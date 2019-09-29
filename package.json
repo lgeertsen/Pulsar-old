@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "name": "pulsar",
+  "description": "Pulsar | A Pipeline Tool",
+  "version": "0.0.1",
+  "author": "Lee Geertsen <lgeertsen@artfx.fr>",
+  "main": "app/background.js",
+  "scripts": {
+    "dev": "nextron",
+    "postinstall": "electron-builder install-app-deps",
+    "build": "nextron build",
+    "build:all": "nextron build --all",
+    "build:win32": "nextron build --win --ia32",
+    "build:win64": "nextron build --win --x64",
+    "build:mac": "nextron build --mac --x64",
+    "build:linux": "nextron build --linux"
+  },
+  "dependencies": {
+    "cross-spawn": "^6.0.5",
+    "electron-serve": "^0.4.0",
+    "electron-store": "^5.0.0",
+    "python-shell": "^1.0.8"
+  },
+  "devDependencies": {
+    "electron": "^6.0.10",
+    "electron-builder": "^21.2.0",
+    "next": "9.0.6",
+    "nextron": "^5.11.1",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1"
+  }
+}

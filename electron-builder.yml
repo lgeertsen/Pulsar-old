@@ -1,0 +1,12 @@
+appId: graphics.lee.pulsar
+productName: Pulsar
+copyright: Copyright © 2019 Lee Geertsen
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish: null
