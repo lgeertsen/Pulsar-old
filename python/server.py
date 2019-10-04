@@ -13,17 +13,21 @@ import eventlet
 sio = socketio.Server()
 app = socketio.WSGIApp(sio)
 
-@sio.event
-def connect(sid, environ):
-    print('connect ', sid)
+frontend = None
 
-@sio.event
-def my_message(sid, data):
-    print('message ', data)
+class FrontEnd(socketio.Namespace):
+    def on_connect(self, sid, environ):
+        print("connected", sid)
+        frontend = sid
 
-@sio.event
-def disconnect(sid):
-    print('disconnect ', sid)
+    def on_disconnect(self, sid):
+        print("disconnected", sid)
+        frontend = None
+
+    def message(self, data):
+        print('message', data)
+
+sio.register_namespace(FrontEnd('/frontend'))
 
 if __name__ == '__main__':
     eventlet.wsgi.server(eventlet.listen(('', 7846)), app)

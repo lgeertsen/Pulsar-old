@@ -103,8 +103,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var electron_serve__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! electron-serve */ "electron-serve");
 /* harmony import */ var electron_serve__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(electron_serve__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers */ "./main/helpers/index.js");
-/* harmony import */ var python_shell__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! python-shell */ "python-shell");
-/* harmony import */ var python_shell__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(python_shell__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! socket.io-client */ "socket.io-client");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var python_shell__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! python-shell */ "python-shell");
+/* harmony import */ var python_shell__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(python_shell__WEBPACK_IMPORTED_MODULE_5__);
+
 
 
 
@@ -124,42 +127,46 @@ if (isProd) {
 (async () => {
   await electron__WEBPACK_IMPORTED_MODULE_1__["app"].whenReady();
   const mainWindow = Object(_helpers__WEBPACK_IMPORTED_MODULE_3__["createWindow"])('main', {
-    width: 1000,
-    height: 600
+    width: 1200,
+    height: 800
   });
+  mainWindow.maximize();
   const homeUrl = isProd ? 'app://./home.html' : 'http://localhost:8888/home';
   await mainWindow.loadURL(homeUrl);
 
   if (!isProd) {
     mainWindow.webContents.openDevTools();
-  }
+  } // var socket = io('http://localhost:7846/frontend', {
+  //   transports: ['websocket'],
+  // });
+
 })();
 
 electron__WEBPACK_IMPORTED_MODULE_1__["app"].on('window-all-closed', () => {
   electron__WEBPACK_IMPORTED_MODULE_1__["app"].quit();
-});
-electron__WEBPACK_IMPORTED_MODULE_1__["ipcMain"].on('run-python', (event, arg) => {
-  let options = {
-    mode: 'text',
-    pythonOptions: ['-u'],
-    // get print results in real-time
-    scriptPath: './python'
-  };
-  python_shell__WEBPACK_IMPORTED_MODULE_4__["PythonShell"].run('server.py', options, function (err, results) {
-    if (err) throw err; // results is an array consisting of messages collected during execution
-
-    console.log('results: %j', results);
-    event.sender.send('result', results);
-  }); // const spawn = require('cross-spawn');
-  // let result;
-  // if (process.env.NODE_ENV === 'production') {
-  //   const executable = join(__dirname, process.platform === 'win32' ? 'hello.exe' : 'hello');
-  //   result = spawn.sync(executable, [], { encoding: 'utf8' });
-  // } else {
-  //   result = spawn.sync('python', [join(__dirname, '../python/hello.py')], { encoding: 'utf8' });
-  // }
-  // event.sender.send('result', result.stdout);
-});
+}); // ipcMain.on('run-python', (event, arg) => {
+//   let options = {
+//     mode: 'text',
+//     pythonOptions: ['-u'], // get print results in real-time
+//     scriptPath: './python'
+//   };
+//
+//   PythonShell.run('server.py', options, function (err, results) {
+//     if (err) throw err;
+//     // results is an array consisting of messages collected during execution
+//     console.log('results: %j', results);
+//     event.sender.send('result', results);
+//   });
+//   // const spawn = require('cross-spawn');
+//   // let result;
+//   // if (process.env.NODE_ENV === 'production') {
+//   //   const executable = join(__dirname, process.platform === 'win32' ? 'hello.exe' : 'hello');
+//   //   result = spawn.sync(executable, [], { encoding: 'utf8' });
+//   // } else {
+//   //   result = spawn.sync('python', [join(__dirname, '../python/hello.py')], { encoding: 'utf8' });
+//   // }
+//   // event.sender.send('result', result.stdout);
+// });
 
 /***/ }),
 
@@ -365,6 +372,17 @@ module.exports = require("path");
 /***/ (function(module, exports) {
 
 module.exports = require("python-shell");
+
+/***/ }),
+
+/***/ "socket.io-client":
+/*!***********************************!*\
+  !*** external "socket.io-client" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("socket.io-client");
 
 /***/ })
 
