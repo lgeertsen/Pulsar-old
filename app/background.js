@@ -114,6 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const isProd = "development" === 'production';
+var softwares = {};
 
 if (isProd) {
   electron_serve__WEBPACK_IMPORTED_MODULE_2___default()({
@@ -136,14 +137,27 @@ if (isProd) {
 
   if (!isProd) {
     mainWindow.webContents.openDevTools();
-  } // var socket = io('http://localhost:7846/frontend', {
-  //   transports: ['websocket'],
-  // });
+  }
 
+  var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_4___default()('http://localhost:7846/frontend', {
+    transports: ['websocket']
+  });
+  socket.on("connection", data => {
+    console.log("----- connected to the python server -----");
+  });
+  socket.on("softwares", data => {
+    console.log("----- connected softwares: -----");
+    console.log(data);
+    softwares = data;
+    mainWindow.webContents.send('softwares', data);
+  });
 })();
 
 electron__WEBPACK_IMPORTED_MODULE_1__["app"].on('window-all-closed', () => {
   electron__WEBPACK_IMPORTED_MODULE_1__["app"].quit();
+});
+electron__WEBPACK_IMPORTED_MODULE_1__["ipcMain"].on("getSoftwares", event => {
+  event.sender.send('softwares', softwares);
 }); // ipcMain.on('run-python', (event, arg) => {
 //   let options = {
 //     mode: 'text',

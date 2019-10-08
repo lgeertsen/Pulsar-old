@@ -12,6 +12,8 @@ import {PythonShell} from 'python-shell';
 
 const isProd = process.env.NODE_ENV === 'production';
 
+var softwares = {};
+
 if (isProd) {
   serve({ directory: 'app' });
 } else {
@@ -36,13 +38,28 @@ if (isProd) {
     mainWindow.webContents.openDevTools();
   }
 
-  // var socket = io('http://localhost:7846/frontend', {
-  //   transports: ['websocket'],
-  // });
+  var socket = io('http://localhost:7846/frontend', {
+    transports: ['websocket'],
+  });
+
+  socket.on("connection", (data) => {
+    console.log("----- connected to the python server -----");
+  });
+
+  socket.on("softwares", (data) => {
+    console.log("----- connected softwares: -----");
+    console.log(data);
+    softwares = data;
+    mainWindow.webContents.send('softwares', data)
+  });
 })();
 
 app.on('window-all-closed', () => {
   app.quit();
+});
+
+ipcMain.on("getSoftwares", (event) => {
+  event.sender.send('softwares', softwares);
 });
 
 // ipcMain.on('run-python', (event, arg) => {

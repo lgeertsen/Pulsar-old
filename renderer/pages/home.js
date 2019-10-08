@@ -1,5 +1,8 @@
+import electron from 'electron';
 import React from 'react';
 import Head from 'next/head';
+
+const ipcRenderer = electron.ipcRenderer || false;
 
 import Node from '../components/Node';
 import Edge from '../components/Edge';
@@ -159,7 +162,26 @@ export default class Home extends React.Component {
             attribute: "output2"
           }
         }
+      },
+      softwares: {
+
       }
+    }
+  }
+
+  componentDidMount() {
+    console.log("----- Component mounted -----");
+    if(ipcRenderer) {
+      ipcRenderer.send("getSoftwares")
+
+
+
+
+      console.log("----- ipcRenderer exists -----");
+      ipcRenderer.on('softwares', (event, data) => {
+        console.log("----- receive list of open softwares -----");
+        this.setState({softwares: data})
+      })
     }
   }
 
@@ -396,37 +418,53 @@ export default class Home extends React.Component {
           <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet"/>
         </Head>
 
-        <div className="graphEditor"
-          style={graphTransform}
-          onMouseDown={(e) => this.dragStart(e)}
-          onMouseMove={(e) => this.drag(e)}
-          onMouseUp={(e) => this.dragEnd(e)}
-          onWheel={(e) => this.zoom(e)}
-        >
-          <div className="nodeContainer">
-            {Object.keys(this.state.nodes).map((nodeId, index) => (
-              this.renderNode(nodeId, index)
-            ))}
-          </div>
-          <div className="svgContainer">
-            <svg>
-              {this.state.draggingEdge ?
-                <path className="dragEdge"
-                  d={`M${this.state.dragEdge.x1},${this.state.dragEdge.y1} C${this.state.dragEdge.x1 + Math.min(300, Math.abs(this.state.dragEdge.y1 - this.state.dragEdge.y2)/2)},${this.state.dragEdge.y1} ${this.state.dragEdge.x2 - Math.min(300, Math.abs(this.state.dragEdge.y1 - this.state.dragEdge.y2)/2)},${this.state.dragEdge.y2} ${this.state.dragEdge.x2},${this.state.dragEdge.y2}`}
-                  stroke="#444"
-                  strokeWidth="1"
-                  fill="none"
-                />
-                :
-                ""
-              }
-              {Object.keys(this.state.edges).map((edgeId, index) => (
-                this.renderEdge(edgeId, index)
-              ))}
-            </svg>
-          </div>
+        <div className="main">
+          <div className="graphContainer">
+            <div className="graphEditor"
+              style={graphTransform}
+              onMouseDown={(e) => this.dragStart(e)}
+              onMouseMove={(e) => this.drag(e)}
+              onMouseUp={(e) => this.dragEnd(e)}
+              onWheel={(e) => this.zoom(e)}
+            >
+              <div className="nodeContainer">
+                {Object.keys(this.state.nodes).map((nodeId, index) => (
+                  this.renderNode(nodeId, index)
+                ))}
+              </div>
+              <div className="svgContainer">
+                <svg>
+                  {this.state.draggingEdge ?
+                    <path className="dragEdge"
+                      d={`M${this.state.dragEdge.x1},${this.state.dragEdge.y1} C${this.state.dragEdge.x1 + Math.min(300, Math.abs(this.state.dragEdge.y1 - this.state.dragEdge.y2)/2)},${this.state.dragEdge.y1} ${this.state.dragEdge.x2 - Math.min(300, Math.abs(this.state.dragEdge.y1 - this.state.dragEdge.y2)/2)},${this.state.dragEdge.y2} ${this.state.dragEdge.x2},${this.state.dragEdge.y2}`}
+                      stroke="#444"
+                      strokeWidth="1"
+                      fill="none"
+                    />
+                    :
+                    ""
+                  }
+                  {Object.keys(this.state.edges).map((edgeId, index) => (
+                    this.renderEdge(edgeId, index)
+                  ))}
+                </svg>
+              </div>
 
+            </div>
+          </div>
+          <div className="softwaresContainer">
+              <h2>Open softwares</h2>
+            <div className="softwares">
+              {Object.keys(this.state.softwares).map((softwareId, index) => (
+                <div key={index} className="software">
+                  <h4 className="softwareName">{this.state.softwares[softwareId].software}</h4>
+                  <img className="softwareImg" src={"./static/" + this.state.softwares[softwareId].software + ".jpg"}></img>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
         <style jsx global>{`
           html, body {
             height: 100%;
@@ -437,6 +475,7 @@ export default class Home extends React.Component {
           }
           * {
             font-family: "Oswald", sans-serif;
+            margin: 0;
           }
           div {
             height: 100%;
@@ -444,6 +483,44 @@ export default class Home extends React.Component {
           }
         `}</style>
         <style jsx>{`
+          .main {
+            display: flex;
+            flex-direction: column;
+          }
+          .main > div {
+            width: auto;
+            height: auto;
+          }
+          .main .softwaresContainer {
+            position: relative;
+            z-index: 2;
+            height: 200px;
+            width: 100%;
+            background: #ddd;
+            border-top: 3px solid #444;
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+          }
+          .main .softwaresContainer .softwares {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+          }
+          .main .softwaresContainer .softwares .software {
+            height: auto;
+            width: 150px;
+            margin-right: 25px;
+          }
+          .main .softwaresContainer .softwares .software .softwareImg {
+            width: 75%;
+          }
+          .main .graphContainer {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            width: 100%;
+          }
           .graphEditor {
             z-index: 1;
             position: absolute;
@@ -451,7 +528,7 @@ export default class Home extends React.Component {
             height: 20000px;
             left: -10000px;
             top: -10000px;
-            background: #eee;
+            background: transparent;
             border: 5px solid #444;
             overflow: hidden;
             touch-action: none;
