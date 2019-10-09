@@ -7,7 +7,7 @@ const ipcRenderer = electron.ipcRenderer || false;
 import Node from '../components/Node';
 import Edge from '../components/Edge';
 
-export default class Home extends React.Component {
+export default class Graph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -186,9 +186,9 @@ export default class Home extends React.Component {
   }
 
   dragStart(e) {
-    console.log(e);
-    e.preventDefault();
+    console.log(e.target);
     if (e.button == 0 && e.target.getAttribute("draggable") == "true") {
+      e.preventDefault();
       let active = true;
       let dragItem =  e.target.getAttribute("nodeid");
       let node = this.state.nodes[dragItem];
@@ -196,12 +196,14 @@ export default class Home extends React.Component {
       let initialY = e.clientY - node.y;
       this.setState({initialX: initialX, initialY: initialY, active: active, dragItem: dragItem});
     } else if(e.button == 1) {
+      e.preventDefault();
       let active = true;
       let dragItem = "46541654165graph465146541651";
       let initialX = e.clientX - this.state.graphPosition.x;
       let initialY = e.clientY - this.state.graphPosition.y;
       this.setState({initialX: initialX, initialY: initialY, active: active, dragItem: dragItem});
     } else if(e.target.getAttribute("attributetype")) {
+      e.preventDefault();
       this.startEdgeDrag(e);
     }
   }
@@ -356,6 +358,7 @@ export default class Home extends React.Component {
   }
 
   editNodeName(nodeId, event) {
+    console.log("smqdlkfjsdklmqfjsklmqdfjklm");
     let nodes = this.state.nodes;
     nodes[nodeId].name = event.target.value;
     this.setState({nodes: nodes});
@@ -452,7 +455,7 @@ export default class Home extends React.Component {
 
             </div>
           </div>
-          <div className="softwaresContainer">
+          {/* <div className="softwaresContainer">
               <h2>Open softwares</h2>
             <div className="softwares">
               {Object.keys(this.state.softwares).map((softwareId, index) => (
@@ -462,7 +465,7 @@ export default class Home extends React.Component {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
 
         <style jsx global>{`
