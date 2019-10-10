@@ -3,6 +3,8 @@ dist
 renderer/.next
 renderer/out
 
+app
+
 # dependencies
 node_modules
 
