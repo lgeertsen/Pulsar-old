@@ -3,6 +3,8 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
+import Nav from '../components/Nav'
+
 const ipcRenderer = electron.ipcRenderer || false;
 
 export default class Manager extends React.Component {
@@ -24,10 +26,14 @@ export default class Manager extends React.Component {
         <Head>
           <title>Pulsar</title>
           <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet"/>
+          <link href="./static/fontawesome/css/all.css" rel="stylesheet"/>
         </Head>
 
-        <div className="main">
+        <Nav/>
 
+        <div className="main">
+          <div></div>
+          <div></div>
         </div>
 
         <style jsx global>{`

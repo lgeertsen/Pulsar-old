@@ -3,6 +3,8 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
+import Nav from '../components/Nav'
+
 const ipcRenderer = electron.ipcRenderer || false;
 
 export default class Home extends React.Component {
@@ -24,7 +26,10 @@ export default class Home extends React.Component {
         <Head>
           <title>Pulsar</title>
           <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet"/>
+          <link href="./static/fontawesome/css/all.css" rel="stylesheet"/>
         </Head>
+
+        <Nav/>
 
         <div className="main">
           <div className="container">
@@ -58,8 +63,10 @@ export default class Home extends React.Component {
             background: #fff;
           }
           * {
-            font-family: "Oswald", sans-serif;
             margin: 0;
+          }
+          p, h1, h2, h3, h4, h5, h6 {
+            font-family: "Oswald", sans-serif;
           }
           div {
             height: 100%;
