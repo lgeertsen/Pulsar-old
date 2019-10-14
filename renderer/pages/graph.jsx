@@ -4,6 +4,7 @@ import Head from 'next/head';
 
 const ipcRenderer = electron.ipcRenderer || false;
 
+import Nav from '../components/Nav'
 import Node from '../components/Node';
 import Edge from '../components/Edge';
 
@@ -419,7 +420,11 @@ export default class Graph extends React.Component {
         <Head>
           <title>Pulsar</title>
           <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet"/>
+          <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet"/>
+          <link href="./static/fontawesome/css/all.css" rel="stylesheet"/>
         </Head>
+
+        <Nav/>
 
         <div className="main">
           <div className="graphContainer">

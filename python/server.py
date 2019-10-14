@@ -1,6 +1,7 @@
 import os
 import sys
 import logging
+import json
 
 # Add vendor to sys.path, to correctly import third party modules
 parent_dir = os.path.dirname(__file__)
@@ -23,10 +24,14 @@ class FrontEnd(socketio.Namespace):
         self._pulsar._frontend = sid
         print('----- sendings software list to frontend -----')
         self.emit("softwares", self._pulsar._softwares, room=sid)
+        self.emit("configFile", self._pulsar._config, room=sid)
 
     def on_disconnect(self, sid):
         print("----- disconnected -----", sid)
         self._pulsar._frontend = None
+
+    def on_getConfig(self, sid):
+        self.emit("configFile", self._pulsar._config, room=sid)
 
 
 
@@ -72,6 +77,17 @@ class Pulsar():
 
         self._frontend = None
         self._softwares = {}
+
+        self.readConfig()
+
+    def readConfig(self):
+        filename = "../config.json"
+        with open(filename, 'r') as data:
+            self._config = json.load(data)
+
+        print("----- config file: -----")
+        print(self._config)
+        print("----- end file -----")
 
 
 

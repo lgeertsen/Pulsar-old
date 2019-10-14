@@ -64,9 +64,11 @@ export default class Nav extends React.Component {
           .nav {
             width: 100%;
             height: 25px;
-            background: #444;
+            background: #fff;
             display: flex;
+            border-bottom: 1px solid #ededed;
             -webkit-app-region: drag;
+            box-shadow: 0 2px 0 0 #f5f5f5;
           }
           .navigation-container {
             flex: 1;
@@ -84,19 +86,18 @@ export default class Nav extends React.Component {
             align-items: center;
             width: 50px;
             height: 25px;
-            background: #444;
-            color: #eee;
-            border-left: 1px solid #999;
+            background: #fff;
+            color: #cecece;
+            border-left: 1px solid #cecece;
             transition: all ease 0.2s;
           }
           .back-btn {
             border: none;
-            border-right: 1px solid #999;
+            border-right: 1px solid #cecece;
           }
           .nav-btn:hover,
           .back-btn:hover {
-            background: #999;
-            color: #444;
+            color: #999;
           }
         `}</style>
       </div>

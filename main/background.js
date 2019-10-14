@@ -13,6 +13,7 @@ import {PythonShell} from 'python-shell';
 const isProd = process.env.NODE_ENV === 'production';
 
 var softwares = {};
+var config = {};
 
 if (isProd) {
   serve({ directory: 'app' });
@@ -41,12 +42,38 @@ if (isProd) {
     mainWindow.webContents.openDevTools();
   }
 
+
+
+
+  ipcMain.on("getSoftwares", (event) => {
+    event.sender.send('softwares', softwares);
+  });
+
+  ipcMain.on("getConfig", (event) => {
+    if(config == {}) {
+      socket.emit("getConfig");
+    } else {
+      event.sender.send('config', config);
+    }
+  });
+
+
+
+
+
   var socket = io('http://localhost:7846/frontend', {
     transports: ['websocket'],
   });
 
   socket.on("connection", (data) => {
     console.log("----- connected to the python server -----");
+  });
+
+  socket.on("configFile", (data) => {
+    console.log("----- received config file -----");
+    console.log(data);
+    config = data;
+    mainWindow.webContents.send('config', data)
   });
 
   socket.on("softwares", (data) => {
@@ -61,9 +88,6 @@ app.on('window-all-closed', () => {
   app.quit();
 });
 
-ipcMain.on("getSoftwares", (event) => {
-  event.sender.send('softwares', softwares);
-});
 
 // ipcMain.on('run-python', (event, arg) => {
 //   let options = {

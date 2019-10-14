@@ -26,6 +26,7 @@ export default class Home extends React.Component {
         <Head>
           <title>Pulsar</title>
           <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet"/>
+          <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet"/>
           <link href="./static/fontawesome/css/all.css" rel="stylesheet"/>
         </Head>
 
@@ -60,17 +61,22 @@ export default class Home extends React.Component {
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: #fff;
+            background: #f4f6fb;
           }
           * {
             margin: 0;
           }
           p, h1, h2, h3, h4, h5, h6 {
-            font-family: "Oswald", sans-serif;
+            color: #444F60;
+            font-family: "Open Sans Condensed", "Oswald", sans-serif;
           }
           div {
             height: 100%;
             width: 100%;
+          }
+          #__next {
+            display: flex;
+            flex-direction: column;
           }
         `}</style>
         <style jsx>{`
@@ -125,15 +131,14 @@ export default class Home extends React.Component {
             width: 200px;
             height: 200px;
             margin: 25px;
-            border: 1px solid #777;
-            border-radius: 3px;
+            border: 1px solid #e3e3e3;
+            border-radius: 6px;
             background: #fff;
             cursor: pointer;
-            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
             transition: all ease 0.2s;
           }
           .menuLink:hover {
-            box-shadow: 0 8px 17px 2px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 10px 4px rgba(0,0,0,0.04);
           }
         `}</style>
       </React.Fragment>
