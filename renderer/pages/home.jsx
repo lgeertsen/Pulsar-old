@@ -40,7 +40,7 @@ export default class Home extends React.Component {
               <div className="menu">
                 <Link href="/manager">
                   <div className="menuLink">
-                    <h1>Asset Manager</h1>
+                    <h1>File Manager</h1>
                   </div>
                 </Link>
                 <Link href="/graph">
