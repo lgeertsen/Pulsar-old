@@ -3,8 +3,10 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
+import Dropdown from '../components/Dropdown';
 import Nav from '../components/Nav';
 import SearchBar from '../components/SearchBar';
+import Switch from '../components/Switch';
 
 const ipcRenderer = electron.ipcRenderer || false;
 
@@ -13,7 +15,7 @@ export default class Manager extends React.Component {
     super(props);
     this.state = {
       projects: [],
-      project: "test"
+      project: ""
     }
   }
 
@@ -21,16 +23,25 @@ export default class Manager extends React.Component {
     console.log("----- Component mounted -----");
     if(ipcRenderer) {
       ipcRenderer.send("getConfig")
-
-
-
-
       console.log("----- ipcRenderer exists -----");
+
+
+
+
       ipcRenderer.on('config', (event, data) => {
         console.log("----- receive list of open softwares -----");
-        this.setState({projects: data.projects})
+        if(data.projects) {
+          this.setState({projects: data.projects})
+          if(data.projects.length > 0) {
+            this.setProject(data.projects[0])
+          }
+        }
       })
     }
+  }
+
+  setProject(project) {
+    this.setState({project: project})
   }
 
   render() {
@@ -51,18 +62,18 @@ export default class Manager extends React.Component {
           <div className="managerContainer">
             <div className="searchContainer">
               <div className="projectSelect">
-                <div className="selectedProject">
-                  <h4>{this.state.project}</h4>
-                </div>
-                <i className="fas fa-angle-down"></i>
+                <Dropdown
+                  value={this.state.project}
+                  options={this.state.projects}
+                  onChange={(element) => this.setState({project: element})}
+                />
               </div>
               <div className="assetShotSwitch">
-                <div className="assetBtn">
-                  <span>Assets</span>
-                </div>
-                <div className="shotBtn">
-                  <span>Shots</span>
-                </div>
+                <Switch
+                  option1="Assets"
+                  option2="Shots"
+                  onChange={(choice) => console.log(choice)}
+                />
               </div>
               <div className="searchBar">
                 <SearchBar/>
@@ -79,6 +90,10 @@ export default class Manager extends React.Component {
                 <div className="filterType">
                   <div className="filterOption">O Work</div>
                   <div className="filterOption">O Publish</div>
+                </div>
+                <div className="filterType">
+                  <div className="filterOption">O 2D</div>
+                  <div className="filterOption">O 3D</div>
                 </div>
               </div>
             </div>
@@ -227,49 +242,15 @@ export default class Manager extends React.Component {
             margin: 0 25px;
           }
           .projectSelect {
-            display: flex;
-            align-items: center;
-            flex-direction: row;
+            position: relative;
             width: 120px;
-            border-radius: 6px;
-            background: #fff;
-            border:  1px solid #e3e3e3;
-            cursor: pointer;
           }
-          .selectedProject {
-            flex: 1;
-            margin-left: 10px;
-          }
-          .projectSelect i {
-            color: #444F60;
-            margin-right: 10px;
-            font-size: 20px;
-          }
+
+
           .assetShotSwitch {
-            display: flex;
-            flex-direction: row;
             width: 120px;
           }
-          .assetBtn,
-          .shotBtn {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #fff;
-            border: 1px solid #e3e3e3;
-            color: #444F60;
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-            cursor: pointer;
-          }
-          .assetBtn {
-            border-top-left-radius: 6px;
-            border-bottom-left-radius: 6px;
-          }
-          .shotBtn {
-            border-top-right-radius: 6px;
-            border-bottom-right-radius: 6px;
-          }
+
           .searchBar {
             flex: 1;
           }
