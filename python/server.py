@@ -89,6 +89,20 @@ class Pulsar():
         print(self._config)
         print("----- end file -----")
 
+        self.initSID()
+
+    def initSID(self):
+        self._sid = {
+            "project": self._config["projects"][0],
+            "type": None,
+            "name": None,
+            "task": None,
+            "subtask": None,
+            "state": None,
+            "version": None,
+            "file": None
+        }
+
 
 
 if __name__ == '__main__':
