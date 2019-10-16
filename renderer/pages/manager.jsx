@@ -3,7 +3,9 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
+import Browser from '../components/Browser';
 import Dropdown from '../components/Dropdown';
+import FileBrowser from '../components/FileBrowser';
 import Nav from '../components/Nav';
 import SearchBar from '../components/SearchBar';
 import Switch from '../components/Switch';
@@ -15,7 +17,34 @@ export default class Manager extends React.Component {
     super(props);
     this.state = {
       projects: [],
-      project: ""
+
+      project: "",
+      switch: "assets",
+      type: undefined,
+      name: undefined,
+      task: undefined,
+      subtask: undefined,
+      state: undefined,
+      version: undefined,
+      file: undefined,
+
+      directories: {
+        type: [],
+        name: [],
+        task: [],
+        subtask: [],
+        file: []
+      },
+
+      sid: {
+        "type": undefined,
+        "name": undefined,
+        "task": undefined,
+        "subtask": undefined,
+        "state": undefined,
+        "version": undefined,
+        "file": undefined
+      }
     }
   }
 
@@ -29,19 +58,52 @@ export default class Manager extends React.Component {
 
 
       ipcRenderer.on('config', (event, data) => {
-        console.log("----- receive list of open softwares -----");
+        console.log("----- receive config file -----");
         if(data.projects) {
           this.setState({projects: data.projects})
           if(data.projects.length > 0) {
             this.setProject(data.projects[0])
           }
         }
-      })
+      });
+
+      ipcRenderer.on('directories', (event, data) => {
+        console.log("----- receive type directories -----");
+        console.log(data);
+        this.setState({directories: data});
+      });
     }
   }
 
   setProject(project) {
-    this.setState({project: project})
+    this.setState({project: project});
+    ipcRenderer.send("setProject", project);
+  }
+
+  setSwitch(data) {
+    let choice = data == 1 ? "assets" : "shots"
+    this.setState({switch: choice});
+    ipcRenderer.send("setSwitch", choice);
+  }
+
+  setType(index) {
+    let dir = this.state.directories.type[index];
+    this.setState({type: dir});
+    ipcRenderer.send("setType", dir);
+  }
+
+  setName(index) {
+    let dir = this.state.directories.name[index];
+    this.setState({name: dir});
+    ipcRenderer.send("setName", dir);
+  }
+
+  setSidDir(type, index) {
+    let dir = this.state.directories[type][index];
+    let sid = this.state.sid;
+    sid[type] = dir
+    this.setState({sid: sid});
+    ipcRenderer.send("setSidDir", {type: type, dir: dir});
   }
 
   render() {
@@ -65,14 +127,14 @@ export default class Manager extends React.Component {
                 <Dropdown
                   value={this.state.project}
                   options={this.state.projects}
-                  onChange={(element) => this.setState({project: element})}
+                  onChange={(element) => this.setProject(element)}
                 />
               </div>
               <div className="assetShotSwitch">
                 <Switch
                   option1="Assets"
                   option2="Shots"
-                  onChange={(choice) => console.log(choice)}
+                  onChange={(choice) => this.setSwitch(choice)}
                 />
               </div>
               <div className="searchBar">
@@ -103,46 +165,51 @@ export default class Manager extends React.Component {
 
             <div className="browserContainer">
               <div className="browser sequenceBrowser">
-                <div className="browserTitle">
-                  <h4>Sequences</h4>
-                </div>
-                <div className="browserInner"></div>
+                <Browser
+                  title={this.state.switch == "assets" ? "Asset Type" : "Sequences"}
+                  directories={this.state.directories.type}
+                  onChange={(dir) => this.setSidDir("type", dir)}
+                />
               </div>
               <div className="chevronContainer">
                 <i className="fas fa-angle-right"></i>
               </div>
               <div className="browser shotBrowser">
-                <div className="browserTitle">
-                  <h4>Shots</h4>
-                </div>
-                <div className="browserInner"></div>
+                <Browser
+                  title={this.state.switch == "assets" ? "Asset Name" : "Shots"}
+                  directories={this.state.directories.name}
+                  onChange={(dir) => this.setSidDir("name", dir)}
+                />
               </div>
               <div className="chevronContainer">
                 <i className="fas fa-angle-right"></i>
               </div>
               <div className="browser taskBrowser">
-                <div className="browserTitle">
-                  <h4>Tasks</h4>
-                </div>
-                <div className="browserInner"></div>
+                <Browser
+                  title="Tasks"
+                  directories={this.state.directories.task}
+                  onChange={(dir) => this.setSidDir("task", dir)}
+                />
               </div>
               <div className="chevronContainer">
                 <i className="fas fa-angle-right"></i>
               </div>
               <div className="browser subtaskBrowser">
-                <div className="browserTitle">
-                  <h4>Subtasks</h4>
-                </div>
-                <div className="browserInner"></div>
+                <Browser
+                  title="Subtasks"
+                  directories={this.state.directories.subtask}
+                  onChange={(dir) => this.setSidDir("subtask", dir)}
+                />
               </div>
               <div className="chevronContainer">
                 <i className="fas fa-angle-right"></i>
               </div>
               <div className="fileBrowser">
-                <div className="browserTitle">
-                  <h4>Files</h4>
-                </div>
-                <div className="fileBrowserInner"></div>
+                <FileBrowser
+                  title="Files"
+                  files={this.state.directories.file}
+                  onChange={(file) => console.log(file)}
+                />
               </div>
             </div>
 
@@ -293,11 +360,6 @@ export default class Manager extends React.Component {
           .browser,
           .fileBrowser {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: #fff;
-            border-radius: 6px;
-            border: 1px solid #e3e3e3;
           }
           .browser:first-child {
             margin-left: 25px;
@@ -306,17 +368,7 @@ export default class Manager extends React.Component {
             flex: 3;
             margin-right: 25px;
           }
-          .browserTitle {
-            height: 25px;
-            background: #f2f2f2;
-          }
-          .browserTitle h4 {
-            margin-left: 10px;
-          }
-          .browserInner {
-            overflow-x: auto;
-            overflow-y: scroll;
-          }
+
           .chevronContainer {
             width: 25px;
             height: auto;

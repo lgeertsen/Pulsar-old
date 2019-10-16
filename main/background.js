@@ -14,6 +14,13 @@ const isProd = process.env.NODE_ENV === 'production';
 
 var softwares = {};
 var config = {};
+var directories = {
+  type: [],
+  name: [],
+  task: [],
+  subtask: [],
+  file: []
+};
 
 if (isProd) {
   serve({ directory: 'app' });
@@ -43,6 +50,9 @@ if (isProd) {
   }
 
 
+  var socket = io('http://localhost:7846/frontend', {
+    transports: ['websocket'],
+  });
 
 
   ipcMain.on("getSoftwares", (event) => {
@@ -57,13 +67,34 @@ if (isProd) {
     }
   });
 
-
-
-
-
-  var socket = io('http://localhost:7846/frontend', {
-    transports: ['websocket'],
+  ipcMain.on("setProject", (event, data) => {
+    console.log("----- set project -----", data);
+    socket.emit("setProject", data);
   });
+
+  ipcMain.on("setSwitch", (event, data) => {
+    console.log("----- set switch -----", data);
+    socket.emit("setSwitch", data);
+  });
+
+  ipcMain.on("setType", (event, data) => {
+    console.log("----- set type -----", data);
+    socket.emit("setType", data);
+  });
+
+  ipcMain.on("setName", (event, data) => {
+    console.log("----- set type -----", data);
+    socket.emit("setType", data);
+  });
+
+  ipcMain.on("setSidDir", (event, data) => {
+    console.log("----- set sid dir -----", data);
+    socket.emit("setSidDir", data);
+  });
+
+
+
+
 
   socket.on("connection", (data) => {
     console.log("----- connected to the python server -----");
@@ -74,6 +105,33 @@ if (isProd) {
     console.log(data);
     config = data;
     mainWindow.webContents.send('config', data)
+  });
+
+  socket.on("directories", (data) => {
+    console.log("----- received directories");
+    console.log(data);
+    switch (data.type) {
+      case "type":
+        directories.name = [];
+        directories.task = [];
+        directories.subtask = [];
+        directories.file = [];
+        break;
+      case "name":
+        directories.task = [];
+        directories.subtask = [];
+        directories.file = [];
+        break;
+      case "task":
+        directories.subtask = [];
+        directories.file = [];
+        break;
+      case "subtask":
+        directories.file = [];
+        break;
+    }
+    directories[data.type] = data.dirs
+    mainWindow.webContents.send('directories', directories)
   });
 
   socket.on("softwares", (data) => {

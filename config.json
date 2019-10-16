@@ -1,8 +1,9 @@
 {
     "projects": ["FILM1", "FILM2", "FILM3"],
+    "disk": "C",
     "shot_paths": {
-      "2d": "I:/SynologyDrive/pipeline/{project}/02_work/02_shot/2d/{type}/{name}/{task}/{subtask}/{state}_{version}",
-      "3d": "I:/SynologyDrive/pipeline/{project}/02_work/02_shot/3d/scenes/{type}/{name}/{task}/{subtask}/{state}_{version}"
+      "2d": "{disk}:/SynologyDrive/pipeline/{project}/02_work/02_shot/2d/{type}/{name}/{task}/{subtask}/{state}_{version}",
+      "3d": "{disk}:/SynologyDrive/pipeline/{project}/02_work/02_shot/3d/scenes/{type}/{name}/{task}/{subtask}/{state}_{version}"
     },
-    "asset_path": "I:/SynologyDrive/pipeline/{project}/02_Work/01_Asset/{type}/{name}/{task}/{subtask}/{state}_{version}"
+    "asset_path": "{disk}:/SynologyDrive/pipeline/{project}/02_Work/01_Asset/{type}/{name}/{task}/{subtask}/{state}_{version}"
 }
