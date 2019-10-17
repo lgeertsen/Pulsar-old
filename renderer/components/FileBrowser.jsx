@@ -9,6 +9,17 @@ const FileBrowser = ({ title, files, onChange }) => {
     setFile(index);
   };
 
+  const getSize = bytes => {
+    let suffixes =  ["B", "KB", "MB", "GB", "TB"];
+    let counter = 0;
+    while (Math.round(bytes / 1024) >= 1) {
+      bytes = bytes / 1024;
+      counter++;
+    }
+    bytes = Math.round(bytes);
+    return bytes.toString() + suffixes[counter];
+  }
+
     return (
       <div className="fileBrowser">
         <div className="fileBrowserTitle">
@@ -30,13 +41,13 @@ const FileBrowser = ({ title, files, onChange }) => {
             <div key={index} className={index == file ? "file selected" : "file"} onClick={(e) => handleChange(index)}>
               <div className="fileName">
                 <i className="fas fa-file"></i>
-                <span>{file.name}</span>
+                <span>{file.name + "_" + file.state + "_" + file.version + "." + file.extension}</span>
               </div>
               <div className="fileModified">
-                <span>{file.name}</span>
+                <span>{file.modified}</span>
               </div>
               <div className="fileSize">
-                <span>{file.name}</span>
+                <span>{getSize(file.size)}</span>
               </div>
             </div>
           ))}
@@ -61,7 +72,7 @@ const FileBrowser = ({ title, files, onChange }) => {
             overflow-x: auto;
             overflow-y: scroll;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
           }
           .file {
             display: flex;
@@ -87,13 +98,19 @@ const FileBrowser = ({ title, files, onChange }) => {
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
           }
           .fileName {
-            flex: 5;
+            flex: 6;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+          }
+          .fileName i {
+            margin: 3px 5px;
           }
           .fileModified {
-            flex: 2;
+            flex: 3;
           }
           .fileSize {
-            flex: 1;
+            flex: 2;
           }
         `}</style>
       </div>

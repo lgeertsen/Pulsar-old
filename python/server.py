@@ -55,11 +55,8 @@ class FrontEnd(socketio.Namespace):
     def on_setSidDir(self, sid, data):
         print("----- set sid dir -----", data)
         self._pulsar._sid[data["type"]] = data["dir"]
-        if(data["type"] == 'subtask'):
-            files = self._pulsar.getFiles()
-        else:
-            dirs = self._pulsar._type_to_func[data["type"]]["func"]()
-            self.emit("directories", {"type": self._pulsar._type_to_func[data["type"]]["type"], "dirs": dirs}, room=sid)
+        dirs = self._pulsar._type_to_func[data["type"]]["func"]()
+        self.emit("directories", {"type": self._pulsar._type_to_func[data["type"]]["type"], "dirs": dirs}, room=sid)
 
 
     # def on_getTypes(self, sid, data):
@@ -130,6 +127,10 @@ class Pulsar():
             "task": {
                 "type": "subtask",
                 "func": self.get_subtasks
+            },
+            "subtask": {
+                "type": "file",
+                "func": self.get_files
             }
         }
 
@@ -217,9 +218,13 @@ class Pulsar():
         dirs = dir1 + list(in_dir2_but_not_in_dir1)
         return dirs
 
-    def getFiles(self):
-        pass
-
+    def get_files(self):
+        files_2d = FileManager.get_files(self._config["shot_paths"]["2d"], "2d", self._sid)
+        files_3d = FileManager.get_files(self._config["shot_paths"]["3d"], "3d", self._sid)
+        files = files_2d + files_3d
+        print("----- files -----")
+        print(files)
+        return files
 
 
 
