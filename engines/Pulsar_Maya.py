@@ -44,7 +44,7 @@ class MayaSocket(socketio.ClientNamespace):
     def on_connect(self):
         print("----- connected to maya namespace -----")
         self._pulsar._connected = True
-        self.emit("software", {"software": "maya", "scene": "maya"})
+        self.emit("software", {"software": "maya", "scene": self._pulsar._scene})
 
     def on_disconnect(self):
         print("disconnected")
@@ -57,8 +57,17 @@ class Pulsar():
         #self._sio = socketio.Client()
         self._sio.register_namespace(MayaSocket('/software', self))
         self._connected = False
+        self._scene = self.getSceneName()
 
         self.createUI()
+
+    def getSceneName(self):
+        filepath = cmds.file(q=True, sn=True)
+        filename = os.path.basename(filepath)
+        raw_name, extension = os.path.splitext(filename)
+        if(raw_name == ""):
+            raw_name = "untitled"
+        return raw_name
 
     def createUI(self):
         self._window = cmds.window( title="Pulsar", iconName='Short Name', widthHeight=(300, 400), sizeable=False )

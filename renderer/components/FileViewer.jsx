@@ -147,6 +147,10 @@ const FileViewer = ({ file }) => {
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
             border:  1px solid #e3e3e3;
             cursor: pointer;
+            transition: all ease 0.3s;
+          }
+          .btn:hover {
+            background: #f2f2f2;
           }
         `}</style>
       </div>

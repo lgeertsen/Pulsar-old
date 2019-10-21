@@ -29,6 +29,8 @@ export default class Manager extends React.Component {
       version: undefined,
       file: undefined,
 
+      softwares: {},
+
       directories: {
         type: [],
         name: [],
@@ -53,6 +55,7 @@ export default class Manager extends React.Component {
     console.log("----- Component mounted -----");
     if(ipcRenderer) {
       ipcRenderer.send("getConfig")
+      ipcRenderer.send("getSoftwares")
       console.log("----- ipcRenderer exists -----");
 
 
@@ -72,6 +75,12 @@ export default class Manager extends React.Component {
         console.log("----- receive type directories -----");
         console.log(data);
         this.setState({directories: data});
+      });
+
+      ipcRenderer.on('softwares', (event, data) => {
+        console.log("----- receive software list -----");
+        console.log(data);
+        this.setState({softwares: data});
       });
     }
   }
@@ -116,7 +125,22 @@ export default class Manager extends React.Component {
         <Nav/>
 
         <div className="main">
-          <div className="softwareContainer"></div>
+          <div className="softwareContainer">
+            <div className="softwareTitle">
+              <h3>Open software</h3>
+            </div>
+            {Object.keys(this.state.softwares).map((softwareId, index) => (
+              <div key={index} className="software">
+                <div className="softwareHeader">
+                  <img className="softwareImg" src={"./static/" + this.state.softwares[softwareId].software + ".jpg"}></img>
+                  <h4 className="softwareName">{this.state.softwares[softwareId].software.charAt(0).toUpperCase() + this.state.softwares[softwareId].software.slice(1)}</h4>
+                </div>
+                <span className="softwareSceneNmae">{this.state.softwares[softwareId].scene}</span>
+              </div>
+            ))}
+          </div>
+
+
           <div className="managerContainer">
             <div className="searchContainer">
               <div className="projectSelect">
@@ -295,6 +319,40 @@ export default class Manager extends React.Component {
             width: 150px;
             background: #fff;
             border-right: 1px solid #ededed;
+          }
+          .softwareTitle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            height: auto;
+            border-bottom: 1px solid #e3e3e3;
+          }
+          .software {
+            display: flex;
+            flex-direction: column;
+            // align-items: center;
+            height: auto;
+            border-bottom: 1px solid #e3e3e3;
+          }
+          .softwareHeader {
+            display: flex;
+            flex-direction:row;
+            align-items: center;
+            height: auto;
+          }
+          .softwareHeader img {
+            width: 25%;
+            margin: 10px;
+          }
+          .softwareHeader h4 {
+            margin: 10px 0;
+          }
+          .softwareSceneNmae {
+            font-family: "Open Sans Condensed", "Oswald", sans-serif;
+            margin-left: 10px;
+            margin-bottom: 10px;
           }
 
 
