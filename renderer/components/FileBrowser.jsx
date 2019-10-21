@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 
 const FileBrowser = ({ title, files, onChange }) => {
 
-  const [file, setFile] = useState(-1);
+  const [selectedFile, setSelectedFile] = useState(-1);
 
   const handleChange = index => {
     onChange(index);
-    setFile(index);
+    setSelectedFile(index);
   };
 
   const getSize = bytes => {
@@ -37,8 +37,14 @@ const FileBrowser = ({ title, files, onChange }) => {
               <span>Size</span>
             </div>
           </div>
-          {files.map((file, index) => (
-            <div key={index} className={index == file ? "file selected" : "file"} onClick={(e) => handleChange(index)}>
+          {files.sort((a, b) => {
+            if(a.version < b.version) { return -1; }
+            if(a.version > b.version) { return 1; }
+            if(a.state < b.state) { return 1; }
+            if(a.state > b.state) { return -1; }
+            return 0;
+          }).map((file, index) => (
+            <div key={index} className={index == selectedFile ? "file selected" : "file"} onClick={(e) => handleChange(index)}>
               <div className="fileName">
                 <i className="fas fa-file"></i>
                 <span>{file.name + "_" + file.state + "_" + file.version + "." + file.extension}</span>
@@ -82,6 +88,12 @@ const FileBrowser = ({ title, files, onChange }) => {
             color: #444F60;
             cursor: pointer;
             transition: all ease 0.2s;
+          }
+          .file:hover {
+            background: #f2f2f2;
+          }
+          .file.selected {
+            background: #f2f244;
           }
           .file.fileHeader {
             background: #f9f9f9;

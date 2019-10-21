@@ -15,7 +15,11 @@ const Browser = ({ title, directories, onChange }) => {
           <h4>{title}</h4>
         </div>
         <div className="browserInner">
-          {directories.map((dir, index) => (
+          {directories.sort((a, b) => {
+            if(a < b) { return -1; }
+            if(a > b) { return 1; }
+            return 0;
+          }).map((dir, index) => (
             <div key={index} className={index == selectedDir ? "directory selected" : "directory"} onClick={(e) => handleChange(index)}>
               <i className={index == selectedDir ? "fas fa-folder-open" : "fas fa-folder"}></i>
               <span>{dir}</span>

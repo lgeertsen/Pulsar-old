@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Browser from '../components/Browser';
 import Dropdown from '../components/Dropdown';
 import FileBrowser from '../components/FileBrowser';
+import FileViewer from '../components/FileViewer';
 import Nav from '../components/Nav';
 import SearchBar from '../components/SearchBar';
 import Switch from '../components/Switch';
@@ -86,24 +87,19 @@ export default class Manager extends React.Component {
     ipcRenderer.send("setSwitch", choice);
   }
 
-  setType(index) {
-    let dir = this.state.directories.type[index];
-    this.setState({type: dir});
-    ipcRenderer.send("setType", dir);
-  }
-
-  setName(index) {
-    let dir = this.state.directories.name[index];
-    this.setState({name: dir});
-    ipcRenderer.send("setName", dir);
-  }
-
   setSidDir(type, index) {
     let dir = this.state.directories[type][index];
     let sid = this.state.sid;
     sid[type] = dir
     this.setState({sid: sid});
     ipcRenderer.send("setSidDir", {type: type, dir: dir});
+  }
+
+  setSidFile(index) {
+    let file = this.state.directories.file[index];
+    let sid = this.state.sid;
+    sid.file = file
+    this.setState({sid: sid});
   }
 
   render() {
@@ -208,48 +204,58 @@ export default class Manager extends React.Component {
                 <FileBrowser
                   title="Files"
                   files={this.state.directories.file}
-                  onChange={(file) => console.log(file)}
+                  onChange={(file) => this.setSidFile(file)}
                 />
               </div>
             </div>
 
 
 
-            <div className="fileContainer">
-              <div className="fileContainerInner"></div>
+            <div className={this.state.sid.file == undefined ? "selectedContainer" : "selectedContainer open"}>
+              {/* <div className="selectedContainerInner">
+                <div className="fileContainer">
+                  <div className="fileContainerInner">
+                    <h4>{this.state.sid.file.name + "_" + this.state.sid.file.state + "_" + this.state.sid.file.version + "." + this.state.sid.file.extension}</h4>
+                  </div>
+                </div>
+
+                <div className="commandContainer">
+                  <div className="btn">
+                    <span>Open</span>
+                  </div>
+                  <div className="btn">
+                    <span>Open As</span>
+                  </div>
+                  <div className="btn">
+                    <span>Save</span>
+                  </div>
+                  <div className="btn">
+                    <span>Save As</span>
+                  </div>
+                  <div className="btn">
+                    <span>Publish</span>
+                  </div>
+                  <div className="btn">
+                    <span>Release</span>
+                  </div>
+                  <div className="btn">
+                    <span>Publish & Release</span>
+                  </div>
+                  <div className="btn">
+                    <span>Close</span>
+                  </div>
+                  <div className="btn">
+                    <span>Screenshot</span>
+                  </div>
+                </div>
+              </div> */}
+              {this.state.sid.file != undefined ?
+                <FileViewer file={this.state.sid.file} />
+                : ""
+              }
             </div>
 
 
-
-            <div className="commandContainer">
-              <div className="btn">
-                <span>Open</span>
-              </div>
-              <div className="btn">
-                <span>Open As</span>
-              </div>
-              <div className="btn">
-                <span>Save</span>
-              </div>
-              <div className="btn">
-                <span>Save As</span>
-              </div>
-              <div className="btn">
-                <span>Publish</span>
-              </div>
-              <div className="btn">
-                <span>Release</span>
-              </div>
-              <div className="btn">
-                <span>Publish & Release</span>
-              </div>
-              <div className="btn">
-                <span>Close</span>
-              </div>
-              <div className="btn">
-                <span>Screenshot</span>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -382,45 +388,14 @@ export default class Manager extends React.Component {
           }
 
 
-
-
-          .fileContainer {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
+          .selectedContainer {
+            margin: 25px 0 ;
+            height: 0px;
+            overflow: hidden;
+            transition: height ease 0.5s;
           }
-          .fileContainerInner {
-            height: 90%;
-            margin: 0 25px;
-            background: #fff;
-            border-radius: 6px;
-            border: 1px solid #e3e3e3;
-          }
-
-
-
-
-          .commandContainer {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            height: 50px;
-          }
-          .commandContainer .btn {
-            display: flex;
-            align-items: center;
-            width: auto;
-            height: 25px;
-            margin: 0 0.5%;
-            padding: 5px 10px;
-            border-radius: 6px;
-            background: #fff;
-            color: #444F60;
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-            border:  1px solid #e3e3e3;
-            cursor: pointer;
+          .selectedContainer.open {
+            height: 350px;
           }
         `}</style>
       </React.Fragment>
