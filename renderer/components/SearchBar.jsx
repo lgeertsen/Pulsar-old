@@ -18,7 +18,15 @@ export default class SearchBar extends React.Component {
   render() {
     return (
       <div className="searchBar">
-        <div className="SearchBarInner">
+        <div className="searchBarType">
+          <div className="typeText">
+            <span>Path:</span>
+          </div>
+          <div className="iconSwitch">
+            <i className="fas fa-sync"></i>
+          </div>
+        </div>
+        <div className="searchBarInner">
           <div className="slashIcon">
             <span>/</span>
           </div>
@@ -74,7 +82,32 @@ export default class SearchBar extends React.Component {
             border-radius: 6px;
             border: 1px solid #e3e3e3;
           }
-          .SearchBarInner {
+          .searchBarType {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 60px;
+            padding-left: 5px;
+            background: #f2f2f2;
+            border-right: 1px solid #e3e3e3;
+          }
+          .typeText {
+            flex: 1;
+          }
+          .searchBarType .iconSwitch {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 25px;
+            font-size: 14px;
+            color: #444F60;
+            cursor: pointer;
+            transition: all ease 0.2s;
+          }
+          .searchBarType:hover {
+            background: #f2f2f2;
+          }
+          .searchBarInner {
             display: flex;
             flex-direction: row;
           }

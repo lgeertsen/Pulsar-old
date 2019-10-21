@@ -24,38 +24,54 @@ const FileViewer = ({ file }) => {
       <div className="fileViewer">
         <div className="fileContainer">
           <div className="fileContainerInner">
-            <div>
-              <h4>{file.name + "_" + file.state + "_" + file.version + "." + file.extension}</h4>
-            </div>
+            <div className="fileInfoContainer">
+              <div className="fileInfo">
+                <h3>{file.name + "_" + file.state + "_" + file.version + "." + file.extension}</h3>
+                <span></span>
+              </div>
 
-            <div className="commandContainer">
-              <div className="btn">
-                <span>Open</span>
+              <div className="commandsContainer">
+                <div className="btn">
+                  <span>Open</span>
+                </div>
+                <div className="btn">
+                  <span>Open As</span>
+                </div>
+                <div className="btn">
+                  <span>Save</span>
+                </div>
+                <div className="btn">
+                  <span>Save As</span>
+                </div>
+                {file.state == "work" ?
+                  <div className="btn">
+                    <span>Publish</span>
+                  </div>
+                  : ""
+                }
+                {file.state == "publish" ?
+                  <div className="btn">
+                    <span>Release</span>
+                  </div>
+                  : ""
+                }
+                {file.state == "work" ?
+                  <div className="btn">
+                    <span>Publish & Release</span>
+                  </div>
+                  : ""
+                }
+                <div className="btn">
+                  <span>Close</span>
+                </div>
               </div>
-              <div className="btn">
-                <span>Open As</span>
-              </div>
-              <div className="btn">
-                <span>Save</span>
-              </div>
-              <div className="btn">
-                <span>Save As</span>
-              </div>
-              <div className="btn">
-                <span>Publish</span>
-              </div>
-              <div className="btn">
-                <span>Release</span>
-              </div>
-              <div className="btn">
-                <span>Publish & Release</span>
-              </div>
-              <div className="btn">
-                <span>Close</span>
-              </div>
-              <div className="btn">
-                <span>Screenshot</span>
-              </div>
+            </div>
+            <div className="fileComment">
+              <h3>Comment</h3>
+              <div></div>
+            </div>
+            <div className="fileScreenshot">
+              <h3>Screenshot</h3>
             </div>
           </div>
         </div>
@@ -76,7 +92,7 @@ const FileViewer = ({ file }) => {
           }
           .fileContainerInner {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
             height: 100%;
@@ -86,24 +102,46 @@ const FileViewer = ({ file }) => {
             border: 1px solid #e3e3e3;
           }
 
-
-
-
-          .commandContainer {
+          .fileInfoContainer {
+            width: 400px;
             display: flex;
             flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            height: 60px;
+            padding-top: 10px;
+            margin: 0 15px;
+            border-right: 1px solid #f2f2f2;
           }
-          .commandContainer .btn {
+          .fileInfo {
+            flex: 1;
+          }
+          .fileComment {
+            width: 350px;
+            padding-top: 10px;
+            margin-right: 15px;
+            border-right: 1px solid #f2f2f2;
+          }
+          .fileScreenshot {
+            flex: 1;
+            padding-top: 10px;
+            margin-right: 15px;
+          }
+
+
+
+          .commandsContainer {
+            width: auto;
+            display: flex;
+            flex-direction: column;
+            // flex-wrap: wrap;
+          }
+          .btn {
             display: flex;
             align-items: center;
-            width: auto;
+            width: 100px;
             height: 25px;
-            margin: 0 0.5%;
-            padding: 5px 10px;
+            margin: 5px;
+            padding: 2px 5px;
             border-radius: 6px;
+            font-size: 14px;
             background: #fff;
             color: #444F60;
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
