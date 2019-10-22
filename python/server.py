@@ -63,19 +63,19 @@ class FrontEnd(socketio.Namespace):
         self._pulsar._sid["file"] = data
 
     def on_execTask(self, sid, data):
-        soft = self._pulsar._softwares[data["id"]]
-        if soft["software"] == "maya":
-            if data["command"] == "open_file":
-                #self._nodes[data.task]
-                path = self._pulsar._config["nodes"] + "." + "/scripts/maya/"
-                file = "open_file"
-                file_path = os.path.join(path, file)
-                arguments = {
-                    "file": FileManager.get_file_path(self._pulsar._config["shot_paths"]["3d"], self._pulsar._sid),
-                    "force": True
-                }
-                print(arguments)
-                self._pulsar._sio.emit("execTask", {"path": path, "file": file, "arguments": arguments}, namespace="/software", room=data["id"])
+        type = data["type"]
+        command = data["command"]
+        node = self._pulsar._nodes[type + "." + command]
+        if(type in ["maya", "houdini", "nuke"]):
+            soft = self._pulsar._softwares[data["id"]]
+            path = "{base_path}/scrips/{type}/".format(base_path=self._pulsar._config["nodes"], type=type)
+            file = node["script"].split(".")[0]
+            arguments = {}
+            if(command == "open_file"):
+                arguments["file"] = FileManager.get_file_path(self._pulsar._config["shot_paths"]["3d"], self._pulsar._sid)
+                arguments["force"] = True
+            print(arguments)
+            self._pulsar._sio.emit("execTask", {"path": path, "file": file, "arguments": arguments}, namespace="/software", room=data["id"])
 
 
 
@@ -158,6 +158,7 @@ class Pulsar():
         self._softwares = {}
 
         self._config = self.readConfig()
+        self._nodes = self.getNodes()
         self._sid = self.initSID()
 
     def readConfig(self):
@@ -171,6 +172,20 @@ class Pulsar():
         print("----- end file -----")
 
         return {}
+
+    def getNodes(self):
+        nodes = {}
+
+        path = self._config["nodes"]
+        node_files = os.listdir(path)
+        for file in node_files:
+            file_path = os.path.join(path, file)
+            if os.path.isfile(file_path):
+                with open(file_path, 'r') as data:
+                    node = json.load(data)
+                    nodes[node["node"]["id"]] = node["node"]
+
+        return nodes
 
     def initSID(self):
         sid = {

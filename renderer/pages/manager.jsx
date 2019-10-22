@@ -116,10 +116,11 @@ export default class Manager extends React.Component {
   execTask(command) {
     console.log("----- exec command -----", command)
     if(this.state.selectedSoftware == undefined) { return; }
-    console.log(this.state.selectedSoftware);
+    let selectedSoft = this.state.selectedSoftware;
     let data = {
-      id: this.state.selectedSoftware,
-      command: command
+      id: selectedSoft,
+      command: command,
+      type: this.state.softwares[selectedSoft].software
     }
 
     ipcRenderer.send("execTask", data)

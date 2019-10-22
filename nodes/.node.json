@@ -1,9 +1,10 @@
 {
     "node" : {
+        "id": "hello_world",
         "name": "node1",
         "color": "#f00",
         "type": "python",
-        "script": "helloWorld.py",
+        "script": "hello_world.py",
         "inputs": [
           {
             "name": "name",

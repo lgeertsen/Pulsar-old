@@ -1,5 +1,6 @@
 {
     "node" : {
+        "id" : "maya.open_file",
         "name": "node1",
         "color": "#44f",
         "type": "maya",
