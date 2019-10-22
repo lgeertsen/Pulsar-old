@@ -1,10 +1,9 @@
 {
     "node" : {
         "name": "node1",
-        "color": "#f00",
+        "color": "#44f",
         "type": "maya",
         "script": "open_file.py",
-        "command": "",
         "inputs": [
           {
             "name": "name",

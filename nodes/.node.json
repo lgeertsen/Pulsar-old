@@ -4,7 +4,6 @@
         "color": "#f00",
         "type": "python",
         "script": "helloWorld.py",
-        "command": "",
         "inputs": [
           {
             "name": "name",
