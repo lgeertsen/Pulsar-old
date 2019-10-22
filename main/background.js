@@ -92,6 +92,16 @@ if (isProd) {
     socket.emit("setSidDir", data);
   });
 
+  ipcMain.on("setFile", (event, data) => {
+    console.log("----- set file -----", data);
+    socket.emit("setFile", data);
+  });
+
+  ipcMain.on("execTask", (event, data) => {
+    console.log("----- exec task -----", data);
+    socket.emit("execTask", data);
+  });
+
 
 
 

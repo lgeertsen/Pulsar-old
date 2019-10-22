@@ -29,6 +29,7 @@ export default class Manager extends React.Component {
       version: undefined,
       file: undefined,
 
+      selectedSoftware: undefined,
       softwares: {},
 
       directories: {
@@ -99,7 +100,7 @@ export default class Manager extends React.Component {
   setSidDir(type, index) {
     let dir = this.state.directories[type][index];
     let sid = this.state.sid;
-    sid[type] = dir
+    sid[type] = dir;
     this.setState({sid: sid});
     ipcRenderer.send("setSidDir", {type: type, dir: dir});
   }
@@ -107,8 +108,21 @@ export default class Manager extends React.Component {
   setSidFile(index) {
     let file = this.state.directories.file[index];
     let sid = this.state.sid;
-    sid.file = file
+    sid.file = file;
     this.setState({sid: sid});
+    ipcRenderer.send("setFile", file);
+  }
+
+  execTask(command) {
+    console.log("----- exec command -----", command)
+    if(this.state.selectedSoftware == undefined) { return; }
+    console.log(this.state.selectedSoftware);
+    let data = {
+      id: this.state.selectedSoftware,
+      command: command
+    }
+
+    ipcRenderer.send("execTask", data)
   }
 
   render() {
@@ -130,7 +144,7 @@ export default class Manager extends React.Component {
               <h3>Open software</h3>
             </div>
             {Object.keys(this.state.softwares).map((softwareId, index) => (
-              <div key={index} className="software">
+              <div key={index} className={this.state.selectedSoftware == softwareId ? "software selected" : "software"} onClick={(e) => this.setState({selectedSoftware: softwareId})}>
                 <div className="softwareHeader">
                   <img className="softwareImg" src={"./static/" + this.state.softwares[softwareId].software + ".jpg"}></img>
                   <h4 className="softwareName">{this.state.softwares[softwareId].software.charAt(0).toUpperCase() + this.state.softwares[softwareId].software.slice(1)}</h4>
@@ -236,45 +250,11 @@ export default class Manager extends React.Component {
 
 
             <div className={this.state.sid.file == undefined ? "selectedContainer" : "selectedContainer open"}>
-              {/* <div className="selectedContainerInner">
-                <div className="fileContainer">
-                  <div className="fileContainerInner">
-                    <h4>{this.state.sid.file.name + "_" + this.state.sid.file.state + "_" + this.state.sid.file.version + "." + this.state.sid.file.extension}</h4>
-                  </div>
-                </div>
-
-                <div className="commandContainer">
-                  <div className="btn">
-                    <span>Open</span>
-                  </div>
-                  <div className="btn">
-                    <span>Open As</span>
-                  </div>
-                  <div className="btn">
-                    <span>Save</span>
-                  </div>
-                  <div className="btn">
-                    <span>Save As</span>
-                  </div>
-                  <div className="btn">
-                    <span>Publish</span>
-                  </div>
-                  <div className="btn">
-                    <span>Release</span>
-                  </div>
-                  <div className="btn">
-                    <span>Publish & Release</span>
-                  </div>
-                  <div className="btn">
-                    <span>Close</span>
-                  </div>
-                  <div className="btn">
-                    <span>Screenshot</span>
-                  </div>
-                </div>
-              </div> */}
               {this.state.sid.file != undefined ?
-                <FileViewer file={this.state.sid.file} />
+                <FileViewer
+                  file={this.state.sid.file}
+                  execTask={(command) => this.execTask(command)}
+                />
                 : ""
               }
             </div>
@@ -335,6 +315,10 @@ export default class Manager extends React.Component {
             // align-items: center;
             height: auto;
             border-bottom: 1px solid #e3e3e3;
+            transition: all ease 0.2s;
+          }
+          .software.selected {
+            background: #f2f244;
           }
           .softwareHeader {
             display: flex;

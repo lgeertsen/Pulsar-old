@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 
-const FileViewer = ({ file }) => {
+const FileViewer = ({ file, execTask }) => {
 
   // const [selectedFile, setSelectedFile] = useState(-1);
 
-  const handleChange = index => {
-    onChange(index);
-    setSelectedFile(index);
+  const handleClick = command => {
+    execTask(command)
   };
 
   const getSize = bytes => {
@@ -31,7 +30,7 @@ const FileViewer = ({ file }) => {
               </div>
 
               <div className="commandsContainer">
-                <div className="btn">
+                <div className="btn" onClick={(e) => handleClick("open_file")}>
                   <span>Open</span>
                 </div>
                 <div className="btn">

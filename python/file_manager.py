@@ -59,6 +59,10 @@ class FileManager:
 
         return files
 
+    def get_file_path(path, sid):
+        format_path = path.format(disk=sid["disk"], project=sid["project"], type=sid["type"], name=sid["name"], task=sid["task"], subtask=sid["subtask"], version=sid["file"]["version"], state=sid["file"]["state"], file=sid["file"]["name"], ext=sid["file"]["extension"])
+        return format_path
+
 
 
     def format_for_types(path, path_type, sid):

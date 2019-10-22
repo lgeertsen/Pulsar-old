@@ -58,6 +58,26 @@ class FrontEnd(socketio.Namespace):
         dirs = self._pulsar._type_to_func[data["type"]]["func"]()
         self.emit("directories", {"type": self._pulsar._type_to_func[data["type"]]["type"], "dirs": dirs}, room=sid)
 
+    def on_setFile(self, sid, data):
+        print("----- set file -----", data)
+        self._pulsar._sid["file"] = data
+
+    def on_execTask(self, sid, data):
+        soft = self._pulsar._softwares[data["id"]]
+        if soft["software"] == "maya":
+            if data["command"] == "open_file":
+                #self._nodes[data.task]
+                path = self._pulsar._config["nodes"] + "." + "/scripts/maya/"
+                file = "open_file"
+                file_path = os.path.join(path, file)
+                arguments = {
+                    "file": FileManager.get_file_path(self._pulsar._config["shot_paths"]["3d"], self._pulsar._sid),
+                    "force": True
+                }
+                print(arguments)
+                self._pulsar._sio.emit("execTask", {"path": path, "file": file, "arguments": arguments}, namespace="/software", room=data["id"])
+
+
 
     # def on_getTypes(self, sid, data):
     #     if(self._pulsar._sid["switch"] == "shots"):

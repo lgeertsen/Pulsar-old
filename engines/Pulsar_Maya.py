@@ -6,6 +6,7 @@ import time
 import logging
 
 import maya.cmds as cmds
+import maya.utils as utils
 
 try:
     from shiboken2 import wrapInstance
@@ -45,6 +46,20 @@ class MayaSocket(socketio.ClientNamespace):
         print("----- connected to maya namespace -----")
         self._pulsar._connected = True
         self.emit("software", {"software": "maya", "scene": self._pulsar._scene})
+
+    def on_execTask(self, data):
+        path = data["path"]
+        file = data["file"]
+        arguments = data["arguments"]
+
+        print(path)
+
+        if path not in sys.path:
+            sys.path.append(path)
+        print(sys.path)
+        task = __import__(file)
+        reload(task)
+        self._pulsar.execute(task.main, arguments)
 
     def on_disconnect(self):
         print("disconnected")

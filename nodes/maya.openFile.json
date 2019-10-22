@@ -1,0 +1,21 @@
+{
+    "node" : {
+        "name": "node1",
+        "color": "#f00",
+        "type": "maya",
+        "script": "open_file.py",
+        "command": "",
+        "inputs": [
+          {
+            "name": "name",
+            "type": "string"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "hello",
+            "type": "string"
+          }
+        ]
+    }
+}
