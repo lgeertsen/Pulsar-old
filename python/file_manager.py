@@ -68,12 +68,13 @@ class FileManager:
     def format_for_types(path, path_type, sid):
         stripped = path.split("/")
         if(path_type == "2d"):
-            stripped = stripped[:7]
-        elif(path_type == "3d"):
-            stripped = stripped[:8]
-        else:
             stripped = stripped[:6]
+        elif(path_type == "3d"):
+            stripped = stripped[:7]
+        else:
+            stripped = stripped[:5]
         dir_path = "/".join(stripped)
+        print(dir_path)
         format_path = dir_path.format(disk=sid["disk"], project=sid["project"])
 
         return format_path
@@ -81,11 +82,11 @@ class FileManager:
     def format_for_names(path, path_type, sid):
         stripped = path.split("/")
         if(path_type == "2d"):
-            stripped = stripped[:8]
-        elif(path_type == "3d"):
-            stripped = stripped[:9]
-        else:
             stripped = stripped[:7]
+        elif(path_type == "3d"):
+            stripped = stripped[:8]
+        else:
+            stripped = stripped[:6]
         dir_path = "/".join(stripped)
         format_path = dir_path.format(disk=sid["disk"], project=sid["project"], type=sid["type"])
 
@@ -94,11 +95,11 @@ class FileManager:
     def format_for_tasks(path, path_type, sid):
         stripped = path.split("/")
         if(path_type == "2d"):
-            stripped = stripped[:9]
-        elif(path_type == "3d"):
-            stripped = stripped[:10]
-        else:
             stripped = stripped[:8]
+        elif(path_type == "3d"):
+            stripped = stripped[:9]
+        else:
+            stripped = stripped[:7]
         dir_path = "/".join(stripped)
         format_path = dir_path.format(disk=sid["disk"], project=sid["project"], type=sid["type"], name=sid["name"])
 
@@ -107,11 +108,11 @@ class FileManager:
     def format_for_subtasks(path, path_type, sid):
         stripped = path.split("/")
         if(path_type == "2d"):
-            stripped = stripped[:10]
-        elif(path_type == "3d"):
-            stripped = stripped[:11]
-        else:
             stripped = stripped[:9]
+        elif(path_type == "3d"):
+            stripped = stripped[:10]
+        else:
+            stripped = stripped[:8]
         dir_path = "/".join(stripped)
         format_path = dir_path.format(disk=sid["disk"], project=sid["project"], type=sid["type"], name=sid["name"], task=sid["task"])
 
@@ -120,11 +121,11 @@ class FileManager:
     def format_for_state_version(path, path_type, sid):
         stripped = path.split("/")
         if(path_type == "2d"):
-            stripped = stripped[:11]
-        elif(path_type == "3d"):
-            stripped = stripped[:12]
-        else:
             stripped = stripped[:10]
+        elif(path_type == "3d"):
+            stripped = stripped[:11]
+        else:
+            stripped = stripped[:9]
         dir_path = "/".join(stripped)
         format_path = dir_path.format(disk=sid["disk"], project=sid["project"], type=sid["type"], name=sid["name"], task=sid["task"], subtask=sid["subtask"])
 
@@ -140,5 +141,5 @@ sid = {
 }
 
 #FileManager.get_types("{disk}:/SynologyDrive/pipeline/{project}/02_work/02_shot/2d/{type}/{name}/{task}/{subtask}/{state}_{version}", "2d", sid)
-FileManager.get_files("{disk}:/SynologyDrive/pipeline/{project}/02_work/02_shot/3d/scenes/{type}/{name}/{task}/{subtask}/{state}_{version}", "3d", sid)
+#FileManager.get_files("{disk}:/SynologyDrive/pipeline/{project}/02_work/02_shot/3d/scenes/{type}/{name}/{task}/{subtask}/{state}_{version}", "3d", sid)
 #FileManager.get_type("{disk}:/SynologyDrive/pipeline/{project}/02_Work/01_Asset/{type}/{name}/{task}/{subtask}/{state}_{version}", "asset", sid)
