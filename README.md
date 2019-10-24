@@ -1,5 +1,8 @@
 # Pulsar Pipeline
 
+In `Pulsar/` copy `.config.example.json` to `config.json`
+Then updata the info and paths to correspond to your setup
+
 ## Frontend
 The frontend code can be found in the following folders:
 - `main/`: the code for the creation of the window
