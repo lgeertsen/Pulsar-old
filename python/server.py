@@ -18,6 +18,7 @@ import eventlet
 
 
 from file_manager import FileManager
+from node_manager import NodeManager
 
 
 
@@ -64,8 +65,10 @@ class FrontEnd(socketio.Namespace):
 
     def on_execTask(self, sid, data):
         type = data["type"]
-        command = data["command"]
-        node = self._pulsar._nodes[type + "." + command]
+        task = data["command"]
+
+        node = NodeManager.getNode(type, task)
+
         if(type in ["maya", "houdini", "nuke"]):
             soft = self._pulsar._softwares[data["id"]]
             path = "{base_path}/scrips/{type}/".format(base_path=self._pulsar._config["nodes"], type=type)
@@ -158,8 +161,8 @@ class Pulsar():
         self._softwares = {}
 
         self._config = self.readConfig()
-        self._nodes = self.getNodes()
         self._sid = self.initSID()
+        NodeManager.importNodes()
 
     def readConfig(self):
         filename = "../config.json"
@@ -172,20 +175,6 @@ class Pulsar():
         print("----- end file -----")
 
         return {}
-
-    def getNodes(self):
-        nodes = {}
-
-        path = self._config["nodes"]
-        node_files = os.listdir(path)
-        for file in node_files:
-            file_path = os.path.join(path, file)
-            if os.path.isfile(file_path):
-                with open(file_path, 'r') as data:
-                    node = json.load(data)
-                    nodes[node["node"]["id"]] = node["node"]
-
-        return nodes
 
     def initSID(self):
         sid = {

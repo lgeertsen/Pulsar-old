@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 
+import Modal from './Modal';
+
 const FileViewer = ({ file, execTask }) => {
 
-  // const [selectedFile, setSelectedFile] = useState(-1);
+  const [showModal, setShowModal] = useState(false);
 
   const handleClick = command => {
     execTask(command)
   };
+
+  const handleModal = value => {
+    setShowModal(value)
+  }
 
   const getSize = bytes => {
     let suffixes =  ["B", "KB", "MB", "GB", "TB"];
@@ -30,7 +36,7 @@ const FileViewer = ({ file, execTask }) => {
               </div>
 
               <div className="commandsContainer">
-                <div className="btn" onClick={(e) => handleClick("open_file")}>
+                <div className="btn" onClick={(e) => handleModal(true)}>
                   <span>Open</span>
                 </div>
                 <div className="btn">
@@ -74,6 +80,11 @@ const FileViewer = ({ file, execTask }) => {
             </div>
           </div>
         </div>
+
+        <Modal show={showModal} handleClose={(val) => handleModal(val)}>
+          <p>Modal</p>
+          <p>Data</p>
+        </Modal>
 
 
         <style jsx>{`
