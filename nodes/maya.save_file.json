@@ -1,17 +1,19 @@
 {
     "node" : {
-        "id" : "maya.open_file",
+        "id" : "maya.save_file",
         "name": "node1",
         "color": "#44f",
         "type": "maya",
-        "script": "open_file.py",
+        "script": "save_file.py",
         "inputs": [
           {
             "name": "file",
             "type": "string"
-          },
+          }
+        ],
+        "outputs": [
           {
-            "name": "force",
+            "name": "is_save",
             "type": "bool"
           }
         ]
