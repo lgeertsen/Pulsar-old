@@ -61,7 +61,13 @@ class FrontEnd(socketio.Namespace):
 
     def on_setFile(self, sid, data):
         print("----- set file -----", data)
+        self._pulsar._sid["state"] = data["state"]
+        self._pulsar._sid["version"] = data["version"]
         self._pulsar._sid["file"] = data
+
+    def on_saveComment(self, sid, data):
+        print("----- save comment -----", data)
+        FileManager.save_comment(self._pulsar._config["shot_paths"]["3d"], self._pulsar._sid, data)
 
     def on_execTask(self, sid, data):
         type = data["type"]
@@ -162,7 +168,7 @@ class Pulsar():
 
         self._config = self.readConfig()
         self._sid = self.initSID()
-        NodeManager.importNodes()
+        NodeManager.importNodes(self._config["nodes"])
 
     def readConfig(self):
         filename = "../config.json"
