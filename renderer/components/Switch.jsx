@@ -36,7 +36,7 @@ const Switch = ({ option1, option2, onChange }) => {
             transition: all ease 0.2s;
           }
           .option.selected {
-            border-color: #f2f244;
+            border-color: #3498db;
             background: #fff;
           }
           .option:first-child {

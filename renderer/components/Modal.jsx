@@ -7,35 +7,51 @@ const Modal = ({ handleClose, show, children }) => {
   };
 
   return (
-    <div className={show ? "modal" : "modal display-none"} onClick={(e) => close(e)}>
-      <section className="modal-main">
+    <div className={show ? "modal" : "modal display-none"}>
+      <div className="backdrop" onClick={(e) => close(e)}></div>
+      <div className="modal-main">
         <div className="close" onClick={(e) => close(e)}></div>
         {children}
-      </section>
+      </div>
 
       <style jsx>{`
         .modal {
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
           position: fixed;
           top: 0;
           left: 0;
-          width:100%;
+          width: 100%;
+          height: 100%;
+        }
+
+        .backdrop {
+          position: relative;
+          top: 0;
+          left: 0;
+          width: 100%;
           height: 100%;
           background: rgba(0, 0, 0, 0.6);
           cursor: pointer;
+          z-index: 2;
         }
 
         .modal-main {
-          position: relative;
-          background: white;
-          width: 400px;
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          background: #fff;
+          min-width: 400px;
+          width: auto;
           height: auto;
-          // top:50%;
-          // left:50%;
-          // transform: translate(-50%,-50%);
+          padding: 15px;
+          padding-top: 25px;
+          border-radius: 6px;
+          border: 1px solid #e3e3e3;
+          box-shadow: 0 3px 10px 4px rgba(0,0,0,0.04);
+          cursor: default;
+          transform: translate(-50%, -50%);
+          z-index: 5
         }
 
         .display-none {

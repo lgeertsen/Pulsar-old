@@ -113,17 +113,52 @@ export default class Manager extends React.Component {
     ipcRenderer.send("setFile", file);
   }
 
+  checkSotfwareSaved() {
+    ipcRenderer.send("checkSotfwareSaved");
+  }
+
   execTask(command) {
     console.log("----- exec command -----", command)
     if(this.state.selectedSoftware == undefined) { return; }
     let selectedSoft = this.state.selectedSoftware;
     let data = {
       id: selectedSoft,
-      command: command,
-      type: this.state.softwares[selectedSoft].software
+      command: command
+    }
+    if(selectedSoft = "new") {
+      data["type"] = "maya"
+    } else {
+      data["type"] = this.state.softwares[selectedSoft].software
     }
 
     ipcRenderer.send("execTask", data)
+  }
+
+  editComment(e) {
+    let sid = this.state.sid
+    sid.file.comment = e.target.value;
+    this.setState({sid: sid});
+  }
+
+  saveComment() {
+    let comment = this.state.sid.file.comment;
+    ipcRenderer.send("saveComment", comment);
+  }
+
+  getCompatibleSoftware() {
+    let file = this.state.sid.file;
+    var softwares = this.state.softwares;
+    var softs = [];
+    if(["ma", "mb"].includes(file.extension)) {
+      for(let id in softwares) {
+        if(softwares[id].software == "maya") {
+          let soft = softwares[id];
+          soft.id = id;
+          softs.push(soft);
+        }
+      }
+    }
+    return softs;
   }
 
   render() {
@@ -145,12 +180,12 @@ export default class Manager extends React.Component {
               <h3>Open software</h3>
             </div>
             {Object.keys(this.state.softwares).map((softwareId, index) => (
-              <div key={index} className={this.state.selectedSoftware == softwareId ? "software selected" : "software"} onClick={(e) => this.setState({selectedSoftware: softwareId})}>
+              <div key={index} className={this.state.selectedSoftware == softwareId ? "software selected" : "software"}>
                 <div className="softwareHeader">
                   <img className="softwareImg" src={"./static/" + this.state.softwares[softwareId].software + ".jpg"}></img>
                   <h4 className="softwareName">{this.state.softwares[softwareId].software.charAt(0).toUpperCase() + this.state.softwares[softwareId].software.slice(1)}</h4>
                 </div>
-                <span className="softwareSceneNmae">{this.state.softwares[softwareId].scene}</span>
+                <span className="softwareSceneNmae">{this.state.softwares[softwareId].saved == 1 ? this.state.softwares[softwareId].scene : this.state.softwares[softwareId].scene + "*"}</span>
               </div>
             ))}
           </div>
@@ -255,6 +290,13 @@ export default class Manager extends React.Component {
                 <FileViewer
                   file={this.state.sid.file}
                   execTask={(command) => this.execTask(command)}
+                  onChangeComment={(e) => this.editComment(e)}
+                  onSaveComment={() => this.saveComment()}
+                  softwares={this.getCompatibleSoftware()}
+                  selectSoftware={(id) => this.setState({selectedSoftware: id})}
+                  selectedSoftware={this.state.selectedSoftware}
+                  selectedSoft={this.state.softwares[this.state.selectedSoftware]}
+                  checkSotfwareSaved={() => this.checkSotfwareSaved()}
                 />
                 : ""
               }
@@ -319,7 +361,7 @@ export default class Manager extends React.Component {
             transition: all ease 0.2s;
           }
           .software.selected {
-            background: #f2f244;
+            background: #3498db;
           }
           .softwareHeader {
             display: flex;
@@ -348,7 +390,7 @@ export default class Manager extends React.Component {
             flex-direction: column;
           }
           .searchContainer {
-            display: flex;
+            display: flex;cd ma
             flex-direction: row;
             align-items: center;
             height: 40px;

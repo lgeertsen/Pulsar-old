@@ -42,7 +42,7 @@ if (isProd) {
 
   mainWindow.maximize();
 
-  const homeUrl = isProd ? 'app://./home.html' : 'http://localhost:8888/home';
+  const homeUrl = isProd ? 'app://./manager.html' : 'http://localhost:8888/manager';
   await mainWindow.loadURL(homeUrl);
 
   if (!isProd) {
@@ -100,6 +100,16 @@ if (isProd) {
   ipcMain.on("execTask", (event, data) => {
     console.log("----- exec task -----", data);
     socket.emit("execTask", data);
+  });
+
+  ipcMain.on("checkSotfwareSaved", (event) => {
+    console.log("----- check is software is saved -----");
+    socket.emit("checkSotfwareSaved");
+  });
+
+  ipcMain.on("saveComment", (event, data) => {
+    console.log("----- save comment -----", data);
+    socket.emit("saveComment", data);
   });
 
 

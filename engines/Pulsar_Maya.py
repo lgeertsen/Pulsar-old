@@ -8,17 +8,6 @@ import logging
 import maya.cmds as cmds
 import maya.utils as utils
 
-try:
-    from shiboken2 import wrapInstance
-except:
-    from shiboken import wrapInstance
-
-try:
-    from PySide2 import QtGui, QtCore, QtWidgets
-except ImportError:
-    from PySide import QtGui, QtCore
-    QtWidgets = QtGui
-
 parent_dir = os.path.abspath(os.path.dirname(__file__))
 vendor_dir = os.path.join(parent_dir, 'vendor')
 if vendor_dir not in sys.path:
@@ -45,7 +34,12 @@ class MayaSocket(socketio.ClientNamespace):
     def on_connect(self):
         print("----- connected to maya namespace -----")
         self._pulsar._connected = True
-        self.emit("software", {"software": "maya", "scene": self._pulsar._scene})
+        saved = self._pulsar.execute(self._pulsar.check_state)
+        self.emit("software", {"software": "maya", "scene": self._pulsar._scene, "saved": saved})
+
+    def on_checkSaved(self, data):
+        saved = self._pulsar.execute(self._pulsar.check_state)
+        self.emit("saved", saved)
 
     def on_execTask(self, data):
         path = data["path"]
@@ -111,5 +105,11 @@ class Pulsar():
             self._sio.emit("close", namespace="/software")
         cmds.deleteUI( self._window, window=True)
 
+    def check_state(self):
+        changed = cmds.file(q=True, modified=True)
+        if changed:
+            return 0
+        return 1
+
     def execute(self, func, *args):
-        utils.executeInMainThreadWithResult(func, *args)
+        return utils.executeInMainThreadWithResult(func, *args)

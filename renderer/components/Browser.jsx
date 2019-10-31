@@ -57,7 +57,7 @@ const Browser = ({ title, directories, onChange }) => {
             background: #f2f2f2;
           }
           .directory.selected {
-            background: #f2f244;
+            background: #3498db;
           }
           .directory i {
             margin: 3px 5px;

@@ -1,0 +1,19 @@
+{
+    "node" : {
+        "id" : "windows.maya_open_file",
+        "name": "maya_open_file",
+        "type": "windows",
+        "color": "#44f",
+        "script": "maya_open_file.bat",
+        "inputs": [
+          {
+            "name": "path",
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "type": "string"
+          }
+        ]
+    }
+}

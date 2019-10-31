@@ -65,6 +65,10 @@ class FrontEnd(socketio.Namespace):
         self._pulsar._sid["version"] = data["version"]
         self._pulsar._sid["file"] = data
 
+    def on_checkSotfwareSaved(self, sid):
+        print("----- check if software is saved -----")
+        self._pulsar._sio.emit("checkSaved", namespace="/software")
+
     def on_saveComment(self, sid, data):
         print("----- save comment -----", data)
         FileManager.save_comment(self._pulsar._config["shot_paths"]["3d"], self._pulsar._sid, data)
@@ -73,18 +77,25 @@ class FrontEnd(socketio.Namespace):
         type = data["type"]
         task = data["command"]
 
-        node = NodeManager.getNode(type, task)
-
         if(type in ["maya", "houdini", "nuke"]):
-            soft = self._pulsar._softwares[data["id"]]
-            path = "{base_path}/scrips/{type}/".format(base_path=self._pulsar._config["nodes"], type=type)
-            file = node["script"].split(".")[0]
             arguments = {}
-            if(command == "open_file"):
+            if(task == "open_file"):
                 arguments["file"] = FileManager.get_file_path(self._pulsar._config["shot_paths"]["3d"], self._pulsar._sid)
                 arguments["force"] = True
-            print(arguments)
-            self._pulsar._sio.emit("execTask", {"path": path, "file": file, "arguments": arguments}, namespace="/software", room=data["id"])
+            if data["id"] == "new":
+                win_task = "{type}_{task}".format(type=type, task=task)
+                node = NodeManager.getNode("windows", win_task)
+                path = "{base_path}/scripts/{type}/".format(base_path=self._pulsar._config["nodes"], type="windows")
+                file = node["script"]
+                file_path = os.path.join(path, file)
+                command = "start {script} {soft_path} {file}".format(script=file_path, soft_path=self._pulsar._config["softwares"][type], file=arguments["file"])
+                print(command)
+                os.system(command)
+            else:
+                node = NodeManager.getNode(type, task)
+                path = "{base_path}/scripts/{type}/".format(base_path=self._pulsar._config["nodes"], type=type)
+                file = node["script"].split(".")[0]
+                self._pulsar._sio.emit("execTask", {"path": path, "file": file, "arguments": arguments}, namespace="/software", room=data["id"])
 
 
 
@@ -117,6 +128,13 @@ class Software(socketio.Namespace):
         print(sid, "----- software -----", data)
         self._pulsar._softwares[sid] = data
 
+        if not self._pulsar._frontend == None:
+            print('----- sendings software list to frontend -----')
+            self._pulsar._sio.emit("softwares", self._pulsar._softwares, namespace="/frontend")
+
+    def on_saved(self, sid, data):
+        print("----- software saved -----", data)
+        self._pulsar._softwares[sid]["saved"] = data
         if not self._pulsar._frontend == None:
             print('----- sendings software list to frontend -----')
             self._pulsar._sio.emit("softwares", self._pulsar._softwares, namespace="/frontend")

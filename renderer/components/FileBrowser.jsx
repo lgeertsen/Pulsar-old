@@ -93,7 +93,7 @@ const FileBrowser = ({ title, files, onChange }) => {
             background: #f2f2f2;
           }
           .file.selected {
-            background: #f2f244;
+            background: #3498db;
           }
           .file.fileHeader {
             background: #f9f9f9;
