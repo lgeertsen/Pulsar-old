@@ -6,5 +6,12 @@
       "3d": "{disk}:/SynologyDrive/{project}/02_work/02_shot/3d/scenes/{type}/{name}/{task}/{subtask}/{state}_{version}/{file}.{ext}"
     },
     "asset_path": "{disk}:/SynologyDrive/pipeline/{project}/02_Work/01_Asset/{type}/{name}/{task}/{subtask}/{state}_{version}/{file}.{ext}",
-    "nodes": "C:/Users/leege/Pulsar/nodes"
+    "nodes": "C:/Users/leege/Pulsar/nodes",
+    "softwares": {
+      "maya": "C:/Maya2019"
+    },
+    "cgwire": {
+      "username": "youremail@artfx.fr",
+      "password": "YOURPASSWORD"
+    }
 }
