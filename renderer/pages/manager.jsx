@@ -32,6 +32,8 @@ export default class Manager extends React.Component {
       selectedSoftware: undefined,
       softwares: {},
 
+      newFileName: undefined,
+
       directories: {
         type: [],
         name: [],
@@ -41,6 +43,8 @@ export default class Manager extends React.Component {
       },
 
       sid: {
+        "project": undefined,
+        "assetShot": "a",
         "type": undefined,
         "name": undefined,
         "task": undefined,
@@ -87,13 +91,17 @@ export default class Manager extends React.Component {
   }
 
   setProject(project) {
-    this.setState({project: project});
+    let sid = this.state.sid;
+    sid.project = project;
+    this.setState({sid: sid, project: project});
     ipcRenderer.send("setProject", project);
   }
 
   setSwitch(data) {
     let choice = data == 1 ? "assets" : "shots"
-    this.setState({switch: choice});
+    let sid = this.state.sid;
+    sid.assetShot = data == 1 ? "a" : "s";
+    this.setState({switch: choice, sid: sid});
     ipcRenderer.send("setSwitch", choice);
   }
 
@@ -109,6 +117,10 @@ export default class Manager extends React.Component {
     let file = this.state.directories.file[index];
     let sid = this.state.sid;
     sid.file = file;
+    sid.state = file.state;
+    sid.version = file.version;
+    sid.fileName = file.name;
+    sid.ext = file.extension;
     this.setState({sid: sid});
     ipcRenderer.send("setFile", file);
   }
@@ -117,19 +129,21 @@ export default class Manager extends React.Component {
     ipcRenderer.send("checkSotfwareSaved");
   }
 
-  execTask(command) {
-    console.log("----- exec command -----", command)
+  execTask(task) {
+    console.log("----- exec command -----", task.command)
     if(this.state.selectedSoftware == undefined) { return; }
     let selectedSoft = this.state.selectedSoftware;
     let data = {
       id: selectedSoft,
-      command: command
+      command: task.command,
+      arguments: task.arguments
     }
     if(selectedSoft = "new") {
       data["type"] = "maya"
     } else {
       data["type"] = this.state.softwares[selectedSoft].software
     }
+    console.log(data);
 
     ipcRenderer.send("execTask", data)
   }
@@ -159,6 +173,22 @@ export default class Manager extends React.Component {
       }
     }
     return softs;
+  }
+
+  getWipName() {
+    let sid = this.state.sid;
+
+    let now = new Date(Date.now());
+    let year = now.getFullYear();
+    let month = now.getMonth() + 1;
+    let day = now.getDate();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
+
+    let timestamp = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
+    let wipName = `WIP_${sid.file.name}_${sid.task}_${sid.subtask}_${sid.file.version}_${timestamp}`;
+    return wipName
   }
 
   render() {
@@ -208,7 +238,9 @@ export default class Manager extends React.Component {
                 />
               </div>
               <div className="searchBar">
-                <SearchBar/>
+                <SearchBar
+                  sid={this.state.sid}
+                />
               </div>
             </div>
 
@@ -288,8 +320,8 @@ export default class Manager extends React.Component {
             <div className={this.state.sid.file == undefined ? "selectedContainer" : "selectedContainer open"}>
               {this.state.sid.file != undefined ?
                 <FileViewer
-                  file={this.state.sid.file}
-                  execTask={(command) => this.execTask(command)}
+                  sid={this.state.sid}
+                  execTask={(task) => this.execTask(task)}
                   onChangeComment={(e) => this.editComment(e)}
                   onSaveComment={() => this.saveComment()}
                   softwares={this.getCompatibleSoftware()}
@@ -297,6 +329,7 @@ export default class Manager extends React.Component {
                   selectedSoftware={this.state.selectedSoftware}
                   selectedSoft={this.state.softwares[this.state.selectedSoftware]}
                   checkSotfwareSaved={() => this.checkSotfwareSaved()}
+                  getWipName={() => this.getWipName()}
                 />
                 : ""
               }
@@ -380,6 +413,7 @@ export default class Manager extends React.Component {
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
             margin-left: 10px;
             margin-bottom: 10px;
+            overflow-wrap: break-word;
           }
 
 

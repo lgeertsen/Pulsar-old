@@ -56,12 +56,13 @@ class FileManager:
 
                         file = {
                             "state": splitted[0],
-                            "version": splitted[1],
+                            "version": "_" if splitted[0] == "wip" else splitted[1],
                             "name": splitFile[0],
                             "extension": splitFile[1],
                             "size": size,
                             "modified": date,
-                            "comment": comment
+                            "comment": comment,
+                            "path": fpath
                         }
                         files.append(file)
 

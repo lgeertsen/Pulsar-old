@@ -55,6 +55,12 @@ class MayaSocket(socketio.ClientNamespace):
         reload(task)
         self._pulsar.execute(task.main, arguments)
 
+        self._pulsar._scene = self._pulsar.execute(self._pulsar.getSceneName)
+        saved = self._pulsar.execute(self._pulsar.check_state)
+
+        self.emit("software", {"software": "maya", "scene": self._pulsar._scene, "saved": saved})
+
+
     def on_disconnect(self):
         print("disconnected")
         self._pulsar._connected = False

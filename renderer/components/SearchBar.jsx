@@ -3,15 +3,8 @@ import React from 'react';
 export default class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      sid: {
-        type: "shots",
-        sequence: "S10",
-        shot: "SH350",
-        task: "fx",
-        subtask: "pyro",
-        version: "v001"
-      }
+    this.props = {
+
     }
   }
 
@@ -20,51 +13,69 @@ export default class SearchBar extends React.Component {
       <div className="searchBar">
         <div className="searchBarType">
           <div className="typeText">
-            <span>Path:</span>
+            <span>SID:</span>
           </div>
           <div className="iconSwitch">
             <i className="fas fa-sync"></i>
           </div>
         </div>
         <div className="searchBarInner">
-          <div className="slashIcon">
-            <span>/</span>
-          </div>
           <div className="input">
-            <span>{this.state.sid.type}</span>
+            <span>{this.props.sid.project}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.state.sid.sequence}</span>
+            <span>{this.props.sid.assetShot}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.state.sid.shot}</span>
+            <span>{this.props.sid.type}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.state.sid.task}</span>
+            <span>{this.props.sid.name}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.state.sid.subtask}</span>
+            <span>{this.props.sid.task}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.state.sid.version}</span>
+            <span>{this.props.sid.subtask}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
+          </div>
+          <div className="input">
+            <span>{this.props.sid.state}</span>
+          </div>
+          <div className="slashIcon">
+            <span>/</span>
+          </div>
+          <div className="input">
+            <span>{this.props.sid.version}</span>
+          </div>
+          <div className="slashIcon">
+            <span>/</span>
+          </div>
+          <div className="input">
+            <span>{this.props.sid.fileName}</span>
+          </div>
+          <div className="slashIcon">
+            <span>/</span>
+          </div>
+          <div className="input">
+            <span>{this.props.sid.ext}</span>
           </div>
         </div>
 

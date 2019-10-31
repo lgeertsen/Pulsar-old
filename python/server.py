@@ -74,14 +74,14 @@ class FrontEnd(socketio.Namespace):
         FileManager.save_comment(self._pulsar._config["shot_paths"]["3d"], self._pulsar._sid, data)
 
     def on_execTask(self, sid, data):
+        print("----- exec task -----", data)
         type = data["type"]
         task = data["command"]
 
         if(type in ["maya", "houdini", "nuke"]):
-            arguments = {}
-            if(task == "open_file"):
-                arguments["file"] = FileManager.get_file_path(self._pulsar._config["shot_paths"]["3d"], self._pulsar._sid)
-                arguments["force"] = True
+            arguments = data["arguments"]
+            # if(task == "open_file"):
+            #     arguments["file"] = FileManager.get_file_path(self._pulsar._config["shot_paths"]["3d"], self._pulsar._sid)
             if data["id"] == "new":
                 win_task = "{type}_{task}".format(type=type, task=task)
                 node = NodeManager.getNode("windows", win_task)
@@ -217,7 +217,8 @@ class Pulsar():
 
     def get_types(self):
         if(self._sid["switch"] == "assets"):
-            return []
+            dirs = FileManager.get_types(self._config["asset_path"], "assets", self._sid)
+            return dirs
         else:
             dir_2d = FileManager.get_types(self._config["shot_paths"]["2d"], "2d", self._sid)
             dir_3d = FileManager.get_types(self._config["shot_paths"]["3d"], "3d", self._sid)
@@ -228,7 +229,8 @@ class Pulsar():
 
     def get_names(self):
         if(self._sid["switch"] == "assets"):
-            return []
+            dirs = FileManager.get_names(self._config["asset_path"], "assets", self._sid)
+            return dirs
         else:
             dir_2d = FileManager.get_names(self._config["shot_paths"]["2d"], "2d", self._sid)
             dir_3d = FileManager.get_names(self._config["shot_paths"]["3d"], "3d", self._sid)
@@ -239,7 +241,8 @@ class Pulsar():
 
     def get_tasks(self):
         if(self._sid["switch"] == "assets"):
-            return []
+            dirs = FileManager.get_tasks(self._config["asset_path"], "assets", self._sid)
+            return dirs
         else:
             dir_2d = FileManager.get_tasks(self._config["shot_paths"]["2d"], "2d", self._sid)
             dir_3d = FileManager.get_tasks(self._config["shot_paths"]["3d"], "3d", self._sid)
@@ -250,7 +253,8 @@ class Pulsar():
 
     def get_subtasks(self):
         if(self._sid["switch"] == "assets"):
-            return []
+            dirs = FileManager.get_subtasks(self._config["asset_path"], "assets", self._sid)
+            return dirs
         else:
             dir_2d = FileManager.get_subtasks(self._config["shot_paths"]["2d"], "2d", self._sid)
             dir_3d = FileManager.get_subtasks(self._config["shot_paths"]["3d"], "3d", self._sid)
@@ -267,12 +271,16 @@ class Pulsar():
         return dirs
 
     def get_files(self):
-        files_2d = FileManager.get_files(self._config["shot_paths"]["2d"], "2d", self._sid)
-        files_3d = FileManager.get_files(self._config["shot_paths"]["3d"], "3d", self._sid)
-        files = files_2d + files_3d
-        print("----- files -----")
-        print(files)
-        return files
+        if(self._sid["switch"] == "assets"):
+            files = FileManager.get_files(self._config["asset_path"], "assets", self._sid)
+            return files
+        else:
+            files_2d = FileManager.get_files(self._config["shot_paths"]["2d"], "2d", self._sid)
+            files_3d = FileManager.get_files(self._config["shot_paths"]["3d"], "3d", self._sid)
+            files = files_2d + files_3d
+            print("----- files -----")
+            print(files)
+            return files
 
 
 

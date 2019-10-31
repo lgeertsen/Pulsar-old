@@ -5,7 +5,12 @@ import os
 
 def main(arguments):
     file = arguments["file"].replace(os.sep, '/')
+    new_name = arguments["name"]
     path_split = file.split("/")
+
+    wip_path = '/'.join(path_split[:-2]) + '/wip'
+    new_name_path = os.path.join(wip_path, new_name)
+
 
     count = 0
     while path_split[count] != "3d":
@@ -22,3 +27,5 @@ def main(arguments):
     else:
         cmds.file(save=True)
         cmds.file(file, open=True, force=False)
+
+    cmds.file(rn=new_name_path)

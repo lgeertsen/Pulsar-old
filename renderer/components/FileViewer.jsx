@@ -3,13 +3,35 @@ import React, { useState } from 'react';
 import CommentContainer from '../containers/CommentContainer';
 import Modal from './Modal';
 
-const FileViewer = ({ file, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved }) => {
+const FileViewer = ({ sid, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName }) => {
 
   const [showModal, setShowModal] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [command, setCommand] = useState(undefined);
+  const [newFileName, setNewFileName] = useState(undefined);
 
-  const handleClick = command => {
+  const onBtnClick  = (command, openModal) => {
+    setCommand(command);
+    if(command = "open_file_as") {
+      let wipName = getWipName()
+      setNewFileName(wipName)
+    }
+    handleModal(openModal);
+  }
+
+  const handleClick = () => {
     handleModal(false);
-    execTask(command);
+    let task = {
+      command: command,
+      arguments: {
+        file: sid.file.path,
+        force: checked ? 1 : 0
+      }
+    };
+    if(command == "open_file_as") {
+      task.arguments["name"] = newFileName;
+    }
+    execTask(task);
   };
 
   const handleModal = value => {
@@ -17,6 +39,7 @@ const FileViewer = ({ file, execTask, onChangeComment, onSaveComment, softwares,
       checkSotfwareSaved();
     } else {
       selectSoftware(undefined);
+      setChecked(false);
     }
     setShowModal(value);
   }
@@ -31,6 +54,14 @@ const FileViewer = ({ file, execTask, onChangeComment, onSaveComment, softwares,
 
   const onClickSoft = (id) => {
     selectSoftware(id);
+  }
+
+  const checkBox = () => {
+    setChecked(!checked);
+  }
+
+  const onFileNameChange = value => {
+    setNewFileName(value);
   }
 
   const getSize = bytes => {
@@ -50,17 +81,18 @@ const FileViewer = ({ file, execTask, onChangeComment, onSaveComment, softwares,
           <div className="fileContainerInner">
             <div className="fileInfoContainer">
               <div className="fileInfo">
-                <h3>{file.name + "_" + file.state + "_" + file.version + "." + file.extension}</h3>
-                <span></span>
+                <h3>{sid.file.name + "_" + sid.file.state + "_" + sid.file.version + "." + sid.file.extension}</h3>
+                <h4>{sid.file.modified}</h4>
+                <h4>{getSize(sid.file.size)}</h4>
               </div>
 
               <div className="commandsContainer">
-                {file.state == "work" ?
+                {sid.file.state != "publish" ?
                   <div className="btnContainer">
-                    <div className="btn" onClick={(e) => handleModal(true)}>
+                    <div className="btn" onClick={(e) => onBtnClick("open_file", true)}>
                       <span>Open</span>
                     </div>
-                    <div className="btn">
+                    <div className="btn" onClick={(e) => onBtnClick("open_file_as", true)}>
                       <span>Open As</span>
                     </div>
                     {/* <div className="btn">
@@ -69,19 +101,22 @@ const FileViewer = ({ file, execTask, onChangeComment, onSaveComment, softwares,
                     <div className="btn">
                       <span>Save As</span>
                     </div> */}
-                    <div className="btn">
-                      <span>Publish</span>
-                    </div>
+                    {sid.file.state == "work" ?
+                      <div className="btn">
+                        <span>Publish</span>
+                      </div>
+                      : ""
+                    }
                   </div>
                   : ""
                 }
-                {file.state == "publish" && file.version != "valid" ?
+                {sid.file.state == "publish" && sid.file.version != "valid" ?
                   <div className="btn">
                     <span>Release</span>
                   </div>
                   : ""
                 }
-                {file.state == "work" ?
+                {sid.file.state == "work" ?
                   <div className="btn">
                     <span>Publish & Release</span>
                   </div>
@@ -90,7 +125,7 @@ const FileViewer = ({ file, execTask, onChangeComment, onSaveComment, softwares,
               </div>
             </div>
             <div className="fileComment">
-              <CommentContainer comment={file.comment} onChange={(e) => editComment(e)} saveComment={() => onSave()}/>
+              <CommentContainer comment={sid.file.comment} onChange={(e) => editComment(e)} saveComment={() => onSave()}/>
             </div>
             <div className="fileScreenshot">
               <h3>Screenshot</h3>
@@ -100,8 +135,17 @@ const FileViewer = ({ file, execTask, onChangeComment, onSaveComment, softwares,
 
         <Modal show={showModal} handleClose={(value) => handleModal(value)}>
           <div className="modalTitle">
-            <h3>{file.name + "_" + file.state + "_" + file.version + "." + file.extension}</h3>
+            <h3>{sid.file.name + "_" + sid.file.state + "_" + sid.file.version + "." + sid.file.extension}</h3>
           </div>
+          {command == "open_file_as" ?
+            <div className="newNameContainer">
+              <div className="label"><h4>Open As:</h4></div>
+              <div className="nameInputContainer">
+                <input className="nameInput" value={newFileName} onChange={(e) => onFileNameChange(e.target.value)}/>
+              </div>
+            </div>
+            : ""
+          }
           <div className="softwareContainer">
             <h4>Open in:</h4>
             <div className="softwareSelection">
@@ -120,13 +164,13 @@ const FileViewer = ({ file, execTask, onChangeComment, onSaveComment, softwares,
           {selectedSoftware != undefined ?
               <div>
                 {selectedSoftware != "new" && selectedSoft.saved == 0 ?
-                  <div className="checkboxContainer">
-                    <div className="checkbox"></div>
+                  <div className="checkboxContainer" onClick={(e) => checkBox()}>
+                    <div className={checked ? "checkbox checked" : "checkbox"}></div>
                     <div className="checkboxLabel">Save current open scene</div>
                   </div>
                   : ""
                 }
-                <div className="btn" onClick={() => handleClick("open_file")}>Open</div>
+                <div className="btn" onClick={() => handleClick()}>Open</div>
               </div>
             :
             <h6>Please select a software.</h6>
@@ -169,6 +213,10 @@ const FileViewer = ({ file, execTask, onChangeComment, onSaveComment, softwares,
           }
           .fileInfo {
             flex: 1;
+          }
+          .fileInfo h3 {
+            width: 95%;
+            word-break: break-word;
           }
 
 
@@ -218,7 +266,7 @@ const FileViewer = ({ file, execTask, onChangeComment, onSaveComment, softwares,
             background: #fff;
             color: #444F60;
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
-            border:  1px solid #e3e3e3;
+            border: 1px solid #e3e3e3;
             cursor: pointer;
             transition: all ease 0.3s;
           }
@@ -229,6 +277,19 @@ const FileViewer = ({ file, execTask, onChangeComment, onSaveComment, softwares,
           .modalTitle {
             margin-bottom: 20px;
           }
+
+          .newNameContainer {
+            margin: 15px 0;
+          }
+          .nameInput {
+            width: calc(100% - 10px);
+            height: 30px;
+            margin-top: 10px;
+            padding-left: 10px;
+            border: 1px solid #e3e3e3;
+            border-radius: 3px;
+          }
+
           .softwareContainer h4 {
             margin-bottom: 10px;
           }
@@ -277,14 +338,14 @@ const FileViewer = ({ file, execTask, onChangeComment, onSaveComment, softwares,
             cursor: pointer;
             transition: all ease 0.2s;
           }
-          .checkbox:after {
+          .checkbox.checked:after {
             content: "";
-            position: relative;
-            left: 9px;
-            top: 5px;
+            position: absolute;
+            left: 6px;
+            top: 2px;
             width: 5px;
             height: 10px;
-            border: solid red;
+            border: solid #fff;
             border-width: 0 3px 3px 0;
             transform: rotate(45deg);
           }
