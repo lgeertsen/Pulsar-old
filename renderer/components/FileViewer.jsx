@@ -125,7 +125,7 @@ const FileViewer = ({ theme, sid, execTask, onChangeComment, onSaveComment, soft
               </div>
             </div>
             <div className="fileComment">
-              <CommentContainer comment={sid.file.comment} onChange={(e) => editComment(e)} saveComment={() => onSave()}/>
+              <CommentContainer theme={theme} comment={sid.file.comment} onChange={(e) => editComment(e)} saveComment={() => onSave()}/>
             </div>
             <div className="fileScreenshot">
               <h3>Screenshot</h3>
@@ -133,7 +133,7 @@ const FileViewer = ({ theme, sid, execTask, onChangeComment, onSaveComment, soft
           </div>
         </div>
 
-        <Modal show={showModal} handleClose={(value) => handleModal(value)}>
+        <Modal theme={theme} show={showModal} handleClose={(value) => handleModal(value)}>
           <div className="modalTitle">
             <h3>{sid.file.name + "_" + sid.file.state + "_" + sid.file.version + "." + sid.file.extension}</h3>
           </div>

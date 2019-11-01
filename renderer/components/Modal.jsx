@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Modal = ({ handleClose, show, children }) => {
+const Modal = ({ theme, handleClose, show, children }) => {
 
   const close = e => {
     handleClose(false)
@@ -40,14 +40,14 @@ const Modal = ({ handleClose, show, children }) => {
           position: absolute;
           left: 50%;
           top: 50%;
-          background: #fff;
+          background: ${theme.background};
           min-width: 400px;
           width: auto;
           height: auto;
           padding: 15px;
           padding-top: 25px;
           border-radius: 6px;
-          border: 1px solid #e3e3e3;
+          border: ${theme.border};
           box-shadow: 0 3px 10px 4px rgba(0,0,0,0.04);
           cursor: default;
           transform: translate(-50%, -50%);
@@ -75,7 +75,7 @@ const Modal = ({ handleClose, show, children }) => {
           content: ' ';
           height: 21px;
           width: 2px;
-          background-color: #444;
+          background-color: ${theme.textSecondary};
         }
         .close:before {
           transform: rotate(45deg);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CommentContainer = ({ comment, onChange, saveComment }) => {
+const CommentContainer = ({ theme, comment, onChange, saveComment }) => {
 
   const [disabled, setDisabled] = useState(true);
 
@@ -68,15 +68,15 @@ const CommentContainer = ({ comment, onChange, saveComment }) => {
             padding: 2px 5px;
             border-radius: 6px;
             font-size: 14px;
-            background: #fff;
-            color: #444F60;
+            background: ${theme.background};
+            color: ${theme.text};
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
-            border:  1px solid #e3e3e3;
+            border:  ${theme.border};
             cursor: pointer;
             transition: all ease 0.3s;
           }
           .btn:hover {
-            background: #f2f2f2;
+            background: ${theme.secondaryBg};
           }
         `}</style>
       </div>

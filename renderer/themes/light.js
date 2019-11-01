@@ -7,8 +7,10 @@ export default {
   accentBorder: "1px solid #f5f5f5",
 
   text: "#757a91",
+  textSecondary: "#444",
 
   white: "#fff",
   blue: "#0062ff",
   red: "#ff5f59"
+
 }

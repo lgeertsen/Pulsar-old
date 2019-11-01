@@ -78,7 +78,10 @@ export default class Manager extends React.Component {
 
 
       ipcRenderer.on('config', (event, data) => {
-        console.log("----- receive config file -----");
+        console.log("----- receive config file -----", data);
+        if(data.theme) {
+          this.setState({theme: data.theme});
+        }
         if(data.projects) {
           this.setState({projects: data.projects})
           if(data.projects.length > 0) {
@@ -212,7 +215,7 @@ export default class Manager extends React.Component {
           <link href="./static/fontawesome/css/all.css" rel="stylesheet"/>
         </Head>
 
-        <Nav/>
+        <Nav theme={themes[this.state.theme]}/>
 
         <div className="main">
           <div className="softwareContainer">
@@ -392,7 +395,7 @@ export default class Manager extends React.Component {
           }
           .softwareContainer {
             width: 150px;
-            background: #fff;
+            background: ${themes[this.state.theme].background};
             border-right: ${themes[this.state.theme].border};
           }
           .softwareTitle {
