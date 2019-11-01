@@ -3,10 +3,10 @@
     "projects": ["FILM1", "FILM2", "FILM3"],
     "disk": "C",
     "shot_paths": {
-      "2d": "{disk}:/SynologyDrive/{project}/02_work/02_shot/2d/{type}/{name}/{task}/{subtask}/{state}_{version}/{file}.{ext}",
-      "3d": "{disk}:/SynologyDrive/{project}/02_work/02_shot/3d/scenes/{type}/{name}/{task}/{subtask}/{state}_{version}/{file}.{ext}"
+      "2d": "{disk}:/SynologyDrive/{project}/03_WORK_PIPE/02_SHOT/2d/{type}/{name}/{task}/{subtask}/{state}_{version}/{file}.{ext}",
+      "3d": "{disk}:/SynologyDrive/{project}/03_WORK_PIPE/02_SHOT/3d/scenes/{type}/{name}/{task}/{subtask}/{state}_{version}/{file}.{ext}"
     },
-    "asset_path": "{disk}:/SynologyDrive/pipeline/{project}/02_Work/01_Asset/{type}/{name}/{task}/{subtask}/{state}_{version}/{file}.{ext}",
+    "asset_path": "{disk}:/SynologyDrive/{project}/03_WORK_PIPE/01_ASSET_3D/{type}/{name}/{task}/{subtask}/{state}_{version}/{file}.{ext}",
     "nodes": "C:/Users/leege/Pulsar/nodes",
     "softwares": {
       "maya": "C:/Maya2019"

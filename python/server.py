@@ -218,6 +218,8 @@ class Pulsar():
     def get_types(self):
         if(self._sid["switch"] == "assets"):
             dirs = FileManager.get_types(self._config["asset_path"], "assets", self._sid)
+            print("----- asset type directories -----")
+            print(dirs)
             return dirs
         else:
             dir_2d = FileManager.get_types(self._config["shot_paths"]["2d"], "2d", self._sid)
