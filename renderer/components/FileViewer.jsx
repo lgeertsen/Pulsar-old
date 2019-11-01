@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import CheckBox from './CheckBox'
 import CommentContainer from '../containers/CommentContainer';
 import Modal from './Modal';
 
@@ -164,10 +165,7 @@ const FileViewer = ({ theme, sid, execTask, onChangeComment, onSaveComment, soft
           {selectedSoftware != undefined ?
               <div>
                 {selectedSoftware != "new" && selectedSoft.saved == 0 ?
-                  <div className="checkboxContainer" onClick={(e) => checkBox()}>
-                    <div className={checked ? "checkbox checked" : "checkbox"}></div>
-                    <div className="checkboxLabel">Save current open scene</div>
-                  </div>
+                  <CheckBox theme={theme} label="Save current open scene" checked={checked} onCheck={() => checkBox()}/>
                   : ""
                 }
                 <div className="btn" onClick={() => handleClick()}>Open</div>
