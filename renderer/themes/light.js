@@ -10,7 +10,6 @@ export default {
   textSecondary: "#444",
 
   white: "#fff",
-  blue: "#0062ff",
-  red: "#ff5f59"
-
+  blue: "#0984e3",
+  red: "#d63031"
 }
