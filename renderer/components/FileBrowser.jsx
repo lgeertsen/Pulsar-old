@@ -63,7 +63,7 @@ const FileBrowser = ({ theme, title, files, onChange }) => {
           .fileBrowser {
             display: flex;
             flex-direction: column;
-            background: ${theme.background};
+            background: ${theme.transparentBg};
             border-radius: 6px;
             border: ${theme.border};
           }

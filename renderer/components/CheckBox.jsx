@@ -10,11 +10,12 @@ const CheckBox = ({ theme, label, checked, onCheck }) => {
     return (
       <div className="checkboxContainer" onClick={(e) => checkBox()}>
         <div className={checked ? "checkbox checked" : "checkbox"}></div>
-        <div className="checkboxLabel">{label}</div>
+        <div className="checkboxLabel">
+          <span>{label}</span>
+        </div>
 
         <style jsx>{`
           .checkboxContainer {
-            margin: 10px 0;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -49,8 +50,12 @@ const CheckBox = ({ theme, label, checked, onCheck }) => {
           }
           .checkboxLabel {
             flex: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
             color: ${theme.text};
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
+            cursor: pointer;
           }
         `}</style>
       </div>

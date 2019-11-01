@@ -31,7 +31,7 @@ const Browser = ({ theme, title, directories, onChange }) => {
           .browser {
             display: flex;
             flex-direction: column;
-            background: ${theme.background};
+            background: ${theme.transparentBg};
             border: ${theme.border};
             border-radius: 6px;
           }

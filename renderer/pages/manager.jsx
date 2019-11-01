@@ -7,6 +7,7 @@ import Browser from '../components/Browser';
 import Dropdown from '../components/Dropdown';
 import FileBrowser from '../components/FileBrowser';
 import FileViewer from '../components/FileViewer';
+import FiltersContainer from '../containers/FiltersContainer';
 import Nav from '../components/Nav';
 import SearchBar from '../components/SearchBar';
 import Switch from '../components/Switch';
@@ -263,19 +264,7 @@ export default class Manager extends React.Component {
 
 
             <div className="filterContainer">
-              <div className="filterTitle">
-                <h4>Filters</h4>
-              </div>
-              <div className="filterTypes">
-                <div className="filterType">
-                  <div className="filterOption">O Work</div>
-                  <div className="filterOption">O Publish</div>
-                </div>
-                <div className="filterType">
-                  <div className="filterOption">O 2D</div>
-                  <div className="filterOption">O 3D</div>
-                </div>
-              </div>
+              <FiltersContainer theme={themes[this.state.theme]} />
             </div>
 
 
@@ -392,6 +381,11 @@ export default class Manager extends React.Component {
             flex-direction: row;
             align-items: center;
             justify-content: center;
+            background-image: linear-gradient(${themes[this.state.theme].blueTransparent}, ${themes[this.state.theme].blueTransparent}), url('./static/img/jakob-owens-CiUR8zISX60-unsplash.jpg');
+            background-position: center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
           }
           .softwareContainer {
             width: 150px;
@@ -446,6 +440,7 @@ export default class Manager extends React.Component {
             flex-direction: column;
           }
           .searchContainer {
+            margin-top: 10px;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -472,30 +467,11 @@ export default class Manager extends React.Component {
 
 
           .filterContainer {
+            height: 150px;
             display: flex;
+            flex-direction: row;
             align-items: center;
-            flex-direction: row;
-            height: 60px;
           }
-          .filterContainer > div {
-            height: 60px;
-            margin: 0 25px;
-          }
-          .filterTitle {
-            width: 50px;
-          }
-          .filterTypes {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-          }
-          .filterType {
-            display: flex;
-            flex-direction: column;
-            width: 80px;
-          }
-
-
 
 
           .browserContainer {
