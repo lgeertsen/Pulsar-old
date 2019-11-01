@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-const Dropdown = ({ value, options, onChange }) => {
+const Dropdown = ({ theme, value, options, onChange }) => {
 
   const node = useRef();
   const [open, setOpen] = useState(false);
@@ -50,8 +50,8 @@ const Dropdown = ({ value, options, onChange }) => {
         <style jsx>{`
           .dropdownContainer {
             border-radius: 6px;
-            background: #fff;
-            border:  1px solid #e3e3e3;
+            background: ${theme.background};
+            border:  ${theme.border};
             cursor: pointer;
           }
           .selectedElement {
@@ -66,7 +66,7 @@ const Dropdown = ({ value, options, onChange }) => {
             margin-left: 10px;
           }
           .selectedElement span {
-            color: #444F60;
+            color: ${theme.text};
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
           }
           .dropdownIcon {
@@ -77,15 +77,15 @@ const Dropdown = ({ value, options, onChange }) => {
             height: 20px;
             margin-right: 10px;
             border-radius: 50%;
-            background: #fff;
+            background: ${theme.background};
             transition: all ease 0.2s;
           }
           .dropdownContainer:hover .dropdownIcon {
-            background: #e3e3e3;
+            background: ${theme.secondaryBg};
           }
           .dropdownIcon i {
             margin-bottom: -2px;
-            color: #444F60;
+            color: ${theme.text};
             font-size: 20px;
           }
           .dropdown {
@@ -94,8 +94,7 @@ const Dropdown = ({ value, options, onChange }) => {
             width: 100%;
             left: 0;
             top: 29px;
-            background: #fff;
-            // border:  1px solid #e3e3e3;
+            background: ${theme.background};
             border-radius: 6px;
             box-shadow: 0 2px 3px rgba(10,10,10,0.1), 0 0 0 1px rgba(10,10,10,0.1);
           }
@@ -105,11 +104,11 @@ const Dropdown = ({ value, options, onChange }) => {
           .dropdownElement {
             width: auto;
             padding-left: 10px;
-            border-bottom: 1px solid #e3e3e3;
+            border-bottom: ${theme.border};
             transition: all ease 0.2s;
           }
           .dropdownElement:hover {
-            background: #f2f2f2;
+            background: ${theme.secondaryBg};
           }
         `}</style>
       </div>

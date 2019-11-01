@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const FileBrowser = ({ title, files, onChange }) => {
+const FileBrowser = ({ theme, title, files, onChange }) => {
 
   const [selectedFile, setSelectedFile] = useState(-1);
 
@@ -63,20 +63,21 @@ const FileBrowser = ({ title, files, onChange }) => {
           .fileBrowser {
             display: flex;
             flex-direction: column;
-            background: #fff;
+            background: ${theme.background};
             border-radius: 6px;
-            border: 1px solid #e3e3e3;
+            border: ${theme.border};
           }
           .fileBrowserTitle {
             height: 25px;
-            background: #f2f2f2;
+            background: ${theme.accentBg};
+            border-bottom: ${theme.border};
           }
           .fileBrowserTitle h4 {
             margin-left: 10px;
           }
           .fileBrowserInner {
             overflow-x: auto;
-            overflow-y: scroll;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
           }
@@ -84,27 +85,27 @@ const FileBrowser = ({ title, files, onChange }) => {
             display: flex;
             flex-direction: row;
             height: 20px;
-            border-bottom: 1px solid #f2f2f2;
-            color: #444F60;
+            border-bottom: ${theme.accentBorder};
+            color: ${theme.text};
             cursor: pointer;
             transition: all ease 0.2s;
           }
           .file:hover {
-            background: #f2f2f2;
+            background: ${theme.secondaryBg};
           }
           .file.selected {
-            background: #3498db;
-            color: #fff;
+            background: ${theme.blue};
+            color: ${theme.white};
           }
           .file.fileHeader {
-            background: #f9f9f9;
+            background: ${theme.secondaryBg};
             cursor: default;
           }
           .file > div {
             display: flex;
             flex-direction: row;
             align-items: center;
-            border-right: 1px solid #e3e3e3;
+            border-right: ${theme.border};
             margin-left: 5px;
           }
           .file span {

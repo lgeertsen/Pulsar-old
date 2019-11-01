@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-const Switch = ({ option1, option2, onChange }) => {
+const Switch = ({ theme, option1, option2, onChange }) => {
 
   const [selected, setSelected] = useState(1);
 
@@ -28,16 +28,16 @@ const Switch = ({ option1, option2, onChange }) => {
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #f2f2f2;
-            border: 1px solid #e3e3e3;
-            color: #444F60;
+            background: ${theme.accentBg};
+            border: ${theme.border};
+            color: ${theme.text};
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
             cursor: pointer;
             transition: all ease 0.2s;
           }
           .option.selected {
-            border-color: #3498db;
-            background: #fff;
+            border-color: ${theme.blue};
+            background: ${theme.background};
           }
           .option:first-child {
             border-top-left-radius: 6px;

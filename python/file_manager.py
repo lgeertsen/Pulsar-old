@@ -65,7 +65,6 @@ class FileManager:
                             "path": fpath
                         }
                         files.append(file)
-
         return files
 
     def get_file_path(path, sid):
@@ -75,13 +74,9 @@ class FileManager:
     def save_comment(path, sid, comment):
         format_path = FileManager.format_for_file(path, "3d", sid)
         file = "comment.txt"
-
         comment_file = os.path.join(format_path, file)
-        # if os.path.exists(comment_file):
         with open(comment_file, 'w') as filetowrite:
             filetowrite.write(comment)
-        # else:
-        #     pass
 
 
 
@@ -164,16 +159,3 @@ class FileManager:
         format_path = dir_path.format(disk=sid["disk"], project=sid["project"], type=sid["type"], name=sid["name"], task=sid["task"], subtask=sid["subtask"], state=sid["state"], version=sid["version"])
 
         return format_path
-
-sid = {
-    "disk": "C",
-    "project": "FILM1",
-    "type": "S10",
-    "name": "SH110",
-    "task": "anim",
-    "subtask": "main"
-}
-
-#FileManager.get_types("{disk}:/SynologyDrive/pipeline/{project}/02_work/02_shot/2d/{type}/{name}/{task}/{subtask}/{state}_{version}", "2d", sid)
-#FileManager.get_files("{disk}:/SynologyDrive/pipeline/{project}/02_work/02_shot/3d/scenes/{type}/{name}/{task}/{subtask}/{state}_{version}", "3d", sid)
-#FileManager.get_type("{disk}:/SynologyDrive/pipeline/{project}/02_Work/01_Asset/{type}/{name}/{task}/{subtask}/{state}_{version}", "asset", sid)

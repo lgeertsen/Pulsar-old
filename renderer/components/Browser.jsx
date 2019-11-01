@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Browser = ({ title, directories, onChange }) => {
+const Browser = ({ theme, title, directories, onChange }) => {
 
   const [selectedDir, setSelectedDir] = useState(-1);
 
@@ -31,13 +31,14 @@ const Browser = ({ title, directories, onChange }) => {
           .browser {
             display: flex;
             flex-direction: column;
-            background: #fff;
+            background: ${theme.background};
+            border: ${theme.border};
             border-radius: 6px;
-            border: 1px solid #e3e3e3;
           }
           .browserTitle {
             height: 25px;
-            background: #f2f2f2;
+            background: ${theme.accentBg};
+            border-bottom: ${theme.border};
           }
           .browserTitle h4 {
             margin-left: 10px;
@@ -48,17 +49,17 @@ const Browser = ({ title, directories, onChange }) => {
           }
           .directory {
             height: auto;
-            border-bottom: 1px solid #f2f2f2;
-            color: #444F60;
+            border-bottom: ${theme.accentBorder};
+            color: ${theme.text};
             cursor: pointer;
             transition: all ease 0.2s;
           }
           .directory:hover {
-            background: #f2f2f2;
+            background: ${theme.secondaryBg};
           }
           .directory.selected {
-            background: #3498db;
-            color: #fff;
+            background: ${theme.blue};
+            color: ${theme.white};
           }
           .directory i {
             margin: 3px 5px;

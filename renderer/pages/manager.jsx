@@ -11,12 +11,23 @@ import Nav from '../components/Nav';
 import SearchBar from '../components/SearchBar';
 import Switch from '../components/Switch';
 
+import darkTheme from '../themes/dark';
+import lightTheme from '../themes/light';
+
+const themes = {
+  dark: darkTheme,
+  light: lightTheme
+};
+
 const ipcRenderer = electron.ipcRenderer || false;
 
 export default class Manager extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
+      theme: "light",
+
       projects: [],
 
       project: "",
@@ -53,7 +64,7 @@ export default class Manager extends React.Component {
         "version": undefined,
         "file": undefined
       }
-    }
+    };
   }
 
   componentDidMount() {
@@ -199,7 +210,6 @@ export default class Manager extends React.Component {
           <title>Pulsar</title>
           <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet"/>
           <link href="./static/fontawesome/css/all.css" rel="stylesheet"/>
-          <link href="./static/fontawesome/css/all.css" rel="stylesheet"/>
         </Head>
 
         <Nav/>
@@ -225,6 +235,7 @@ export default class Manager extends React.Component {
             <div className="searchContainer">
               <div className="projectSelect">
                 <Dropdown
+                  theme={themes[this.state.theme]}
                   value={this.state.project}
                   options={this.state.projects}
                   onChange={(element) => this.setProject(element)}
@@ -232,6 +243,7 @@ export default class Manager extends React.Component {
               </div>
               <div className="assetShotSwitch">
                 <Switch
+                  theme={themes[this.state.theme]}
                   option1="Assets"
                   option2="Shots"
                   onChange={(choice) => this.setSwitch(choice)}
@@ -239,6 +251,7 @@ export default class Manager extends React.Component {
               </div>
               <div className="searchBar">
                 <SearchBar
+                  theme={themes[this.state.theme]}
                   sid={this.state.sid}
                 />
               </div>
@@ -268,6 +281,7 @@ export default class Manager extends React.Component {
             <div className="browserContainer">
               <div className="browser sequenceBrowser">
                 <Browser
+                  theme={themes[this.state.theme]}
                   title={this.state.switch == "assets" ? "Asset Type" : "Sequences"}
                   directories={this.state.directories.type}
                   onChange={(dir) => this.setSidDir("type", dir)}
@@ -278,6 +292,7 @@ export default class Manager extends React.Component {
               </div>
               <div className="browser shotBrowser">
                 <Browser
+                  theme={themes[this.state.theme]}
                   title={this.state.switch == "assets" ? "Asset Name" : "Shots"}
                   directories={this.state.directories.name}
                   onChange={(dir) => this.setSidDir("name", dir)}
@@ -288,6 +303,7 @@ export default class Manager extends React.Component {
               </div>
               <div className="browser taskBrowser">
                 <Browser
+                  theme={themes[this.state.theme]}
                   title="Tasks"
                   directories={this.state.directories.task}
                   onChange={(dir) => this.setSidDir("task", dir)}
@@ -298,6 +314,7 @@ export default class Manager extends React.Component {
               </div>
               <div className="browser subtaskBrowser">
                 <Browser
+                  theme={themes[this.state.theme]}
                   title="Subtasks"
                   directories={this.state.directories.subtask}
                   onChange={(dir) => this.setSidDir("subtask", dir)}
@@ -308,6 +325,7 @@ export default class Manager extends React.Component {
               </div>
               <div className="fileBrowser">
                 <FileBrowser
+                  theme={themes[this.state.theme]}
                   title="Files"
                   files={this.state.directories.file}
                   onChange={(file) => this.setSidFile(file)}
@@ -320,6 +338,7 @@ export default class Manager extends React.Component {
             <div className={this.state.sid.file == undefined ? "selectedContainer" : "selectedContainer open"}>
               {this.state.sid.file != undefined ?
                 <FileViewer
+                  theme={themes[this.state.theme]}
                   sid={this.state.sid}
                   execTask={(task) => this.execTask(task)}
                   onChangeComment={(e) => this.editComment(e)}
@@ -345,13 +364,13 @@ export default class Manager extends React.Component {
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: #f4f6fb;
+            background: ${themes[this.state.theme].body} !important;
           }
           * {
             margin: 0;
           }
           p, h1, h2, h3, h4, h5, h6 {
-            color: #444F60;
+            color: ${themes[this.state.theme].text};
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
           }
           div {
@@ -374,7 +393,7 @@ export default class Manager extends React.Component {
           .softwareContainer {
             width: 150px;
             background: #fff;
-            border-right: 1px solid #ededed;
+            border-right: ${themes[this.state.theme].border};
           }
           .softwareTitle {
             display: flex;
@@ -383,14 +402,14 @@ export default class Manager extends React.Component {
             align-items: center;
             padding: 10px 0;
             height: auto;
-            border-bottom: 1px solid #e3e3e3;
+            border-bottom: ${themes[this.state.theme].border};
           }
           .software {
             display: flex;
             flex-direction: column;
             // align-items: center;
             height: auto;
-            border-bottom: 1px solid #e3e3e3;
+            border-bottom: ${themes[this.state.theme].border};
             transition: all ease 0.2s;
           }
           .software.selected {
@@ -424,7 +443,7 @@ export default class Manager extends React.Component {
             flex-direction: column;
           }
           .searchContainer {
-            display: flex;cd ma
+            display: flex;
             flex-direction: row;
             align-items: center;
             height: 40px;
@@ -502,7 +521,7 @@ export default class Manager extends React.Component {
             justify-content: center;
           }
           .chevronContainer i {
-            color: #444F60;
+            color: ${themes[this.state.theme].text};
             font-size: 28px;
           }
 

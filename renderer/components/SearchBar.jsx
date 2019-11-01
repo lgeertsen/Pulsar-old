@@ -89,9 +89,9 @@ export default class SearchBar extends React.Component {
             flex-direction: row;
             flex: 1;
             height: 25px;
-            background: #fff;
+            background: ${this.props.theme.background};
             border-radius: 6px;
-            border: 1px solid #e3e3e3;
+            border: ${this.props.theme.border};
           }
           .searchBarType {
             display: flex;
@@ -99,8 +99,8 @@ export default class SearchBar extends React.Component {
             align-items: center;
             width: 60px;
             padding-left: 5px;
-            background: #f2f2f2;
-            border-right: 1px solid #e3e3e3;
+            background: ${this.props.theme.secondaryBg};
+            border-right: ${this.props.theme.border};
           }
           .typeText {
             flex: 1;
@@ -111,12 +111,12 @@ export default class SearchBar extends React.Component {
             align-items: center;
             width: 25px;
             font-size: 14px;
-            color: #444F60;
+            color: ${this.props.theme.text};
             cursor: pointer;
             transition: all ease 0.2s;
           }
           .searchBarType:hover {
-            background: #f2f2f2;
+            background: ${this.props.theme.secondaryBg};
           }
           .searchBarInner {
             display: flex;
@@ -124,7 +124,7 @@ export default class SearchBar extends React.Component {
           }
           span {
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
-            color: #444F60;
+            color: ${this.props.theme.text};
           }
           .input {
             width: auto;
@@ -135,7 +135,7 @@ export default class SearchBar extends React.Component {
             justify-content: center;
             align-items: center;
             width: 15px;
-            background: #f2f2f2;
+            background: ${this.props.theme.secondaryBg};
             font-weight: bold;
           }
           .copy {
@@ -143,12 +143,12 @@ export default class SearchBar extends React.Component {
             justify-content: center;
             align-items: center;
             width: 25px;
-            color: #444F60;
+            color: ${this.props.theme.text};
             cursor: pointer;
             transition: all ease 0.2s;
           }
           .copy:hover {
-            background: #f2f2f2;
+            background: ${this.props.theme.secondaryBg};
           }
         `}</style>
       </div>

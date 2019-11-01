@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import CommentContainer from '../containers/CommentContainer';
 import Modal from './Modal';
 
-const FileViewer = ({ sid, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName }) => {
+const FileViewer = ({ theme, sid, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -198,9 +198,9 @@ const FileViewer = ({ sid, execTask, onChangeComment, onSaveComment, softwares, 
             align-items: center;
             height: 100%;
             margin: 15px 25px;
-            background: #fff;
+            background: ${theme.background};
             border-radius: 6px;
-            border: 1px solid #e3e3e3;
+            border: ${theme.border};
           }
 
           .fileInfoContainer {
@@ -209,7 +209,7 @@ const FileViewer = ({ sid, execTask, onChangeComment, onSaveComment, softwares, 
             flex-direction: row;
             padding-top: 10px;
             margin: 0 15px;
-            border-right: 1px solid #f2f2f2;
+            border-right: ${theme.accentBorder};
           }
           .fileInfo {
             flex: 1;
@@ -227,7 +227,7 @@ const FileViewer = ({ sid, execTask, onChangeComment, onSaveComment, softwares, 
             width: 350px;
             padding-top: 10px;
             margin-right: 15px;
-            border-right: 1px solid #f2f2f2;
+            border-right: ${theme.accentBorder};
           }
 
 
@@ -263,15 +263,15 @@ const FileViewer = ({ sid, execTask, onChangeComment, onSaveComment, softwares, 
             padding: 2px 5px;
             border-radius: 6px;
             font-size: 14px;
-            background: #fff;
-            color: #444F60;
+            background: ${theme.background};
+            color: ${theme.text};
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
-            border: 1px solid #e3e3e3;
+            border: ${theme.border};
             cursor: pointer;
             transition: all ease 0.3s;
           }
           .btn:hover {
-            background: #f2f2f2;
+            background: ${theme.secondaryBg};
           }
 
           .modalTitle {
@@ -286,7 +286,7 @@ const FileViewer = ({ sid, execTask, onChangeComment, onSaveComment, softwares, 
             height: 30px;
             margin-top: 10px;
             padding-left: 10px;
-            border: 1px solid #e3e3e3;
+            border: ${theme.border};
             border-radius: 3px;
           }
 
@@ -306,12 +306,12 @@ const FileViewer = ({ sid, execTask, onChangeComment, onSaveComment, softwares, 
             align-items: center;
             margin: 5px 8px;
             padding: 10px 5px;
-            border: 1px solid #e3e3e3;
+            border: ${theme.border};
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
             transition: all ease 0.2s;
           }
           .software.selected {
-            background: #3498db;
+            background: ${theme.blue};
           }
           .software img {
             width: 80px;
@@ -331,8 +331,8 @@ const FileViewer = ({ sid, execTask, onChangeComment, onSaveComment, softwares, 
             position: relative;
             width: 20px;
             height: 20px;
-            background: #f2f2f2;
-            border: 1px solid #e3e3e3;
+            background: ${theme.secondaryBg};
+            border: ${theme.border};
             border-radius: 3px;
             margin: 0 8px;
             cursor: pointer;
@@ -345,19 +345,19 @@ const FileViewer = ({ sid, execTask, onChangeComment, onSaveComment, softwares, 
             top: 2px;
             width: 5px;
             height: 10px;
-            border: solid #fff;
+            border: solid ${theme.white};
             border-width: 0 3px 3px 0;
             transform: rotate(45deg);
           }
           .checkbox:hover {
-            border-color: #3498db;
+            border-color: ${theme.blue};
           }
           .checkbox.checked {
-            background: #3498db;
+            background: ${theme.blue};
           }
           .checkboxLabel {
             flex: 1;
-            color: #444F60;
+            color: ${theme.text};
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
           }
         `}</style>
