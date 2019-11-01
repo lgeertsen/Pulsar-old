@@ -1,4 +1,5 @@
 {
+    "theme": "light",
     "projects": ["FILM1", "FILM2", "FILM3"],
     "disk": "C",
     "shot_paths": {
