@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import CheckBox from '../components/CheckBox'
 
-const FiltersContainer = ({ theme }) => {
+const FiltersContainer = ({ theme, primaryColor }) => {
     return (
       <div className="filterContainer">
         <div className="filterTypes">
@@ -11,15 +11,15 @@ const FiltersContainer = ({ theme }) => {
               <h4>Filters:</h4>
             </div>
             <div className="filterOption">
-              <CheckBox theme={theme} label="Work" checked={false} onCheck={() => console.log("check")} />
+              <CheckBox theme={theme} primaryColor={primaryColor} label="Work" checked={false} onCheck={() => console.log("check")} />
             </div>
             <div className="filterOption">
-              <CheckBox theme={theme} label="Publish" checked={false} onCheck={() => console.log("check")} />
+              <CheckBox theme={theme} primaryColor={primaryColor} label="Publish" checked={false} onCheck={() => console.log("check")} />
             </div>
           </div>
           <div className="filterType">
-            <CheckBox theme={theme} label="2D" checked={false} onCheck={() => console.log("check")} />
-            <CheckBox theme={theme} label="3D" checked={true} onCheck={() => console.log("check")} />
+            <CheckBox theme={theme} primaryColor={primaryColor} label="2D" checked={false} onCheck={() => console.log("check")} />
+            <CheckBox theme={theme} primaryColor={primaryColor} label="3D" checked={true} onCheck={() => console.log("check")} />
           </div>
         </div>
 

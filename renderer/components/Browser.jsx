@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Browser = ({ theme, title, directories, onChange }) => {
+const Browser = ({ theme, primaryColor, title, directories, onChange }) => {
 
   const [selectedDir, setSelectedDir] = useState(-1);
 
@@ -58,7 +58,7 @@ const Browser = ({ theme, title, directories, onChange }) => {
             background: ${theme.secondaryBg};
           }
           .directory.selected {
-            background: ${theme.blue};
+            background: ${theme[primaryColor]};
             color: ${theme.white};
           }
           .directory i {

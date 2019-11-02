@@ -44,6 +44,10 @@ export default class Nav extends React.Component {
             <i className="fas fa-angle-left"></i>
           </div>
         </div>
+        <div className="settings-btn" onClick={() => this.props.openSettings()}>
+          <span>Settings</span>
+          <i className="fas fa-cog"></i>
+        </div>
         <div className="nav-btns-container">
           <div id="btn-minimize" className="nav-btn" onClick={this.minimize}>
             <i className="fas fa-minus"></i>
@@ -79,9 +83,11 @@ export default class Nav extends React.Component {
             flex-direction: row;
           }
           .nav-btn,
-          .back-btn {
+          .back-btn,
+          .settings-btn {
             -webkit-app-region: no-drag;
             display: flex;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
             width: 50px;
@@ -90,13 +96,26 @@ export default class Nav extends React.Component {
             color: ${this.props.theme.text};
             border-left: ${this.props.theme.border};
             transition: all ease 0.2s;
+            cursor: pointer;
           }
           .back-btn {
             border: none;
             border-right: ${this.props.theme.border};
           }
+          .settings-btn {
+            width: auto;
+            margin-right: 50px;
+            padding: 0 10px;
+            border-right: ${this.props.theme.border};
+          }
+          .settings-btn span {
+            font-family: "Open Sans Condensed", "Oswald", sans-serif;
+            margin-right: 10px;
+            margin-bottom: 2px;
+          }
           .nav-btn:hover,
-          .back-btn:hover {
+          .back-btn:hover,
+          .settings-btn:hover {
             color: ${this.props.theme.textSecondary};
           }
         `}</style>

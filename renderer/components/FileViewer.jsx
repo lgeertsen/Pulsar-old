@@ -4,7 +4,7 @@ import CheckBox from './CheckBox'
 import CommentContainer from '../containers/CommentContainer';
 import Modal from './Modal';
 
-const FileViewer = ({ theme, sid, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName }) => {
+const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -134,7 +134,7 @@ const FileViewer = ({ theme, sid, execTask, onChangeComment, onSaveComment, soft
           </div>
         </div>
 
-        <Modal theme={theme} show={showModal} handleClose={(value) => handleModal(value)}>
+        <Modal theme={theme} primaryColor={primaryColor} show={showModal} handleClose={(value) => handleModal(value)}>
           <div className="modalTitle">
             <h3>{sid.file.name + "_" + sid.file.state + "_" + sid.file.version + "." + sid.file.extension}</h3>
           </div>
@@ -309,7 +309,7 @@ const FileViewer = ({ theme, sid, execTask, onChangeComment, onSaveComment, soft
             transition: all ease 0.2s;
           }
           .software.selected {
-            background: ${theme.blue};
+            background: ${theme[primaryColor]};
           }
           .software img {
             width: 80px;
@@ -348,10 +348,10 @@ const FileViewer = ({ theme, sid, execTask, onChangeComment, onSaveComment, soft
             transform: rotate(45deg);
           }
           .checkbox:hover {
-            border-color: ${theme.blue};
+            border-color: ${theme[primaryColor]};
           }
           .checkbox.checked {
-            background: ${theme.blue};
+            background: ${theme[primaryColor]};
           }
           .checkboxLabel {
             flex: 1;

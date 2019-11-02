@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-const Dropdown = ({ theme, value, options, onChange }) => {
+const Dropdown = ({ theme, primaryColor, value, options, onChange }) => {
 
   const node = useRef();
   const [open, setOpen] = useState(false);

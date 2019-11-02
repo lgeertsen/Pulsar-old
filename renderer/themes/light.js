@@ -11,8 +11,13 @@ export default {
   textSecondary: "#444",
 
   white: "#fff",
+  green: "#a3cb38",
+  mint: "#00b894",
+  lightBlue: "#00cec9",
   blue: "#0984e3",
-  blueTransparent: "rgba(116, 185, 255, 0.5)",
+  purple: "#6c5ce7",
+  yellow: "#fdcb6e",
+  orange: "#e17055",
   red: "#d63031",
-  redTransparent: "rgba(214, 48, 49, 0.3)",
+  pink: "#e84393",
 }

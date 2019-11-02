@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Modal = ({ theme, handleClose, show, children }) => {
+const Modal = ({ theme, primaryColor, handleClose, show, children }) => {
 
   const close = e => {
     handleClose(false)
@@ -65,6 +65,7 @@ const Modal = ({ theme, handleClose, show, children }) => {
           width: 20px;
           height: 20px;
           opacity: 0.3;
+          cursor: pointer;
         }
         .close:hover {
           opacity: 1;

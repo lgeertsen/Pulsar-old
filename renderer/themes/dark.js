@@ -10,6 +10,13 @@ export default {
   textSecondary: "#aaa",
 
   white: "#fff",
+  green: "#a3cb38",
+  mint: "#00b894",
+  lightBlue: "#00cec9",
   blue: "#0984e3",
-  red: "#d63031"
+  purple: "#6c5ce7",
+  yellow: "#fdcb6e",
+  orange: "#e17055",
+  red: "#d63031",
+  pink: "#e84393",
 }

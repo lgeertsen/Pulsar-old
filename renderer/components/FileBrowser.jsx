@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const FileBrowser = ({ theme, title, files, onChange }) => {
+const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
 
   const [selectedFile, setSelectedFile] = useState(-1);
 
@@ -94,7 +94,7 @@ const FileBrowser = ({ theme, title, files, onChange }) => {
             background: ${theme.secondaryBg};
           }
           .file.selected {
-            background: ${theme.blue};
+            background: ${theme[primaryColor]};
             color: ${theme.white};
           }
           .file.fileHeader {

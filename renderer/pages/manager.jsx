@@ -10,6 +10,7 @@ import FileViewer from '../components/FileViewer';
 import FiltersContainer from '../containers/FiltersContainer';
 import Nav from '../components/Nav';
 import SearchBar from '../components/SearchBar';
+import SettingsContainer from '../containers/SettingsContainer';
 import Switch from '../components/Switch';
 
 import darkTheme from '../themes/dark';
@@ -28,6 +29,9 @@ export default class Manager extends React.Component {
 
     this.state = {
       theme: "light",
+      primaryColor: "blue",
+
+      settingsModal: false,
 
       projects: [],
 
@@ -82,6 +86,9 @@ export default class Manager extends React.Component {
         console.log("----- receive config file -----", data);
         if(data.theme) {
           this.setState({theme: data.theme});
+        }
+        if(data.color) {
+          this.setState({primaryColor: data.color});
         }
         if(data.projects) {
           this.setState({projects: data.projects})
@@ -216,7 +223,10 @@ export default class Manager extends React.Component {
           <link href="./static/fontawesome/css/all.css" rel="stylesheet"/>
         </Head>
 
-        <Nav theme={themes[this.state.theme]}/>
+        <Nav
+          theme={themes[this.state.theme]}
+          openSettings={() => this.setState({settingsModal: true})}
+        />
 
         <div className="main">
           <div className="softwareContainer">
@@ -240,6 +250,7 @@ export default class Manager extends React.Component {
               <div className="projectSelect">
                 <Dropdown
                   theme={themes[this.state.theme]}
+                  primaryColor={this.state.primaryColor}
                   value={this.state.project}
                   options={this.state.projects}
                   onChange={(element) => this.setProject(element)}
@@ -248,6 +259,7 @@ export default class Manager extends React.Component {
               <div className="assetShotSwitch">
                 <Switch
                   theme={themes[this.state.theme]}
+                  primaryColor={this.state.primaryColor}
                   option1="Assets"
                   option2="Shots"
                   onChange={(choice) => this.setSwitch(choice)}
@@ -256,6 +268,7 @@ export default class Manager extends React.Component {
               <div className="searchBar">
                 <SearchBar
                   theme={themes[this.state.theme]}
+                  primaryColor={this.state.primaryColor}
                   sid={this.state.sid}
                 />
               </div>
@@ -264,7 +277,10 @@ export default class Manager extends React.Component {
 
 
             <div className="filterContainer">
-              <FiltersContainer theme={themes[this.state.theme]} />
+              <FiltersContainer
+                theme={themes[this.state.theme]}
+                primaryColor={this.state.primaryColor}
+              />
             </div>
 
 
@@ -274,6 +290,7 @@ export default class Manager extends React.Component {
               <div className="browser sequenceBrowser">
                 <Browser
                   theme={themes[this.state.theme]}
+                  primaryColor={this.state.primaryColor}
                   title={this.state.switch == "assets" ? "Asset Type" : "Sequences"}
                   directories={this.state.directories.type}
                   onChange={(dir) => this.setSidDir("type", dir)}
@@ -285,6 +302,7 @@ export default class Manager extends React.Component {
               <div className="browser shotBrowser">
                 <Browser
                   theme={themes[this.state.theme]}
+                  primaryColor={this.state.primaryColor}
                   title={this.state.switch == "assets" ? "Asset Name" : "Shots"}
                   directories={this.state.directories.name}
                   onChange={(dir) => this.setSidDir("name", dir)}
@@ -296,6 +314,7 @@ export default class Manager extends React.Component {
               <div className="browser taskBrowser">
                 <Browser
                   theme={themes[this.state.theme]}
+                  primaryColor={this.state.primaryColor}
                   title="Tasks"
                   directories={this.state.directories.task}
                   onChange={(dir) => this.setSidDir("task", dir)}
@@ -307,6 +326,7 @@ export default class Manager extends React.Component {
               <div className="browser subtaskBrowser">
                 <Browser
                   theme={themes[this.state.theme]}
+                  primaryColor={this.state.primaryColor}
                   title="Subtasks"
                   directories={this.state.directories.subtask}
                   onChange={(dir) => this.setSidDir("subtask", dir)}
@@ -318,6 +338,7 @@ export default class Manager extends React.Component {
               <div className="fileBrowser">
                 <FileBrowser
                   theme={themes[this.state.theme]}
+                  primaryColor={this.state.primaryColor}
                   title="Files"
                   files={this.state.directories.file}
                   onChange={(file) => this.setSidFile(file)}
@@ -331,6 +352,7 @@ export default class Manager extends React.Component {
               {this.state.sid.file != undefined ?
                 <FileViewer
                   theme={themes[this.state.theme]}
+                  primaryColor={this.state.primaryColor}
                   sid={this.state.sid}
                   execTask={(task) => this.execTask(task)}
                   onChangeComment={(e) => this.editComment(e)}
@@ -349,6 +371,13 @@ export default class Manager extends React.Component {
 
           </div>
         </div>
+
+        <SettingsContainer
+          theme={themes[this.state.theme]}
+          primaryColor={this.state.primaryColor}
+          show={this.state.settingsModal}
+          handleClose={() =>  this.setState({settingsModal: false})}
+        />
 
         <style jsx global>{`
           html, body {
@@ -381,11 +410,11 @@ export default class Manager extends React.Component {
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            background-image: linear-gradient(${themes[this.state.theme].blueTransparent}, ${themes[this.state.theme].blueTransparent}), url('./static/img/jakob-owens-CiUR8zISX60-unsplash.jpg');
-            background-position: center;
-            background-attachment: fixed;
-            background-size: cover;
-            background-repeat: no-repeat;
+            // background-image: linear-gradient(${themes[this.state.theme].blueTransparent}, ${themes[this.state.theme].blueTransparent}), url('./static/img/jakob-owens-CiUR8zISX60-unsplash.jpg');
+            // background-position: center;
+            // background-attachment: fixed;
+            // background-size: cover;
+            // background-repeat: no-repeat;
           }
           .softwareContainer {
             width: 150px;

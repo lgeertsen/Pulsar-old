@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-const Switch = ({ theme, option1, option2, onChange }) => {
+const Switch = ({ theme, primaryColor, option1, option2, onChange }) => {
 
   const [selected, setSelected] = useState(1);
 
@@ -36,8 +36,9 @@ const Switch = ({ theme, option1, option2, onChange }) => {
             transition: all ease 0.2s;
           }
           .option.selected {
-            border-color: ${theme.blue};
-            background: ${theme.background};
+            border-color: ${theme[primaryColor]};
+            background: ${theme[primaryColor]};
+            color: ${theme.white};
           }
           .option:first-child {
             border-top-left-radius: 6px;

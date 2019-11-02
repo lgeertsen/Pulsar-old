@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CheckBox = ({ theme, label, checked, onCheck }) => {
+const CheckBox = ({ theme, primaryColor, label, checked, onCheck }) => {
   // const [checked, setChecked] = useState(false);
 
   const checkBox = () => {
@@ -43,10 +43,10 @@ const CheckBox = ({ theme, label, checked, onCheck }) => {
             transform: rotate(45deg);
           }
           .checkbox:hover {
-            border-color: ${theme.blue};
+            border-color: ${theme[primaryColor]};
           }
           .checkbox.checked {
-            background: ${theme.blue};
+            background: ${theme[primaryColor]};
           }
           .checkboxLabel {
             flex: 1;
