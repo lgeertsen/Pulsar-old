@@ -56,6 +56,7 @@ class FrontEnd(socketio.Namespace):
     def on_setSidDir(self, sid, data):
         print("----- set sid dir -----", data)
         self._pulsar._sid[data["type"]] = data["dir"]
+        self._pulsar.cleanSid(data["type"])
         dirs = self._pulsar._type_to_func[data["type"]]["func"]()
         self.emit("directories", {"type": self._pulsar._type_to_func[data["type"]]["type"], "dirs": dirs}, room=sid)
 
@@ -214,6 +215,52 @@ class Pulsar():
             "file": None
         }
         return sid
+
+    def cleanSid(self, sid_type):
+        if sid_type == "project":
+            self._sid["switch"] = None
+            self._sid["type"] = None
+            self._sid["name"] = None
+            self._sid["task"] = None
+            self._sid["subtask"] = None
+            self._sid["state"] = None
+            self._sid["version"] = None
+            self._sid["file"] = None
+        elif sid_type == "switch":
+            self._sid["type"] = None
+            self._sid["name"] = None
+            self._sid["task"] = None
+            self._sid["subtask"] = None
+            self._sid["state"] = None
+            self._sid["version"] = None
+            self._sid["file"] = None
+        elif sid_type == "type":
+            self._sid["name"] = None
+            self._sid["task"] = None
+            self._sid["subtask"] = None
+            self._sid["state"] = None
+            self._sid["version"] = None
+            self._sid["file"] = None
+        elif sid_type == "name":
+            self._sid["task"] = None
+            self._sid["subtask"] = None
+            self._sid["state"] = None
+            self._sid["version"] = None
+            self._sid["file"] = None
+        elif sid_type == "task":
+            self._sid["subtask"] = None
+            self._sid["state"] = None
+            self._sid["version"] = None
+            self._sid["file"] = None
+        elif sid_type == "subtask":
+            self._sid["state"] = None
+            self._sid["version"] = None
+            self._sid["file"] = None
+        elif sid_type == "state":
+            self._sid["version"] = None
+            self._sid["file"] = None
+        elif sid_type == "version":
+            self._sid["file"] = None
 
     def get_types(self):
         if(self._sid["switch"] == "assets"):

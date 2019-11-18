@@ -53,8 +53,8 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
     onSaveComment();
   }
 
-  const onClickSoft = (id) => {
-    selectSoftware(id);
+  const onClickSoft = (id, software) => {
+    selectSoftware(id, software);
   }
 
   const checkBox = () => {
@@ -135,44 +135,42 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
         </div>
 
         <Modal theme={theme} primaryColor={primaryColor} show={showModal} handleClose={(value) => handleModal(value)}>
-          <div className="modalTitle">
-            <h3>{sid.file.name + "_" + sid.file.state + "_" + sid.file.version + "." + sid.file.extension}</h3>
-          </div>
-          {command == "open_file_as" ?
-            <div className="newNameContainer">
-              <div className="label"><h4>Open As:</h4></div>
-              <div className="nameInputContainer">
-                <input className="nameInput" value={newFileName} onChange={(e) => onFileNameChange(e.target.value)}/>
-              </div>
+          <div className="openSoftModal">
+            <div className="modalTitle">
+              <h3>{sid.file.name + "_" + sid.file.state + "_" + sid.file.version + "." + sid.file.extension}</h3>
             </div>
-            : ""
-          }
-          <div className="softwareContainer">
-            <h4>Open in:</h4>
-            <div className="softwareSelection">
-              {softwares.map((soft, index) => (
-                <div key={index} className={soft.id == selectedSoftware ? "software selected" : "software"} onClick={(e) => onClickSoft(soft.id)}>
-                  <img className="softwareImg" src={"./static/" + soft.software + ".jpg"}></img>
-                  <span>{soft.saved == 1 ? soft.scene : soft.scene + "*"}</span>
+            {command == "open_file_as" ?
+              <div className="newNameContainer">
+                <div className="label"><h4>Open As:</h4></div>
+                <div className="nameInputContainer">
+                  <input className="nameInput" value={newFileName} onChange={(e) => onFileNameChange(e.target.value)}/>
                 </div>
-              ))}
-              <div className={selectedSoftware == "new" ? "software selected" : "software"} onClick={(e) => onClickSoft("new")}>
-                <img className="softwareImg" src={"./static/maya.jpg"}></img>
-                <span>Open new maya</span>
+              </div>
+              : ""
+            }
+            <div className="softwareContainer">
+              <h4>Open in:</h4>
+              <div className="softwareSelection">
+                {softwares.map((soft, index) => (
+                  <div key={index} className={soft.id == selectedSoftware ? "software selected" : "software"} onClick={(e) => onClickSoft(soft.id, soft.software)}>
+                    <img className="softwareImg" src={"./static/" + soft.software + ".png"}></img>
+                    <span>{soft.saved == 1 ? soft.scene : soft.scene + "*"}</span>
+                  </div>
+                ))}
               </div>
             </div>
+            {selectedSoftware != undefined ?
+                <div>
+                  {selectedSoftware != "new" && selectedSoft.saved == 0 ?
+                    <CheckBox theme={theme} label="Save current open scene" checked={checked} onCheck={() => checkBox()}/>
+                    : ""
+                  }
+                  <div className="btn" onClick={() => handleClick()}>Open</div>
+                </div>
+              :
+              <h6>Please select a software.</h6>
+            }
           </div>
-          {selectedSoftware != undefined ?
-              <div>
-                {selectedSoftware != "new" && selectedSoft.saved == 0 ?
-                  <CheckBox theme={theme} label="Save current open scene" checked={checked} onCheck={() => checkBox()}/>
-                  : ""
-                }
-                <div className="btn" onClick={() => handleClick()}>Open</div>
-              </div>
-            :
-            <h6>Please select a software.</h6>
-          }
         </Modal>
 
 
@@ -272,6 +270,12 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
             background: ${theme.secondaryBg};
           }
 
+          .openSoftModal {
+            width: 500px;
+            padding-left: 15px;
+            padding-right: 15px;
+          }
+
           .modalTitle {
             margin-bottom: 20px;
           }
@@ -280,7 +284,7 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
             margin: 15px 0;
           }
           .nameInput {
-            width: calc(100% - 10px);
+            width: 450px;
             height: 30px;
             margin-top: 10px;
             padding-left: 10px;

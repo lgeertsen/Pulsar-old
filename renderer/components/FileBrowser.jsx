@@ -84,7 +84,8 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
           .file {
             display: flex;
             flex-direction: row;
-            height: 20px;
+            min-height: 20px;
+            max-height: 20px;
             border-bottom: ${theme.accentBorder};
             color: ${theme.text};
             cursor: pointer;

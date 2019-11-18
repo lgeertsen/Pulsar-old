@@ -46,6 +46,7 @@ export default class Manager extends React.Component {
       file: undefined,
 
       selectedSoftware: undefined,
+      selectedSoftwareType: undefined,
       softwares: {},
 
       newFileName: undefined,
@@ -158,12 +159,8 @@ export default class Manager extends React.Component {
     let data = {
       id: selectedSoft,
       command: task.command,
-      arguments: task.arguments
-    }
-    if(selectedSoft = "new") {
-      data["type"] = "maya"
-    } else {
-      data["type"] = this.state.softwares[selectedSoft].software
+      arguments: task.arguments,
+      type: this.state.selectedSoftwareType
     }
     console.log(data);
 
@@ -193,7 +190,45 @@ export default class Manager extends React.Component {
           softs.push(soft);
         }
       }
+      let newSoft = {
+        id: "new",
+        software: "maya",
+        scene: "Open new maya",
+        saved: 1
+      }
+      softs.push(newSoft);
+    } else if(["hip", "hipnc"].includes(file.extension)) {
+      for(let id in softwares) {
+        if(softwares[id].software == "houdini") {
+          let soft = softwares[id];
+          soft.id = id;
+          softs.push(soft);
+        }
+      }
+      let newSoft = {
+        id: "new",
+        software: "houdini",
+        scene: "Open new houdini",
+        saved: 1
+      }
+      softs.push(newSoft);
+    } else if(["nk"].includes(file.extension)) {
+      for(let id in softwares) {
+        if(softwares[id].software == "nuke") {
+          let soft = softwares[id];
+          soft.id = id;
+          softs.push(soft);
+        }
+      }
+      let newSoft = {
+        id: "new",
+        software: "nuke",
+        scene: "Open new nuke",
+        saved: 1
+      }
+      softs.push(newSoft);
     }
+
     return softs;
   }
 
@@ -211,6 +246,10 @@ export default class Manager extends React.Component {
     let timestamp = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
     let wipName = `WIP_${sid.file.name}_${sid.task}_${sid.subtask}_${sid.file.version}_${timestamp}`;
     return wipName
+  }
+
+  setTheme(theme) {
+    this.setState({theme: theme});
   }
 
   render() {
@@ -358,7 +397,7 @@ export default class Manager extends React.Component {
                   onChangeComment={(e) => this.editComment(e)}
                   onSaveComment={() => this.saveComment()}
                   softwares={this.getCompatibleSoftware()}
-                  selectSoftware={(id) => this.setState({selectedSoftware: id})}
+                  selectSoftware={(id, software) => this.setState({selectedSoftware: id, selectedSoftwareType: software})}
                   selectedSoftware={this.state.selectedSoftware}
                   selectedSoft={this.state.softwares[this.state.selectedSoftware]}
                   checkSotfwareSaved={() => this.checkSotfwareSaved()}
@@ -374,6 +413,8 @@ export default class Manager extends React.Component {
 
         <SettingsContainer
           theme={themes[this.state.theme]}
+          themeName={this.state.theme}
+          setTheme={(theme) => this.setTheme(theme)}
           primaryColor={this.state.primaryColor}
           show={this.state.settingsModal}
           handleClose={() =>  this.setState({settingsModal: false})}

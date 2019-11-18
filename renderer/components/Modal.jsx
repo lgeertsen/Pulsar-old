@@ -44,7 +44,7 @@ const Modal = ({ theme, primaryColor, handleClose, show, children }) => {
           min-width: 400px;
           width: auto;
           height: auto;
-          padding: 15px;
+          padding-bottom: 15px;
           padding-top: 25px;
           border-radius: 6px;
           border: ${theme.border};

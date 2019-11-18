@@ -1,6 +1,7 @@
 export default {
   body: "#34495e",
   background: "#2c3e50",
+  transparentBg: "rgba(255, 255, 255, 0.85)",
   accentBg: "#636e72",
   secondaryBg: "#2d3436",
   border: "1px solid #7f8c8d",

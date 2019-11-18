@@ -1,5 +1,6 @@
 {
     "theme": "light",
+    "color": "red",
     "projects": ["FILM1", "FILM2", "FILM3"],
     "disk": "C",
     "shot_paths": {
@@ -9,7 +10,8 @@
     "asset_path": "{disk}:/SynologyDrive/{project}/03_WORK_PIPE/01_ASSET_3D/{type}/{name}/{task}/{subtask}/{state}_{version}/{file}.{ext}",
     "nodes": "C:/Users/leege/Pulsar/nodes",
     "softwares": {
-      "maya": "C:/Maya2019"
+      "maya": "C:/Maya2019",
+      "houdini": "C:/Houdini17"
     },
     "cgwire": {
       "username": "youremail@artfx.fr",
