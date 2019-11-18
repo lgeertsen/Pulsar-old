@@ -10,8 +10,9 @@
     "asset_path": "{disk}:/SynologyDrive/{project}/03_WORK_PIPE/01_ASSET_3D/{type}/{name}/{task}/{subtask}/{state}_{version}/{file}.{ext}",
     "nodes": "C:/Users/leege/Pulsar/nodes",
     "softwares": {
-      "maya": "C:/Maya2019",
-      "houdini": "C:/Houdini17"
+      "maya": "C:/Maya2019/bin/maya.exe",
+      "houdini": "C:/Houdini17/bin/houdinifx.exe",
+      "nuke": "C:/Nuke11.3v5/Nuke11.3.exe"
     },
     "cgwire": {
       "username": "youremail@artfx.fr",
