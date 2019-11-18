@@ -1,7 +1,7 @@
 {
     "node" : {
         "id" : "houdini.open_file",
-        "name": "node1",
+        "name": "open_file",
         "color": "#44f",
         "type": "houdini",
         "script": "open_file.py",

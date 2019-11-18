@@ -1,13 +1,17 @@
 {
     "node" : {
-        "id" : "nuke.open_file",
-        "name": "open_file",
+        "id" : "houdini.open_file_as",
+        "name": "open_file_as",
+        "type": "houdini",
         "color": "#44f",
-        "type": "nuke",
-        "script": "open_file.py",
+        "script": "open_file_as.py",
         "inputs": [
           {
             "name": "file",
+            "type": "string"
+          },
+          {
+            "name": "name",
             "type": "string"
           },
           {
