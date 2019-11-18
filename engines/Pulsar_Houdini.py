@@ -5,8 +5,8 @@ import timeit
 import time
 import logging
 
-import maya.cmds as cmds
-import maya.utils as utils
+import hou
+import hdefereval
 
 parent_dir = os.path.abspath(os.path.dirname(__file__))
 vendor_dir = os.path.join(parent_dir, 'vendor')
@@ -14,13 +14,6 @@ if vendor_dir not in sys.path:
     sys.path.append(vendor_dir)
 
 import socketio
-
-def maya_useNewAPI():
-    """
-    The presence of this function tells Maya that the plugin produces, and
-    expects to be passed, objects created using the Maya Python API 2.0.
-    """
-    pass
 
 
 logger = logging.getLogger(__name__)
@@ -35,7 +28,7 @@ class PulsarSocket(socketio.ClientNamespace):
         print("----- connected to pulsar socket -----")
         self._pulsar._connected = True
         saved = self._pulsar.execute(self._pulsar.check_state)
-        self.emit("software", {"software": "maya", "scene": self._pulsar._scene, "saved": saved})
+        self.emit("software", {"software": "houdini", "scene": self._pulsar._scene, "saved": saved})
 
     def on_checkSaved(self, data):
         saved = self._pulsar.execute(self._pulsar.check_state)
@@ -58,7 +51,7 @@ class PulsarSocket(socketio.ClientNamespace):
         self._pulsar._scene = self._pulsar.execute(self._pulsar.getSceneName)
         saved = self._pulsar.execute(self._pulsar.check_state)
 
-        self.emit("software", {"software": "maya", "scene": self._pulsar._scene, "saved": saved})
+        self.emit("software", {"software": "houdini", "scene": self._pulsar._scene, "saved": saved})
 
 
     def on_disconnect(self):
@@ -74,27 +67,26 @@ class Pulsar():
         self._connected = False
         self._scene = self.getSceneName()
 
-        self.createUI()
+        # self.createUI()
+        self.launch()
 
     def getSceneName(self):
-        filepath = cmds.file(q=True, sn=True)
-        filename = os.path.basename(filepath)
-        raw_name, extension = os.path.splitext(filename)
+        raw_name, extension = os.path.splitext(hou.hipFile.basename())
         if(raw_name == ""):
             raw_name = "untitled"
         return raw_name
 
-    def createUI(self):
-        self._window = cmds.window( title="Pulsar", iconName='Short Name', widthHeight=(300, 400), sizeable=False )
-        cmds.columnLayout( adjustableColumn=True )
-
-        cmds.button( label='Launch Pulsar', command=self.launch )
-        cmds.button( label='Stop Pulsar', command=self.stop )
-        cmds.button( label='Close', command=self.closeUI )
-
-        cmds.setParent( '..' )
-
-        cmds.showWindow( self._window )
+    # def createUI(self):
+    #     self._window = cmds.window( title="Pulsar", iconName='Short Name', widthHeight=(300, 400), sizeable=False )
+    #     cmds.columnLayout( adjustableColumn=True )
+    #
+    #     cmds.button( label='Launch Pulsar', command=self.launch )
+    #     cmds.button( label='Stop Pulsar', command=self.stop )
+    #     cmds.button( label='Close', command=self.closeUI )
+    #
+    #     cmds.setParent( '..' )
+    #
+    #     cmds.showWindow( self._window )
 
 
     def launch(self, *args):
@@ -106,16 +98,19 @@ class Pulsar():
         if self._connected:
             self._sio.emit("close", namespace="/software")
 
-    def closeUI(self, *args):
-        if self._connected:
-            self._sio.emit("close", namespace="/software")
-        cmds.deleteUI( self._window, window=True)
+    # def closeUI(self, *args):
+    #     if self._connected:
+    #         self._sio.emit("close", namespace="/software")
+    #     cmds.deleteUI( self._window, window=True)
 
     def check_state(self):
-        changed = cmds.file(q=True, modified=True)
+        changed = hou.hipFile.hasUnsavedChanges()
         if changed:
             return 0
         return 1
 
     def execute(self, func, *args):
-        return utils.executeInMainThreadWithResult(func, *args)
+        return hdefereval.executeInMainThreadWithResult(func, *args)
+
+
+Pulsar()

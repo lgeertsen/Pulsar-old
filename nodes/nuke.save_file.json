@@ -1,7 +1,7 @@
 {
     "node" : {
         "id" : "nuke.save_file",
-        "name": "node1",
+        "name": "save_file",
         "color": "#44f",
         "type": "nuke",
         "script": "save_file.py",

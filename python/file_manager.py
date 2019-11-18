@@ -54,7 +54,8 @@ class FileManager:
                             with open(comment_file, 'r') as data:
                                 comment = data.read()
 
-                        file = {
+                        try:
+                            file = {
                             "state": splitted[0],
                             "version": "_" if splitted[0] == "wip" else splitted[1],
                             "name": splitFile[0],
@@ -63,8 +64,10 @@ class FileManager:
                             "modified": date,
                             "comment": comment,
                             "path": fpath
-                        }
-                        files.append(file)
+                            }
+                            files.append(file)
+                        except:
+                            pass
         return files
 
     def get_file_path(path, sid):

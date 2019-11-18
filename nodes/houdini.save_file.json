@@ -1,7 +1,7 @@
 {
     "node" : {
         "id" : "houdini.save_file",
-        "name": "node1",
+        "name": "save_file",
         "color": "#44f",
         "type": "houdini",
         "script": "save_file.py",

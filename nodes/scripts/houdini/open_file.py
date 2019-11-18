@@ -1,9 +1,11 @@
+import os
 import hou
 
-
 def main(arguments):
-    if(arguments["force"]):
-        hou.hipFile.load(arguments["file"], open=True, force=True)
+    file = arguments["file"].replace(os.sep, '/')
+
+    if(arguments["force"] == 0):
+        hou.hipFile.load(file, suppress_save_prompt=True)
     else:
         hou.hipFile.save(file_name=None)
-        hou.hipFile.load(arguments["file"], open=True, force=False)
+        hou.hipFile.load(file, suppress_save_prompt=False)

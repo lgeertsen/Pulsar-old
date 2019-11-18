@@ -162,7 +162,7 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
             {selectedSoftware != undefined ?
                 <div>
                   {selectedSoftware != "new" && selectedSoft.saved == 0 ?
-                    <CheckBox theme={theme} label="Save current open scene" checked={checked} onCheck={() => checkBox()}/>
+                    <CheckBox theme={theme} primaryColor={primaryColor} label="Save current open scene" checked={checked} onCheck={() => checkBox()}/>
                     : ""
                   }
                   <div className="btn" onClick={() => handleClick()}>Open</div>

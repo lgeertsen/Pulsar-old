@@ -275,7 +275,7 @@ export default class Manager extends React.Component {
             {Object.keys(this.state.softwares).map((softwareId, index) => (
               <div key={index} className={this.state.selectedSoftware == softwareId ? "software selected" : "software"}>
                 <div className="softwareHeader">
-                  <img className="softwareImg" src={"./static/" + this.state.softwares[softwareId].software + ".jpg"}></img>
+                  <img className="softwareImg" src={"./static/" + this.state.softwares[softwareId].software + ".png"}></img>
                   <h4 className="softwareName">{this.state.softwares[softwareId].software.charAt(0).toUpperCase() + this.state.softwares[softwareId].software.slice(1)}</h4>
                 </div>
                 <span className="softwareSceneNmae">{this.state.softwares[softwareId].saved == 1 ? this.state.softwares[softwareId].scene : this.state.softwares[softwareId].scene + "*"}</span>
