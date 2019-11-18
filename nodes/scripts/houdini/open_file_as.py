@@ -31,3 +31,13 @@ def main(arguments):
 
     hou.hipFile.setName(new_name_path)
     hou.hipFile.save(file_name=None)
+
+    workspace_path = path.split('/scenes')[0]
+    wipcache_path = os.path.split(path.replace('02_shot/3d/scenes', '03_WIP_CACHE_FX'))[0]
+    wipcache_path = wipcache_path.replace('01_asset_3d/3d/scenes', '03_WIP_CACHE_FX')
+    pubcache_path = os.path.split(path.replace('02_shot/3d/scenes', '04_PUBLISH_CACHE_FX'))[0]
+    pubcache_path = pubcache_path.replace('01_asset_3d/3d/scenes', '04_PUBLISH_CACHE_FX')
+
+    hou.putenv('JOB', workspace_path)
+    hou.putenv('WIPCACHE', wipcache_path)
+    hou.putenv('PUBCACHE', pubcache_path)
