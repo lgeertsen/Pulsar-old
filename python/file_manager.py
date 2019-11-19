@@ -117,7 +117,7 @@ class FileManager:
         elif(path_type == "3d"):
             stripped = stripped[:9]
         else:
-            stripped = stripped[:7]
+            stripped = stripped[:9]
         dir_path = "/".join(stripped)
         format_path = dir_path.format(disk=sid["disk"], project=sid["project"], type=sid["type"], name=sid["name"])
 
@@ -130,7 +130,7 @@ class FileManager:
         elif(path_type == "3d"):
             stripped = stripped[:10]
         else:
-            stripped = stripped[:8]
+            stripped = stripped[:10]
         dir_path = "/".join(stripped)
         format_path = dir_path.format(disk=sid["disk"], project=sid["project"], type=sid["type"], name=sid["name"], task=sid["task"])
 
@@ -143,7 +143,7 @@ class FileManager:
         elif(path_type == "3d"):
             stripped = stripped[:11]
         else:
-            stripped = stripped[:9]
+            stripped = stripped[:11]
         dir_path = "/".join(stripped)
         format_path = dir_path.format(disk=sid["disk"], project=sid["project"], type=sid["type"], name=sid["name"], task=sid["task"], subtask=sid["subtask"])
 
@@ -156,7 +156,7 @@ class FileManager:
         elif(path_type == "3d"):
             stripped = stripped[:12]
         else:
-            stripped = stripped[:10]
+            stripped = stripped[:12]
         dir_path = "/".join(stripped)
         format_path = dir_path.format(disk=sid["disk"], project=sid["project"], type=sid["type"], name=sid["name"], task=sid["task"], subtask=sid["subtask"], state=sid["state"], version=sid["version"])
 

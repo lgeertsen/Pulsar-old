@@ -59,6 +59,14 @@ export default class Manager extends React.Component {
         file: []
       },
 
+      selectedIndexes: {
+        type: -1,
+        name: -1,
+        task: -1,
+        subtask: -1,
+        file: -1
+      },
+
       sid: {
         "project": undefined,
         "assetShot": "a",
@@ -68,7 +76,8 @@ export default class Manager extends React.Component {
         "subtask": undefined,
         "state": undefined,
         "version": undefined,
-        "file": undefined
+        "file": undefined,
+        "ext": undefined
       }
     };
   }
@@ -100,7 +109,7 @@ export default class Manager extends React.Component {
       });
 
       ipcRenderer.on('directories', (event, data) => {
-        console.log("----- receive type directories -----");
+        console.log("----- received directories -----");
         console.log(data);
         this.setState({directories: data});
       });
@@ -115,24 +124,95 @@ export default class Manager extends React.Component {
 
   setProject(project) {
     let sid = this.state.sid;
+    let selectedIndexes = this.state.selectedIndexes;
     sid.project = project;
-    this.setState({sid: sid, project: project});
+    selectedIndexes.file = -1;
+    sid.fileName = undefined;
+    sid.state = undefined;
+    sid.version = undefined;
+    sid.ext = undefined;
+    selectedIndexes.subtask = -1;
+    sid.subtask = undefined;
+    selectedIndexes.task = -1;
+    sid.task = undefined;
+    selectedIndexes.name = -1;
+    sid.name = undefined;
+    selectedIndexes.type = -1;
+    sid.type = undefined;
+
+    this.setState({sid: sid, project: project, selectedIndexes: selectedIndexes});
     ipcRenderer.send("setProject", project);
   }
 
   setSwitch(data) {
     let choice = data == 1 ? "assets" : "shots"
     let sid = this.state.sid;
+    let selectedIndexes = this.state.selectedIndexes;
+    selectedIndexes.file = -1;
+    sid.fileName = undefined;
+    sid.state = undefined;
+    sid.version = undefined;
+    sid.ext = undefined;
+    selectedIndexes.subtask = -1;
+    sid.subtask = undefined;
+    selectedIndexes.task = -1;
+    sid.task = undefined;
+    selectedIndexes.name = -1;
+    sid.name = undefined;
+    selectedIndexes.type = -1;
+    sid.type = undefined;
     sid.assetShot = data == 1 ? "a" : "s";
-    this.setState({switch: choice, sid: sid});
+    this.setState({switch: choice, sid: sid, selectedIndexes: selectedIndexes});
     ipcRenderer.send("setSwitch", choice);
   }
 
   setSidDir(type, index) {
+    console.log("-------------type------------", type);
     let dir = this.state.directories[type][index];
     let sid = this.state.sid;
     sid[type] = dir;
-    this.setState({sid: sid});
+    let selectedIndexes = this.state.selectedIndexes
+    selectedIndexes[type] = index
+
+    if(type == "subtask") {
+      selectedIndexes.file = -1;
+      sid.fileName = undefined;
+      sid.state = undefined;
+      sid.version = undefined;
+      sid.ext = undefined;
+    } else if(type == "task") {
+      selectedIndexes.file = -1;
+      sid.fileName = undefined;
+      sid.state = undefined;
+      sid.version = undefined;
+      sid.ext = undefined;
+      selectedIndexes.subtask = -1;
+      sid.subtask = undefined;
+    } else if(type == "name") {
+      selectedIndexes.file = -1;
+      sid.fileName = undefined;
+      sid.state = undefined;
+      sid.version = undefined;
+      sid.ext = undefined;
+      selectedIndexes.subtask = -1;
+      sid.subtask = undefined;
+      selectedIndexes.task = -1;
+      sid.task = undefined;
+    } else if(type == "type") {
+      selectedIndexes.file = -1;
+      sid.fileName = undefined;
+      sid.state = undefined;
+      sid.version = undefined;
+      sid.ext = undefined;
+      selectedIndexes.subtask = -1;
+      sid.subtask = undefined;
+      selectedIndexes.task = -1;
+      sid.task = undefined;
+      selectedIndexes.name = -1;
+      sid.name = undefined;
+    }
+
+    this.setState({sid: sid, selectedIndexes: selectedIndexes});
     ipcRenderer.send("setSidDir", {type: type, dir: dir});
   }
 
@@ -144,8 +224,14 @@ export default class Manager extends React.Component {
     sid.version = file.version;
     sid.fileName = file.name;
     sid.ext = file.extension;
-    this.setState({sid: sid});
+    let selectedIndexes = this.state.selectedIndexes
+    selectedIndexes.file = index
+    this.setState({sid: sid, selectedIndexes: selectedIndexes});
     ipcRenderer.send("setFile", file);
+  }
+
+  refreshBrowser() {
+    ipcRenderer.send("refresh");
   }
 
   checkSotfwareSaved() {
@@ -333,6 +419,7 @@ export default class Manager extends React.Component {
                   title={this.state.switch == "assets" ? "Asset Type" : "Sequences"}
                   directories={this.state.directories.type}
                   onChange={(dir) => this.setSidDir("type", dir)}
+                  selectedDir={this.state.selectedIndexes.type}
                 />
               </div>
               <div className="chevronContainer">
@@ -345,6 +432,7 @@ export default class Manager extends React.Component {
                   title={this.state.switch == "assets" ? "Asset Name" : "Shots"}
                   directories={this.state.directories.name}
                   onChange={(dir) => this.setSidDir("name", dir)}
+                  selectedDir={this.state.selectedIndexes.name}
                 />
               </div>
               <div className="chevronContainer">
@@ -357,6 +445,7 @@ export default class Manager extends React.Component {
                   title="Tasks"
                   directories={this.state.directories.task}
                   onChange={(dir) => this.setSidDir("task", dir)}
+                  selectedDir={this.state.selectedIndexes.task}
                 />
               </div>
               <div className="chevronContainer">
@@ -369,6 +458,7 @@ export default class Manager extends React.Component {
                   title="Subtasks"
                   directories={this.state.directories.subtask}
                   onChange={(dir) => this.setSidDir("subtask", dir)}
+                  selectedDir={this.state.selectedIndexes.subtask}
                 />
               </div>
               <div className="chevronContainer">
@@ -381,6 +471,7 @@ export default class Manager extends React.Component {
                   title="Files"
                   files={this.state.directories.file}
                   onChange={(file) => this.setSidFile(file)}
+                  selectedFile={this.state.selectedIndexes.file}
                 />
               </div>
             </div>
@@ -402,6 +493,7 @@ export default class Manager extends React.Component {
                   selectedSoft={this.state.softwares[this.state.selectedSoftware]}
                   checkSotfwareSaved={() => this.checkSotfwareSaved()}
                   getWipName={() => this.getWipName()}
+                  refresh={() => this.refreshBrowser()}
                 />
                 : ""
               }
@@ -451,11 +543,11 @@ export default class Manager extends React.Component {
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            // background-image: linear-gradient(${themes[this.state.theme].blueTransparent}, ${themes[this.state.theme].blueTransparent}), url('./static/img/jakob-owens-CiUR8zISX60-unsplash.jpg');
-            // background-position: center;
-            // background-attachment: fixed;
-            // background-size: cover;
-            // background-repeat: no-repeat;
+            background-image: linear-gradient(${themes[this.state.theme].transparentBg}, ${themes[this.state.theme].transparentBg}), url('./static/img/jakob-owens-CiUR8zISX60-unsplash.jpg');
+            background-position: center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
           }
           .softwareContainer {
             width: 150px;
@@ -550,9 +642,9 @@ export default class Manager extends React.Component {
             flex-direction: row;
             align-items: center;
           }
-          .browser,
-          .fileBrowser {
-            flex: 1;
+          .browser {
+            // flex: 1;
+            width: 150px;
           }
           .browser:first-child {
             margin-left: 25px;

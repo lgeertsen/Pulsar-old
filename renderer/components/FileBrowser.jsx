@@ -38,6 +38,10 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
             </div>
           </div>
           {files.sort((a, b) => {
+            let name_a = a.name.toLowerCase()
+            let name_b = b.name.toLowerCase()
+            if(name_a < name_b) { return -1; }
+            if(name_a > name_b) { return 1; }
             if(a.version < b.version) { return -1; }
             if(a.version > b.version) { return 1; }
             if(a.state < b.state) { return 1; }

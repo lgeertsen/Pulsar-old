@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 
-const Browser = ({ theme, primaryColor, title, directories, onChange }) => {
-
-  const [selectedDir, setSelectedDir] = useState(-1);
+const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDir }) => {
 
   const handleChange = index => {
     onChange(index);
-    setSelectedDir(index);
   };
 
     return (

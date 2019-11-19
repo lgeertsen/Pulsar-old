@@ -112,6 +112,11 @@ if (isProd) {
     socket.emit("saveComment", data);
   });
 
+  ipcMain.on("refresh", (event) => {
+    console.log("----- refresh browser -----");
+    socket.emit("refresh");
+  });
+
 
 
 

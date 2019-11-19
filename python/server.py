@@ -66,6 +66,26 @@ class FrontEnd(socketio.Namespace):
         self._pulsar._sid["version"] = data["version"]
         self._pulsar._sid["file"] = data
 
+    def on_refresh(self, sid):
+        print("----- refresh browser -----")
+
+        if(this._pulsar._sid["project"] != None):
+            dirs = self._pulsar._type_to_func["project"]["func"]()
+            self.emit("directories", {"type": self._pulsar._type_to_func["project"]["type"], "dirs": dirs}, room=sid)
+        if(this._pulsar._sid["type"] != None):
+            dirs = self._pulsar._type_to_func["type"]["func"]()
+            self.emit("directories", {"type": self._pulsar._type_to_func["type"]["type"], "dirs": dirs}, room=sid)
+        if(this._pulsar._sid["name"] != None):
+            dirs = self._pulsar._type_to_func["name"]["func"]()
+            self.emit("directories", {"type": self._pulsar._type_to_func["name"]["type"], "dirs": dirs}, room=sid)
+        if(this._pulsar._sid["task"] != None):
+            dirs = self._pulsar._type_to_func["task"]["func"]()
+            self.emit("directories", {"type": self._pulsar._type_to_func["task"]["type"], "dirs": dirs}, room=sid)
+        if(this._pulsar._sid["subtask"] != None):
+            dirs = self._pulsar._type_to_func["subtask"]["func"]()
+            self.emit("directories", {"type": self._pulsar._type_to_func["subtask"]["type"], "dirs": dirs}, room=sid)
+
+
     def on_checkSotfwareSaved(self, sid):
         print("----- check if software is saved -----")
         self._pulsar._sio.emit("checkSaved", namespace="/software")

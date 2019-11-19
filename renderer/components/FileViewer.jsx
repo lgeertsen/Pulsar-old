@@ -4,7 +4,7 @@ import CheckBox from './CheckBox'
 import CommentContainer from '../containers/CommentContainer';
 import Modal from './Modal';
 
-const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName }) => {
+const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName, refresh }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -30,6 +30,7 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
       }
     };
     if(command == "open_file_as") {
+      refresh()
       task.arguments["name"] = newFileName;
     }
     execTask(task);
