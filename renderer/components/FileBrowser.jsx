@@ -30,6 +30,9 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
             <div className="fileName nameHeader">
               <span>Name</span>
             </div>
+            <div className="fileTag tagHeader">
+              <span>Tags</span>
+            </div>
             <div className="fileModified modifiedHeader">
               <span>Date Modified</span>
             </div>
@@ -48,6 +51,13 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
               <div className="fileName">
                 <i className="fas fa-file"></i>
                 <span>{file.name + "_" + file.state + "_" + file.version + "." + file.extension}</span>
+              </div>
+              <div className="fileTag">
+                {file.tags.map((tag, index) => (
+                  <div key={index} className={"tag tag_" + tag.toLowerCase()}>
+                    <span>{tag}</span>
+                  </div>
+                ))}
               </div>
               <div className="fileModified">
                 <span>{file.modified}</span>
@@ -113,7 +123,7 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
           }
           .fileName {
-            flex: 6;
+            flex: 1;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -121,11 +131,44 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
           .fileName i {
             margin: 3px 5px;
           }
+          .file .fileTag {
+            width: 100px;
+            overflow: hidden;
+            flex-direction: column;
+          }
           .fileModified {
-            flex: 3;
+            width: 130px;
           }
           .fileSize {
-            flex: 2;
+            width: 50px;
+          }
+          .tag {
+            width: auto;
+            height: auto;
+            padding: 3px 5px;
+            border-radius: 3px;
+            background: #888;
+            color: #fff;
+            font-size: 14px;
+            margin: 2px 0;
+          }
+          .tag.tag_done {
+            background: ${theme.orange};
+          }
+          .tag.tag_wip {
+            background: ${theme.yellow};
+          }
+          .tag.tag_wfa {
+            background: ${theme.blue};
+          }
+          .tag.tag_retake {
+            background: ${theme.red};
+          }
+          .tag.tag_valid {
+            background: ${theme.green};
+          }
+          .tag.tag_todo {
+            background: ${theme.purple};
           }
         `}</style>
       </div>

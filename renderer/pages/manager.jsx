@@ -315,12 +315,12 @@ export default class Manager extends React.Component {
 
 
 
-            <div className="filterContainer">
+            {/* <div className="filterContainer">
               <FiltersContainer
                 theme={themes[this.state.theme]}
                 primaryColor={this.state.primaryColor}
               />
-            </div>
+            </div> */}
 
 
 

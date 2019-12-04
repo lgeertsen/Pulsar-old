@@ -39,8 +39,15 @@ class FileManager:
         for dir in state_version_dirs:
             splitted = dir.split("_")
             projFiles = os.listdir(dir_path + "/" + dir)
+            tags = []
             for f in projFiles:
-                if f != "comment.txt":
+                splitFile = f.split(".")
+                if(splitFile[-1] == "tag"):
+                    tags.append(splitFile[0])
+
+            for f in projFiles:
+                extension = f.split(".")[-1]
+                if f != "comment.txt" and extension != "tag":
                     fpath = os.path.join(dir_path + "/" + dir, f)
                     if os.path.isfile(fpath):
                         size = os.path.getsize(fpath)
@@ -56,14 +63,15 @@ class FileManager:
 
                         try:
                             file = {
-                            "state": splitted[0],
-                            "version": "_" if splitted[0] == "wip" else splitted[1],
-                            "name": splitFile[0],
-                            "extension": splitFile[1],
-                            "size": size,
-                            "modified": date,
-                            "comment": comment,
-                            "path": fpath
+                                "state": splitted[0],
+                                "version": "_" if splitted[0] == "wip" else splitted[1],
+                                "name": splitFile[0],
+                                "extension": splitFile[1],
+                                "size": size,
+                                "modified": date,
+                                "comment": comment,
+                                "tags": tags,
+                                "path": fpath
                             }
                             files.append(file)
                         except:
@@ -81,6 +89,7 @@ class FileManager:
         with open(comment_file, 'w') as filetowrite:
             filetowrite.write(comment)
 
+    
 
 
 
