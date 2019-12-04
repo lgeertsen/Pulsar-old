@@ -21,7 +21,11 @@ $ yarn dev
 The source code for the backed can be found in: `python/`
 To run the backend server:
 ```bash
-$ python server.py
+# install dependencies
+$ yarn install
+
+# start dev server
+$ yarn dev
 ```
 
 ## Engine plugins
