@@ -1,0 +1,12 @@
+{
+  "name": "python",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.py"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "nodemon": "^2.0.1"
+  }
+}
