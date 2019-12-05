@@ -1,0 +1,25 @@
+{
+    "node" : {
+        "id" : "windows.mayapy_publish",
+        "name": "node1",
+        "color": "#44f",
+        "type": "windows",
+        "script": "publish.py",
+        "inputs": [
+          {
+            "name": "file",
+            "type": "string"
+          },
+          {
+            "name": "new_path",
+            "type": "string"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "is_save",
+            "type": "bool"
+          }
+        ]
+    }
+}
