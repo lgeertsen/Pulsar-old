@@ -43,6 +43,19 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, show, han
                     </div>
                   </div>
                 </div>
+                <div className="settingsOption">
+                  <div className="settingsOptionTitle">
+                    <h3>Primary Color:</h3>
+                  </div>
+                  <div className="settingsOptionChoices">
+                    <div className="settingsOptionChoice">
+                      
+                    </div>
+                    <div className="settingsOptionChoice">
+                      <div className={themeName == "dark" ? "themeChoice themeChoiceDark selected" : "themeChoice themeChoiceDark"} onClick={() => changeTheme("dark")}>Dark</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
