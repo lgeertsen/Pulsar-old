@@ -1,17 +1,13 @@
 {
     "node" : {
-        "id" : "windows.mayapy_publish",
-        "name": "node1",
+        "id" : "hython.publish",
+        "name": "publish",
         "color": "#44f",
-        "type": "windows",
+        "type": "hython",
         "script": "publish.py",
         "inputs": [
           {
             "name": "file",
-            "type": "string"
-          },
-          {
-            "name": "new_path",
             "type": "string"
           }
         ],

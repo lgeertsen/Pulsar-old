@@ -1,17 +1,5 @@
-import maya.standalone
-maya.standalone.initialize( name='python' )
-
-import maya.cmds as cmds
-import maya.mel as mel
-
 import os
 import sys
-
-def import_references():
-    refs = cmds.ls(type='reference')
-    for i in refs:
-    	rFile = cmds.referenceQuery(i, f=True)
-    	cmds.file(rFile, importReference=True)
 
 def main(file_path):
     file = file_path.replace(os.sep, '/')
@@ -27,13 +15,11 @@ def main(file_path):
 
     publish_path = os.path.join(publish_dir, path_split[-1])
 
-    cmds.file(file, open=True, force=True)
 
-    cmds.file(rn=publish_path)
+    hou.hipFile.load(file, suppress_save_prompt=True)
 
-    import_references()
-
-    cmds.file(save=True, force=True)
+    hou.hipFile.setName(publish_path)
+    hou.hipFile.save(file_name=None)
 
     old_file = path_split[-2:-1]
     comment = "Published from {file}".format(file=old_file)

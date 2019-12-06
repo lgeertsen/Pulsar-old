@@ -13,6 +13,7 @@
       "maya": "C:/Maya2019/bin/maya.exe",
       "mayapy": "C:/Maya2019/bin/mayapy.exe",
       "houdini": "C:/Houdini17/bin/houdinifx.exe",
+      "hython": "C:/Houdini17/bin/hython.exe",
       "nuke": "C:/Nuke11.3v5/Nuke11.3.exe"
     },
     "cgwire": {

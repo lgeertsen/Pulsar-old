@@ -37,7 +37,13 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
   };
 
   const onPublish = () => {
-    selectSoftware("mayapy", "mayapy")
+    if(["ma", "mb"].includes(sid.file.extension)) {
+      selectSoftware("mayapy", "mayapy")
+    } else if(["hip", "hipnc"].includes(sid.file.extension)) {
+      selectSoftware("hython", "hython")
+    } else if(["nk"].includes(sid.file.extension)) {
+
+    }
     let task = {
       command: "publish",
       arguments: {
@@ -173,7 +179,7 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
             </div>
             {selectedSoftware != undefined ?
                 <div>
-                  {selectedSoftware != "new" && selectedSoftware != "mayapy" && selectedSoft.saved == 0 ?
+                  {!["new", "mayapy", "hython"].includes(selectedSoftware) && selectedSoft.saved == 0 ?
                     <CheckBox theme={theme} primaryColor={primaryColor} label="Save current open scene" checked={checked} onCheck={() => checkBox()}/>
                     : ""
                   }
