@@ -150,6 +150,7 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
             width: auto;
             height: auto;
             padding: 3px 5px;
+            border: 1px solid ${theme.text};
             border-radius: 3px;
             background: #888;
             color: #fff;

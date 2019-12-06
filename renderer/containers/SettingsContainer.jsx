@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Modal from '../components/Modal'
 
-const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, show, handleClose }) => {
+const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, setPrimaryColor, show, handleClose }) => {
   const close = () => {
     handleClose();
   }
@@ -47,13 +47,15 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, show, han
                   <div className="settingsOptionTitle">
                     <h3>Primary Color:</h3>
                   </div>
-                  <div className="settingsOptionChoices">
-                    <div className="settingsOptionChoice">
-
-                    </div>
-                    <div className="settingsOptionChoice">
-                      <div className={themeName == "dark" ? "themeChoice themeChoiceDark selected" : "themeChoice themeChoiceDark"} onClick={() => changeTheme("dark")}>Dark</div>
-                    </div>
+                  <div className="settingsOptionChoices primaryColor">
+                    {Object.keys(theme.colors).map((color, index) => (
+                      <div key={index} className="settingsOptionChoice">
+                        { color != "white" ?
+                          <div className={primaryColor == color ? `colorBullet ${color} selected` : `colorBullet ${color}`} onClick={() => setPrimaryColor(color)}></div>
+                          : ""
+                        }
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -161,6 +163,56 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, show, han
           .themeChoiceDark {
             background: #34495e;
             color: #ecf0f1;
+          }
+          .settingsOptionChoices.primaryColor {
+            flex-wrap: wrap;
+          }
+          .colorBullet {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            margin-left: 5px;
+            pointer: cursor;
+          }
+          .colorBullet.green {
+            background: ${theme.colors.green};
+            border-color: ${theme.colors.green};
+          }
+          .colorBullet.mint {
+            background: ${theme.colors.mint};
+            border-color: ${theme.colors.mint};
+          }
+          .colorBullet.lightBlue {
+            background: ${theme.colors.lightBlue};
+            border-color: ${theme.colors.lightBlue};
+          }
+          .colorBullet.blue {
+            background: ${theme.colors.blue};
+            border-color: ${theme.colors.blue};
+          }
+          .colorBullet.purple {
+            background: ${theme.colors.purple};
+            border-color: ${theme.colors.purple};
+          }
+          .colorBullet.yellow {
+            background: ${theme.colors.yellow};
+            border-color: ${theme.colors.yellow};
+          }
+          .colorBullet.orange {
+            background: ${theme.colors.orange};
+            border-color: ${theme.colors.orange};
+          }
+          .colorBullet.red {
+            background: ${theme.colors.red};
+            border-color: ${theme.colors.red};
+          }
+          .colorBullet.pink {
+            background: ${theme.colors.pink};
+            border-color: ${theme.colors.pink};
+          }
+          .colorBullet.selected {
+            border-color: ${theme.text};
           }
         `}</style>
       </Modal>

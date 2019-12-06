@@ -338,6 +338,10 @@ export default class Manager extends React.Component {
     this.setState({theme: theme});
   }
 
+  setPrimaryColor(color) {
+    this.setState({primaryColor: color});
+  }
+
   render() {
 
     return (
@@ -508,6 +512,7 @@ export default class Manager extends React.Component {
           themeName={this.state.theme}
           setTheme={(theme) => this.setTheme(theme)}
           primaryColor={this.state.primaryColor}
+          setPrimaryColor={(color) => this.setPrimaryColor(color)}
           show={this.state.settingsModal}
           handleClose={() =>  this.setState({settingsModal: false})}
         />
