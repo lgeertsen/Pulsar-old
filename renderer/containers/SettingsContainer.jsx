@@ -49,7 +49,7 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, show, han
                   </div>
                   <div className="settingsOptionChoices">
                     <div className="settingsOptionChoice">
-                      
+
                     </div>
                     <div className="settingsOptionChoice">
                       <div className={themeName == "dark" ? "themeChoice themeChoiceDark selected" : "themeChoice themeChoiceDark"} onClick={() => changeTheme("dark")}>Dark</div>
@@ -149,7 +149,7 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, show, han
             transition: all ease 0.3s;
           }
           .themeChoice.selected {
-            border: 2px solid ${theme[primaryColor]};
+            border: 2px solid ${theme.colors[primaryColor]};
           }
           .themeChoice:hover {
             box-shadow: 0 3px 10px 4px rgba(0,0,0,0.1);

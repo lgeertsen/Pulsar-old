@@ -109,8 +109,8 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
             background: ${theme.secondaryBg};
           }
           .file.selected {
-            background: ${theme[primaryColor]};
-            color: ${theme.white};
+            background: ${theme.colors[primaryColor]};
+            color: ${theme.colors.white};
           }
           .file.fileHeader {
             background: ${theme.secondaryBg};
@@ -157,22 +157,22 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
             margin: 2px 0;
           }
           .tag.tag_done {
-            background: ${theme.orange};
+            background: ${theme.colors.orange};
           }
           .tag.tag_wip {
-            background: ${theme.yellow};
+            background: ${theme.colors.yellow};
           }
           .tag.tag_wfa {
-            background: ${theme.blue};
+            background: ${theme.colors.blue};
           }
           .tag.tag_retake {
-            background: ${theme.red};
+            background: ${theme.colors.red};
           }
           .tag.tag_valid {
-            background: ${theme.green};
+            background: ${theme.colors.green};
           }
           .tag.tag_todo {
-            background: ${theme.purple};
+            background: ${theme.colors.purple};
           }
         `}</style>
       </div>

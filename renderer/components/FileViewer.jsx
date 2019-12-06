@@ -314,7 +314,7 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
             transition: all ease 0.2s;
           }
           .software.selected {
-            background: ${theme[primaryColor]};
+            background: ${theme.colors[primaryColor]};
           }
           .software img {
             width: 80px;
@@ -348,15 +348,15 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
             top: 2px;
             width: 5px;
             height: 10px;
-            border: solid ${theme.white};
+            border: solid ${theme.colors.white};
             border-width: 0 3px 3px 0;
             transform: rotate(45deg);
           }
           .checkbox:hover {
-            border-color: ${theme[primaryColor]};
+            border-color: ${theme.colors[primaryColor]};
           }
           .checkbox.checked {
-            background: ${theme[primaryColor]};
+            background: ${theme.colors[primaryColor]};
           }
           .checkboxLabel {
             flex: 1;

@@ -55,8 +55,8 @@ const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDi
             background: ${theme.secondaryBg};
           }
           .directory.selected {
-            background: ${theme[primaryColor]};
-            color: ${theme.white};
+            background: ${theme.colors[primaryColor]};
+            color: ${theme.colors.white};
           }
           .directory i {
             margin: 3px 5px;

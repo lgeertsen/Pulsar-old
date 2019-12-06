@@ -36,9 +36,9 @@ const Switch = ({ theme, primaryColor, option1, option2, onChange }) => {
             transition: all ease 0.2s;
           }
           .option.selected {
-            border-color: ${theme[primaryColor]};
-            background: ${theme[primaryColor]};
-            color: ${theme.white};
+            border-color: ${theme.colors[primaryColor]};
+            background: ${theme.colors[primaryColor]};
+            color: ${theme.colors.white};
           }
           .option:first-child {
             border-top-left-radius: 6px;

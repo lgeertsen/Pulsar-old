@@ -38,15 +38,15 @@ const CheckBox = ({ theme, primaryColor, label, checked, onCheck }) => {
             top: 2px;
             width: 5px;
             height: 10px;
-            border: solid ${theme.white};
+            border: solid ${theme.colors.white};
             border-width: 0 3px 3px 0;
             transform: rotate(45deg);
           }
           .checkbox:hover {
-            border-color: ${theme[primaryColor]};
+            border-color: ${theme.colors[primaryColor]};
           }
           .checkbox.checked {
-            background: ${theme[primaryColor]};
+            background: ${theme.colors[primaryColor]};
           }
           .checkboxLabel {
             flex: 1;
