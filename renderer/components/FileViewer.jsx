@@ -36,6 +36,17 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
     execTask(task);
   };
 
+  const onPublish = () => {
+    selectSoftware("mayapy", "mayapy")
+    let task = {
+      command: "publish",
+      arguments: {
+        file: sid.file.path
+      }
+    }
+    execTask(task)
+  }
+
   const handleModal = value => {
     if(value == true) {
       checkSotfwareSaved();
@@ -104,7 +115,7 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
                       <span>Save As</span>
                     </div> */}
                     {sid.file.state == "work" ?
-                      <div className="btn">
+                      <div className="btn" onClick={() => onPublish()}>
                         <span>Publish</span>
                       </div>
                       : ""
@@ -162,7 +173,7 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
             </div>
             {selectedSoftware != undefined ?
                 <div>
-                  {selectedSoftware != "new" && selectedSoft.saved == 0 ?
+                  {selectedSoftware != "new" && selectedSoftware != "mayapy" && selectedSoft.saved == 0 ?
                     <CheckBox theme={theme} primaryColor={primaryColor} label="Save current open scene" checked={checked} onCheck={() => checkBox()}/>
                     : ""
                   }

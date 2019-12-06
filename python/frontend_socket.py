@@ -13,6 +13,8 @@ if vendor_dir not in sys.path:
 
 import socketio
 
+from node_manager import NodeManager
+
 class FrontEnd(socketio.Namespace):
     def __init__(self, namespace, pulsar):
         super(FrontEnd, self).__init__(namespace)
@@ -88,6 +90,14 @@ class FrontEnd(socketio.Namespace):
                 path = "{base_path}/scripts/{type}/".format(base_path=self._pulsar._config["nodes"], type=type)
                 file = node["script"].split(".")[0]
                 self._pulsar._sio.emit("execTask", {"path": path, "file": file, "arguments": arguments}, namespace="/software", room=data["id"])
+        elif data["id"] == "mayapy":
+            node = NodeManager.getNode(type, task)
+            path = "{base_path}/scripts/{type}/".format(base_path=self._pulsar._config["nodes"], type=type)
+            file = node["script"]
+            file_path = os.path.join(path, file)
+            command = "{mayapy} {file} {args}".format(mayapy=self._pulsar._config["softwares"]["mayapy"], file=file_path, args=data["arguments"])
+            print(command)
+            os.system(command)
 
 
 

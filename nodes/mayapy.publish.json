@@ -1,17 +1,13 @@
 {
     "node" : {
         "id" : "mayapy.publish",
-        "name": "node1",
+        "name": "publish",
         "color": "#44f",
         "type": "mayapy",
         "script": "publish.py",
         "inputs": [
           {
             "name": "file",
-            "type": "string"
-          },
-          {
-            "name": "new_path",
             "type": "string"
           }
         ],
