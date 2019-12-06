@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import CheckBox from '../components/CheckBox'
 
-const FiltersContainer = ({ theme, primaryColor }) => {
+const FiltersContainer = ({ theme, primaryColor, filters }) => {
     return (
       <div className="filterContainer">
         <div className="filterTypes">
@@ -10,6 +10,18 @@ const FiltersContainer = ({ theme, primaryColor }) => {
             <div className="filterTitle">
               <h4>Filters:</h4>
             </div>
+          </div>
+          {Object.keys(filters).map((filter, index) => (
+            <div key={index} className="filterType">
+
+              {Object.keys(filters[filter]).map((option, index) => (
+                <div key={index} className="filterOption">
+                  <CheckBox theme={theme} primaryColor={primaryColor} label={(option.charAt(0).toUpperCase() + option.slice(1)).split("_").join(" ")} checked={filter.option} onCheck={() => console.log("check")} />
+                </div>
+              ))}
+            </div>
+          ))}
+          <div className="filterType">
             <div className="filterOption">
               <CheckBox theme={theme} primaryColor={primaryColor} label="Work" checked={false} onCheck={() => console.log("check")} />
             </div>
@@ -18,8 +30,12 @@ const FiltersContainer = ({ theme, primaryColor }) => {
             </div>
           </div>
           <div className="filterType">
-            <CheckBox theme={theme} primaryColor={primaryColor} label="2D" checked={false} onCheck={() => console.log("check")} />
-            <CheckBox theme={theme} primaryColor={primaryColor} label="3D" checked={true} onCheck={() => console.log("check")} />
+            <div className="filterOption">
+              <CheckBox theme={theme} primaryColor={primaryColor} label="2D" checked={false} onCheck={() => console.log("check")} />
+            </div>
+            <div className="filterOption">
+              <CheckBox theme={theme} primaryColor={primaryColor} label="3D" checked={true} onCheck={() => console.log("check")} />
+            </div>
           </div>
         </div>
 

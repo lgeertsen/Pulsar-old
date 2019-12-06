@@ -51,6 +51,17 @@ export default class Manager extends React.Component {
 
       newFileName: undefined,
 
+      filters: {
+        scened2D3D: {
+          _2D: false,
+          _3D: true
+        },
+        state: {
+          work: true,
+          publish: true
+        }
+      },
+
       directories: {
         type: [],
         name: [],
@@ -405,12 +416,13 @@ export default class Manager extends React.Component {
 
 
 
-            {/* <div className="filterContainer">
+            <div className="filterContainer">
               <FiltersContainer
                 theme={themes[this.state.theme]}
                 primaryColor={this.state.primaryColor}
+                filters={this.state.filters}
               />
-            </div> */}
+            </div>
 
 
 
