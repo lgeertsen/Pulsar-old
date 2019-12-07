@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { app, ipcMain } from 'electron';
+import { app, ipcMain, globalShortcut } from 'electron';
 import serve from 'electron-serve';
 import {
   createWindow,
@@ -42,12 +42,39 @@ if (isProd) {
 
   mainWindow.maximize();
 
+  const overlay = createWindow('overlay', {
+    width: 250,
+    height: 80,
+    frame: false,
+    resizable: false,
+    alwaysOnTop: true,
+    skipTaskbar: true,
+    transparent: true
+  });
+
+
   const homeUrl = isProd ? 'app://./manager.html' : 'http://localhost:8888/manager';
   await mainWindow.loadURL(homeUrl);
 
+  const overlayUrl = isProd ? 'app://./overlay.html' : 'http://localhost:8888/overlay';
+  await overlay.loadURL(overlayUrl);
+
   if (!isProd) {
     mainWindow.webContents.openDevTools();
+    overlay.webContents.openDevTools();
   }
+
+  mainWindow.on("focus", (e) => {
+    overlay.minimize();
+  });
+
+  mainWindow.on("blur", (e) => {
+    overlay.restore();
+  });
+
+  // const ret = globalShortcut.register('CommandOrControl+S', () => {
+  //   console.log('CommandOrControl+S is pressed')
+  // });
 
 
   var socket = io('http://localhost:7846/frontend', {
@@ -176,6 +203,11 @@ if (isProd) {
 app.on('window-all-closed', () => {
   app.quit();
 });
+
+app.on('will-quit', () => {
+  // Unregister all shortcuts.
+  globalShortcut.unregisterAll()
+})
 
 
 // ipcMain.on('run-python', (event, arg) => {
