@@ -52,6 +52,8 @@ if (isProd) {
     transparent: true
   });
 
+  overlay.minimize();
+
 
   const homeUrl = isProd ? 'app://./manager.html' : 'http://localhost:8888/manager';
   await mainWindow.loadURL(homeUrl);
