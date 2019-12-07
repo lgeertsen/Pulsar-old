@@ -28,6 +28,7 @@ export default class Manager extends React.Component {
     super(props);
 
     this.state = {
+      config: {},
       theme: "light",
       primaryColor: "blue",
 
@@ -106,6 +107,7 @@ export default class Manager extends React.Component {
 
       ipcRenderer.on('config', (event, data) => {
         console.log("----- receive config file -----", data);
+        this.setState({config: data})
         if(data.theme) {
           this.setState({theme: data.theme});
         }
@@ -228,8 +230,7 @@ export default class Manager extends React.Component {
     ipcRenderer.send("setSidDir", {type: type, dir: dir});
   }
 
-  setSidFile(index) {
-    let file = this.state.directories.file[index];
+  setSidFile(file, index) {
     let sid = this.state.sid;
     sid.file = file;
     sid.state = file.state;
@@ -388,6 +389,22 @@ export default class Manager extends React.Component {
     this.setState({primaryColor: color});
   }
 
+  cancelSettings() {
+    let theme = this.state.config.theme;
+    let primaryColor = this.state.config.color;
+    this.setState({theme: theme, primaryColor: primaryColor});
+  }
+
+  saveSettings() {
+    let theme = this.state.theme;
+    let color = this.state.primaryColor;
+    let config = this.state.config;
+    config.theme = theme;
+    config.color = color;
+    this.setState({config: config});
+    ipcRenderer.send("saveConfig", config);
+  }
+
   render() {
 
     return (
@@ -522,7 +539,7 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   title="Files"
                   files={this.filteredFiles()}
-                  onChange={(file) => this.setSidFile(file)}
+                  onChange={(file, index) => this.setSidFile(file, index)}
                   selectedFile={this.state.selectedIndexes.file}
                 />
               </div>
@@ -563,6 +580,8 @@ export default class Manager extends React.Component {
           setPrimaryColor={(color) => this.setPrimaryColor(color)}
           show={this.state.settingsModal}
           handleClose={() =>  this.setState({settingsModal: false})}
+          cancelSettings={() => this.cancelSettings()}
+          saveSettings={() => this.saveSettings()}
         />
 
         <style jsx global>{`

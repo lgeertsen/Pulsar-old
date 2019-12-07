@@ -112,6 +112,12 @@ if (isProd) {
     socket.emit("saveComment", data);
   });
 
+  ipcMain.on("saveConfig", (event, data) => {
+    console.log("----- save config -----", data);
+    socket.emit("saveConfig", data);
+  });
+
+
   ipcMain.on("refresh", (event) => {
     console.log("----- refresh browser -----");
     socket.emit("refresh");

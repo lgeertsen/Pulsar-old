@@ -4,8 +4,8 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
 
   const [selectedFile, setSelectedFile] = useState(-1);
 
-  const handleChange = index => {
-    onChange(index);
+  const handleChange = (file, index) => {
+    onChange(file, index);
     setSelectedFile(index);
   };
 
@@ -51,7 +51,7 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
             if(a.state > b.state) { return -1; }
             return 0;
           }).map((file, index) => (
-            <div key={index} className={index == selectedFile ? "file selected" : "file"} onClick={(e) => handleChange(index)}>
+            <div key={index} className={index == selectedFile ? "file selected" : "file"} onClick={(e) => handleChange(file, index)}>
               <div className="fileName">
                 <i className="fas fa-file"></i>
                 <span>{file.name + "_" + file.state + "_" + file.version + "." + file.extension}</span>

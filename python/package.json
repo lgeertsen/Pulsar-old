@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.py"
+    "dev": "nodemon pulsar.py"
   },
   "license": "MIT",
   "dependencies": {

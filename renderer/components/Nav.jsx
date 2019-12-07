@@ -40,9 +40,9 @@ export default class Nav extends React.Component {
     return (
       <div className="nav">
         <div className="navigation-container">
-          <div className="back-btn" onClick={() => Router.back()}>
+          {/* <div className="back-btn" onClick={() => Router.back()}>
             <i className="fas fa-angle-left"></i>
-          </div>
+          </div> */}
         </div>
         <div className="settings-btn" onClick={() => this.props.openSettings()}>
           <span>Settings</span>

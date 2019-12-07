@@ -67,6 +67,10 @@ class FrontEnd(socketio.Namespace):
         print("----- save comment -----", data)
         FileManager.save_comment(self._pulsar._config["shot_paths"]["3d"], self._pulsar._sid, data)
 
+    def on_saveConfig(self, sid, data):
+        print("----- save config -----", data)
+        self._pulsar.saveConfig(data)
+
     def on_execTask(self, sid, data):
         print("----- exec task -----", data)
         type = data["type"]

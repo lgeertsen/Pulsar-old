@@ -72,6 +72,12 @@ class Pulsar():
 
         return {}
 
+    def saveConfig(self, config):
+        self._config = config
+        filename = "../config.json"
+        with open(filename, 'w') as filetowrite:
+            json.dump(config, filetowrite, sort_keys=True, indent=4)
+
     def initSID(self):
         sid = {
             "disk": self._config["disk"],
