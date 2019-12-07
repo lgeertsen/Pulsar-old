@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 import CheckBox from '../components/CheckBox'
 
-const FiltersContainer = ({ theme, primaryColor, filters }) => {
+const FiltersContainer = ({ theme, primaryColor, filters, setFilter }) => {
+
     return (
       <div className="filterContainer">
         <div className="filterTypes">
@@ -16,27 +17,17 @@ const FiltersContainer = ({ theme, primaryColor, filters }) => {
 
               {Object.keys(filters[filter]).map((option, index) => (
                 <div key={index} className="filterOption">
-                  <CheckBox theme={theme} primaryColor={primaryColor} label={(option.charAt(0).toUpperCase() + option.slice(1)).split("_").join(" ")} checked={filter.option} onCheck={() => console.log("check")} />
+                  <CheckBox
+                    theme={theme}
+                    primaryColor={primaryColor}
+                    label={(option.charAt(0).toUpperCase() + option.slice(1)).split("_").join(" ")}
+                    checked={filters[filter][option]}
+                    onCheck={() => setFilter(filter, option, !filters[filter][option])}
+                  />
                 </div>
               ))}
             </div>
           ))}
-          <div className="filterType">
-            <div className="filterOption">
-              <CheckBox theme={theme} primaryColor={primaryColor} label="Work" checked={false} onCheck={() => console.log("check")} />
-            </div>
-            <div className="filterOption">
-              <CheckBox theme={theme} primaryColor={primaryColor} label="Publish" checked={false} onCheck={() => console.log("check")} />
-            </div>
-          </div>
-          <div className="filterType">
-            <div className="filterOption">
-              <CheckBox theme={theme} primaryColor={primaryColor} label="2D" checked={false} onCheck={() => console.log("check")} />
-            </div>
-            <div className="filterOption">
-              <CheckBox theme={theme} primaryColor={primaryColor} label="3D" checked={true} onCheck={() => console.log("check")} />
-            </div>
-          </div>
         </div>
 
         <style jsx>{`

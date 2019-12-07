@@ -52,13 +52,14 @@ export default class Manager extends React.Component {
       newFileName: undefined,
 
       filters: {
-        scened2D3D: {
-          _2D: false,
-          _3D: true
-        },
+        // scened2D3D: {
+        //   _2D: false,
+        //   _3D: true
+        // },
         state: {
           work: true,
-          publish: true
+          publish: true,
+          wip: false
         }
       },
 
@@ -249,6 +250,40 @@ export default class Manager extends React.Component {
     ipcRenderer.send("checkSotfwareSaved");
   }
 
+  setFilter(filter, option, value) {
+    let filters = this.state.filters;
+    filters[filter][option] = value;
+    this.setState({filters: filters});
+  }
+
+  filteredFiles() {
+    let files = this.state.directories.file;
+    let filteredFiles = [];
+
+    let filters = this.state.filters;
+    for(const filter in filters) {
+      switch (filter) {
+        case "state":
+          let work = filters[filter]["work"];
+          let publish = filters[filter]["publish"];
+          let wip = filters[filter]["wip"];
+
+          for(let i = 0; i < files.length; i ++) {
+            if(files[i].state == "work" && work) {
+              filteredFiles.push(files[i]);
+            } else if(files[i].state == "publish" && publish) {
+              filteredFiles.push(files[i]);
+            } else if(files[i].state == "wip" && wip) {
+              filteredFiles.psuh(files[i]);
+            }
+          }
+          break;
+      }
+    }
+
+    return filteredFiles
+  }
+
   execTask(task) {
     console.log("----- exec command -----", task.command)
     if(this.state.selectedSoftware == undefined) { return; }
@@ -421,6 +456,7 @@ export default class Manager extends React.Component {
                 theme={themes[this.state.theme]}
                 primaryColor={this.state.primaryColor}
                 filters={this.state.filters}
+                setFilter={(filter, option, value) => this.setFilter(filter, option, value)}
               />
             </div>
 
@@ -485,7 +521,7 @@ export default class Manager extends React.Component {
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
                   title="Files"
-                  files={this.state.directories.file}
+                  files={this.filteredFiles()}
                   onChange={(file) => this.setSidFile(file)}
                   selectedFile={this.state.selectedIndexes.file}
                 />
