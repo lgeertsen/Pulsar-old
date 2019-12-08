@@ -14,6 +14,7 @@ if vendor_dir not in sys.path:
 
 import socketio
 import eventlet
+import eventlet.wsgi
 
 from file_manager import FileManager
 from node_manager import NodeManager
@@ -61,7 +62,7 @@ class Pulsar():
         NodeManager.importNodes(self._config["nodes"])
 
     def readConfig(self):
-        filename = "../config.json"
+        filename = "C:/Users/leege/Pulsar/config.json"
         with open(filename, 'r') as data:
             config = json.load(data)
             return config
@@ -207,5 +208,5 @@ class Pulsar():
 
 if __name__ == '__main__':
     pulsar = Pulsar()
-    eventlet.wsgi.server(eventlet.listen(('', 7846)), pulsar._app)
+    eventlet.wsgi.server(eventlet.listen(('127.0.0.1', 7846)), pulsar._app)
     print('----- server running on port 7846 -----')
