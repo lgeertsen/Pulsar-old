@@ -26,7 +26,7 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, setPrimar
         theme={theme}
         primaryColor={primaryColor}
         show={show}
-        handleClose={() => close()}
+        handleClose={() => cancel()}
       >
         <div className="settingsContainer">
           <div className="settingsTitle">
