@@ -65,11 +65,6 @@ class Pulsar():
         with open(filename, 'r') as data:
             config = json.load(data)
             return config
-
-        print("----- config file: -----")
-        print(self._config)
-        print("----- end file -----")
-
         return {}
 
     def saveConfig(self, config):

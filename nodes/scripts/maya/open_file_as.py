@@ -11,6 +11,8 @@ def main(arguments):
     wip_path = '/'.join(path_split[:-2]) + '/wip'
     new_name_path = os.path.join(wip_path, new_name)
 
+    if not os.path.exists(wip_path):
+        os.mkdir(wip_path)
 
     count = 0
     while path_split[count] != "3d":

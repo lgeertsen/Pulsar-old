@@ -11,6 +11,9 @@ def main(arguments):
     path = os.path.join(wip_path, new_name)
     new_name_path = path.replace(os.sep, '/')
 
+    if not os.path.exists(wip_path):
+        os.mkdir(wip_path)
+
 
 
     # count = 0

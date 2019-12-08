@@ -21,12 +21,14 @@ class Software(socketio.Namespace):
     def on_connect(self, sid, environ):
         print("----- connected software -----", sid)
         self._pulsar._softwares[sid] = {
+            "id": sid,
             "software": None,
             "scene": None
         }
 
     def on_software(self, sid, data):
         print(sid, "----- software -----", data)
+        data["id"] = sid
         self._pulsar._softwares[sid] = data
 
         if not self._pulsar._frontend == None:

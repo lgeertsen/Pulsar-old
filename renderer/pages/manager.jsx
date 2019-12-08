@@ -49,6 +49,7 @@ export default class Manager extends React.Component {
       selectedSoftware: undefined,
       selectedSoftwareType: undefined,
       softwares: {},
+      overlaySoftware: undefined,
 
       newFileName: undefined,
 
@@ -132,6 +133,18 @@ export default class Manager extends React.Component {
         console.log("----- receive software list -----");
         console.log(data);
         this.setState({softwares: data});
+        let keys = Object.keys(data);
+        if(this.state.overlaySoftware == undefined) {
+          if(keys.length > 0) {
+            this.setState({overlaySoftware: keys[0]});
+            ipcRenderer.send("overlaySoftware", data[keys[0]]);
+          } else {
+            this.setState({overlaySoftware: undefined});
+            ipcRenderer.send("overlaySoftware", undefined);
+          }
+        } else {
+          ipcRenderer.send("overlaySoftware", this.state.softwares[this.state.overlaySoftware]);
+        }
       });
     }
   }
@@ -405,6 +418,11 @@ export default class Manager extends React.Component {
     ipcRenderer.send("saveConfig", config);
   }
 
+  setOverlaySoftware(softwareId) {
+    this.setState({overlaySoftware: softwareId});
+    ipcRenderer.send("overlaySoftware", this.state.softwares[softwareId]);
+  }
+
   render() {
 
     return (
@@ -426,12 +444,15 @@ export default class Manager extends React.Component {
               <h3>Open software</h3>
             </div>
             {Object.keys(this.state.softwares).map((softwareId, index) => (
-              <div key={index} className={this.state.selectedSoftware == softwareId ? "software selected" : "software"}>
+              <div key={index} className={this.state.overlaySoftware == softwareId ? "software selected" : "software"}>
+                <div className="overlaySelector" onClick={(e) => this.setOverlaySoftware(softwareId)}>
+                  <i className="far fa-window-restore"></i>
+                </div>
                 <div className="softwareHeader">
                   <img className="softwareImg" src={"./static/" + this.state.softwares[softwareId].software + ".png"}></img>
                   <h4 className="softwareName">{this.state.softwares[softwareId].software.charAt(0).toUpperCase() + this.state.softwares[softwareId].software.slice(1)}</h4>
                 </div>
-                <span className="softwareSceneNmae">{this.state.softwares[softwareId].saved == 1 ? this.state.softwares[softwareId].scene : this.state.softwares[softwareId].scene + "*"}</span>
+                <span className="softwareSceneName">{this.state.softwares[softwareId].saved == 1 ? this.state.softwares[softwareId].scene : this.state.softwares[softwareId].scene + "*"}</span>
               </div>
             ))}
           </div>
@@ -636,6 +657,7 @@ export default class Manager extends React.Component {
             border-bottom: ${themes[this.state.theme].border};
           }
           .software {
+            position: relative;
             display: flex;
             flex-direction: column;
             // align-items: center;
@@ -644,7 +666,25 @@ export default class Manager extends React.Component {
             transition: all ease 0.2s;
           }
           .software.selected {
-            background: #3498db;
+            background: ${themes[this.state.theme].colors[this.state.primaryColor]};
+          }
+          .software .overlaySelector {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            background: transparent;
+            cursor: pointer;
+            color: ${themes[this.state.theme].text};
+            transition: all ease 0.3s;
+          }
+          .software .overlaySelector:hover {
+            background: rgba(200, 200, 200, 0.5);
           }
           .softwareHeader {
             display: flex;
@@ -659,11 +699,17 @@ export default class Manager extends React.Component {
           .softwareHeader h4 {
             margin: 10px 0;
           }
-          .softwareSceneNmae {
+          .softwareSceneName {
             font-family: "Open Sans Condensed", "Oswald", sans-serif;
             margin-left: 10px;
             margin-bottom: 10px;
             overflow-wrap: break-word;
+            color: ${themes[this.state.theme].textSecondary};
+          }
+          .software.selected h4,
+          .software.selected .overlaySelector,
+          .software.selected .softwareSceneName {
+            color: #fff;
           }
 
 

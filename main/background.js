@@ -44,7 +44,7 @@ if (isProd) {
 
   const overlay = createWindow('overlay', {
     width: 250,
-    height: 80,
+    height: 85,
     frame: false,
     resizable: false,
     alwaysOnTop: true,
@@ -144,12 +144,17 @@ if (isProd) {
   ipcMain.on("saveConfig", (event, data) => {
     console.log("----- save config -----", data);
     socket.emit("saveConfig", data);
+    config = data;
+    overlay.webContents.send('config', data);
   });
-
 
   ipcMain.on("refresh", (event) => {
     console.log("----- refresh browser -----");
     socket.emit("refresh");
+  });
+
+  ipcMain.on("overlaySoftware", (event, data) => {
+    overlay.webContents.send('software', data);
   });
 
 
@@ -165,6 +170,7 @@ if (isProd) {
     console.log(data);
     config = data;
     mainWindow.webContents.send('config', data)
+    overlay.webContents.send('config', data)
   });
 
   socket.on("directories", (data) => {
