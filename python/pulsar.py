@@ -22,6 +22,9 @@ from frontend_socket import FrontEnd
 from software_socket import Software
 
 
+config_path = "C:/Users/leege/Pulsar/config.json"
+
+
 class Pulsar():
     def __init__(self):
         logger = logging.getLogger(__name__)
@@ -62,7 +65,7 @@ class Pulsar():
         NodeManager.importNodes(self._config["nodes"])
 
     def readConfig(self):
-        filename = "C:/Users/leege/Pulsar/config.json"
+        filename = config_path
         with open(filename, 'r') as data:
             config = json.load(data)
             return config

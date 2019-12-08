@@ -206,6 +206,17 @@ if (isProd) {
     softwares = data;
     mainWindow.webContents.send('softwares', data)
   });
+
+  const spawn = require('child_process');
+  let result;
+  if (process.env.NODE_ENV === 'production') {
+    const executable = join(__dirname, process.platform === 'win32' ? 'pulsar.exe' : 'pulsar');
+    result = spawn.sync(executable, [], { encoding: 'utf8' });
+  } else {
+    const executable = 'C:/Users/leege/Pulsar/python/dist/pulsar.exe';
+    result = spawn.async(executable, [], { encoding: 'utf8' });
+    // result = spawn.sync('python', [join(__dirname, '../python/pulsar.py')], { encoding: 'utf8' });
+  }
 })();
 
 app.on('window-all-closed', () => {
