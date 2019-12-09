@@ -74,6 +74,9 @@ class Pulsar():
         self._connected = False
         self._scene = self.getSceneName()
 
+
+        cmds.scriptJob(e=('SceneOpened', self._sio.emit("software", {"software": "maya", "scene": self._pulsar._scene, "saved": 0)))
+
         self.launch()
         # self.createUI()
 
