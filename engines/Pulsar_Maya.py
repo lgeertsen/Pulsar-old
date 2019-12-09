@@ -74,7 +74,8 @@ class Pulsar():
         self._connected = False
         self._scene = self.getSceneName()
 
-        self.createUI()
+        self.launch()
+        # self.createUI()
 
     def getSceneName(self):
         filepath = cmds.file(q=True, sn=True)
