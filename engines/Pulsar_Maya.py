@@ -75,10 +75,14 @@ class Pulsar():
         self._scene = self.getSceneName()
 
 
-        cmds.scriptJob(e=('SceneOpened', self._sio.emit("software", {"software": "maya", "scene": self._pulsar._scene, "saved": 0)))
+        cmds.scriptJob(e=('SceneOpened', self.sendSceneName))
 
         self.launch()
         # self.createUI()
+
+    def sendSceneName(self):
+        self._scene = self.getSceneName()
+        self._sio.emit("software", {"software": "maya", "scene": self._scene, "saved": 0})
 
     def getSceneName(self):
         filepath = cmds.file(q=True, sn=True)
