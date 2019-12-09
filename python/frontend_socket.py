@@ -63,6 +63,10 @@ class FrontEnd(socketio.Namespace):
         print("----- check if software is saved -----")
         self._pulsar._sio.emit("checkSaved", namespace="/software")
 
+    def on_getSceneName(self, sid, data):
+        print("----- getSceneName -----")
+        self._pulsar._sio.emit("getSceneName", namespace="/software")
+
     def on_saveComment(self, sid, data):
         print("----- save comment -----", data)
         FileManager.save_comment(self._pulsar._config["shot_paths"]["3d"], self._pulsar._sid, data)

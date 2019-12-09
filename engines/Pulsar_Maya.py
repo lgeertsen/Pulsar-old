@@ -41,6 +41,12 @@ class PulsarSocket(socketio.ClientNamespace):
         saved = self._pulsar.execute(self._pulsar.check_state)
         self.emit("saved", saved)
 
+    def on_getSceneName(self, data):
+        self._pulsar._scene = self._pulsar.execute(self._pulsar.getSceneName)
+        saved = self._pulsar.execute(self._pulsar.check_state)
+
+        self.emit("software", {"software": "maya", "scene": self._pulsar._scene, "saved": saved})
+
     def on_execTask(self, data):
         path = data["path"]
         file = data["file"]
@@ -74,15 +80,8 @@ class Pulsar():
         self._connected = False
         self._scene = self.getSceneName()
 
-
-        cmds.scriptJob(e=('SceneOpened', self.sendSceneName))
-
         self.launch()
         # self.createUI()
-
-    def sendSceneName(self):
-        self._scene = self.getSceneName()
-        self._sio.emit("software", {"software": "maya", "scene": self._scene, "saved": 0})
 
     def getSceneName(self):
         filepath = cmds.file(q=True, sn=True)

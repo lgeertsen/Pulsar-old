@@ -157,6 +157,10 @@ if (isProd) {
     overlay.webContents.send('software', data);
   });
 
+  ipcMain.on("getSceneName", (event, data) => {
+    socket.emit("getSceneName", data);
+  });
+
 
 
 

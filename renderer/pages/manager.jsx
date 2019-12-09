@@ -423,6 +423,10 @@ export default class Manager extends React.Component {
     ipcRenderer.send("overlaySoftware", this.state.softwares[softwareId]);
   }
 
+  reloadSceneName(softwareId) {
+    ipcRenderer.send("getSceneName", softwareId);
+  }
+
   render() {
 
     return (
@@ -452,7 +456,7 @@ export default class Manager extends React.Component {
                   <img className="softwareImg" src={"./static/" + this.state.softwares[softwareId].software + ".png"}></img>
                   <h4 className="softwareName">{this.state.softwares[softwareId].software.charAt(0).toUpperCase() + this.state.softwares[softwareId].software.slice(1)}</h4>
                 </div>
-                <span className="softwareSceneName">{this.state.softwares[softwareId].saved == 1 ? this.state.softwares[softwareId].scene : this.state.softwares[softwareId].scene + "*"}</span>
+                <span className="softwareSceneName"><i className="fas fa-sync" onClick={(e) => this.reloadSceneName(softwareId)}></i>{this.state.softwares[softwareId].saved == 1 ? this.state.softwares[softwareId].scene : this.state.softwares[softwareId].scene + "*"}</span>
               </div>
             ))}
           </div>
@@ -706,10 +710,21 @@ export default class Manager extends React.Component {
             overflow-wrap: break-word;
             color: ${themes[this.state.theme].textSecondary};
           }
+          .softwareSceneName i {
+            margin-right: 3px;
+            font-size: 12px;
+            color: ${themes[this.state.theme].textSecondary};
+            transition: all ease 0.2s;
+            cursor: pointer;
+          }
           .software.selected h4,
+          .software.selected i,
           .software.selected .overlaySelector,
           .software.selected .softwareSceneName {
             color: #fff;
+          }
+          .softwareSceneName i:hover {
+            color: ${themes[this.state.theme].text};
           }
 
 
