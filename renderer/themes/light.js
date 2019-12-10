@@ -21,5 +21,10 @@ export default {
     orange: "#e17055",
     red: "#d63031",
     pink: "#e84393",
+    miami: "linear-gradient(to right, #3494e6, #ec6ead)",
+    flare: "linear-gradient(to right, #f12711, #f5af19)",
+    blackRose: "linear-gradient(to right, #f4c4f3, #fc67fa)",
+    tealLove: "linear-gradient(to right, #AAFFA9, #11FFBD)",
+    wiretap: "linear-gradient(to right, #8A2387, #E94057, #F27121)",
   }
 }

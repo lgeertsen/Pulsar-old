@@ -190,44 +190,51 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, setPrimar
             height: 40px;
             border: 3px solid #fff;
             border-radius: 50%;
-            margin-left: 5px;
+            margin-left: 10px;
+            margin-bottom: 5px;
             pointer: cursor;
           }
           .colorBullet.green {
             background: ${theme.colors.green};
-            border-color: ${theme.colors.green};
           }
           .colorBullet.mint {
             background: ${theme.colors.mint};
-            border-color: ${theme.colors.mint};
           }
           .colorBullet.lightBlue {
             background: ${theme.colors.lightBlue};
-            border-color: ${theme.colors.lightBlue};
           }
           .colorBullet.blue {
             background: ${theme.colors.blue};
-            border-color: ${theme.colors.blue};
           }
           .colorBullet.purple {
             background: ${theme.colors.purple};
-            border-color: ${theme.colors.purple};
           }
           .colorBullet.yellow {
             background: ${theme.colors.yellow};
-            border-color: ${theme.colors.yellow};
           }
           .colorBullet.orange {
             background: ${theme.colors.orange};
-            border-color: ${theme.colors.orange};
           }
           .colorBullet.red {
             background: ${theme.colors.red};
-            border-color: ${theme.colors.red};
           }
           .colorBullet.pink {
             background: ${theme.colors.pink};
-            border-color: ${theme.colors.pink};
+          }
+          .colorBullet.miami {
+            background: ${theme.colors.miami};
+          }
+          .colorBullet.flare {
+            background: ${theme.colors.flare};
+          }
+          .colorBullet.blackRose {
+            background: ${theme.colors.blackRose};
+          }
+          .colorBullet.tealLove {
+            background: ${theme.colors.tealLove};
+          }
+          .colorBullet.wiretap {
+            background: ${theme.colors.wiretap};
           }
           .colorBullet.selected {
             border-color: ${theme.text};
