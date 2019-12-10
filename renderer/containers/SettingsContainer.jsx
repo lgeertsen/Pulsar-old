@@ -1,8 +1,27 @@
 import React, { useState } from 'react';
+import electron from 'electron';
 
 import Modal from '../components/Modal'
 
-const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, setPrimaryColor, show, handleClose, cancelSettings, saveSettings }) => {
+const shell = electron.shell || false;
+
+const SettingsContainer = ({
+  saveShortcut,
+  setSaveShortcut,
+  incrementShortcut,
+  setIncrementShortcut,
+  theme,
+  themeName,
+  setTheme,
+  primaryColor,
+  setPrimaryColor,
+  show,
+  handleClose,
+  cancelSettings,
+  saveSettings
+}) => {
+  const [selectedTab, setSelectedTab] = useState(0);
+
   const close = () => {
     handleClose();
   }
@@ -34,11 +53,15 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, setPrimar
           </div>
           <div className="settingsInnerContainer">
             <div className="settingsSidebar">
-              <div className="settingsTab">
+              <div className={selectedTab == 0 ? "settingsTab selected" : "settingsTab"} onClick={(e) => setSelectedTab(0)}>
                 <h3><i className="fas fa-palette"></i> UI</h3>
+              </div>
+              <div className={selectedTab == 1 ? "settingsTab selected" : "settingsTab"} onClick={(e) => setSelectedTab(1)}>
+                <h3><i className="far fa-window-restore"></i> Overlay</h3>
               </div>
             </div>
             <div className="settingsMain">
+            {selectedTab == 0 ?
               <div className="settingsMainInner">
                 <div className="settingsOption">
                   <div className="settingsOptionTitle">
@@ -69,6 +92,40 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, setPrimar
                   </div>
                 </div>
               </div>
+              : ""
+            }
+            {selectedTab == 1 ?
+              <div className="settingsMainInner">
+                <div className="settingsOption">
+                  <div className="settingsOptionTitle">
+                    <h3>Save Shortcut:</h3>
+                  </div>
+                  <div className="settingsOptionChoices">
+                    <div className="settingsOptionChoice">
+                      <input type="text" value={saveShortcut} onChange={(e) => setSaveShortcut(e.target.value)}/>
+                    </div>
+                  </div>
+                </div>
+                <div className="settingsOption">
+                  <div className="settingsOptionTitle">
+                    <h3>Increment & Save Shortcut:</h3>
+                  </div>
+                  <div className="settingsOptionChoices">
+                    <div className="settingsOptionChoice">
+                      <input type="text" value={incrementShortcut} onChange={(e) => setIncrementShortcut(e.target.value)}/>
+                    </div>
+                  </div>
+                </div>
+                <div className="settingsOption">
+                  <div className="settingsOptionChoices">
+                    <div className="settingsOptionChoice">
+                      <h5 className="keyCombinations">Possible keys:<br/>Cmd, Alt, AltGr, Shift, 0 - 9, A - Z, Space, Tab, Capslock, F1 - F12, Numlock, Backspace, Delete, Return, Esc, num0 - num9</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              : ""
+            }
             </div>
           </div>
           <div className="saveAndCancelContainer">
@@ -105,7 +162,7 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, setPrimar
           .settingsSidebar {
             height: 100%;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             width: 150px;
             border-right: ${theme.border};
           }
@@ -115,6 +172,9 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, setPrimar
             border-bottom: ${theme.accentBorder};
             cursor: pointer;
             transition: all ease 0.2s;
+          }
+          .settingsTab.selected {
+            background: ${theme.secondaryBg};
           }
           .settingsTab i {
             margin-right: 10px;
@@ -142,8 +202,12 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, setPrimar
             border-bottom: ${theme.border};
           }
           .settingsOptionTitle {
-            width: 80px;
+            width: 120px;
             margin-left: 15px;
+            margin-bottom: 10px;
+          }
+          .settingsOptionTitle h3 {
+            font-size: 16px;
           }
           .settingsOptionChoices {
             display: flex;
@@ -154,6 +218,9 @@ const SettingsContainer = ({ theme, themeName, setTheme, primaryColor, setPrimar
           .settingsOptionChoice {
             width: auto;
             display: flex;
+          }
+          .keyCombinations {
+            margin-left: 10px;
           }
           .themeChoice {
             display: flex;

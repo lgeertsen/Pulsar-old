@@ -2,6 +2,8 @@ import os
 import sys
 import logging
 import json
+from pathlib import Path
+from shutil import copyfile
 
 # Add vendor to sys.path, to correctly import third party modules
 parent_dir = os.path.dirname(__file__)
@@ -21,9 +23,7 @@ from node_manager import NodeManager
 from frontend_socket import FrontEnd
 from software_socket import Software
 
-
-config_path = "C:/Users/leege/Pulsar/config.json"
-
+config_path = os.path.join(str(Path.home()), ".pulsar.config")
 
 class Pulsar():
     def __init__(self):
@@ -65,15 +65,25 @@ class Pulsar():
         NodeManager.importNodes(self._config["nodes"])
 
     def readConfig(self):
-        filename = config_path
-        with open(filename, 'r') as data:
-            config = json.load(data)
-            return config
+        if os.path.isfile(config_path):
+            print ("config exist")
+            filename = config_path
+            with open(filename, 'r') as data:
+                config = json.load(data)
+                return config
+        else:
+            print ("config does not exist")
+            src = "../.config.example.json"
+            copyfile(src, config_path)
+            filename = config_path
+            with open(filename, 'r') as data:
+                config = json.load(data)
+                return config
         return {}
 
     def saveConfig(self, config):
         self._config = config
-        filename = "../config.json"
+        filename = config_path
         with open(filename, 'w') as filetowrite:
             json.dump(config, filetowrite, sort_keys=True, indent=4)
 

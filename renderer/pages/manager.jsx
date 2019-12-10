@@ -31,6 +31,8 @@ export default class Manager extends React.Component {
       config: {},
       theme: "light",
       primaryColor: "blue",
+      saveShortcut: "",
+      incrementShortcut: "",
 
       settingsModal: false,
 
@@ -114,6 +116,12 @@ export default class Manager extends React.Component {
         }
         if(data.color) {
           this.setState({primaryColor: data.color});
+        }
+        if(data.overlay.save) {
+          this.setState({saveShortcut: data.overlay.save})
+        }
+        if(data.overlay.increment) {
+          this.setState({incrementShortcut: data.overlay.increment})
         }
         if(data.projects) {
           this.setState({projects: data.projects})
@@ -288,7 +296,7 @@ export default class Manager extends React.Component {
             } else if(files[i].state == "publish" && publish) {
               filteredFiles.push(files[i]);
             } else if(files[i].state == "wip" && wip) {
-              filteredFiles.psuh(files[i]);
+              filteredFiles.push(files[i]);
             }
           }
           break;
@@ -411,9 +419,14 @@ export default class Manager extends React.Component {
   saveSettings() {
     let theme = this.state.theme;
     let color = this.state.primaryColor;
+    let saveShortcut = this.state.saveShortcut;
+    let incrementShortcut = this.state.incrementShortcut;
+
     let config = this.state.config;
     config.theme = theme;
     config.color = color;
+    config.overlay.save = saveShortcut;
+    config.overlay.increment = incrementShortcut;
     this.setState({config: config});
     ipcRenderer.send("saveConfig", config);
   }
@@ -598,6 +611,10 @@ export default class Manager extends React.Component {
         </div>
 
         <SettingsContainer
+          saveShortcut={this.state.saveShortcut}
+          setSaveShortcut={(value) => this.setState({saveShortcut: value})}
+          incrementShortcut={this.state.incrementShortcut}
+          setIncrementShortcut={(value) => this.setState({incrementShortcut: value})}
           theme={themes[this.state.theme]}
           themeName={this.state.theme}
           setTheme={(theme) => this.setTheme(theme)}

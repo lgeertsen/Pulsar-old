@@ -12,6 +12,8 @@ import {PythonShell} from 'python-shell';
 
 const isProd = process.env.NODE_ENV === 'production';
 
+var overlaySoftware = undefined;
+
 var softwares = {};
 var config = {};
 var directories = {
@@ -142,10 +144,12 @@ if (isProd) {
   });
 
   ipcMain.on("saveConfig", (event, data) => {
+    removeShortcuts()
     console.log("----- save config -----", data);
     socket.emit("saveConfig", data);
     config = data;
     overlay.webContents.send('config', data);
+    setShortcuts()
   });
 
   ipcMain.on("refresh", (event) => {
@@ -154,6 +158,7 @@ if (isProd) {
   });
 
   ipcMain.on("overlaySoftware", (event, data) => {
+    overlaySoftware = data;
     overlay.webContents.send('software', data);
   });
 
@@ -170,11 +175,13 @@ if (isProd) {
   });
 
   socket.on("configFile", (data) => {
+    removeShortcuts()
     console.log("----- received config file -----");
     console.log(data);
     config = data;
     mainWindow.webContents.send('config', data)
     overlay.webContents.send('config', data)
+    setShortcuts()
   });
 
   socket.on("directories", (data) => {
@@ -211,17 +218,60 @@ if (isProd) {
     mainWindow.webContents.send('softwares', data)
   });
 
-  const spawn = require('child_process');
-  let result;
-  if (process.env.NODE_ENV === 'production') {
-    const executable = join(__dirname, process.platform === 'win32' ? 'pulsar.exe' : 'pulsar');
-    result = spawn.sync(executable, [], { encoding: 'utf8' });
-  } else {
-    const executable = 'C:/Users/leege/Pulsar/python/dist/pulsar.exe';
-    result = spawn.async(executable, [], { encoding: 'utf8' });
-    // result = spawn.sync('python', [join(__dirname, '../python/pulsar.py')], { encoding: 'utf8' });
+  var setShortcuts = () => {
+    globalShortcut.register(config.overlay.save, () => {
+      console.log('save')
+      if(overlaySoftware != undefined) {
+        let task = {
+          id: overlaySoftware.id,
+          command: "save_file",
+          arguments: {},
+          type: overlaySoftware.software
+        };
+        socket.emit("execTask", task);
+      }
+    });
+    globalShortcut.register(config.overlay.increment, () => {
+      console.log('increment')
+      if(overlaySoftware != undefined) {
+        let task = {
+          id: overlaySoftware.id,
+          command: "save_increment",
+          arguments: {},
+          type: overlaySoftware.software
+        };
+        socket.emit("execTask", task);
+      }
+    });
+
+    mainWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null
+    if (overlay != null) {
+      // secondWindow.close()
+      overlay.destroy()
+      overlay = null;
+    }
+  })
   }
+
+  // const spawn = require('child_process');
+  // let result;
+  // if (process.env.NODE_ENV === 'production') {
+  //   const executable = join(__dirname, process.platform === 'win32' ? 'pulsar.exe' : 'pulsar');
+  //   result = spawn.sync(executable, [], { encoding: 'utf8' });
+  // } else {
+  //   const executable = 'C:/Users/leege/Pulsar/python/dist/pulsar.exe';
+  //   result = spawn.async(executable, [], { encoding: 'utf8' });
+  //   // result = spawn.sync('python', [join(__dirname, '../python/pulsar.py')], { encoding: 'utf8' });
+  // }
 })();
+
+var removeShortcuts = () => {
+  globalShortcut.unregisterAll()
+}
 
 app.on('window-all-closed', () => {
   app.quit();

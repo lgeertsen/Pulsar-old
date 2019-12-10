@@ -7,6 +7,10 @@
     "color": "green",
     "disk": "C",
     "nodes": "C:/Users/leege/Pulsar/nodes",
+    "overlay": {
+      "save": "Ctrl+Shift+S",
+      "increment": "Ctrl+Alt+S"
+    },
     "projects": [
         "FILM1",
         "FILM2",
