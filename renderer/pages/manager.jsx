@@ -9,6 +9,7 @@ import FileBrowser from '../components/FileBrowser';
 import FileViewer from '../components/FileViewer';
 import FiltersContainer from '../containers/FiltersContainer';
 import Nav from '../components/Nav';
+import NewAssetContainer from '../containers/NewAssetContainer';
 import SearchBar from '../components/SearchBar';
 import SettingsContainer from '../containers/SettingsContainer';
 import Switch from '../components/Switch';
@@ -34,6 +35,7 @@ export default class Manager extends React.Component {
       saveShortcut: "",
       incrementShortcut: "",
 
+      newAssetModal: false,
       settingsModal: false,
 
       projects: [],
@@ -94,6 +96,32 @@ export default class Manager extends React.Component {
         "version": undefined,
         "file": undefined,
         "ext": undefined
+      },
+
+      assetDirectories: {
+        "project": [],
+        "assetShot": "a",
+        "type": [],
+        "name": [],
+        "task": [],
+        "subtask": [],
+        "state": [],
+        "version": [],
+        "file": [],
+        "ext": []
+      },
+
+      assetSid: {
+        "project": undefined,
+        "assetShot": "a",
+        "type": undefined,
+        "name": undefined,
+        "task": undefined,
+        "subtask": undefined,
+        "state": undefined,
+        "version": undefined,
+        "file": undefined,
+        "ext": undefined
       }
     };
   }
@@ -112,6 +140,7 @@ export default class Manager extends React.Component {
         console.log("----- receive config file -----", data);
         this.setState({config: data})
         if(data.theme) {
+          console.log(data.theme);
           this.setState({theme: data.theme});
         }
         if(data.color) {
@@ -124,7 +153,15 @@ export default class Manager extends React.Component {
           this.setState({incrementShortcut: data.overlay.increment})
         }
         if(data.projects) {
-          this.setState({projects: data.projects})
+          let assetDirectories = this.state.assetDirectories;
+          assetDirectories.project = data.projects;
+          let assetSid = this.state.assetSid;
+          assetSid.project = data.projects[0];
+          this.setState({
+            projects: data.projects,
+            assetDirectories: assetDirectories,
+            assetSid: assetSid
+          })
           if(data.projects.length > 0) {
             this.setProject(data.projects[0])
           }
@@ -262,6 +299,12 @@ export default class Manager extends React.Component {
     selectedIndexes.file = index
     this.setState({sid: sid, selectedIndexes: selectedIndexes});
     ipcRenderer.send("setFile", file);
+  }
+
+  setAssetSid(key, value) {
+    let assetSid = this.state.assetSid;
+    assetSid[key] = value;
+    this.setState({assetSid: assetSid});
   }
 
   refreshBrowser() {
@@ -477,6 +520,11 @@ export default class Manager extends React.Component {
 
           <div className="managerContainer">
             <div className="searchContainer">
+              <div className="createAsset">
+                <div className="createAssetBtn btn" onClick={(e) => this.setState({newAssetModal: true})}>
+                  <h5>Create Asset</h5>
+                </div>
+              </div>
               <div className="projectSelect">
                 <Dropdown
                   theme={themes[this.state.theme]}
@@ -609,6 +657,16 @@ export default class Manager extends React.Component {
 
           </div>
         </div>
+
+        <NewAssetContainer
+          theme={themes[this.state.theme]}
+          primaryColor={this.state.primaryColor}
+          show={this.state.newAssetModal}
+          handleClose={() =>  this.setState({newAssetModal: false})}
+          assetDirectories={this.state.assetDirectories}
+          assetSid={this.state.assetSid}
+          setAssetSid={(key, value) => this.setAssetSid}
+        />
 
         <SettingsContainer
           saveShortcut={this.state.saveShortcut}
@@ -765,6 +823,36 @@ export default class Manager extends React.Component {
           .projectSelect {
             position: relative;
             width: 120px;
+          }
+          .createAsset {
+            width: 100px;
+          }
+          .btn {
+            display: flex;
+            align-items: center;
+            width: 100px;
+            height: 25px;
+            margin: 5px;
+            padding: 2px 5px;
+            border-radius: 6px;
+            font-size: 18px;
+            background: ${themes[this.state.theme].background};
+            color: ${themes[this.state.theme].text};
+            font-family: "Open Sans Condensed", "Oswald", sans-serif;
+            border: ${themes[this.state.theme].border};
+            cursor: pointer;
+            transition: all ease 0.3s;
+          }
+          .btn h5 {
+            width: 100%;
+            text-align: center;
+          }
+          .btn:hover {
+            background: ${themes[this.state.theme].secondaryBg};
+          }
+          .createAssetBtn {
+            margin: 0;
+            padding: 0 5px;
           }
 
 
