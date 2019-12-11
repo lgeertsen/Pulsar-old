@@ -23,6 +23,13 @@ var directories = {
   subtask: [],
   file: []
 };
+var assetDirectories = {
+  type: [],
+  name: [],
+  task: [],
+  subtask: [],
+  file: []
+};
 
 if (isProd) {
   serve({ directory: 'app' });
@@ -103,9 +110,19 @@ if (isProd) {
     socket.emit("setProject", data);
   });
 
+  ipcMain.on("setAssetProject", (event, data) => {
+    console.log("----- set project -----", data);
+    socket.emit("setAssetProject", data);
+  });
+
   ipcMain.on("setSwitch", (event, data) => {
     console.log("----- set switch -----", data);
     socket.emit("setSwitch", data);
+  });
+
+  ipcMain.on("setAssetSwitch", (event, data) => {
+    console.log("----- set switch -----", data);
+    socket.emit("setAssetSwitch", data);
   });
 
   ipcMain.on("setType", (event, data) => {
@@ -187,28 +204,29 @@ if (isProd) {
   socket.on("directories", (data) => {
     console.log("----- received directories");
     console.log(data);
+    let dirs = data.sid == "sid" ? directories : assetDirectories;
     switch (data.type) {
       case "type":
-        directories.name = [];
-        directories.task = [];
-        directories.subtask = [];
-        directories.file = [];
-        break;
+      dirs.name = [];
+      dirs.task = [];
+      dirs.subtask = [];
+      dirs.file = [];
+      break;
       case "name":
-        directories.task = [];
-        directories.subtask = [];
-        directories.file = [];
-        break;
+      dirs.task = [];
+      dirs.subtask = [];
+      dirs.file = [];
+      break;
       case "task":
-        directories.subtask = [];
-        directories.file = [];
-        break;
+      dirs.subtask = [];
+      dirs.file = [];
+      break;
       case "subtask":
-        directories.file = [];
-        break;
+      dirs.file = [];
+      break;
     }
-    directories[data.type] = data.dirs
-    mainWindow.webContents.send('directories', directories)
+    dirs[data.type] = data.dirs
+    mainWindow.webContents.send('directories', {sid: data.sid, dirs: dirs})
   });
 
   socket.on("softwares", (data) => {

@@ -37,13 +37,25 @@ class FrontEnd(socketio.Namespace):
     def on_setProject(self, sid, data):
         print("----- set project -----", data)
         self._pulsar._sid["project"] = data
-        dirs = self._pulsar._type_to_func["project"]["func"]()
-        self.emit("directories", {"type": "type", "dirs": dirs}, room=sid)
+        dirs = self._pulsar._type_to_func["project"]["func"]("sid")
+        self.emit("directories", {"sid": "sid", "type": "type", "dirs": dirs}, room=sid)
+
+    def on_setAssetProject(self, sid, data):
+        print("----- set asset project -----", data)
+        self._pulsar._assetSid["project"] = data
+        dirs = self._pulsar._type_to_func["project"]["func"]("assetSid")
+        self.emit("directories", {"sid": "assetSid", "type": "type", "dirs": dirs}, room=sid)
 
     def on_setSwitch(self, sid, data):
         print("----- set switch -----", data)
         self._pulsar._sid["switch"] = data
-        dirs = self._pulsar._type_to_func["project"]["func"]()
+        dirs = self._pulsar._type_to_func["project"]["func"]("sid")
+        self.emit("directories", {"type": "type", "dirs": dirs}, room=sid)
+
+    def on_setSwitch(self, sid, data):
+        print("----- set switch -----", data)
+        self._pulsar._assetSid["switch"] = data
+        dirs = self._pulsar._type_to_func["project"]["func"]("assetSid")
         self.emit("directories", {"type": "type", "dirs": dirs}, room=sid)
 
     def on_setSidDir(self, sid, data):

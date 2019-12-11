@@ -62,6 +62,7 @@ class Pulsar():
 
         self._config = self.readConfig()
         self._sid = self.initSID()
+        self._assetSid = self.initSID()
         NodeManager.importNodes(self._config["nodes"])
 
     def readConfig(self):
@@ -148,15 +149,18 @@ class Pulsar():
         elif sid_type == "version":
             self._sid["file"] = None
 
-    def get_types(self):
-        if(self._sid["switch"] == "assets"):
-            dirs = FileManager.get_types(self._config["asset_path"], "assets", self._sid)
+    def get_types(self, sidType):
+        sid = self._sid
+        if sidType == "assetSid":
+            sid = self._assetSid
+        if(sid["switch"] == "assets"):
+            dirs = FileManager.get_types(self._config["asset_path"], "assets", sid)
             print("----- asset type directories -----")
             print(dirs)
             return dirs
         else:
-            dir_2d = FileManager.get_types(self._config["shot_paths"]["2d"], "2d", self._sid)
-            dir_3d = FileManager.get_types(self._config["shot_paths"]["3d"], "3d", self._sid)
+            dir_2d = FileManager.get_types(self._config["shot_paths"]["2d"], "2d", sid)
+            dir_3d = FileManager.get_types(self._config["shot_paths"]["3d"], "3d", sid)
             dirs = self.assemble_dirs(dir_2d, dir_3d)
             print("----- sequence directories -----")
             print(dirs)

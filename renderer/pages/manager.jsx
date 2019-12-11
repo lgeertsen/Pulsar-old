@@ -41,6 +41,7 @@ export default class Manager extends React.Component {
       projects: [],
 
       project: "",
+      assetProject: "",
       switch: "assets",
       type: undefined,
       name: undefined,
@@ -154,16 +155,17 @@ export default class Manager extends React.Component {
         }
         if(data.projects) {
           let assetDirectories = this.state.assetDirectories;
-          assetDirectories.project = data.projects;
           let assetSid = this.state.assetSid;
-          assetSid.project = data.projects[0];
           this.setState({
             projects: data.projects,
             assetDirectories: assetDirectories,
             assetSid: assetSid
           })
           if(data.projects.length > 0) {
-            this.setProject(data.projects[0])
+            assetSid.project = data.projects[0];
+            this.setState({assetSid: assetSid});
+            this.setProject("sid", data.projects[0]);
+            this.setProject("assetSid", data.projects[0]);
           }
         }
       });
@@ -171,7 +173,12 @@ export default class Manager extends React.Component {
       ipcRenderer.on('directories', (event, data) => {
         console.log("----- received directories -----");
         console.log(data);
-        this.setState({directories: data});
+        if(data.sid == "sid") {
+          this.setState({directories: data.dirs});
+        } else {
+          console.log(data);
+          this.setState({assetDirectories: data.dirs});
+        }
       });
 
       ipcRenderer.on('softwares', (event, data) => {
@@ -194,51 +201,60 @@ export default class Manager extends React.Component {
     }
   }
 
-  setProject(project) {
-    let sid = this.state.sid;
+  setProject(sidType, project) {
+    let sid = sidType == "sid" ? this.state.sid : this.state.assetSid;
     let selectedIndexes = this.state.selectedIndexes;
     sid.project = project;
-    selectedIndexes.file = -1;
     sid.fileName = undefined;
     sid.state = undefined;
     sid.version = undefined;
     sid.ext = undefined;
-    selectedIndexes.subtask = -1;
     sid.subtask = undefined;
-    selectedIndexes.task = -1;
     sid.task = undefined;
-    selectedIndexes.name = -1;
     sid.name = undefined;
-    selectedIndexes.type = -1;
     sid.type = undefined;
-
-    this.setState({sid: sid, project: project, selectedIndexes: selectedIndexes});
-    ipcRenderer.send("setProject", project);
+    if(sidType == "sid") {
+      selectedIndexes.file = -1;
+      selectedIndexes.subtask = -1;
+      selectedIndexes.task = -1;
+      selectedIndexes.name = -1;
+      selectedIndexes.type = -1;
+      this.setState({sid: sid, project: project, selectedIndexes: selectedIndexes});
+      ipcRenderer.send("setProject", project);
+    } else {
+      this.setState({assetSid: sid, assetProject: project});
+      ipcRenderer.send("setAssetProject", project);
+    }
   }
 
-  setSwitch(data) {
+  setSwitch(sidType, data) {
     let choice = data == 1 ? "assets" : "shots"
-    let sid = this.state.sid;
+    let sid = sidType == "sid" ? this.state.sid : this.state.assetSid;
     let selectedIndexes = this.state.selectedIndexes;
     selectedIndexes.file = -1;
     sid.fileName = undefined;
     sid.state = undefined;
     sid.version = undefined;
     sid.ext = undefined;
-    selectedIndexes.subtask = -1;
     sid.subtask = undefined;
-    selectedIndexes.task = -1;
     sid.task = undefined;
-    selectedIndexes.name = -1;
     sid.name = undefined;
-    selectedIndexes.type = -1;
     sid.type = undefined;
     sid.assetShot = data == 1 ? "a" : "s";
-    this.setState({switch: choice, sid: sid, selectedIndexes: selectedIndexes});
-    ipcRenderer.send("setSwitch", choice);
+    if(sidType == "sid") {
+      selectedIndexes.subtask = -1;
+      selectedIndexes.task = -1;
+      selectedIndexes.name = -1;
+      selectedIndexes.type = -1;
+      this.setState({switch: choice, sid: sid, selectedIndexes: selectedIndexes});
+      ipcRenderer.send("setSwitch", choice);
+    } else {
+      this.setState({assetSid: sid});
+      ipcRenderer.send("setAssetSwitch", choice);
+    }
   }
 
-  setSidDir(type, index) {
+  setSidDir(sidType, type, index) {
     console.log("-------------type------------", type);
     let dir = this.state.directories[type][index];
     let sid = this.state.sid;
@@ -531,7 +547,7 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   value={this.state.project}
                   options={this.state.projects}
-                  onChange={(element) => this.setProject(element)}
+                  onChange={(element) => this.setProject("sid", element)}
                 />
               </div>
               <div className="assetShotSwitch">
@@ -540,7 +556,7 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   option1="Assets"
                   option2="Shots"
-                  onChange={(choice) => this.setSwitch(choice)}
+                  onChange={(choice) => this.setSwitch("sid", choice)}
                 />
               </div>
               <div className="searchBar">
@@ -573,7 +589,7 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   title={this.state.switch == "assets" ? "Asset Type" : "Sequences"}
                   directories={this.state.directories.type}
-                  onChange={(dir) => this.setSidDir("type", dir)}
+                  onChange={(dir) => this.setSidDir("sid", "type", dir)}
                   selectedDir={this.state.selectedIndexes.type}
                 />
               </div>
@@ -586,7 +602,7 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   title={this.state.switch == "assets" ? "Asset Name" : "Shots"}
                   directories={this.state.directories.name}
-                  onChange={(dir) => this.setSidDir("name", dir)}
+                  onChange={(dir) => this.setSidDir("sid", "name", dir)}
                   selectedDir={this.state.selectedIndexes.name}
                 />
               </div>
@@ -599,7 +615,7 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   title="Tasks"
                   directories={this.state.directories.task}
-                  onChange={(dir) => this.setSidDir("task", dir)}
+                  onChange={(dir) => this.setSidDir("sid", "task", dir)}
                   selectedDir={this.state.selectedIndexes.task}
                 />
               </div>
@@ -612,7 +628,7 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   title="Subtasks"
                   directories={this.state.directories.subtask}
-                  onChange={(dir) => this.setSidDir("subtask", dir)}
+                  onChange={(dir) => this.setSidDir("sid", "subtask", dir)}
                   selectedDir={this.state.selectedIndexes.subtask}
                 />
               </div>
@@ -664,8 +680,12 @@ export default class Manager extends React.Component {
           show={this.state.newAssetModal}
           handleClose={() =>  this.setState({newAssetModal: false})}
           assetDirectories={this.state.assetDirectories}
+          projects={this.state.projects}
+          assetProject={this.state.assetProject}
           assetSid={this.state.assetSid}
-          setAssetSid={(key, value) => this.setAssetSid}
+          setAssetProject={(project) => this.setProject("assetSid", project)}
+          setAssetSwitch={(value) => this.setSwitch("assetSid", value)}
+          setAssetSid={(key, value) => this.setAssetSid(key, value)}
         />
 
         <SettingsContainer
