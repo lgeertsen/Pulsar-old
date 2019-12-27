@@ -107,7 +107,7 @@ function getStringItems(type, filter) {
                         <div className="autocompleteInputContainer">
                           <input
                             {...getInputProps({
-                              isOpen,
+                              // isOpen,
                               placeholder: 'Enter a name',
                             })}
                           />
@@ -120,12 +120,14 @@ function getStringItems(type, filter) {
                             </div>
                           ) : (
                             <div className="controllerButton" {...getToggleButtonProps()}>
-                              <i class={isOpen ? "fas fa-angle-up" : "fas fa-angle-down"}></i>
+                              <i className={isOpen ? "fas fa-angle-up" : "fas fa-angle-down"}></i>
                             </div>
                           )}
                         </div>
                         <div className="autocompleteMenuContainer">
-                          <div className="autocompleteMenu" {...getMenuProps({isOpen})}>
+                          <div className="autocompleteMenu"
+                            // {...getMenuProps({isOpen})}
+                            >
                             {isOpen ?
                               getStringItems("type", inputValue).map((item, index) => (
                                 <div className="autocompleteItem"

@@ -39,7 +39,7 @@ const Dropdown = ({ theme, primaryColor, value, options, onChange }) => {
           </div>
 
           <div className={open ? "dropdown" : "dropdown hidden"}>
-            {options.map((element, index) => (
+            {Object.keys(options).map((element, index) => (
               <div key={index} className="dropdownElement" onClick={e => handleChange(element)}>
                 <span>{element}</span>
               </div>

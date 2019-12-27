@@ -164,7 +164,7 @@ export default class Manager extends React.Component {
             assetSid: assetSid
           })
           if(data.projects.length > 0) {
-            assetSid.project = data.projects[0];
+            assetSid.project = Object.keys(data.projects)[0];
             this.setState({assetSid: assetSid});
             this.setProject("sid", data.projects[0]);
             this.setProject("assetSid", data.projects[0]);
@@ -203,6 +203,10 @@ export default class Manager extends React.Component {
     }
   }
 
+  setAssetIdValue(sid, type, data) {
+    ipcRenderer.send("setAssetId", {sid: sid, type: type, value: data});
+  }
+
   setProject(sidType, project) {
     let sid = sidType == "sid" ? this.state.sid : this.state.assetSid;
     let selectedIndexes = this.state.selectedIndexes;
@@ -223,9 +227,10 @@ export default class Manager extends React.Component {
       selectedIndexes.type = -1;
       this.setState({sid: sid, project: project, selectedIndexes: selectedIndexes});
       ipcRenderer.send("setProject", project);
+      ipcRenderer.send("setAssetId", {sid: "fileManager", type: "project", value: project});
     } else {
       this.setState({assetSid: sid, assetProject: project});
-      ipcRenderer.send("setAssetProject", project);
+      ipcRenderer.send("setAssetId", {sid: "fileManager", type: "project", value: project});
     }
   }
 
@@ -549,7 +554,7 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   value={this.state.project}
                   options={this.state.projects}
-                  onChange={(element) => this.setProject("sid", element)}
+                  onChange={(element) => this.setAssetIdValue("fileManager", "project", element)}
                 />
               </div>
               <div className="assetShotSwitch">
@@ -557,8 +562,10 @@ export default class Manager extends React.Component {
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
                   option1="Assets"
+                  value1="asset"
                   option2="Shots"
-                  onChange={(choice) => this.setSwitch("sid", choice)}
+                  value2="shot"
+                  onChange={(choice) => this.setAssetIdValue("fileManager", "pathType", choice)}
                 />
               </div>
               <div className="searchBar">
@@ -591,7 +598,7 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   title={this.state.switch == "assets" ? "Asset Type" : "Sequences"}
                   directories={this.state.directories.type}
-                  onChange={(dir) => this.setSidDir("sid", "type", dir)}
+                  onChange={(dir) => this.setAssetIdValue("fileManager", "group", dir)}
                   selectedDir={this.state.selectedIndexes.type}
                 />
               </div>
@@ -604,7 +611,7 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   title={this.state.switch == "assets" ? "Asset Name" : "Shots"}
                   directories={this.state.directories.name}
-                  onChange={(dir) => this.setSidDir("sid", "name", dir)}
+                  onChange={(dir) => this.setAssetIdValue("fileManager", "name", dir)}
                   selectedDir={this.state.selectedIndexes.name}
                 />
               </div>
@@ -617,7 +624,7 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   title="Tasks"
                   directories={this.state.directories.task}
-                  onChange={(dir) => this.setSidDir("sid", "task", dir)}
+                  onChange={(dir) => this.setAssetIdValue("fileManager", "task", dir)}
                   selectedDir={this.state.selectedIndexes.task}
                 />
               </div>
@@ -630,7 +637,7 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   title="Subtasks"
                   directories={this.state.directories.subtask}
-                  onChange={(dir) => this.setSidDir("sid", "subtask", dir)}
+                  onChange={(dir) => this.setAssetIdValue("fileManager", "subtask", dir)}
                   selectedDir={this.state.selectedIndexes.subtask}
                 />
               </div>
@@ -745,7 +752,7 @@ export default class Manager extends React.Component {
           }
           .softwareContainer {
             width: 150px;
-            background: ${themes[this.state.theme].background};
+            // background: ${themes[this.state.theme].background};
             border-right: ${themes[this.state.theme].border};
           }
           .softwareTitle {
