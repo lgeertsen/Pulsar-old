@@ -14,6 +14,8 @@ import SearchBar from '../components/SearchBar';
 import SettingsContainer from '../containers/SettingsContainer';
 import Switch from '../components/Switch';
 
+import "../styles/main.sass"
+
 import darkTheme from '../themes/dark';
 import lightTheme from '../themes/light';
 
