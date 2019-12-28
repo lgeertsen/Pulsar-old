@@ -88,6 +88,21 @@ export default class Manager extends React.Component {
         file: -1
       },
 
+      fileManagerAssetId: {
+        dimension: "*",
+        group: "",
+        groups: [],
+        name: "",
+        names: [],
+        pathType: "asset",
+        project: "",
+        projects: [],
+        subtask: "",
+        subtasks: [],
+        task: "",
+        tasks: [],
+      },
+
       sid: {
         "project": undefined,
         "assetShot": "a",
@@ -155,20 +170,28 @@ export default class Manager extends React.Component {
         if(data.overlay.increment) {
           this.setState({incrementShortcut: data.overlay.increment})
         }
-        if(data.projects) {
-          let assetDirectories = this.state.assetDirectories;
-          let assetSid = this.state.assetSid;
-          this.setState({
-            projects: data.projects,
-            assetDirectories: assetDirectories,
-            assetSid: assetSid
-          })
-          if(data.projects.length > 0) {
-            assetSid.project = Object.keys(data.projects)[0];
-            this.setState({assetSid: assetSid});
-            this.setProject("sid", data.projects[0]);
-            this.setProject("assetSid", data.projects[0]);
-          }
+        // if(data.projects) {
+        //   let assetDirectories = this.state.assetDirectories;
+        //   let assetSid = this.state.assetSid;
+        //   this.setState({
+        //     projects: data.projects,
+        //     assetDirectories: assetDirectories,
+        //     assetSid: assetSid
+        //   })
+        //   if(data.projects.length > 0) {
+        //     assetSid.project = Object.keys(data.projects)[0];
+        //     this.setState({assetSid: assetSid});
+        //     this.setProject("sid", data.projects[0]);
+        //     this.setProject("assetSid", data.projects[0]);
+        //   }
+        // }
+      });
+
+      ipcRenderer.on('assetId', (event, data) => {
+        console.log("----- received assetId -----");
+        console.log(data);
+        if(data.sid == "fileManager") {
+          this.setState({fileManagerAssetId: data});
         }
       });
 
@@ -552,8 +575,8 @@ export default class Manager extends React.Component {
                 <Dropdown
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
-                  value={this.state.project}
-                  options={this.state.projects}
+                  value={this.state.fileManagerAssetId.project}
+                  options={this.state.fileManagerAssetId.projects}
                   onChange={(element) => this.setAssetIdValue("fileManager", "project", element)}
                 />
               </div>
@@ -597,9 +620,9 @@ export default class Manager extends React.Component {
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
                   title={this.state.switch == "assets" ? "Asset Type" : "Sequences"}
-                  directories={this.state.directories.type}
+                  directories={this.state.fileManagerAssetId.groups}
                   onChange={(dir) => this.setAssetIdValue("fileManager", "group", dir)}
-                  selectedDir={this.state.selectedIndexes.type}
+                  selectedDir={this.state.fileManagerAssetId.group}
                 />
               </div>
               <div className="chevronContainer">
@@ -610,9 +633,9 @@ export default class Manager extends React.Component {
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
                   title={this.state.switch == "assets" ? "Asset Name" : "Shots"}
-                  directories={this.state.directories.name}
+                  directories={this.state.fileManagerAssetId.names}
                   onChange={(dir) => this.setAssetIdValue("fileManager", "name", dir)}
-                  selectedDir={this.state.selectedIndexes.name}
+                  selectedDir={this.state.fileManagerAssetId.name}
                 />
               </div>
               <div className="chevronContainer">
@@ -623,9 +646,9 @@ export default class Manager extends React.Component {
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
                   title="Tasks"
-                  directories={this.state.directories.task}
+                  directories={this.state.fileManagerAssetId.tasks}
                   onChange={(dir) => this.setAssetIdValue("fileManager", "task", dir)}
-                  selectedDir={this.state.selectedIndexes.task}
+                  selectedDir={this.state.fileManagerAssetId.task}
                 />
               </div>
               <div className="chevronContainer">
@@ -636,9 +659,9 @@ export default class Manager extends React.Component {
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
                   title="Subtasks"
-                  directories={this.state.directories.subtask}
+                  directories={this.state.fileManagerAssetId.subtasks}
                   onChange={(dir) => this.setAssetIdValue("fileManager", "subtask", dir)}
-                  selectedDir={this.state.selectedIndexes.subtask}
+                  selectedDir={this.state.fileManagerAssetId.subtask}
                 />
               </div>
               <div className="chevronContainer">

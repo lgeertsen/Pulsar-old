@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDir }) => {
 
-  const handleChange = index => {
-    onChange(index);
+  const handleChange = dir => {
+    onChange(dir);
   };
 
     return (
@@ -17,7 +17,7 @@ const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDi
             if(a > b) { return 1; }
             return 0;
           }).map((dir, index) => (
-            <div key={index} className={index == selectedDir ? "directory selected" : "directory"} onClick={(e) => handleChange(index)}>
+            <div key={index} className={dir == selectedDir ? "directory selected" : "directory"} onClick={(e) => handleChange(dir)}>
               <i className={index == selectedDir ? "fas fa-folder-open" : "fas fa-folder"}></i>
               <span>{dir}</span>
             </div>

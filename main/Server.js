@@ -39,30 +39,37 @@ export default class Server {
   get config () { return this._config }
 
   onConfig (message, config) {
-    this._renderer.sendMessageMain(message, config)
+    this.sendMessageMain(message, config)
     if(this._assetIds["fileManager"] == undefined) {
       Logger.info("----- fileManager AssetId doesn't exist -----");
-      let fm = new AssetId("fileManager", config.paths)
+      let fm = new AssetId("fileManager", config.paths, config.projects, (data) => this.sendMessageMain("assetId", data));
       this._assetIds["fileManager"] = fm;
       let keys = Object.keys(config.projects);
       if(keys.length > 0) {
-        fm.project = keys[0];
+        this.setAssetIdValue("fileManager", "project", keys[0])
+        // fm.project = keys[0];
       }
+      fm.formatForRender((message, data) => this.sendMessageMain(message, data));
     }
     if(this._assetIds["newAsset"] == undefined) {
       Logger.log("----- newAsset AssetId doesn't exist -----");
-      let fm = new AssetId("newAsset", config.paths)
-      this._assetIds["newAsset"] = fm;
+      let na = new AssetId("newAsset", config.paths, config.projects, (data) => this.sendMessageMain("assetId", data));
+      this._assetIds["newAsset"] = na;
       let keys = Object.keys(config.projects);
       if(keys.length > 0) {
-        fm.project = keys[0];
+        this.setAssetIdValue("newAsset", "project", keys[0])
+        // na.project = keys[0];
       }
+      na.formatForRender((message, data) => this.sendMessageMain(message, data));
     }
   }
 
   setAssetIdValue(sid, type, value) {
-    this._assetIds[sid].setValue(type, value)
-    FileManager.getDirectories(this._assetIds[sid], this.config.config.projects)
+    this._assetIds[sid].setValue(type, value);
+  }
+
+  sendMessageMain(message, data) {
+    this._renderer.sendMessageMain(message, data)
   }
 
   startServer() {

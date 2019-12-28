@@ -51,8 +51,7 @@ if (isProd) {
     frame: false
   });
 
-  // mainWindow.maximize();
-  mainWindow.minimize();
+  mainWindow.maximize();
 
   // var overlay = createWindow('overlay', {
   //   width: 250,

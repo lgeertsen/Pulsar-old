@@ -36,40 +36,7 @@ export default class Renderer {
       this._server.setAssetIdValue(data.sid, data.type, data.value);
     });
 
-    ipcMain.on("setProject", (event, data) => {
-      console.log("----- set project -----", data);
-      // socket.emit("setProject", data);
-    });
 
-    ipcMain.on("setAssetProject", (event, data) => {
-      console.log("----- set project -----", data);
-      // socket.emit("setAssetProject", data);
-    });
-
-    ipcMain.on("setSwitch", (event, data) => {
-      console.log("----- set switch -----", data);
-      // socket.emit("setSwitch", data);
-    });
-
-    ipcMain.on("setAssetSwitch", (event, data) => {
-      console.log("----- set switch -----", data);
-      // socket.emit("setAssetSwitch", data);
-    });
-
-    ipcMain.on("setType", (event, data) => {
-      console.log("----- set type -----", data);
-      // socket.emit("setType", data);
-    });
-
-    ipcMain.on("setName", (event, data) => {
-      console.log("----- set type -----", data);
-      // socket.emit("setType", data);
-    });
-
-    ipcMain.on("setSidDir", (event, data) => {
-      console.log("----- set sid dir -----", data);
-      // socket.emit("setSidDir", data);
-    });
 
     ipcMain.on("setFile", (event, data) => {
       console.log("----- set file -----", data);
