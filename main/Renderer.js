@@ -32,7 +32,6 @@ export default class Renderer {
     });
 
     ipcMain.on("setAssetId", (event, data) => {
-      console.log("----- data -----", data);
       this._server.setAssetIdValue(data.sid, data.type, data.value);
     });
 

@@ -1,3 +1,4 @@
+import File from './File';
 import FileManager from './FileManager';
 import Logger from './Logger';
 import Renderer from './Renderer';
@@ -12,12 +13,12 @@ const typeToDirMap = {
 }
 
 const typeToClearMap = {
-  project:  ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "file", "files"],
-  pathType: ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "file", "files"],
-  group:    ["name", "names", "task", "tasks", "subtask", "subtasks", "file", "files"],
-  name:     ["task", "tasks", "subtask", "subtasks", "file", "files"],
-  task:     ["subtask", "subtasks", "file", "files"],
-  subtask:  ["file", "files"]
+  project:  ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
+  pathType: ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
+  group:    ["name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
+  name:     ["task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
+  task:     ["subtask", "subtasks", "state", "version", "file", "files"],
+  subtask:  ["state", "version", "file", "files"]
 }
 
 export default class AssetId {
@@ -47,6 +48,7 @@ export default class AssetId {
     this._names = [];
     this._tasks = [];
     this._subtasks = [];
+    this._files = [];
 
     this._searchDir = null;
   }
@@ -86,8 +88,9 @@ export default class AssetId {
   get version () { return this._version }
   set version (version) { this._version = version }
 
-  get file () { return this._file }
+  get file () { return this._file.fullName }
   set file (file) { this._file = file }
+  get formatFile () { return this._file == "<>" ? "<>" : this._file.format() }
 
 
   // Directories get & set
@@ -103,22 +106,34 @@ export default class AssetId {
   get subtasks () { return this._subtasks }
   set subtasks (subtasks) { this._subtasks = subtasks }
 
+  get files () { return this._files }
+  set files (files) { this._files = files }
+
   get searchDir () { return this._searchDir }
 
   setValue(type, value) {
     this.clearValues(type);
-    this[type] = value;
     this.setSearchDir(type);
-    if(this.searchDir == "files") {
-      FileManager.getFiles(this);
+    if(this.searchDir != undefined) {
+      this[type] = value;
+      if(this.searchDir == "files") {
+        FileManager.getProjectFiles(this, (files) => this.setFiles(files));
+      } else {
+        FileManager.getDirectories(this, (dirs) => this.setDirs(dirs));
+      }
     } else {
-      FileManager.getDirectories(this, (dirs) => this.setDirs(dirs));
+      let file = this._files.filter(f => {
+        return f.path == value;
+      })[0];
+      this._file = file;
+      this._state = file.state;
+      this._version = file.version;
+      this.formatForRender();
     }
   }
 
   clearValues(type) {
     let values = typeToClearMap[type];
-
     if(values) {
       for(let i = 0; i < values.length; i++) {
         if(typeof(this[values[i]]) == "object") {
@@ -134,10 +149,16 @@ export default class AssetId {
     this._searchDir = typeToDirMap[type];
   }
 
+  setFiles(files) {
+    this._files = files;
+    this.formatForRender();
+  }
+
   setDirs(dirs) {
-    this[this._searchDir] = dirs;
-    Logger.list(dirs);
-    this.formatForRender()
+    let formattedDirs = FileManager.formatDirs(dirs);
+    let arrangedDirs = FileManager.removeDoubles(formattedDirs)
+    this[this._searchDir] = arrangedDirs;
+    this.formatForRender();
   }
 
   formatForRender() {
@@ -152,14 +173,24 @@ export default class AssetId {
       name:       this.name,
       task:       this.task,
       subtask:    this.subtask,
+      file:       this.formatFile,
 
       groups:     this.groups,
       names:      this.names,
       tasks:      this.tasks,
-      subtasks:   this.subtasks
+      subtasks:   this.subtasks,
+      files:      this.formatFiles(),
     }
-    Logger.info("Formatted assetId");
-    Logger.log(asset);
+
     this._sendToRenderer(asset);
+  }
+
+  formatFiles() {
+    let files = [];
+    for(let i = 0; i < this._files.length; i++) {
+      let file = this._files[i].formatForRender();
+      files.push(file);
+    }
+    return files;
   }
 }

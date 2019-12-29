@@ -26,7 +26,7 @@ export default class Logger {
   static list(list) {
     console.log(ctx.inverse("["));
     for(let i = 0; i < list.length; i++) {
-      console.log(ctx.bgMagenta(list[i]));
+      console.log(`${ctx.bgMagenta(i)}    ${list[i]}`);
     }
     console.log(ctx.inverse("]"));
   }

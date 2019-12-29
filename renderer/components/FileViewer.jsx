@@ -4,7 +4,7 @@ import CheckBox from './CheckBox'
 import CommentContainer from '../containers/CommentContainer';
 import Modal from './Modal';
 
-const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName, refresh }) => {
+const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName, refresh }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -25,7 +25,7 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
     let task = {
       command: command,
       arguments: {
-        file: sid.file.path,
+        file: assetId.file.path,
         force: checked ? 1 : 0
       }
     };
@@ -37,17 +37,17 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
   };
 
   const onPublish = () => {
-    if(["ma", "mb"].includes(sid.file.extension)) {
+    if(["ma", "mb"].includes(assetId.file.extension)) {
       selectSoftware("mayapy", "mayapy")
-    } else if(["hip", "hipnc"].includes(sid.file.extension)) {
+    } else if(["hip", "hipnc"].includes(assetId.file.extension)) {
       selectSoftware("hython", "hython")
-    } else if(["nk"].includes(sid.file.extension)) {
+    } else if(["nk"].includes(assetId.file.extension)) {
 
     }
     let task = {
       command: "publish",
       arguments: {
-        file: sid.file.path
+        file: assetId.file.path
       }
     }
     execTask(task)
@@ -100,13 +100,14 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
           <div className="fileContainerInner">
             <div className="fileInfoContainer">
               <div className="fileInfo">
-                <h3>{sid.file.name + "_" + sid.file.state + "_" + sid.file.version + "." + sid.file.extension}</h3>
-                <h4>{sid.file.modified}</h4>
-                <h4>{getSize(sid.file.size)}</h4>
+                <h3>{assetId.file.name + "_" + assetId.file.state + "_" + assetId.file.version + "." + assetId.file.extension}</h3>
+                <h4>{assetId.file.modified}</h4>
+                <h4>{getSize(assetId.file.size)}</h4>
+                <h6>{assetId.file.path}</h6>
               </div>
 
               <div className="commandsContainer">
-                {sid.file.state != "publish" ?
+                {assetId.file.state != "publish" ?
                   <div className="btnContainer">
                     <div className="btn" onClick={(e) => onBtnClick("open_file", true)}>
                       <span>Open</span>
@@ -120,7 +121,7 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
                     <div className="btn">
                       <span>Save As</span>
                     </div> */}
-                    {sid.file.state == "work" ?
+                    {assetId.file.state == "work" ?
                       <div className="btn" onClick={() => onPublish()}>
                         <span>Publish</span>
                       </div>
@@ -129,13 +130,13 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
                   </div>
                   : ""
                 }
-                {sid.file.state == "publish" && sid.file.version != "valid" ?
+                {assetId.file.state == "publish" && assetId.file.version != "valid" ?
                   <div className="btn">
                     <span>Release</span>
                   </div>
                   : ""
                 }
-                {sid.file.state == "work" ?
+                {assetId.file.state == "work" ?
                   <div className="btn">
                     <span>Publish & Release</span>
                   </div>
@@ -144,7 +145,7 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
               </div>
             </div>
             <div className="fileComment">
-              <CommentContainer theme={theme} comment={sid.file.comment} onChange={(e) => editComment(e)} saveComment={() => onSave()}/>
+              <CommentContainer theme={theme} comment={assetId.file.comment} onChange={(e) => editComment(e)} saveComment={() => onSave()}/>
             </div>
             <div className="fileScreenshot">
               <h3>Screenshot</h3>
@@ -155,7 +156,7 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
         <Modal theme={theme} primaryColor={primaryColor} show={showModal} handleClose={(value) => handleModal(value)}>
           <div className="openSoftModal">
             <div className="modalTitle">
-              <h3>{sid.file.name + "_" + sid.file.state + "_" + sid.file.version + "." + sid.file.extension}</h3>
+              <h3>{assetId.file.name + "_" + assetId.file.state + "_" + assetId.file.version + "." + assetId.file.extension}</h3>
             </div>
             {command == "open_file_as" ?
               <div className="newNameContainer">
@@ -218,7 +219,7 @@ const FileViewer = ({ theme, primaryColor, sid, execTask, onChangeComment, onSav
           }
 
           .fileInfoContainer {
-            width: 400px;
+            width: 600px;
             display: flex;
             flex-direction: row;
             padding-top: 10px;

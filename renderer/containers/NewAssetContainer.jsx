@@ -11,13 +11,8 @@ const NewAssetContainer = ({
   primaryColor,
   show,
   handleClose,
-  assetDirectories,
-  projects,
-  assetProject,
-  assetSid,
-  setAssetSid,
-  setAssetProject,
-  setAssetSwitch
+  assetId,
+  setAssetIdValue
 }) => {
   const close = () => {
     handleClose();
@@ -25,9 +20,9 @@ const NewAssetContainer = ({
 
   const autocompleteHandleChange = (type, changes) => {
     if (changes.hasOwnProperty('selectedItem')) {
-      setAssetSid(type, changes.selectedItem)
+      setAssetIdValue(type, changes.selectedItem)
     } else if (changes.hasOwnProperty('inputValue')) {
-      setAssetSid(type, changes.inputValue)
+      setAssetIdValue(type, changes.inputValue)
     }
   }
 
@@ -63,9 +58,9 @@ function getStringItems(type, filter) {
                   <Dropdown
                     theme={theme}
                     primaryColor={primaryColor}
-                    value={assetProject}
-                    options={projects}
-                    onChange={(element) => setAssetProject(element)}
+                    value={assetId.project}
+                    options={assetId.projects}
+                    onChange={(element) => setAssetIdValue("project", element)}
                   />
                 </div>
               </div>
@@ -78,8 +73,10 @@ function getStringItems(type, filter) {
                     theme={theme}
                     primaryColor={primaryColor}
                     option1="Assets"
+                    value1="asset"
                     option2="Shots"
-                    onChange={(choice) => setAssetSwitch(choice)}
+                    value2="shot"
+                    onChange={(choice) => setAssetIdValue("pathType", choice)}
                   />
                 </div>
               </div>
@@ -90,7 +87,7 @@ function getStringItems(type, filter) {
                   <h3>Asset Type:</h3>
                 </div>
                 <div className="optionDropdown">
-                  <Downshift selectedItem={assetSid.type} onStateChange={(changes) => autocompleteHandleChange("type", changes)}>
+                  <Downshift selectedItem={assetId.group} onStateChange={(changes) => autocompleteHandleChange("type", changes)}>
                     {({
                       getLabelProps,
                       getInputProps,

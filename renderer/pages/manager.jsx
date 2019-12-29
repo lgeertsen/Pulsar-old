@@ -42,17 +42,6 @@ export default class Manager extends React.Component {
 
       projects: [],
 
-      project: "",
-      assetProject: "",
-      switch: "assets",
-      type: undefined,
-      name: undefined,
-      task: undefined,
-      subtask: undefined,
-      state: undefined,
-      version: undefined,
-      file: undefined,
-
       selectedSoftware: undefined,
       selectedSoftwareType: undefined,
       softwares: {},
@@ -72,24 +61,10 @@ export default class Manager extends React.Component {
         }
       },
 
-      directories: {
-        type: [],
-        name: [],
-        task: [],
-        subtask: [],
-        file: []
-      },
-
-      selectedIndexes: {
-        type: -1,
-        name: -1,
-        task: -1,
-        subtask: -1,
-        file: -1
-      },
-
       fileManagerAssetId: {
         dimension: "*",
+        file: "<>",
+        files: [],
         group: "",
         groups: [],
         name: "",
@@ -102,45 +77,22 @@ export default class Manager extends React.Component {
         task: "",
         tasks: [],
       },
-
-      sid: {
-        "project": undefined,
-        "assetShot": "a",
-        "type": undefined,
-        "name": undefined,
-        "task": undefined,
-        "subtask": undefined,
-        "state": undefined,
-        "version": undefined,
-        "file": undefined,
-        "ext": undefined
+      newAssetId: {
+        dimension: "*",
+        file: "<>",
+        files: [],
+        group: "",
+        groups: [],
+        name: "",
+        names: [],
+        pathType: "asset",
+        project: "",
+        projects: [],
+        subtask: "",
+        subtasks: [],
+        task: "",
+        tasks: [],
       },
-
-      assetDirectories: {
-        "project": [],
-        "assetShot": "a",
-        "type": [],
-        "name": [],
-        "task": [],
-        "subtask": [],
-        "state": [],
-        "version": [],
-        "file": [],
-        "ext": []
-      },
-
-      assetSid: {
-        "project": undefined,
-        "assetShot": "a",
-        "type": undefined,
-        "name": undefined,
-        "task": undefined,
-        "subtask": undefined,
-        "state": undefined,
-        "version": undefined,
-        "file": undefined,
-        "ext": undefined
-      }
     };
   }
 
@@ -170,21 +122,6 @@ export default class Manager extends React.Component {
         if(data.overlay.increment) {
           this.setState({incrementShortcut: data.overlay.increment})
         }
-        // if(data.projects) {
-        //   let assetDirectories = this.state.assetDirectories;
-        //   let assetSid = this.state.assetSid;
-        //   this.setState({
-        //     projects: data.projects,
-        //     assetDirectories: assetDirectories,
-        //     assetSid: assetSid
-        //   })
-        //   if(data.projects.length > 0) {
-        //     assetSid.project = Object.keys(data.projects)[0];
-        //     this.setState({assetSid: assetSid});
-        //     this.setProject("sid", data.projects[0]);
-        //     this.setProject("assetSid", data.projects[0]);
-        //   }
-        // }
       });
 
       ipcRenderer.on('assetId', (event, data) => {
@@ -192,17 +129,8 @@ export default class Manager extends React.Component {
         console.log(data);
         if(data.sid == "fileManager") {
           this.setState({fileManagerAssetId: data});
-        }
-      });
-
-      ipcRenderer.on('directories', (event, data) => {
-        console.log("----- received directories -----");
-        console.log(data);
-        if(data.sid == "sid") {
-          this.setState({directories: data.dirs});
-        } else {
-          console.log(data);
-          this.setState({assetDirectories: data.dirs});
+        } else if(data.sid == "newAsset") {
+          this.setState({newAssetId: data});
         }
       });
 
@@ -230,129 +158,6 @@ export default class Manager extends React.Component {
     ipcRenderer.send("setAssetId", {sid: sid, type: type, value: data});
   }
 
-  setProject(sidType, project) {
-    let sid = sidType == "sid" ? this.state.sid : this.state.assetSid;
-    let selectedIndexes = this.state.selectedIndexes;
-    sid.project = project;
-    sid.fileName = undefined;
-    sid.state = undefined;
-    sid.version = undefined;
-    sid.ext = undefined;
-    sid.subtask = undefined;
-    sid.task = undefined;
-    sid.name = undefined;
-    sid.type = undefined;
-    if(sidType == "sid") {
-      selectedIndexes.file = -1;
-      selectedIndexes.subtask = -1;
-      selectedIndexes.task = -1;
-      selectedIndexes.name = -1;
-      selectedIndexes.type = -1;
-      this.setState({sid: sid, project: project, selectedIndexes: selectedIndexes});
-      ipcRenderer.send("setProject", project);
-      ipcRenderer.send("setAssetId", {sid: "fileManager", type: "project", value: project});
-    } else {
-      this.setState({assetSid: sid, assetProject: project});
-      ipcRenderer.send("setAssetId", {sid: "fileManager", type: "project", value: project});
-    }
-  }
-
-  setSwitch(sidType, data) {
-    let choice = data == 1 ? "assets" : "shots"
-    let sid = sidType == "sid" ? this.state.sid : this.state.assetSid;
-    let selectedIndexes = this.state.selectedIndexes;
-    selectedIndexes.file = -1;
-    sid.fileName = undefined;
-    sid.state = undefined;
-    sid.version = undefined;
-    sid.ext = undefined;
-    sid.subtask = undefined;
-    sid.task = undefined;
-    sid.name = undefined;
-    sid.type = undefined;
-    sid.assetShot = data == 1 ? "a" : "s";
-    if(sidType == "sid") {
-      selectedIndexes.subtask = -1;
-      selectedIndexes.task = -1;
-      selectedIndexes.name = -1;
-      selectedIndexes.type = -1;
-      this.setState({switch: choice, sid: sid, selectedIndexes: selectedIndexes});
-      ipcRenderer.send("setSwitch", choice);
-    } else {
-      this.setState({assetSid: sid});
-      ipcRenderer.send("setAssetSwitch", choice);
-    }
-  }
-
-  setSidDir(sidType, type, index) {
-    console.log("-------------type------------", type);
-    let dir = this.state.directories[type][index];
-    let sid = this.state.sid;
-    sid[type] = dir;
-    let selectedIndexes = this.state.selectedIndexes
-    selectedIndexes[type] = index
-
-    if(type == "subtask") {
-      selectedIndexes.file = -1;
-      sid.fileName = undefined;
-      sid.state = undefined;
-      sid.version = undefined;
-      sid.ext = undefined;
-    } else if(type == "task") {
-      selectedIndexes.file = -1;
-      sid.fileName = undefined;
-      sid.state = undefined;
-      sid.version = undefined;
-      sid.ext = undefined;
-      selectedIndexes.subtask = -1;
-      sid.subtask = undefined;
-    } else if(type == "name") {
-      selectedIndexes.file = -1;
-      sid.fileName = undefined;
-      sid.state = undefined;
-      sid.version = undefined;
-      sid.ext = undefined;
-      selectedIndexes.subtask = -1;
-      sid.subtask = undefined;
-      selectedIndexes.task = -1;
-      sid.task = undefined;
-    } else if(type == "type") {
-      selectedIndexes.file = -1;
-      sid.fileName = undefined;
-      sid.state = undefined;
-      sid.version = undefined;
-      sid.ext = undefined;
-      selectedIndexes.subtask = -1;
-      sid.subtask = undefined;
-      selectedIndexes.task = -1;
-      sid.task = undefined;
-      selectedIndexes.name = -1;
-      sid.name = undefined;
-    }
-
-    this.setState({sid: sid, selectedIndexes: selectedIndexes});
-    ipcRenderer.send("setSidDir", {type: type, dir: dir});
-  }
-
-  setSidFile(file, index) {
-    let sid = this.state.sid;
-    sid.file = file;
-    sid.state = file.state;
-    sid.version = file.version;
-    sid.fileName = file.name;
-    sid.ext = file.extension;
-    let selectedIndexes = this.state.selectedIndexes
-    selectedIndexes.file = index
-    this.setState({sid: sid, selectedIndexes: selectedIndexes});
-    ipcRenderer.send("setFile", file);
-  }
-
-  setAssetSid(key, value) {
-    let assetSid = this.state.assetSid;
-    assetSid[key] = value;
-    this.setState({assetSid: assetSid});
-  }
-
   refreshBrowser() {
     ipcRenderer.send("refresh");
   }
@@ -368,30 +173,25 @@ export default class Manager extends React.Component {
   }
 
   filteredFiles() {
-    let files = this.state.directories.file;
+    let files = this.state.fileManagerAssetId.files;
     let filteredFiles = [];
 
     let filters = this.state.filters;
     for(const filter in filters) {
       switch (filter) {
         case "state":
-          let work = filters[filter]["work"];
-          let publish = filters[filter]["publish"];
-          let wip = filters[filter]["wip"];
+          let states = [];
+          if(filters[filter]["work"]) { states.push("work") }
+          if(filters[filter]["publish"]) { states.push("publish") }
+          if(filters[filter]["wip"]) { states.push("wip") }
+          let filtered = files.filter(file => {
+            return states.includes(file.state);
+          });
 
-          for(let i = 0; i < files.length; i ++) {
-            if(files[i].state == "work" && work) {
-              filteredFiles.push(files[i]);
-            } else if(files[i].state == "publish" && publish) {
-              filteredFiles.push(files[i]);
-            } else if(files[i].state == "wip" && wip) {
-              filteredFiles.push(files[i]);
-            }
-          }
+          filteredFiles = filteredFiles.concat(filtered);
           break;
       }
     }
-
     return filteredFiles
   }
 
@@ -411,18 +211,19 @@ export default class Manager extends React.Component {
   }
 
   editComment(e) {
-    let sid = this.state.sid
-    sid.file.comment = e.target.value;
-    this.setState({sid: sid});
+    let assetId = this.state.fileManagerAssetId
+    assetId.file.comment = e.target.value;
+    this.setState({fileManagerAssetId: assetId});
   }
 
   saveComment() {
-    let comment = this.state.sid.file.comment;
-    ipcRenderer.send("saveComment", comment);
+    let sid = this.state.fileManagerAssetId.sid
+    let comment = this.state.fileManagerAssetId.file.comment;
+    ipcRenderer.send("saveComment", {sid: sid, comment: comment});
   }
 
   getCompatibleSoftware() {
-    let file = this.state.sid.file;
+    let file = this.state.fileManagerAssetId.file;
     var softwares = this.state.softwares;
     var softs = [];
     if(["ma", "mb"].includes(file.extension)) {
@@ -476,7 +277,7 @@ export default class Manager extends React.Component {
   }
 
   getWipName() {
-    let sid = this.state.sid;
+    let assetId = this.state.fileManagerAssetId;
 
     let now = new Date(Date.now());
     let year = now.getFullYear();
@@ -487,7 +288,7 @@ export default class Manager extends React.Component {
     let seconds = now.getSeconds();
 
     let timestamp = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
-    let wipName = `WIP_${sid.file.name}_${sid.task}_${sid.subtask}_${sid.file.version}_${timestamp}`;
+    let wipName = `WIP_${assetId.file.name}_${assetId.task}_${assetId.subtask}_${assetId.file.version}_${timestamp}`;
     return wipName
   }
 
@@ -595,7 +396,7 @@ export default class Manager extends React.Component {
                 <SearchBar
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
-                  sid={this.state.sid}
+                  assetId={this.state.fileManagerAssetId}
                 />
               </div>
             </div>
@@ -673,20 +474,20 @@ export default class Manager extends React.Component {
                   primaryColor={this.state.primaryColor}
                   title="Files"
                   files={this.filteredFiles()}
-                  onChange={(file, index) => this.setSidFile(file, index)}
-                  selectedFile={this.state.selectedIndexes.file}
+                  onChange={(file) => this.setAssetIdValue("fileManager", "file", file)}
+                  selectedFile={this.state.fileManagerAssetId.file}
                 />
               </div>
             </div>
 
 
 
-            <div className={this.state.sid.file == undefined ? "selectedContainer" : "selectedContainer open"}>
-              {this.state.sid.file != undefined ?
+            <div className={this.state.fileManagerAssetId.file == "<>" ? "selectedContainer" : "selectedContainer open"}>
+              {this.state.fileManagerAssetId.file != "<>" ?
                 <FileViewer
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
-                  sid={this.state.sid}
+                  assetId={this.state.fileManagerAssetId}
                   execTask={(task) => this.execTask(task)}
                   onChangeComment={(e) => this.editComment(e)}
                   onSaveComment={() => this.saveComment()}
@@ -711,13 +512,8 @@ export default class Manager extends React.Component {
           primaryColor={this.state.primaryColor}
           show={this.state.newAssetModal}
           handleClose={() =>  this.setState({newAssetModal: false})}
-          assetDirectories={this.state.assetDirectories}
-          projects={this.state.projects}
-          assetProject={this.state.assetProject}
-          assetSid={this.state.assetSid}
-          setAssetProject={(project) => this.setProject("assetSid", project)}
-          setAssetSwitch={(value) => this.setSwitch("assetSid", value)}
-          setAssetSid={(key, value) => this.setAssetSid(key, value)}
+          assetId={this.state.newAssetId}
+          setAssetIdValue={(type, element) => this.setAssetIdValue("newAsset", type, element)}
         />
 
         <SettingsContainer
