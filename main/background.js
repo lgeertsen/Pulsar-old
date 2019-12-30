@@ -48,7 +48,7 @@ if (isProd) {
     height: 800,
     minWidth: 1200,
     minHeight: 800,
-    frame: false
+    frame: true,
   });
 
   mainWindow.maximize();

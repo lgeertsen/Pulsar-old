@@ -336,6 +336,7 @@ export default class Manager extends React.Component {
       <React.Fragment>
         <Head>
           <title>Pulsar</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet"/>
           <link href="./static/fontawesome/css/all.css" rel="stylesheet"/>
         </Head>
@@ -533,28 +534,28 @@ export default class Manager extends React.Component {
         />
 
         <style jsx global>{`
-          html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background: ${themes[this.state.theme].body} !important;
-          }
-          * {
-            margin: 0;
-          }
-          p, h1, h2, h3, h4, h5, h6 {
-            color: ${themes[this.state.theme].text};
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-          }
-          div {
-            height: 100%;
-            width: 100%;
-          }
-          #__next {
-            display: flex;
-            flex-direction: column;
-          }
+          // html, body {
+          //   height: 100%;
+          //   margin: 0;
+          //   padding: 0;
+          //   overflow: hidden;
+          //   background: ${themes[this.state.theme].body} !important;
+          // }
+          // * {
+          //   margin: 0;
+          // }
+          // p, h1, h2, h3, h4, h5, h6 {
+          //   color: ${themes[this.state.theme].text};
+          //   font-family: "Open Sans Condensed", "Oswald", sans-serif;
+          // }
+          // div {
+          //   height: 100%;
+          //   width: 100%;
+          // }
+          // #__next {
+          //   display: flex;
+          //   flex-direction: column;
+          // }
         `}</style>
         <style jsx>{`
           .main {
