@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Downshift from 'downshift';
 import matchSorter from 'match-sorter';
 
+import Autocomplete from '../components/Autocomplete';
 import Dropdown from '../components/Dropdown';
 import Modal from '../components/Modal'
 import Switch from '../components/Switch';
@@ -11,13 +12,8 @@ const NewAssetContainer = ({
   primaryColor,
   show,
   handleClose,
-  assetDirectories,
-  projects,
-  assetProject,
-  assetSid,
-  setAssetSid,
-  setAssetProject,
-  setAssetSwitch
+  assetId,
+  setAssetIdValue
 }) => {
   const close = () => {
     handleClose();
@@ -25,22 +21,22 @@ const NewAssetContainer = ({
 
   const autocompleteHandleChange = (type, changes) => {
     if (changes.hasOwnProperty('selectedItem')) {
-      setAssetSid(type, changes.selectedItem)
+      setAssetIdValue(type, changes.selectedItem)
     } else if (changes.hasOwnProperty('inputValue')) {
-      setAssetSid(type, changes.inputValue)
+      setAssetIdValue(type, changes.inputValue)
     }
   }
 
   const getItems = (type, filter) => {
-    console.log(assetDirectories);
-  return filter
-    ? matchSorter(assetDirectories[type], filter)
-    : assetDirectories[type]
-}
+    console.log(assetId);
+    return filter
+      ? matchSorter(assetId[type], filter)
+      : assetId[type]
+  }
 
-function getStringItems(type, filter) {
-  return getItems(type, filter)
-}
+  function getStringItems(type, filter) {
+    return getItems(type, filter)
+  }
 
     return (
       <Modal
@@ -63,9 +59,9 @@ function getStringItems(type, filter) {
                   <Dropdown
                     theme={theme}
                     primaryColor={primaryColor}
-                    value={assetProject}
-                    options={projects}
-                    onChange={(element) => setAssetProject(element)}
+                    value={assetId.project}
+                    options={assetId.projects}
+                    onChange={(element) => setAssetIdValue("project", element)}
                   />
                 </div>
               </div>
@@ -78,8 +74,10 @@ function getStringItems(type, filter) {
                     theme={theme}
                     primaryColor={primaryColor}
                     option1="Assets"
+                    value1="asset"
                     option2="Shots"
-                    onChange={(choice) => setAssetSwitch(choice)}
+                    value2="shot"
+                    onChange={(choice) => setAssetIdValue("pathType", choice)}
                   />
                 </div>
               </div>
@@ -89,64 +87,62 @@ function getStringItems(type, filter) {
                 <div className="optionTitle">
                   <h3>Asset Type:</h3>
                 </div>
-                <div className="optionDropdown">
-                  <Downshift selectedItem={assetSid.type} onStateChange={(changes) => autocompleteHandleChange("type", changes)}>
-                    {({
-                      getLabelProps,
-                      getInputProps,
-                      getToggleButtonProps,
-                      getMenuProps,
-                      getItemProps,
-                      isOpen,
-                      clearSelection,
-                      selectedItem,
-                      inputValue,
-                      highlightedIndex,
-                    }) => (
-                      <div className="autocomplete">
-                        <div className="autocompleteInputContainer">
-                          <input
-                            {...getInputProps({
-                              isOpen,
-                              placeholder: 'Enter a name',
-                            })}
-                          />
-                          {selectedItem ? (
-                            <div className="controllerButton"
-                              onClick={clearSelection}
-                              aria-label="clear selection"
-                            >
-                              <i className="fas fa-times"></i>
-                            </div>
-                          ) : (
-                            <div className="controllerButton" {...getToggleButtonProps()}>
-                              <i class={isOpen ? "fas fa-angle-up" : "fas fa-angle-down"}></i>
-                            </div>
-                          )}
-                        </div>
-                        <div className="autocompleteMenuContainer">
-                          <div className="autocompleteMenu" {...getMenuProps({isOpen})}>
-                            {isOpen ?
-                              getStringItems("type", inputValue).map((item, index) => (
-                                <div className="autocompleteItem"
-                                  key={index}
-                                  {...getItemProps({
-                                    item,
-                                    index,
-                                    isActive: highlightedIndex === index,
-                                    isSelected: selectedItem === item,
-                                  })}
-                                >
-                                  {item}
-                                </div>
-                              ))
-                              : null
-                            }
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </Downshift>
+                <div className="optionDropdown optionAutocomplete">
+                  <Autocomplete
+                    theme={theme}
+                    primaryColor={primaryColor}
+                    assetId={assetId}
+                    setAssetIdValue={(type, value) => setAssetIdValue(type, value)}
+                    type="groups"
+                    value="group"
+                  />
+                </div>
+              </div>
+              <div className="assetOption">
+                <div className="optionTitle">
+                  <h3>Asset Name:</h3>
+                </div>
+                <div className="optionDropdown optionAutocomplete">
+                  <Autocomplete
+                    theme={theme}
+                    primaryColor={primaryColor}
+                    assetId={assetId}
+                    setAssetIdValue={(type, value) => setAssetIdValue(type, value)}
+                    type="names"
+                    value="name"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="optionRow">
+              <div className="assetOption">
+                <div className="optionTitle">
+                  <h3>Task:</h3>
+                </div>
+                <div className="optionDropdown optionAutocomplete">
+                  <Autocomplete
+                    theme={theme}
+                    primaryColor={primaryColor}
+                    assetId={assetId}
+                    setAssetIdValue={(type, value) => setAssetIdValue(type, value)}
+                    type="tasks"
+                    value="task"
+                  />
+                </div>
+              </div>
+              <div className="assetOption">
+                <div className="optionTitle">
+                  <h3>Subtask:</h3>
+                </div>
+                <div className="optionDropdown optionAutocomplete">
+                  <Autocomplete
+                    theme={theme}
+                    primaryColor={primaryColor}
+                    assetId={assetId}
+                    setAssetIdValue={(type, value) => setAssetIdValue(type, value)}
+                    type="subtasks"
+                    value="subtask"
+                  />
                 </div>
               </div>
             </div>
@@ -193,6 +189,10 @@ function getStringItems(type, filter) {
           .optionDropdown {
             position: relative;
             height: 25px;
+          }
+          .optionAutocomplete {
+            border-radius: 6px;
+            border: ${theme.border};
           }
 
           .autocompleteInputContainer {

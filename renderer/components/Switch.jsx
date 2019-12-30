@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
 
-const Switch = ({ theme, primaryColor, option1, option2, onChange }) => {
+const Switch = ({ theme, primaryColor, option1, value1, option2, value2, onChange }) => {
 
   const [selected, setSelected] = useState(1);
 
   const handleChange = selectedValue => {
-    onChange(selectedValue);
+    onChange(selectedValue == 1 ? value1 : value2);
     setSelected(selectedValue);
   };
 

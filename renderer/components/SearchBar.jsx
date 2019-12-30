@@ -13,7 +13,7 @@ export default class SearchBar extends React.Component {
       <div className="searchBar">
         <div className="searchBarType">
           <div className="typeText">
-            <span>SID:</span>
+            <span>ID:</span>
           </div>
           <div className="iconSwitch">
             <i className="fas fa-sync"></i>
@@ -21,61 +21,61 @@ export default class SearchBar extends React.Component {
         </div>
         <div className="searchBarInner">
           <div className="input">
-            <span>{this.props.sid.project}</span>
+            <span>{this.props.assetId.project}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.props.sid.assetShot}</span>
+            <span>{this.props.assetId.assetShot}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.props.sid.type}</span>
+            <span>{this.props.assetId.type}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.props.sid.name}</span>
+            <span>{this.props.assetId.name}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.props.sid.task}</span>
+            <span>{this.props.assetId.task}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.props.sid.subtask}</span>
+            <span>{this.props.assetId.subtask}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.props.sid.state}</span>
+            <span>{this.props.assetId.state}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.props.sid.version}</span>
+            <span>{this.props.assetId.version}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.props.sid.fileName}</span>
+            <span>{this.props.assetId.fileName}</span>
           </div>
           <div className="slashIcon">
             <span>/</span>
           </div>
           <div className="input">
-            <span>{this.props.sid.ext}</span>
+            <span>{this.props.assetId.ext}</span>
           </div>
         </div>
 

@@ -5,6 +5,7 @@ export default {
   accentBg: "#636e72",
   secondaryBg: "#2d3436",
   border: "1px solid #7f8c8d",
+  borderColor: "#e8e8e8",
   accentBorder: "1px solid #95a5a6",
 
   text: "#ecf0f1",
