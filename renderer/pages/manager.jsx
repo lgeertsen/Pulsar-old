@@ -63,7 +63,7 @@ export default class Manager extends React.Component {
 
       fileManagerAssetId: {
         dimension: "*",
-        file: "<>",
+        file: "",
         files: [],
         group: "",
         groups: [],
@@ -79,7 +79,7 @@ export default class Manager extends React.Component {
       },
       newAssetId: {
         dimension: "*",
-        file: "<>",
+        file: "",
         files: [],
         group: "",
         groups: [],
@@ -99,8 +99,8 @@ export default class Manager extends React.Component {
   componentDidMount() {
     console.log("----- Component mounted -----");
     if(ipcRenderer) {
-      ipcRenderer.send("getConfig")
-      ipcRenderer.send("getSoftwares")
+      ipcRenderer.send("getConfig");
+      ipcRenderer.send("getSoftwares");
       console.log("----- ipcRenderer exists -----");
 
 
@@ -420,7 +420,7 @@ export default class Manager extends React.Component {
                 <Browser
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
-                  title={this.state.switch == "assets" ? "Asset Type" : "Sequences"}
+                  title={this.state.fileManagerAssetId.pathType == "asset" ? "Asset Type" : "Sequences"}
                   directories={this.state.fileManagerAssetId.groups}
                   onChange={(dir) => this.setAssetIdValue("fileManager", "group", dir)}
                   selectedDir={this.state.fileManagerAssetId.group}
@@ -433,7 +433,7 @@ export default class Manager extends React.Component {
                 <Browser
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
-                  title={this.state.switch == "assets" ? "Asset Name" : "Shots"}
+                  title={this.state.fileManagerAssetId.pathType == "asset" ? "Asset Name" : "Shots"}
                   directories={this.state.fileManagerAssetId.names}
                   onChange={(dir) => this.setAssetIdValue("fileManager", "name", dir)}
                   selectedDir={this.state.fileManagerAssetId.name}
@@ -482,8 +482,8 @@ export default class Manager extends React.Component {
 
 
 
-            <div className={this.state.fileManagerAssetId.file == "<>" ? "selectedContainer" : "selectedContainer open"}>
-              {this.state.fileManagerAssetId.file != "<>" ?
+            <div className={this.state.fileManagerAssetId.file == "" ? "selectedContainer" : "selectedContainer open"}>
+              {this.state.fileManagerAssetId.file != "" ?
                 <FileViewer
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}

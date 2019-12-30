@@ -65,6 +65,8 @@ export default class Server {
   }
 
   setAssetIdValue(sid, type, value) {
+    Logger.info(`sid = ${sid}`)
+    Logger.warning(`${type}: ${value}`)
     this._assetIds[sid].setValue(type, value);
   }
 
