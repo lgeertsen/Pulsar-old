@@ -1,0 +1,61 @@
+.main
+  position: fixed
+  top: 0
+  right: 0
+  width: calc(100% - 250px)
+  display: flex
+  flex-direction: column
+  transition: all 0.3s
+
+  &.full
+    width: calc(100% - 80px)
+
+.software-container
+  height: 0px
+  border-bottom: 1px solid $grey-lighter
+  display: flex
+  flex-direction: row
+  overflow: hidden
+
+  &.open
+    height: 50px
+
+.software-title
+  width: auto
+
+.manager-container
+  flex: 1
+  display: flex
+  flex-direction: column
+
+.search-container
+  height: 60px
+  padding: 10px 20px
+  display: flex
+  flex-direction: row
+  align-items: center
+
+.create-asset,
+.project-select,
+.asset-shot-switch
+  width: 140px
+  padding: 0 10px
+.search-bar-container
+  flex: 1
+  padding: 0 10px
+
+
+.filter-container
+  height: 150px
+  display: flex
+  flex-direction: row
+  align-items: center
+
+.browser-container
+  flex: 1
+  display: flex
+  flex-direction: row
+  align-items: center
+
+.file-container
+  height: 350px

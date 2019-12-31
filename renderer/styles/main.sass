@@ -3,7 +3,8 @@
 
 // @import 'abstracts/variables'
 
-@import 'components/nav'
+@import 'components/all'
+@import 'pages/all'
 
 html, body
   height: 100%
@@ -15,6 +16,21 @@ div
   height: 100%
   width: 100%
 
+div, p, h1, h2, h3, h4, h5, h6, a, button
+  color: $grey-dark
+  font-family: "Big Shoulders Text", sans-serif
+  font-weight: 500
+  letter-spacing: 0.03rem
+
 #__next
   display: flex
   flex-direction: row
+
+.dropdown
+  display: inline-block
+
+  *
+    height: auto
+
+  a.dropdown-item
+    font-size: 16px

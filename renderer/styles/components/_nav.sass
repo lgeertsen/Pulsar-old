@@ -2,7 +2,7 @@
   position: fixed
   left: 0
   top: 0
-  width: 300px
+  width: 250px
 
   &.nav-compressed
     width: 80px
@@ -15,14 +15,14 @@
   width: 0
   overflow: hidden
   background: $white
-  border-right: 1px solid $grey-light
+  border-right: 1px solid $grey-lighter
   transition: all 0.3s
 
   &.open
     width: 80px
 
 .nav-sidebar.open
-  width: 300px
+  width: 250px
 
 .nav-compressed-header
   display: flex
@@ -35,14 +35,17 @@
     font-family: "Architectural", sans-serif
 
 .nav-header
-  position: relative
+  display: flex
+  flex-direction: row
   width: 100%
   height: 80px
   padding: 0 15px
 
   h1
+    flex: 1
     font-size: 56px
     font-family: "Architectural", sans-serif
+
 
 .menu-divider
   width: 100%
@@ -97,15 +100,28 @@
 
 .nav-item
   display: flex
+  flex-direction: row
   justify-content: center
   align-items: center
   width: 100%
   height: 80px
-  font-size: 18px
+  font-size: 20px
   color: $grey-light
   cursor: pointer
   transition: all 0.25s
 
   &:hover,
   &.active
-    color: $red
+    color: $green
+
+  .nav-item-title
+    flex: 1
+    display: flex
+    flex-direction: row
+    margin-left: 15px
+    align-items: center
+    font-family: "Apex Mk3 ExtraLight", sans-serif
+
+.nav-sidebar
+  .nav-item
+    padding-left: 40px
