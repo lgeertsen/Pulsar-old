@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-const Switch = ({ theme, primaryColor, option1, value1, option2, value2, onChange }) => {
+const Switch = ({ theme, primaryColor, value, option1, value1, option2, value2, onChange }) => {
 
   const [selected, setSelected] = useState(1);
 
@@ -11,10 +11,10 @@ const Switch = ({ theme, primaryColor, option1, value1, option2, value2, onChang
 
     return (
       <div className="switch buttons has-addons">
-        <div className={selected == 1 ? "button is-selected is-success" : "button"} onClick={(e) => handleChange(1)}>
+        <div className={value == value1 ? "button is-selected is-success" : "button"} onClick={(e) => handleChange(1)}>
           <span>{option1}</span>
         </div>
-        <div className={selected == 2 ? "button is-selected is-success" : "button"} onClick={(e) => handleChange(2)}>
+        <div className={value == value2 ? "button is-selected is-success" : "button"} onClick={(e) => handleChange(2)}>
           <span>{option2}</span>
         </div>
 

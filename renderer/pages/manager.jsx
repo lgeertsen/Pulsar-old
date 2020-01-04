@@ -387,6 +387,7 @@ export default class Manager extends React.Component {
                 <Switch
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
+                  value={this.state.fileManagerAssetId.pathType}
                   option1="Assets"
                   value1="asset"
                   option2="Shots"
