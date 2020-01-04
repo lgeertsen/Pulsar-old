@@ -1,7 +1,6 @@
 import electron from 'electron';
 import React from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 
 import Browser from '../components/Browser';
 import Dropdown from '../components/Dropdown';
@@ -14,7 +13,7 @@ import SearchBar from '../components/SearchBar';
 import SettingsContainer from '../containers/SettingsContainer';
 import Switch from '../components/Switch';
 
-import "../styles/main.sass"
+import "../styles/manager.sass"
 
 import darkTheme from '../themes/dark';
 import lightTheme from '../themes/light';
@@ -344,6 +343,7 @@ export default class Manager extends React.Component {
 
         <Nav
           open={this.state.navOpen}
+          page="manager"
           toggleNav={(v) => this.setState({navOpen: v})}
         />
 

@@ -28,19 +28,19 @@ export default class Nav extends React.Component {
           </div>
           <div className="menu-divider"></div>
           <div className="nav-menu">
-            <div className="nav-item icon active" onClick={() => Router.push('/manager')}>
+            <div className={this.props.page == "manager" ? "nav-item icon active" : "nav-item icon"} onClick={() => Router.push('/manager')}>
               <i className="las la-folder-open"></i>
             </div>
-            <div className="nav-item icon" onClick={() => Router.push('/graph')}>
+            <div className={this.props.page == "graph" ? "nav-item icon active" : "nav-item icon"} onClick={() => Router.push('/graph')}>
               <i className="las la-project-diagram"></i>
             </div>
-            <div className="nav-item icon">
+            <div className={this.props.page == "farm" ? "nav-item icon active" : "nav-item icon"}>
               <i className="las la-tractor"></i>
             </div>
-            <div className="nav-item icon">
+            <div className={this.props.page == "vyewer" ? "nav-item icon active" : "nav-item icon"}>
               <i className="las la-photo-video"></i>
             </div>
-            <div className="nav-item icon">
+            <div className={this.props.page == "settings" ? "nav-item icon active" : "nav-item icon"} onClick={() => Router.push('/settings')}>
               <i className="las la-cog"></i>
             </div>
           </div>
@@ -59,23 +59,23 @@ export default class Nav extends React.Component {
           </div>
           <div className="menu-divider"></div>
           <div className="nav-menu">
-            <div className="nav-item icon active">
+            <div className={this.props.page == "manager" ? "nav-item icon active" : "nav-item icon"} onClick={() => Router.push('/manager')}>
               <i className="las la-folder-open"></i>
               <div className="nav-item-title">Asset Manager</div>
             </div>
-            <div className="nav-item icon">
+            <div className={this.props.page == "graph" ? "nav-item icon active" : "nav-item icon"} onClick={() => Router.push('/graph')}>
               <i className="las la-project-diagram"></i>
               <div className="nav-item-title">Graph Editor</div>
             </div>
-            <div className="nav-item icon">
+            <div className={this.props.page == "farm" ? "nav-item icon active" : "nav-item icon"}>
               <i className="las la-tractor"></i>
               <div className="nav-item-title">Render Farm</div>
             </div>
-            <div className="nav-item icon">
+            <div className={this.props.page == "vyewer" ? "nav-item icon active" : "nav-item icon"}>
               <i className="las la-photo-video"></i>
               <div className="nav-item-title">Vyewer</div>
             </div>
-            <div className="nav-item icon">
+            <div className={this.props.page == "settings" ? "nav-item icon active" : "nav-item icon"} onClick={() => Router.push('/settings')}>
               <i className="las la-cog"></i>
               <div className="nav-item-title">Settings</div>
             </div>
