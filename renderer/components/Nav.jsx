@@ -7,31 +7,6 @@ export default class Nav extends React.Component {
     super(props);
     this.state = {
     }
-
-    this.remote = electron.remote || false;
-
-    this.minimize = this.minimize.bind(this);
-    this.maximize = this.maximize.bind(this);
-    this.close = this.close.bind(this);
-  }
-
-  minimize() {
-    const window = this.remote.getCurrentWindow();
-    window.minimize();
-  }
-
-  maximize() {
-    const window = this.remote.getCurrentWindow();
-    if(window.isMaximized()) {
-      window.unmaximize();
-    } else {
-      window.maximize();
-    }
-  }
-
-  close() {
-    const window = this.remote.getCurrentWindow();
-    window.close();
   }
 
   render() {
