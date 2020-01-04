@@ -10,146 +10,75 @@ export default class SearchBar extends React.Component {
 
   render() {
     return (
-      <div className="searchBar">
-        <div className="searchBarType">
-          <div className="typeText">
+      <div className="search-bar">
+        <div className="search-bar-type">
+          <div className="search-bar-type-text">
             <span>ID:</span>
           </div>
-          <div className="iconSwitch">
-            <i className="fas fa-sync"></i>
+          <div className="icon-switch icon">
+            <i className="las la-sync"></i>
           </div>
         </div>
-        <div className="searchBarInner">
-          <div className="input">
+        <div className="search-bar-inner">
+          <div className="search-bar-input">
             <span>{this.props.assetId.project}</span>
           </div>
-          <div className="slashIcon">
+          <div className="search-bar-slash">
             <span>/</span>
           </div>
-          <div className="input">
-            <span>{this.props.assetId.assetShot}</span>
+          <div className="search-bar-input">
+            <span>{this.props.assetId.pathType}</span>
           </div>
-          <div className="slashIcon">
+          <div className="search-bar-slash">
             <span>/</span>
           </div>
-          <div className="input">
-            <span>{this.props.assetId.type}</span>
+          <div className="search-bar-input">
+            <span>{this.props.assetId.group}</span>
           </div>
-          <div className="slashIcon">
+          <div className="search-bar-slash">
             <span>/</span>
           </div>
-          <div className="input">
+          <div className="search-bar-input">
             <span>{this.props.assetId.name}</span>
           </div>
-          <div className="slashIcon">
+          <div className="search-bar-slash">
             <span>/</span>
           </div>
-          <div className="input">
+          <div className="search-bar-input">
             <span>{this.props.assetId.task}</span>
           </div>
-          <div className="slashIcon">
+          <div className="search-bar-slash">
             <span>/</span>
           </div>
-          <div className="input">
+          <div className="search-bar-input">
             <span>{this.props.assetId.subtask}</span>
           </div>
-          <div className="slashIcon">
+          <div className="search-bar-slash">
             <span>/</span>
           </div>
-          <div className="input">
-            <span>{this.props.assetId.state}</span>
+          <div className="search-bar-input">
+            <span>{this.props.assetId.file.state}</span>
           </div>
-          <div className="slashIcon">
+          <div className="search-bar-slash">
             <span>/</span>
           </div>
-          <div className="input">
-            <span>{this.props.assetId.version}</span>
+          <div className="search-bar-input">
+            <span>{this.props.assetId.file.version}</span>
           </div>
-          <div className="slashIcon">
+          <div className="search-bar-slash">
             <span>/</span>
           </div>
-          <div className="input">
-            <span>{this.props.assetId.fileName}</span>
-          </div>
-          <div className="slashIcon">
-            <span>/</span>
-          </div>
-          <div className="input">
-            <span>{this.props.assetId.ext}</span>
+          <div className="search-bar-input">
+            <span>{this.props.assetId.file ? `${this.props.assetId.file.name}.${this.props.assetId.file.extension}` : ""}</span>
           </div>
         </div>
 
-        <div className="copy">
-          <i className="far fa-copy"></i>
+        <div className="search-bar-copy icon">
+          <i className="las la-copy"></i>
         </div>
 
         <style jsx>{`
-          .searchBar {
-            display: flex;
-            flex-direction: row;
-            flex: 1;
-            height: 25px;
-            background: ${this.props.theme.background};
-            border-radius: 6px;
-            border: ${this.props.theme.border};
-          }
-          .searchBarType {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            width: 60px;
-            padding-left: 5px;
-            background: ${this.props.theme.secondaryBg};
-            border-right: ${this.props.theme.border};
-          }
-          .typeText {
-            flex: 1;
-          }
-          .searchBarType .iconSwitch {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 25px;
-            font-size: 14px;
-            color: ${this.props.theme.text};
-            cursor: pointer;
-            transition: all ease 0.2s;
-          }
-          .searchBarType:hover {
-            background: ${this.props.theme.secondaryBg};
-          }
-          .searchBarInner {
-            display: flex;
-            flex-direction: row;
-          }
-          span {
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-            color: ${this.props.theme.text};
-          }
-          .input {
-            width: auto;
-            margin: 0 5px;
-          }
-          .slashIcon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 15px;
-            background: ${this.props.theme.secondaryBg};
-            font-weight: bold;
-          }
-          .copy {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 25px;
-            color: ${this.props.theme.text};
-            cursor: pointer;
-            transition: all ease 0.2s;
-          }
-          .copy:hover {
-            background: ${this.props.theme.secondaryBg};
-          }
+
         `}</style>
       </div>
     );

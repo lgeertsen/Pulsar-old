@@ -1,0 +1,51 @@
+.search-bar
+  display: flex
+  flex-direction: row
+  border: 1px solid $grey-lighter
+  border-radius: $radius
+
+.search-bar-type
+  width: 60px
+  display: flex
+  flex-direction: row
+  align-items: center
+  padding-left: 5px
+  background: $white-ter
+
+  .search-bar-type-text
+    flex: 1
+    display: flex
+    flex-direction: row
+    align-items: center
+
+  .icon-switch
+    width: 25px
+
+.search-bar-inner
+  flex: 1
+  display: flex
+  flex-direction: row
+
+  & > div
+    height: 100%
+    display: flex
+    flex-direction: row
+    align-items: center
+
+  .search-bar-input
+    width: auto
+    padding: 0 5px
+
+  .search-bar-slash
+    width: 15px
+    justify-content: center
+    background: $grey-lightest
+
+.search-bar-copy
+  width: 25px
+  height: 100%
+  cursor: pointer
+  transition: all 0.25s
+
+  &:hover
+    background: $grey-lightest

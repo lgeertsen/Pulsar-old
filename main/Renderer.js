@@ -31,9 +31,16 @@ export default class Renderer {
       }
     });
 
+    ipcMain.on("getAssetId", (event) => {
+      this._server._assetIds["fileManager"].formatForRender()
+      this._server._assetIds["newAsset"].formatForRender()
+    });
+
     ipcMain.on("setAssetId", (event, data) => {
       this._server.setAssetIdValue(data.sid, data.type, data.value);
     });
+
+
 
 
 

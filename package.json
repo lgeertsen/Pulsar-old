@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
+    "bulma": "^0.8.0",
     "cross-spawn": "^6.0.5",
     "downshift": "^3.4.7",
     "electron-serve": "^0.4.0",

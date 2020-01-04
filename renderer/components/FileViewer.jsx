@@ -95,84 +95,107 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
   }
 
     return (
-      <div className="fileViewer">
-        <div className="fileContainer">
-          <div className="fileContainerInner">
-            <div className="fileInfoContainer">
-              <div className="fileInfo">
-                <h3>{assetId.file.name + "_" + assetId.file.state + "_" + assetId.file.version + "." + assetId.file.extension}</h3>
-                <h4>{assetId.file.modified}</h4>
-                <h4>{getSize(assetId.file.size)}</h4>
-                <h6>{assetId.file.path}</h6>
+      <div className="file-viewer card">
+        <div className="file-viewer-inner card-content">
+          <div className="file-viewer-info-container">
+            <div className="file-viewer-file-info">
+
+              <div className="file-viewer-file-state field is-grouped is-grouped-multiline">
+                <div className="control">
+                  <div className=" tags has-addons">
+                    <span className="tag">{assetId.file.state}</span>
+                    <span className="tag is-primary">{assetId.file.version}</span>
+                  </div>
+                </div>
+                {assetId.file.tags.map((tag, index) => (
+                  <div key={index} className="control">
+                    <div className="tags has-addons">
+                      <span className={`tag tag-${tag.toLowerCase()}`}>{tag}</span>
+                      <a className="tag is-delete"></a>
+                    </div>
+                  </div>
+                ))}
+                <form onSubmit={(event) => console.log(event)}>
+                  <div className="field has-addons">
+                    <div className="control">
+                      <input className="input" type="text" placeholder="Add Tag"/>
+                    </div>
+                    <div className="control">
+                      <input className="button" type="submit" value="Add" />
+                    </div>
+                  </div>
+                </form>
               </div>
 
-              <div className="commandsContainer">
-                {assetId.file.state != "publish" ?
-                  <div className="btnContainer">
-                    <div className="btn" onClick={(e) => onBtnClick("open_file", true)}>
-                      <span>Open</span>
-                    </div>
-                    <div className="btn" onClick={(e) => onBtnClick("open_file_as", true)}>
-                      <span>Open As</span>
-                    </div>
-                    {/* <div className="btn">
-                      <span>Save</span>
-                    </div>
-                    <div className="btn">
-                      <span>Save As</span>
-                    </div> */}
-                    {assetId.file.state == "work" ?
-                      <div className="btn" onClick={() => onPublish()}>
-                        <span>Publish</span>
-                      </div>
-                      : ""
-                    }
-                  </div>
-                  : ""
-                }
-                {assetId.file.state == "publish" && assetId.file.version != "valid" ?
-                  <div className="btn">
-                    <span>Release</span>
-                  </div>
-                  : ""
-                }
-                {assetId.file.state == "work" ?
-                  <div className="btn">
-                    <span>Publish & Release</span>
-                  </div>
-                  : ""
-                }
-              </div>
+
+
+              <h3>{assetId.file.name}</h3>
+              <h4>Last modified: {assetId.file.modified}</h4>
+              <h4>File size: {getSize(assetId.file.size)}</h4>
+              <h4>AssetId: {`${assetId.project}/${assetId.dimension}/${assetId.group}/${assetId.name}/${assetId.task}/${assetId.subtask}/${assetId.file.state}/${assetId.file.version}/${assetId.file.name}.${assetId.file.extension}`}</h4>
+              <h4>Path: {assetId.file.path}</h4>
             </div>
-            <div className="fileComment">
-              <CommentContainer theme={theme} comment={assetId.file.comment} onChange={(e) => editComment(e)} saveComment={() => onSave()}/>
-            </div>
-            <div className="fileScreenshot">
-              <h3>Screenshot</h3>
+
+            <div className="commands-container">
+              {assetId.file.state != "publish" ?
+                <div className="btn-container">
+                  <div className="button" onClick={(e) => onBtnClick("open_file", true)}>
+                    <span>Open</span>
+                  </div>
+                  <div className="button" onClick={(e) => onBtnClick("open_file_as", true)}>
+                    <span>Open As</span>
+                  </div>
+                  {assetId.file.state == "work" ?
+                    <div className="button" onClick={() => onPublish()}>
+                      <span>Publish</span>
+                    </div>
+                    : ""
+                  }
+                </div>
+                : ""
+              }
+              {assetId.file.state == "publish" && assetId.file.version != "valid" ?
+                <div className="button">
+                  <span>Release</span>
+                </div>
+                : ""
+              }
+              {assetId.file.state == "work" ?
+                <div className="button">
+                  <span>Publish & Release</span>
+                </div>
+                : ""
+              }
             </div>
           </div>
+          <div className="file-viewer-comment-container">
+            <CommentContainer theme={theme} comment={assetId.file.comment} onChange={(e) => editComment(e)} saveComment={() => onSave()}/>
+          </div>
+          {/* <div className="file-screenshot">
+            <h3>Screenshot</h3>
+          </div> */}
         </div>
 
-        <Modal theme={theme} primaryColor={primaryColor} show={showModal} handleClose={(value) => handleModal(value)}>
-          <div className="openSoftModal">
-            <div className="modalTitle">
+        <Modal theme={theme} primaryColor={primaryColor} title="Open file" show={showModal} handleClose={(value) => handleModal(value)}>
+          <div className="open-soft-modal">
+            <div className="modal-title">
               <h3>{assetId.file.name + "_" + assetId.file.state + "_" + assetId.file.version + "." + assetId.file.extension}</h3>
             </div>
             {command == "open_file_as" ?
-              <div className="newNameContainer">
+              <div className="new-name-container">
                 <div className="label"><h4>Open As:</h4></div>
-                <div className="nameInputContainer">
-                  <input className="nameInput" value={newFileName} onChange={(e) => onFileNameChange(e.target.value)}/>
+                <div className="name-input-container">
+                  <input className="name-input input" value={newFileName} onChange={(e) => onFileNameChange(e.target.value)}/>
                 </div>
               </div>
               : ""
             }
-            <div className="softwareContainer">
+            <div className="modal-software-container">
               <h4>Open in:</h4>
-              <div className="softwareSelection">
+              <div className="software-selection">
                 {softwares.map((soft, index) => (
                   <div key={index} className={soft.id == selectedSoftware ? "software selected" : "software"} onClick={(e) => onClickSoft(soft.id, soft.software)}>
-                    <img className="softwareImg" src={"./static/" + soft.software + ".png"}></img>
+                    <img className="software-img" src={"./static/" + soft.software + ".png"}></img>
                     <span>{soft.saved == 1 ? soft.scene : soft.scene + "*"}</span>
                   </div>
                 ))}
@@ -184,7 +207,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
                     <CheckBox theme={theme} primaryColor={primaryColor} label="Save current open scene" checked={checked} onCheck={() => checkBox()}/>
                     : ""
                   }
-                  <div className="btn" onClick={() => handleClick()}>Open</div>
+                  <div className="button" onClick={() => handleClick()}>Open</div>
                 </div>
               :
               <h6>Please select a software.</h6>
@@ -194,193 +217,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
 
 
         <style jsx>{`
-          .fileViewer {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-          }
-          .fileContainer {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-          .fileContainerInner {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            margin: 15px 25px;
-            background: ${theme.background};
-            border-radius: 6px;
-            border: ${theme.border};
-          }
-
-          .fileInfoContainer {
-            width: 600px;
-            display: flex;
-            flex-direction: row;
-            padding-top: 10px;
-            margin: 0 15px;
-            border-right: ${theme.accentBorder};
-          }
-          .fileInfo {
-            flex: 1;
-          }
-          .fileInfo h3 {
-            width: 95%;
-            word-break: break-word;
-          }
-
-
-
-          .fileComment {
-            display: flex;
-            flex-direction: column;
-            width: 350px;
-            padding-top: 10px;
-            margin-right: 15px;
-            border-right: ${theme.accentBorder};
-          }
-
-
-
-
-
-          .fileScreenshot {
-            flex: 1;
-            padding-top: 10px;
-            margin-right: 15px;
-          }
-
-
-
-          .commandsContainer {
-            width: auto;
-            display: flex;
-            flex-direction: column;
-            // flex-wrap: wrap;
-          }
-          .btnContainer {
-            width: auto;
-            height: auto;
-            display: flex;
-            flex-direction: column;
-          }
-          .btn {
-            display: flex;
-            align-items: center;
-            width: 100px;
-            height: 25px;
-            margin: 5px;
-            padding: 2px 5px;
-            border-radius: 6px;
-            font-size: 14px;
-            background: ${theme.background};
-            color: ${theme.text};
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-            border: ${theme.border};
-            cursor: pointer;
-            transition: all ease 0.3s;
-          }
-          .btn:hover {
-            background: ${theme.secondaryBg};
-          }
-
-          .openSoftModal {
-            width: 500px;
-            padding-left: 15px;
-            padding-right: 15px;
-          }
-
-          .modalTitle {
-            margin-bottom: 20px;
-          }
-
-          .newNameContainer {
-            margin: 15px 0;
-          }
-          .nameInput {
-            width: 450px;
-            height: 30px;
-            margin-top: 10px;
-            padding-left: 10px;
-            border: ${theme.border};
-            border-radius: 3px;
-          }
-
-          .softwareContainer h4 {
-            margin-bottom: 10px;
-          }
-          .softwareSelection {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-          }
-          .software {
-            min-width: 100px;
-            width: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 5px 8px;
-            padding: 10px 5px;
-            border: ${theme.border};
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-            transition: all ease 0.2s;
-          }
-          .software.selected {
-            background: ${theme.colors[primaryColor]};
-          }
-          .software img {
-            width: 80px;
-            margin-bottom: 10px;
-          }
-          .software:hover {
-            box-shadow: 0 3px 10px 4px rgba(0,0,0,0.04);
-          }
-
-          .checkboxContainer {
-            margin: 10px 0;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-          }
-          .checkbox {
-            position: relative;
-            width: 20px;
-            height: 20px;
-            background: ${theme.secondaryBg};
-            border: ${theme.border};
-            border-radius: 3px;
-            margin: 0 8px;
-            cursor: pointer;
-            transition: all ease 0.2s;
-          }
-          .checkbox.checked:after {
-            content: "";
-            position: absolute;
-            left: 6px;
-            top: 2px;
-            width: 5px;
-            height: 10px;
-            border: solid ${theme.colors.white};
-            border-width: 0 3px 3px 0;
-            transform: rotate(45deg);
-          }
-          .checkbox:hover {
-            border-color: ${theme.colors[primaryColor]};
-          }
-          .checkbox.checked {
-            background: ${theme.colors[primaryColor]};
-          }
-          .checkboxLabel {
-            flex: 1;
-            color: ${theme.text};
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-          }
+          
         `}</style>
       </div>
     );

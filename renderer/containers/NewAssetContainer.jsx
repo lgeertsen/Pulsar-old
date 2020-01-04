@@ -43,19 +43,17 @@ const NewAssetContainer = ({
         theme={theme}
         primaryColor={primaryColor}
         show={show}
+        title="Create Asset"
         handleClose={() => close()}
       >
-        <div className="newAssetContainer">
-          <div className="settingsTitle">
-            <h1>Create Asset</h1>
-          </div>
-          <div className="innerContainer">
-            <div className="optionRow">
-              <div className="assetOption">
-                <div className="optionTitle">
+        <div className="new-asset-container">
+          <div className="new-asset-inner-container">
+            <div className="new-asset-option-row">
+              <div className="new-asset-option">
+                <div className="new-asset-option-title">
                   <h3>Project:</h3>
                 </div>
-                <div className="optionDropdown">
+                <div className="new-asset-dropdown">
                   <Dropdown
                     theme={theme}
                     primaryColor={primaryColor}
@@ -65,11 +63,11 @@ const NewAssetContainer = ({
                   />
                 </div>
               </div>
-              <div className="assetOption">
-                <div className="optionTitle">
+              <div className="new-asset-option">
+                <div className="new-asset-option-title">
                   <h3>Asset or Shot:</h3>
                 </div>
-                <div className="optionDropdown">
+                <div className="new-asset-dropdown">
                   <Switch
                     theme={theme}
                     primaryColor={primaryColor}
@@ -82,12 +80,12 @@ const NewAssetContainer = ({
                 </div>
               </div>
             </div>
-            <div className="optionRow">
-              <div className="assetOption">
-                <div className="optionTitle">
+            <div className="new-asset-option-row">
+              <div className="new-asset-option">
+                <div className="new-asset-option-title">
                   <h3>Asset Type:</h3>
                 </div>
-                <div className="optionDropdown optionAutocomplete">
+                <div className="new-asset-dropdown new-asset-option-autocomplete">
                   <Autocomplete
                     theme={theme}
                     primaryColor={primaryColor}
@@ -98,11 +96,11 @@ const NewAssetContainer = ({
                   />
                 </div>
               </div>
-              <div className="assetOption">
-                <div className="optionTitle">
+              <div className="new-asset-option">
+                <div className="new-asset-option-title">
                   <h3>Asset Name:</h3>
                 </div>
-                <div className="optionDropdown optionAutocomplete">
+                <div className="new-asset-dropdown new-asset-option-autocomplete">
                   <Autocomplete
                     theme={theme}
                     primaryColor={primaryColor}
@@ -114,12 +112,12 @@ const NewAssetContainer = ({
                 </div>
               </div>
             </div>
-            <div className="optionRow">
-              <div className="assetOption">
-                <div className="optionTitle">
+            <div className="new-asset-option-row">
+              <div className="new-asset-option">
+                <div className="new-asset-option-title">
                   <h3>Task:</h3>
                 </div>
-                <div className="optionDropdown optionAutocomplete">
+                <div className="new-asset-dropdown new-asset-option-autocomplete">
                   <Autocomplete
                     theme={theme}
                     primaryColor={primaryColor}
@@ -130,11 +128,11 @@ const NewAssetContainer = ({
                   />
                 </div>
               </div>
-              <div className="assetOption">
-                <div className="optionTitle">
+              <div className="new-asset-option">
+                <div className="new-asset-option-title">
                   <h3>Subtask:</h3>
                 </div>
-                <div className="optionDropdown optionAutocomplete">
+                <div className="new-asset-dropdown new-asset-option-autocomplete">
                   <Autocomplete
                     theme={theme}
                     primaryColor={primaryColor}
@@ -150,57 +148,7 @@ const NewAssetContainer = ({
         </div>
 
         <style jsx>{`
-          .newAssetContainer {
-            display: flex;
-            flex-direction: column;
-            width: 800px;
-            height: 600px;
-          }
-          .settingsTitle {
-            width: 100%;
-            height: 70px;
-            border-bottom: ${theme.border};
-          }
-          .settingsTitle h1 {
-            margin-left: 25px;
-            margin-bottom: 15px;
-          }
-          .innerContainer {
-            display: flex;
-            flex-direction: column;
-            border-bottom: ${theme.border};
-          }
-          .optionRow {
-            height: auto;
-            display: flex;
-            flex-direction: row;
-            margin-bottom: 10px;
-          }
-          .assetOption {
-            flex: 1;
-            height: auto;
-            padding: 0 25px;
-          }
-          .optionTitle {
-            width: auto;
-            height: auto;
-            margin: 5px 0;
-          }
-          .optionDropdown {
-            position: relative;
-            height: 25px;
-          }
-          .optionAutocomplete {
-            border-radius: 6px;
-            border: ${theme.border};
-          }
 
-          .autocompleteInputContainer {
-            position: relative;
-          }
-          .autocompleteMenuContainer {
-            position: relative;
-          }
         `}</style>
       </Modal>
     );

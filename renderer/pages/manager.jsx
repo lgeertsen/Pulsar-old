@@ -37,6 +37,8 @@ export default class Manager extends React.Component {
       saveShortcut: "",
       incrementShortcut: "",
 
+      navOpen: false,
+
       newAssetModal: false,
       settingsModal: false,
 
@@ -101,10 +103,7 @@ export default class Manager extends React.Component {
     if(ipcRenderer) {
       ipcRenderer.send("getConfig");
       ipcRenderer.send("getSoftwares");
-      console.log("----- ipcRenderer exists -----");
-
-
-
+      ipcRenderer.send("getAssetId");
 
       ipcRenderer.on('config', (event, data) => {
         console.log("----- receive config file -----", data);
@@ -336,18 +335,21 @@ export default class Manager extends React.Component {
       <React.Fragment>
         <Head>
           <title>Pulsar</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet"/>
-          <link href="./static/fontawesome/css/all.css" rel="stylesheet"/>
+          <link href="https://fonts.googleapis.com/css?family=Big+Shoulders+Text:400,500,700&display=swap" rel="stylesheet"/>
+          {/* <link href="./static/fontawesome/css/all.css" rel="stylesheet"/> */}
+          <link href="./static/line-awesome/css/line-awesome.min.css" rel="stylesheet"/>
         </Head>
 
         <Nav
-          theme={themes[this.state.theme]}
-          openSettings={() => this.setState({settingsModal: true})}
+          open={this.state.navOpen}
+          toggleNav={(v) => this.setState({navOpen: v})}
         />
 
-        <div className="main">
-          <div className="softwareContainer">
-            <div className="softwareTitle">
+        <div className={this.state.navOpen ? "main" : "main full"}>
+          <div className={Object.keys(this.state.softwares).length > 0 ? "software-container open" : "software-container"}>
+            <div className="software-title">
               <h3>Open software</h3>
             </div>
             {Object.keys(this.state.softwares).map((softwareId, index) => (
@@ -359,20 +361,20 @@ export default class Manager extends React.Component {
                   <img className="softwareImg" src={"./static/" + this.state.softwares[softwareId].software + ".png"}></img>
                   <h4 className="softwareName">{this.state.softwares[softwareId].software.charAt(0).toUpperCase() + this.state.softwares[softwareId].software.slice(1)}</h4>
                 </div>
-                <span className="softwareSceneName"><i className="fas fa-sync" onClick={(e) => this.reloadSceneName(softwareId)}></i>{this.state.softwares[softwareId].saved == 1 ? this.state.softwares[softwareId].scene : this.state.softwares[softwareId].scene + "*"}</span>
+                <span className="softwareSceneName"><i className="las la-sync" onClick={(e) => this.reloadSceneName(softwareId)}></i>{this.state.softwares[softwareId].saved == 1 ? this.state.softwares[softwareId].scene : this.state.softwares[softwareId].scene + "*"}</span>
               </div>
             ))}
           </div>
 
 
-          <div className="managerContainer">
-            <div className="searchContainer">
-              <div className="createAsset">
-                <div className="createAssetBtn btn" onClick={(e) => this.setState({newAssetModal: true})}>
+          <div className="manager-container">
+            <div className="search-container">
+              <div className="create-asset">
+                <div className="create-asset-btn button" onClick={(e) => this.setState({newAssetModal: true})}>
                   <h5>Create Asset</h5>
                 </div>
               </div>
-              <div className="projectSelect">
+              <div className="project-select">
                 <Dropdown
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
@@ -381,7 +383,7 @@ export default class Manager extends React.Component {
                   onChange={(element) => this.setAssetIdValue("fileManager", "project", element)}
                 />
               </div>
-              <div className="assetShotSwitch">
+              <div className="asset-shot-switch">
                 <Switch
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
@@ -392,7 +394,7 @@ export default class Manager extends React.Component {
                   onChange={(choice) => this.setAssetIdValue("fileManager", "pathType", choice)}
                 />
               </div>
-              <div className="searchBar">
+              <div className="search-bar-container">
                 <SearchBar
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
@@ -403,7 +405,7 @@ export default class Manager extends React.Component {
 
 
 
-            <div className="filterContainer">
+            <div className="filter-container">
               <FiltersContainer
                 theme={themes[this.state.theme]}
                 primaryColor={this.state.primaryColor}
@@ -415,7 +417,7 @@ export default class Manager extends React.Component {
 
 
 
-            <div className="browserContainer">
+            <div className="browser-container">
               <div className="browser sequenceBrowser">
                 <Browser
                   theme={themes[this.state.theme]}
@@ -426,8 +428,8 @@ export default class Manager extends React.Component {
                   selectedDir={this.state.fileManagerAssetId.group}
                 />
               </div>
-              <div className="chevronContainer">
-                <i className="fas fa-angle-right"></i>
+              <div className="chevron-container">
+                <i className="las la-angle-right"></i>
               </div>
               <div className="browser shotBrowser">
                 <Browser
@@ -439,8 +441,8 @@ export default class Manager extends React.Component {
                   selectedDir={this.state.fileManagerAssetId.name}
                 />
               </div>
-              <div className="chevronContainer">
-                <i className="fas fa-angle-right"></i>
+              <div className="chevron-container">
+                <i className="las la-angle-right"></i>
               </div>
               <div className="browser taskBrowser">
                 <Browser
@@ -452,8 +454,8 @@ export default class Manager extends React.Component {
                   selectedDir={this.state.fileManagerAssetId.task}
                 />
               </div>
-              <div className="chevronContainer">
-                <i className="fas fa-angle-right"></i>
+              <div className="chevron-container">
+                <i className="las la-angle-right"></i>
               </div>
               <div className="browser subtaskBrowser">
                 <Browser
@@ -465,10 +467,10 @@ export default class Manager extends React.Component {
                   selectedDir={this.state.fileManagerAssetId.subtask}
                 />
               </div>
-              <div className="chevronContainer">
-                <i className="fas fa-angle-right"></i>
+              <div className="chevron-container">
+                <i className="las la-angle-right"></i>
               </div>
-              <div className="fileBrowser">
+              <div className="file-browser">
                 <FileBrowser
                   theme={themes[this.state.theme]}
                   primaryColor={this.state.primaryColor}
@@ -482,7 +484,7 @@ export default class Manager extends React.Component {
 
 
 
-            <div className={this.state.fileManagerAssetId.file == "" ? "selectedContainer" : "selectedContainer open"}>
+            <div className={this.state.fileManagerAssetId.file == "" ? "file-container" : "file-container open"}>
               {this.state.fileManagerAssetId.file != "" ?
                 <FileViewer
                   theme={themes[this.state.theme]}
@@ -515,7 +517,7 @@ export default class Manager extends React.Component {
           assetId={this.state.newAssetId}
           setAssetIdValue={(type, element) => this.setAssetIdValue("newAsset", type, element)}
         />
-
+{/*
         <SettingsContainer
           saveShortcut={this.state.saveShortcut}
           setSaveShortcut={(value) => this.setState({saveShortcut: value})}
@@ -530,238 +532,13 @@ export default class Manager extends React.Component {
           handleClose={() =>  this.setState({settingsModal: false})}
           cancelSettings={() => this.cancelSettings()}
           saveSettings={() => this.saveSettings()}
-        />
+        /> */}
 
         <style jsx global>{`
-          html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background: ${themes[this.state.theme].body} !important;
-          }
-          * {
-            margin: 0;
-          }
-          p, h1, h2, h3, h4, h5, h6 {
-            color: ${themes[this.state.theme].text};
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-          }
-          div {
-            height: 100%;
-            width: 100%;
-          }
-          #__next {
-            display: flex;
-            flex-direction: column;
-          }
+
         `}</style>
         <style jsx>{`
-          .main {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            background-image: linear-gradient(${themes[this.state.theme].transparentBg}, ${themes[this.state.theme].transparentBg}), url('./static/img/jakob-owens-CiUR8zISX60-unsplash.jpg');
-            background-position: center;
-            background-attachment: fixed;
-            background-size: cover;
-            background-repeat: no-repeat;
-          }
-          .softwareContainer {
-            width: 150px;
-            // background: ${themes[this.state.theme].background};
-            border-right: ${themes[this.state.theme].border};
-          }
-          .softwareTitle {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 10px 0;
-            height: auto;
-            border-bottom: ${themes[this.state.theme].border};
-          }
-          .software {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            // align-items: center;
-            height: auto;
-            border-bottom: ${themes[this.state.theme].border};
-            transition: all ease 0.2s;
-          }
-          .software.selected {
-            background: ${themes[this.state.theme].colors[this.state.primaryColor]};
-          }
-          .software .overlaySelector {
-            position: absolute;
-            top: 3px;
-            right: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            border-radius: 6px;
-            background: transparent;
-            cursor: pointer;
-            color: ${themes[this.state.theme].text};
-            transition: all ease 0.3s;
-          }
-          .software .overlaySelector:hover {
-            background: rgba(200, 200, 200, 0.5);
-          }
-          .softwareHeader {
-            display: flex;
-            flex-direction:row;
-            align-items: center;
-            height: auto;
-          }
-          .softwareHeader img {
-            width: 25%;
-            margin: 10px;
-          }
-          .softwareHeader h4 {
-            margin: 10px 0;
-          }
-          .softwareSceneName {
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-            margin-left: 10px;
-            margin-bottom: 10px;
-            overflow-wrap: break-word;
-            color: ${themes[this.state.theme].textSecondary};
-          }
-          .softwareSceneName i {
-            margin-right: 3px;
-            font-size: 12px;
-            color: ${themes[this.state.theme].textSecondary};
-            transition: all ease 0.2s;
-            cursor: pointer;
-          }
-          .software.selected h4,
-          .software.selected i,
-          .software.selected .overlaySelector,
-          .software.selected .softwareSceneName {
-            color: #fff;
-          }
-          .softwareSceneName i:hover {
-            color: ${themes[this.state.theme].text};
-          }
 
-
-
-          .managerContainer {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-          }
-          .searchContainer {
-            margin-top: 10px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            height: 40px;
-          }
-          .searchContainer > div {
-            height: 25px;
-            margin: 0 25px;
-          }
-          .projectSelect {
-            position: relative;
-            width: 120px;
-          }
-          .createAsset {
-            width: 100px;
-          }
-          .btn {
-            display: flex;
-            align-items: center;
-            width: 100px;
-            height: 25px;
-            margin: 5px;
-            padding: 2px 5px;
-            border-radius: 6px;
-            font-size: 18px;
-            background: ${themes[this.state.theme].background};
-            color: ${themes[this.state.theme].text};
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-            border: ${themes[this.state.theme].border};
-            cursor: pointer;
-            transition: all ease 0.3s;
-          }
-          .btn h5 {
-            width: 100%;
-            text-align: center;
-          }
-          .btn:hover {
-            background: ${themes[this.state.theme].secondaryBg};
-          }
-          .createAssetBtn {
-            margin: 0;
-            padding: 0 5px;
-          }
-
-
-          .assetShotSwitch {
-            width: 120px;
-          }
-
-          .searchBar {
-            flex: 1;
-          }
-
-
-
-          .filterContainer {
-            height: 150px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-          }
-
-
-          .browserContainer {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-          }
-          .browser {
-            // flex: 1;
-            width: 150px;
-          }
-          .browser:first-child {
-            margin-left: 25px;
-          }
-          .fileBrowser {
-            flex: 3;
-            margin-right: 25px;
-          }
-
-          .chevronContainer {
-            width: 25px;
-            height: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-          .chevronContainer i {
-            color: ${themes[this.state.theme].text};
-            font-size: 28px;
-          }
-
-
-          .selectedContainer {
-            margin: 25px 0 ;
-            height: 0px;
-            overflow: hidden;
-            transition: height ease 0.5s;
-          }
-          .selectedContainer.open {
-            height: 350px;
-          }
         `}</style>
       </React.Fragment>
     );
