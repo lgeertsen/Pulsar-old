@@ -77,7 +77,30 @@ export default class Manager extends React.Component {
           toggleNav={(v) => this.setState({navOpen: v})}
         />
 
-        <div className={this.state.navOpen ? "main" : "main full"}></div>
+        <div className={this.state.navOpen ? "main" : "main full"}>
+          <div className="settings-page-title">
+            <h1 className="display-1">Settings</h1>
+          </div>
+          <div className="settings-container">
+            <div className="settings-sidebar">
+              <div className="nav-menu">
+                <div className="nav-item icon active">
+                  <i className="las la-palette"></i>
+                  <div className="nav-item-title">Theme</div>
+                </div>
+                <div className="nav-item icon">
+                  <i className="las la-window-restore"></i>
+                  <div className="nav-item-title">Overlay</div>
+                </div>
+              </div>
+            </div>
+            <div className="settings-main">
+
+            </div>
+          </div>
+        </div>
+
+
 
         <style jsx global>{`
 

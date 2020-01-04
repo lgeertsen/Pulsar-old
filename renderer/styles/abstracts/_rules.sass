@@ -18,6 +18,18 @@ div, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea
   display: flex
   flex-direction: row
 
+.main
+  position: fixed
+  top: 0
+  right: 0
+  width: calc(100% - 250px)
+  display: flex
+  flex-direction: column
+  transition: all 0.3s
+
+  &.full
+    width: calc(100% - 80px)
+
 .dropdown
   display: inline-block
 
@@ -26,3 +38,7 @@ div, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea
 
   a.dropdown-item
     font-size: 16px
+
+.display-1
+  font-size: 4rem
+  font-family: "Architectural", sans-serif
