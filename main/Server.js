@@ -49,7 +49,7 @@ export default class Server {
         this.setAssetIdValue("fileManager", "project", keys[0])
         // fm.project = keys[0];
       }
-      fm.formatForRender((message, data) => this.sendMessageMain(message, data));
+      fm.formatForRender();
     }
     if(this._assetIds["newAsset"] == undefined) {
       Logger.log("----- newAsset AssetId doesn't exist -----");
@@ -60,7 +60,7 @@ export default class Server {
         this.setAssetIdValue("newAsset", "project", keys[0])
         // na.project = keys[0];
       }
-      na.formatForRender((message, data) => this.sendMessageMain(message, data));
+      na.formatForRender();
     }
   }
 

@@ -1,0 +1,29 @@
+.browser
+  display: flex
+  flex-direction: column
+
+  .card-header-title
+    padding: 0.25rem 1rem
+    font-weight: 400
+
+.browser-inner
+  padding: 0
+  height: 100%
+  overflow: auto
+
+  .directory
+    height: auto
+    font-size: 16px
+    border-bottom: 1px solid $grey-lighter
+    cursor: pointer
+    transition: all 0.25s
+
+    i
+      margin: 3px 5px
+
+    &:hover
+      background: $white-ter
+
+    &.selected
+      background: $green
+      color: $white

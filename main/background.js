@@ -1,4 +1,4 @@
-import { join } from 'path';
+import path from 'path';
 import { app, ipcMain, globalShortcut } from 'electron';
 import serve from 'electron-serve';
 import {
@@ -49,7 +49,10 @@ if (isProd) {
     minWidth: 1200,
     minHeight: 800,
     frame: true,
+    icon: path.join(__dirname, '../main/pulsar.png')
   });
+
+  console.log(path.join(__dirname, '../main/pulsar.png'));
 
   mainWindow.maximize();
 

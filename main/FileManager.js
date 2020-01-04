@@ -31,7 +31,7 @@ export default class FileManager {
         let state = dirSplit[0];
         let version = state == "wip" ? "_" : dirSplit[1];
 
-        let comment;
+        let comment = "";
         let tags = [];
 
         for(let j = 0; j < files.length; j++) {

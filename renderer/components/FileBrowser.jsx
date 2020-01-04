@@ -21,22 +21,22 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
   }
 
     return (
-      <div className="fileBrowser">
-        <div className="fileBrowserTitle">
-          <h4>{title}</h4>
-        </div>
-        <div className="fileBrowserInner">
-          <div className="fileHeader file">
-            <div className="fileName nameHeader">
+      <div className="card file-browser">
+        <header className="card-header">
+          <p className="card-header-title">{title}</p>
+        </header>
+        <div className="card-content file-browser-inner">
+          <div className="file-header pulsar-file">
+            <div className="pulsar-file-name name-header">
               <span>Name</span>
             </div>
-            <div className="fileTag tagHeader">
+            <div className="file-tag tag-header">
               <span>Tags</span>
             </div>
-            <div className="fileModified modifiedHeader">
+            <div className="file-modified modified-header">
               <span>Date Modified</span>
             </div>
-            <div className="fileSize sizeHeader">
+            <div className="file-size size-header">
               <span>Size</span>
             </div>
           </div>
@@ -51,22 +51,22 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
             if(a.state > b.state) { return -1; }
             return 0;
           }).map((file, index) => (
-            <div key={index} className={index == selectedFile ? "file selected" : "file"} onClick={(e) => handleChange(index, file.path)}>
-              <div className="fileName">
-                <i className="fas fa-file"></i>
+            <div key={index} className={index == selectedFile ? "pulsar-file selected" : "pulsar-file"} onClick={(e) => handleChange(index, file.path)}>
+              <div className="pulsar-file-name">
+                <i className="las la-file"></i>
                 <span>{file.name + "_" + file.state + "_" + file.version + "." + file.extension}</span>
               </div>
-              <div className="fileTag">
-                {file.tags.map((tag, index) => (
-                  <div key={index} className={"tag tag_" + tag.toLowerCase()}>
+              <div className="file-tag">
+                {file.tags.sort().map((tag, index) => (
+                  <div key={index} className={"tag tag-" + tag.toLowerCase()}>
                     <span>{tag}</span>
                   </div>
                 ))}
               </div>
-              <div className="fileModified">
+              <div className="file-modified">
                 <span>{file.modified}</span>
               </div>
-              <div className="fileSize">
+              <div className="file-size">
                 <span>{getSize(file.size)}</span>
               </div>
             </div>
@@ -74,107 +74,7 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
         </div>
 
         <style jsx>{`
-          .fileBrowser {
-            display: flex;
-            flex-direction: column;
-            background: ${theme.transparentBg};
-            border-radius: 6px;
-            border: ${theme.border};
-          }
-          .fileBrowserTitle {
-            height: 25px;
-            background: ${theme.accentBg};
-            border-bottom: ${theme.border};
-          }
-          .fileBrowserTitle h4 {
-            margin-left: 10px;
-          }
-          .fileBrowserInner {
-            overflow-x: auto;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-          }
-          .file {
-            display: flex;
-            flex-direction: row;
-            // min-height: 20px;
-            height: auto;
-            border-bottom: ${theme.accentBorder};
-            color: ${theme.text};
-            cursor: pointer;
-            transition: all ease 0.2s;
-          }
-          .file:hover {
-            background: ${theme.secondaryBg};
-          }
-          .file.selected {
-            background: ${theme.colors[primaryColor]};
-            color: ${theme.colors.white};
-          }
-          .file.fileHeader {
-            background: ${theme.secondaryBg};
-            cursor: default;
-          }
-          .file > div {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            border-right: ${theme.border};
-            margin-left: 5px;
-          }
-          .file span {
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-          }
-          .fileName {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-          }
-          .fileName i {
-            margin: 3px 5px;
-          }
-          .file .fileTag {
-            width: 100px;
-            overflow: hidden;
-            flex-direction: column;
-          }
-          .fileModified {
-            width: 130px;
-          }
-          .fileSize {
-            width: 50px;
-          }
-          .tag {
-            width: auto;
-            height: auto;
-            padding: 3px 5px;
-            border: 1px solid ${theme.text};
-            border-radius: 3px;
-            background: #888;
-            color: #fff;
-            font-size: 14px;
-            margin: 2px 0;
-          }
-          .tag.tag_done {
-            background: ${theme.colors.orange};
-          }
-          .tag.tag_wip {
-            background: ${theme.colors.yellow};
-          }
-          .tag.tag_wfa {
-            background: ${theme.colors.blue};
-          }
-          .tag.tag_retake {
-            background: ${theme.colors.red};
-          }
-          .tag.tag_valid {
-            background: ${theme.colors.green};
-          }
-          .tag.tag_todo {
-            background: ${theme.colors.purple};
-          }
+
         `}</style>
       </div>
     );
