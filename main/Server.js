@@ -11,19 +11,14 @@ import SoftwareSocket from './SoftwareSocket';
 // import router from './Router'
 
 export default class Server {
-  constructor(mainWindow, overlay) {
+  constructor() {
     this._app = express();
     // this._app.use('/', router)
     this._http = createServer(this._app);
     this._io = new SocketIO(this._http);
     this._softwareSocket = new SoftwareSocket(this._io);
 
-    this._mainWindow = mainWindow;
-    this._overlay = overlay;
-    this._renderer = new Renderer(this, mainWindow, overlay);
-
     this._config = new Config();
-    this._config.readConfig((message, config) => this.onConfig(message, config))
 
     this._softwares = {};
 
@@ -38,8 +33,20 @@ export default class Server {
 
   get config () { return this._config }
 
+  async whenReady() {
+    let config = await this._config.readConfig()
+    this.onConfig("config", config)
+    return config
+  }
+
+  setWindows(mainWindow, overlay) {
+    this._mainWindow = mainWindow;
+    this._overlay = overlay;
+    this._renderer = new Renderer(this, mainWindow, overlay);
+  }
+
   onConfig (message, config) {
-    this.sendMessageMain(message, config)
+    // this.sendMessageMain(message, config)
     if(this._assetIds["fileManager"] == undefined) {
       Logger.info("----- fileManager AssetId doesn't exist -----");
       let fm = new AssetId("fileManager", config.paths, config.projects, (data) => this.sendMessageMain("assetId", data));
@@ -49,7 +56,7 @@ export default class Server {
         this.setAssetIdValue("fileManager", "project", keys[0])
         // fm.project = keys[0];
       }
-      fm.formatForRender();
+      // fm.formatForRender();
     }
     if(this._assetIds["newAsset"] == undefined) {
       Logger.log("----- newAsset AssetId doesn't exist -----");
@@ -60,7 +67,7 @@ export default class Server {
         this.setAssetIdValue("newAsset", "project", keys[0])
         // na.project = keys[0];
       }
-      na.formatForRender();
+      // na.formatForRender();
     }
   }
 

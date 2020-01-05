@@ -1,12 +1,11 @@
 {
-    "asset_old_path": "{disk}:/SynologyDrive/{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/3d/scenes/{task}/{subtask}/{state}_{version}/{file}.{ext}",
     "cgwire": {
         "password": "YOURPASSWORD",
         "username": "youremail@artfx.fr"
     },
     "color": "green",
-    "disk": "C",
     "nodes": "C:/Users/leege/Pulsar/nodes",
+    "firstUsage": true,
     "overlay": {
       "save": "Ctrl+Shift+S",
       "increment": "Ctrl+Alt+S"
@@ -19,10 +18,6 @@
         "FILM1": "C:/SynologyDrive/FILM1",
         "FILM2": "C:/SynologyDrive/FILM2",
         "FILM3": "C:/SynologyDrive/FILM3"
-    },
-    "shot_paths": {
-        "2d": "{disk}:/SynologyDrive/{project}/03_WORK_PIPE/02_SHOT/2d/scenes/{type}/{name}/{task}/{subtask}/{state}_{version}/{file}.{ext}",
-        "3d": "{disk}:/SynologyDrive/{project}/03_WORK_PIPE/02_SHOT/3d/scenes/{type}/{name}/{task}/{subtask}/{state}_{version}/{file}.{ext}"
     },
     "softwares": {
         "houdini": "C:/Houdini17/bin/houdinifx.exe",

@@ -9,6 +9,7 @@ import {
 // import io from 'socket.io-client';
 
 import Server from "./Server";
+const server = new Server();
 
 // import {PythonShell} from 'python-shell';
 
@@ -42,6 +43,8 @@ if (isProd) {
 
 (async () => {
   await app.whenReady();
+  let config = await server.whenReady();
+
 
   var mainWindow = createWindow('main', {
     width: 1200,
@@ -68,9 +71,18 @@ if (isProd) {
   //
   // overlay.minimize();
 
+  server.setWindows(mainWindow, 'overlay')
+  server.startServer();
 
-  const homeUrl = isProd ? 'app://./manager.html' : 'http://localhost:8888/manager';
-  await mainWindow.loadURL(homeUrl);
+  // let config = server.config.config
+  console.log("-----config-----", config);
+  if(config.firstUsage) {
+    const homeUrl = isProd ? 'app://./welcome.html' : 'http://localhost:8888/welcome';
+    await mainWindow.loadURL(homeUrl);
+  } else {
+    const homeUrl = isProd ? 'app://./manager.html' : 'http://localhost:8888/manager';
+    await mainWindow.loadURL(homeUrl);
+  }
 
   // const overlayUrl = isProd ? 'app://./overlay.html' : 'http://localhost:8888/overlay';
   // await overlay.loadURL(overlayUrl);
@@ -88,12 +100,6 @@ if (isProd) {
   //   overlay.restore();
   // });
 
-
-
-
-
-  const server = new Server(mainWindow, "overlay");
-  server.startServer();
 
   // const ret = globalShortcut.register('CommandOrControl+S', () => {
   //   console.log('CommandOrControl+S is pressed')
@@ -283,17 +289,6 @@ if (isProd) {
     }
   })
   // }
-
-  // const spawn = require('child_process');
-  // let result;
-  // if (process.env.NODE_ENV === 'production') {
-  //   const executable = join(__dirname, process.platform === 'win32' ? 'pulsar.exe' : 'pulsar');
-  //   result = spawn.sync(executable, [], { encoding: 'utf8' });
-  // } else {
-  //   const executable = 'C:/Users/leege/Pulsar/python/dist/pulsar.exe';
-  //   result = spawn.async(executable, [], { encoding: 'utf8' });
-  //   // result = spawn.sync('python', [join(__dirname, '../python/pulsar.py')], { encoding: 'utf8' });
-  // }
 })();
 
 var removeShortcuts = () => {
@@ -308,28 +303,3 @@ app.on('will-quit', () => {
   // Unregister all shortcuts.
   globalShortcut.unregisterAll()
 })
-
-
-// ipcMain.on('run-python', (event, arg) => {
-//   let options = {
-//     mode: 'text',
-//     pythonOptions: ['-u'], // get print results in real-time
-//     scriptPath: './python'
-//   };
-//
-//   PythonShell.run('server.py', options, function (err, results) {
-//     if (err) throw err;
-//     // results is an array consisting of messages collected during execution
-//     console.log('results: %j', results);
-//     event.sender.send('result', results);
-//   });
-//   // const spawn = require('cross-spawn');
-//   // let result;
-//   // if (process.env.NODE_ENV === 'production') {
-//   //   const executable = join(__dirname, process.platform === 'win32' ? 'hello.exe' : 'hello');
-//   //   result = spawn.sync(executable, [], { encoding: 'utf8' });
-//   // } else {
-//   //   result = spawn.sync('python', [join(__dirname, '../python/hello.py')], { encoding: 'utf8' });
-//   // }
-//   // event.sender.send('result', result.stdout);
-// });

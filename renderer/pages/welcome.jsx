@@ -4,11 +4,11 @@ import Head from 'next/head';
 
 import Nav from '../components/Nav';
 
-import "../styles/settings.sass"
+import "../styles/welcome.sass"
 
 const ipcRenderer = electron.ipcRenderer || false;
 
-export default class Settings extends React.Component {
+export default class Welcome extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,25 +21,7 @@ export default class Settings extends React.Component {
 
       navOpen: false,
 
-      selectedTab: 0,
-
-      tabs: [
-        {
-          "title": "Projects",
-          "icon" : "la-archive",
-          "render": this.renderProjectTab()
-        },
-        {
-          "title": "Theme",
-          "icon": "la-palette",
-          "render": this.renderThemeTab()
-        },
-        {
-          "title": "Overlay",
-          "icon": "la-window-restore",
-          "render": this.renderOverlayTab()
-        }
-      ]
+      step: 0
     };
   }
 
@@ -68,30 +50,6 @@ export default class Settings extends React.Component {
     }
   }
 
-  renderProjectTab() {
-    return (
-      <div>
-        <h1 className="display-4">Projects</h1>
-      </div>
-    );
-  }
-
-  renderThemeTab() {
-    return (
-      <div>
-        <h1 className="display-4">Theme</h1>
-      </div>
-    );
-  }
-
-  renderOverlayTab() {
-    return (
-      <div>
-        <h1 className="display-4">Overlay</h1>
-      </div>
-    );
-  }
-
   render() {
 
     return (
@@ -105,30 +63,36 @@ export default class Settings extends React.Component {
           <link href="./static/line-awesome/css/line-awesome.min.css" rel="stylesheet"/>
         </Head>
 
-        <Nav
-          theme={this.state.theme}
-          open={this.state.navOpen}
-          page="settings"
-          toggleNav={(v) => this.setState({navOpen: v})}
-        />
-
-        <div className={this.state.navOpen ? `main theme-${this.stat}` : "main full"}>
-          <div className="settings-page-title">
-            <h1 className="display-1">Settings</h1>
-          </div>
-          <div className="settings-container">
-            <div className="settings-sidebar">
-              <div className="nav-menu">
-                {this.state.tabs.map((tab, index) => (
-                  <div key={index} className="nav-item icon" onClick={(e) => this.setState({selectedTab: index})}>
-                    <i className={"las " + tab.icon}></i>
-                    <div className="nav-item-title">{tab.title}</div>
-                  </div>
-                ))}
+        <div className={this.state.navOpen ? "main theme-" + this.state.theme : "main full theme-" + this.state.theme}>
+          <div className="box welcome-box">
+            <div className={this.state.step == 0 ? "welcome-step welcome-step-0" : "welcome-step welcome-step-0 slide-out-left"}>
+              <div className="welcome-title-container">
+                <h1 className="welcome-top-title display-4 sub-display">Welcome To</h1>
+                <h1 className="welcome-title display-1">Pulsar</h1>
+              </div>
+              <div className="get-started" onClick={(e) => this.setState({step: 1})}>
+                <span>Get Started!</span>
+                <i className="las la-arrow-circle-right"></i>
               </div>
             </div>
-            <div className="settings-main">
-              {this.state.tabs[this.state.selectedTab].render}
+            <div className={this.state.step == 1 ? "welcome-step welcome-step-1 slide-in-right" : this.state.step < 1 ? "welcome-step welcome-step-1 hidden" : "welcome-step welcome-step-1 slide-out-left"}>
+              <div className="step-title">
+                <h1 className="display-2">Theme</h1>
+                <span>Select the theme you would like to use for Pulsar</span>
+              </div>
+              <div className="step-themes">
+                <div className="step-theme">
+                  <div className="step-theme-preview step-theme-light"></div>
+                  <div>Light</div>
+                </div>
+                <div className="step-theme">
+                  <div className="step-theme-preview step-theme-dark"></div>
+                  <div>Dark</div>
+                </div>
+              </div>
+              <div className="step-footer">
+                <div className="step-next button" onClick={(e) => this.setState({theme: this.state.theme == "light" ? "dark" : "light"})}>Next</div>
+              </div>
             </div>
           </div>
         </div>

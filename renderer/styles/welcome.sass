@@ -1,0 +1,144 @@
+@charset 'utf-8'
+@import '~bulma/bulma.sass'
+
+// @import 'abstracts/variables'
+@import 'themes/all'
+@import 'abstracts/all'
+@import 'components/all'
+@import 'containers/all'
+
+@mixin inline-animation($duration)
+  $name: inline-#{unique-id()}
+
+  @keyframes #{$name}
+    @content
+
+
+  animation-name: $name
+  animation-duration: $duration
+  // animation-iteration-count: infinite
+
+.main.full
+  position: relative
+  width: 100%
+  align-items: center
+  justify-content: center
+  // background: $white-bis
+
+  @include themify($themes)
+    color: themed('textColor')
+    background-color: themed('backgroundColor')
+
+.welcome-box
+  position: relative
+  width: 600px
+  height: 400px
+  white-space: nowrap
+  overflow: hidden
+  padding: 0
+  transition: all 0.3s
+
+  @include inline-animation(3s)
+    0%
+      top: 1000px
+      width: 0px
+      height: 0px
+      border-radius: $radius-rounded
+
+    33%
+      top: 0px
+      width: 40px
+      height: 40px
+
+    66%
+      width: 600px
+      height: 10px
+      border-radius: $radius
+
+    100%
+      top: 0px
+      width: 600px
+      height: 400px
+
+.welcome-step
+  position: absolute
+  top: 0
+  left: 0
+  padding: 25px
+  display: flex
+  flex-direction: column
+  align-items: center
+
+  & > div
+    height: auto
+
+  &.hidden
+    display: none
+
+  &.slide-out-left
+    animation-name: slide-out-left
+    animation-duration: 0.5s
+    // animation-delay: 4s
+    animation-fill-mode: forwards
+
+  &.slide-in-right
+    animation-name: slide-in-right
+    animation-duration: 0.5s
+    // animation-delay: 4s
+    animation-fill-mode: forwards
+
+.welcome-step-0
+  justify-content: center
+  text-align: center
+
+.welcome-top-title
+  opacity: 0
+  animation-name: fade-in-down
+  animation-duration: 1s
+  animation-delay: 3s
+  animation-fill-mode: forwards
+
+.welcome-title
+  font-size: 6rem
+  opacity: 0
+  animation-name: fade-in-down
+  animation-duration: 1s
+  animation-delay: 4s
+  animation-fill-mode: forwards
+
+.get-started
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: center
+  font-size: 24px
+  cursor: pointer
+  color: $grey-light
+
+  opacity: 0
+  animation-name: fade-in-up
+  animation-duration: 1s
+  animation-delay: 6s
+  animation-fill-mode: forwards
+
+  &:hover
+    color: $grey-dark
+
+  i
+    font-size: 28px
+
+.step-themes
+  flex: 1
+  display: flex
+  flex-direction: row
+
+.step-theme
+  flex: 1
+
+.step-footer
+  display: flex
+  flex-direction: row
+  justify-content: flex-end
+
+  .button
+    width: auto
