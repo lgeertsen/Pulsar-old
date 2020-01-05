@@ -4,30 +4,15 @@
 // @import 'abstracts/variables'
 @import 'themes/all'
 @import 'abstracts/all'
+@import 'base/all'
 @import 'components/all'
 @import 'containers/all'
-
-@mixin inline-animation($duration)
-  $name: inline-#{unique-id()}
-
-  @keyframes #{$name}
-    @content
-
-
-  animation-name: $name
-  animation-duration: $duration
-  // animation-iteration-count: infinite
 
 .main.full
   position: relative
   width: 100%
   align-items: center
   justify-content: center
-  // background: $white-bis
-
-  @include themify($themes)
-    color: themed('textColor')
-    background-color: themed('backgroundColor')
 
 .welcome-box
   position: relative
@@ -113,7 +98,6 @@
   justify-content: center
   font-size: 24px
   cursor: pointer
-  color: $grey-light
 
   opacity: 0
   animation-name: fade-in-up
@@ -122,18 +106,30 @@
   animation-fill-mode: forwards
 
   &:hover
-    color: $grey-dark
 
   i
     font-size: 28px
 
-.step-themes
+.step-themes,
+.step-colors
   flex: 1
   display: flex
   flex-direction: row
 
 .step-theme
   flex: 1
+
+.step-colors
+  justify-content: space-between
+  align-items: center
+
+.step-color-bullet
+  height: 50px
+  width: 50px
+  margin: 5px
+  border-width: 3px
+  border-style: solid
+  border-radius: $radius-rounded
 
 .step-footer
   display: flex

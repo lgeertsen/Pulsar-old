@@ -26,5 +26,5 @@
         "mayapy": "C:/Maya2019/bin/mayapy.exe",
         "nuke": "C:/Nuke11.3v5/Nuke11.3.exe"
     },
-    "theme": "light"
+    "theme": "theme-light"
 }

@@ -8,13 +8,24 @@ import "../styles/welcome.sass"
 
 const ipcRenderer = electron.ipcRenderer || false;
 
+const colors = [
+  "orange",
+  "yellow",
+  "green",
+  "turquoise",
+  "cyan",
+  "blue",
+  "purple",
+  "red"
+]
+
 export default class Welcome extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       config: {},
-      theme: "light",
+      theme: "theme-light",
       primaryColor: "blue",
       saveShortcut: "",
       incrementShortcut: "",
@@ -63,8 +74,8 @@ export default class Welcome extends React.Component {
           <link href="./static/line-awesome/css/line-awesome.min.css" rel="stylesheet"/>
         </Head>
 
-        <div className={this.state.navOpen ? "main theme-" + this.state.theme : "main full theme-" + this.state.theme}>
-          <div className="box welcome-box">
+        <div className={this.state.navOpen ? "main " + this.state.theme : "main full " + this.state.theme}>
+          <div className={"box welcome-box " + this.state.theme}>
             <div className={this.state.step == 0 ? "welcome-step welcome-step-0" : "welcome-step welcome-step-0 slide-out-left"}>
               <div className="welcome-title-container">
                 <h1 className="welcome-top-title display-4 sub-display">Welcome To</h1>
@@ -91,7 +102,21 @@ export default class Welcome extends React.Component {
                 </div>
               </div>
               <div className="step-footer">
-                <div className="step-next button" onClick={(e) => this.setState({theme: this.state.theme == "light" ? "dark" : "light"})}>Next</div>
+                <div className="step-next button" onClick={(e) => this.setState({step: 2})}>Next</div>
+              </div>
+            </div>
+            <div className={this.state.step == 2 ? "welcome-step welcome-step-2 slide-in-right" : this.state.step < 2 ? "welcome-step welcome-step-2 hidden" : "welcome-step welcome-step-2 slide-out-left"}>
+              <div className="step-title">
+                <h1 className="display-2">Color</h1>
+                <span>Pick your favorite color</span>
+              </div>
+              <div className="step-colors">
+                {colors.map((color, index) => (
+                  <div key={index} className={"step-color-bullet bg-" + color}></div>
+                ))}
+              </div>
+              <div className="step-footer">
+                <div className="step-next button" onClick={(e) => this.setState({theme: this.state.theme == "theme-light" ? "theme-dark" : "theme-light"})}>Next</div>
               </div>
             </div>
           </div>

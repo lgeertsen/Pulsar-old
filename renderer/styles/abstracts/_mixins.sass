@@ -9,3 +9,12 @@
 
       @content
       $theme-map: null !global
+
+@mixin inline-animation($duration)
+  $name: inline-#{unique-id()}
+
+  @keyframes #{$name}
+    @content
+
+  animation-name: $name
+  animation-duration: $duration
