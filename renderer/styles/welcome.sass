@@ -17,7 +17,7 @@
 .welcome-box
   position: relative
   width: 600px
-  height: 400px
+  height: 500px
   white-space: nowrap
   overflow: hidden
   padding: 0
@@ -32,18 +32,18 @@
 
     33%
       top: 0px
-      width: 40px
-      height: 40px
+      width: 80px
+      height: 80px
 
     66%
       width: 600px
-      height: 10px
+      height: 20px
       border-radius: $radius
 
     100%
       top: 0px
       width: 600px
-      height: 400px
+      height: 500px
 
 .welcome-step
   position: absolute
@@ -110,14 +110,50 @@
   i
     font-size: 28px
 
+.step-title
+  position: relative
+
+.step-divider
+  position: relative
+  top: -20px
+  width: 130px
+  height: 3px
+  border-top-width: 1px
+  border-top-style: solid
+  border-bottom-width: 1px
+  border-bottom-style: solid
+
 .step-themes,
-.step-colors
+.step-colors,
+.step-projects
   flex: 1
   display: flex
   flex-direction: row
 
+.step-projects
+  flex-direction: column
+  padding: 10px 0
+
 .step-theme
   flex: 1
+  height: calc(100% - 50px)
+  margin: 25px
+  cursor: pointer
+  transition: all 0.25s
+
+  &:hover
+    @include themify($themes)
+      box-shadow: themed('box-shadow')
+
+  & > div
+    padding: 25px
+
+
+.step-theme-box
+  display: flex
+  justify-content: center
+  align-items: center
+  text-align: center
 
 .step-colors
   justify-content: space-between
@@ -130,6 +166,44 @@
   border-width: 3px
   border-style: solid
   border-radius: $radius-rounded
+  cursor: pointer
+
+.step-project
+  height: auto
+  display: flex
+  flex-direction: row
+  padding: 5px 10px 5px 0
+
+  &.box
+    margin-bottom: 5px
+
+  &.field
+    padding-left: 0
+
+.step-project-name
+  flex: 1
+
+  &.padding-left
+    padding-left: 10px
+
+.step-project-path
+  flex: 2
+  margin: 0 15px
+  overflow: hidden
+
+  .file-label
+    width: 100%
+
+    .file-cta
+      max-width: 100%
+
+.step-project-delete
+  width: 30px
+  cursor: pointer
+
+  i
+    font-size: 24px
+
 
 .step-footer
   display: flex

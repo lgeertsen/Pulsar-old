@@ -33,6 +33,11 @@ div, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea
   &.full
     width: calc(100% - 80px)
 
+.bg-main
+  @include themify($themes)
+    color: themed('text')
+    background-color: themed('bg')
+
 .dropdown
   display: inline-block
 

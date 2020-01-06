@@ -1,12 +1,10 @@
-import electron from 'electron';
+import { ipcRenderer } from 'electron';
 import React from 'react';
 import Head from 'next/head';
 
 import Nav from '../components/Nav';
 
 import "../styles/welcome.sass"
-
-const ipcRenderer = electron.ipcRenderer || false;
 
 const colors = [
   "orange",
@@ -29,6 +27,12 @@ export default class Welcome extends React.Component {
       primaryColor: "blue",
       saveShortcut: "",
       incrementShortcut: "",
+      projects: {
+        "FILM1": "C:/SynologyDrive/FILM1"
+      },
+
+      newProjectName: "",
+      newProjectPath: "",
 
       navOpen: false,
 
@@ -58,7 +62,36 @@ export default class Welcome extends React.Component {
           this.setState({incrementShortcut: data.overlay.increment})
         }
       });
+
+      ipcRenderer.on('selectedDirectory', (event, data) => {
+        this.setState({newProjectPath: data});
+      });
     }
+  }
+
+  selectDirectory() {
+    ipcRenderer.send('selectDirectory');
+    // console.log(dialog);
+    // let dir = dialog.showOpenDialog({
+    //   properties: ['openDirectory']
+    // })
+    // this.setState({newProjectPath: dir})
+  }
+
+  addProject() {
+    let projects = this.state.projects;
+    let name = this.state.newProjectName;
+    let path = this.state.newProjectPath;
+    if(name != "" && path != "") {
+      projects[name] = path;
+      this.setState({projects: projects, newProjectName: "", newProjectPath: ""});
+    }
+  }
+
+  removeProject(project) {
+    let projects = this.state.projects;
+    delete projects[project];
+    this.setState({projects: projects});
   }
 
   render() {
@@ -89,16 +122,23 @@ export default class Welcome extends React.Component {
             <div className={this.state.step == 1 ? "welcome-step welcome-step-1 slide-in-right" : this.state.step < 1 ? "welcome-step welcome-step-1 hidden" : "welcome-step welcome-step-1 slide-out-left"}>
               <div className="step-title">
                 <h1 className="display-2">Theme</h1>
+                <div className={"step-divider border-" + this.state.primaryColor}></div>
                 <span>Select the theme you would like to use for Pulsar</span>
               </div>
               <div className="step-themes">
-                <div className="step-theme">
-                  <div className="step-theme-preview step-theme-light"></div>
-                  <div>Light</div>
+                <div className={"step-theme " + this.state.theme} onClick={(e) => this.setState({theme: "theme-light"})}>
+                  <div className="theme-light bg-main">
+                    <div className="step-theme-box box theme-light">
+                      <h1 className="display-4 sub-display">Light</h1>
+                    </div>
+                  </div>
                 </div>
-                <div className="step-theme">
-                  <div className="step-theme-preview step-theme-dark"></div>
-                  <div>Dark</div>
+                <div className={"step-theme " + this.state.theme} onClick={(e) => this.setState({theme: "theme-dark"})}>
+                  <div className="theme-dark bg-main">
+                    <div className="step-theme-box box theme-dark">
+                      <h1 className="display-4 sub-display">Dark</h1>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="step-footer">
@@ -108,15 +148,66 @@ export default class Welcome extends React.Component {
             <div className={this.state.step == 2 ? "welcome-step welcome-step-2 slide-in-right" : this.state.step < 2 ? "welcome-step welcome-step-2 hidden" : "welcome-step welcome-step-2 slide-out-left"}>
               <div className="step-title">
                 <h1 className="display-2">Color</h1>
+                <div className={"step-divider border-" + this.state.primaryColor}></div>
                 <span>Pick your favorite color</span>
               </div>
               <div className="step-colors">
                 {colors.map((color, index) => (
-                  <div key={index} className={"step-color-bullet bg-" + color}></div>
+                  <div key={index} className={this.state.primaryColor == color ? "step-color-bullet bg-" + color : "step-color-bullet bg-" + color + " border-" + color} onClick={(e) => this.setState({primaryColor: color})}></div>
                 ))}
               </div>
               <div className="step-footer">
-                <div className="step-next button" onClick={(e) => this.setState({theme: this.state.theme == "theme-light" ? "theme-dark" : "theme-light"})}>Next</div>
+                <div className="step-next button" onClick={(e) => this.setState({step: 3})}>Next</div>
+              </div>
+            </div>
+            <div className={this.state.step == 3 ? "welcome-step welcome-step-3 slide-in-right" : this.state.step < 3 ? "welcome-step welcome-step-3 hidden" : "welcome-step welcome-step-3 slide-out-left"}>
+              <div className="step-title">
+                <h1 className="display-2">Projects</h1>
+                <div className={"step-divider border-" + this.state.primaryColor}></div>
+                <span>Add your projects</span>
+              </div>
+              <div className="step-projects">
+                {Object.keys(this.state.projects).map((project, index) => (
+                  <div key={index} className={"step-project box " + this.state.theme}>
+                    <div className="step-project-name padding-left">{project}</div>
+                    <div className="step-project-path">{this.state.projects[project]}</div>
+                    <div className="step-project-delete icon" onClick={(e) => this.removeProject(project)}>
+                      <i className="las la-times"></i>
+                    </div>
+                  </div>
+                ))}
+                <div className="step-project">
+                  <div className="step-project-name">
+                    <input className="input" type="text" placeholder="Project Name" value={this.state.newProjectName} onChange={(e) => this.setState({newProjectName: e.target.value.trim()})}/>
+                  </div>
+                  <div className="file step-project-path">
+                    <div className="file-label" onClick={(e) => this.selectDirectory()}>
+                      {/* <input className="file-input" type="file" onChange={(e) => this.setState({newProjectPath: e.target.value})}/> */}
+                      <div className="file-cta">
+                        <span className="file-icon">
+                          <i className="las la-folder-open"></i>
+                        </span>
+                        <span className="file-label">
+                          {this.state.newProjectPath == "" ? "Select Project Directory" : this.state.newProjectPath}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="step-project-delete" onClick={(e) => this.addProject()}>
+                    <div className={"button bg-" + this.state.primaryColor}>
+                      <i className="las la-plus"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="step-footer">
+                <div className="step-next button" onClick={(e) => this.setState({step: 4})}>Next</div>
+              </div>
+            </div>
+
+            <div className={this.state.step == 4 ? "welcome-step welcome-step-4 slide-in-right" : this.state.step < 4 ? "welcome-step welcome-step-4 hidden" : "welcome-step welcome-step-4 slide-out-left"}>
+              <div className="steps-finish">
+                <h1 className="display-1">All set up!!!</h1>
               </div>
             </div>
           </div>
