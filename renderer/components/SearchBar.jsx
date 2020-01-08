@@ -10,8 +10,8 @@ export default class SearchBar extends React.Component {
 
   render() {
     return (
-      <div className="search-bar">
-        <div className="search-bar-type">
+      <div className={"search-bar " + this.props.theme}>
+        <div className={"search-bar-type " + this.props.theme}>
           <div className="search-bar-type-text">
             <span>ID:</span>
           </div>
@@ -23,49 +23,49 @@ export default class SearchBar extends React.Component {
           <div className="search-bar-input">
             <span>{this.props.assetId.project}</span>
           </div>
-          <div className="search-bar-slash">
+          <div className={"search-bar-slash " + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.pathType}</span>
           </div>
-          <div className="search-bar-slash">
+          <div className={"search-bar-slash " + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.group}</span>
           </div>
-          <div className="search-bar-slash">
+          <div className={"search-bar-slash " + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.name}</span>
           </div>
-          <div className="search-bar-slash">
+          <div className={"search-bar-slash " + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.task}</span>
           </div>
-          <div className="search-bar-slash">
+          <div className={"search-bar-slash " + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.subtask}</span>
           </div>
-          <div className="search-bar-slash">
+          <div className={"search-bar-slash " + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.file.state}</span>
           </div>
-          <div className="search-bar-slash">
+          <div className={"search-bar-slash " + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.file.version}</span>
           </div>
-          <div className="search-bar-slash">
+          <div className={"search-bar-slash " + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
@@ -73,7 +73,7 @@ export default class SearchBar extends React.Component {
           </div>
         </div>
 
-        <div className="search-bar-copy icon">
+        <div className={"search-bar-copy icon " + this.props.theme}>
           <i className="las la-copy"></i>
         </div>
 

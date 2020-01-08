@@ -32,11 +32,22 @@
 
 @keyframes slide-in-right
   0%
-    transform: translate3d(100%,0,0);
+    transform: translate3d(100%,0,0)
     visibility: visible
 
   to
     transform: translateZ(0)
+
+@keyframes rotate-in
+    0%
+        transform-origin: center
+        transform: rotate(-200deg)
+        opacity: 0
+
+    to
+        transform-origin: center
+        transform: translateZ(0)
+        opacity: 1
 
 @keyframes jack-in-the-box
     0%

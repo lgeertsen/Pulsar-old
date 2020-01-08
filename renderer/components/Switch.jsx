@@ -11,10 +11,10 @@ const Switch = ({ theme, primaryColor, value, option1, value1, option2, value2, 
 
     return (
       <div className="switch buttons has-addons">
-        <div className={value == value1 ? "button is-selected is-success" : "button"} onClick={(e) => handleChange(1)}>
+        <div className={value == value1 ? `button is-selected bg-${primaryColor} ${theme}` : `button ${theme}`} onClick={(e) => handleChange(1)}>
           <span>{option1}</span>
         </div>
-        <div className={value == value2 ? "button is-selected is-success" : "button"} onClick={(e) => handleChange(2)}>
+        <div className={value == value2 ? `button is-selected bg-${primaryColor} ${theme}` : `button ${theme}`} onClick={(e) => handleChange(2)}>
           <span>{option2}</span>
         </div>
 

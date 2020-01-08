@@ -11,7 +11,11 @@ export default class Renderer {
     this.listenForMessages();
   }
 
-  sendMessageMain(message, data) {
+  sendMessageMain(message) {
+    this._mainWindow.webContents.send(message)
+  }
+
+  sendMessageMainData(message, data) {
     this._mainWindow.webContents.send(message, data)
   }
 
@@ -44,13 +48,13 @@ export default class Renderer {
 
     ipcMain.on("selectDirectory", (event, data) => {
       dialog.showOpenDialog({ properties: ['openDirectory'] }, (dir) => {
-        event.sender.send('selectedDirectory', dir);
+        event.sender.send('selectedDirectory', dir[0]);
       });
     });
 
-    ipcMain.on("setFile", (event, data) => {
-      console.log("----- set file -----", data);
-      // socket.emit("setFile", data);
+    ipcMain.on("setConfig", (event, data) => {
+      console.log("----- set config -----", data);
+      this._server.setConfig(data)
     });
 
     ipcMain.on("execTask", (event, data) => {
@@ -68,14 +72,6 @@ export default class Renderer {
       // socket.emit("saveComment", data);
     });
 
-    ipcMain.on("saveConfig", (event, data) => {
-      removeShortcuts()
-      console.log("----- save config -----", data);
-      // socket.emit("saveConfig", data);
-      config = data;
-      // overlay.webContents.send('config', data);
-      // setShortcuts()
-    });
 
     ipcMain.on("refresh", (event) => {
       console.log("----- refresh browser -----");

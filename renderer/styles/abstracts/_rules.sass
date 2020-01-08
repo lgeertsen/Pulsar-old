@@ -29,6 +29,7 @@ div, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea
   @include themify($themes)
     color: themed('text')
     background-color: themed('bg')
+    border-color: themed('text')
 
   &.full
     width: calc(100% - 80px)
@@ -50,7 +51,9 @@ div, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea
 .display-1,
 .display-2,
 .display-3,
-.display-4
+.display-4,
+.display-5,
+.display-6
   font-family: "Architectural", sans-serif
 
   &.sub-display
@@ -67,3 +70,9 @@ div, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea
 
 .display-4
   font-size: 2.5rem
+
+.display-5
+  font-size: 2rem
+
+.display-6
+  font-size: 1.5rem

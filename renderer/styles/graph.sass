@@ -1,0 +1,52 @@
+@charset 'utf-8'
+@import '~bulma/bulma.sass'
+
+@import 'themes/all'
+@import 'abstracts/all'
+@import 'base/all'
+@import 'components/all'
+@import 'containers/all'
+
+.nav
+  z-index: 10000
+
+.scene-view
+  position: relative
+  z-index: 50
+  flex: 1
+  background: $grey
+
+.graph-container
+  flex: 1
+  position: relative
+  z-index: 2
+
+.graph-editor
+  z-index: 1
+  position: absolute
+  width: 20000px
+  height: 20000px
+  left: -10000px
+  top: -10000px
+  background: transparent
+  border: 5px solid #444
+  overflow: hidden
+  touch-action: none
+
+.node-container
+  position: absolute
+  width: 0
+  top: 0
+  left: 0
+  z-index: 3
+
+.edge-container
+  position: absolute
+  top: 0
+  left: 0
+  z-index: 2
+
+  svg
+    position: absolute
+    width: 100%
+    height: 100%

@@ -21,9 +21,9 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
   }
 
     return (
-      <div className="card file-browser">
-        <header className="card-header">
-          <p className="card-header-title">{title}</p>
+      <div className={"card file-browser " + theme}>
+        <header className={"card-header " + theme}>
+          <p className={"card-header-title " + theme}>{title}</p>
         </header>
         <div className="card-content file-browser-inner">
           <div className="file-header pulsar-file">
@@ -51,7 +51,7 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
             if(a.state > b.state) { return -1; }
             return 0;
           }).map((file, index) => (
-            <div key={index} className={index == selectedFile ? "pulsar-file selected" : "pulsar-file"} onClick={(e) => handleChange(index, file.path)}>
+            <div key={index} className={index == selectedFile ? `pulsar-file bg-${primaryColor} ${theme}` : `pulsar-file ${theme}`} onClick={(e) => handleChange(index, file.path)}>
               <div className="pulsar-file-name">
                 <i className="las la-file"></i>
                 <span>{file.name + "_" + file.state + "_" + file.version + "." + file.extension}</span>

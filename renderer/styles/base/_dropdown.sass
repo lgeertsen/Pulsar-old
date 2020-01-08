@@ -1,0 +1,13 @@
+.dropdown-content
+  @include themify($themes)
+    background-color: themed('bg-bis')
+
+.dropdown-item
+  transition: all 0.25s
+  @include themify($themes)
+    color: themed('text')
+
+  &:hover
+    @include themify($themes)
+      color: themed('text')
+      background-color: themed('bg')

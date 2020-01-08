@@ -71,6 +71,7 @@ const NewAssetContainer = ({
                   <Switch
                     theme={theme}
                     primaryColor={primaryColor}
+                    value={assetId.pathType}
                     option1="Assets"
                     value1="asset"
                     option2="Shots"

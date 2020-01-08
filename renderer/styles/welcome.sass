@@ -1,7 +1,6 @@
 @charset 'utf-8'
 @import '~bulma/bulma.sass'
 
-// @import 'abstracts/variables'
 @import 'themes/all'
 @import 'abstracts/all'
 @import 'base/all'
@@ -212,3 +211,45 @@
 
   .button
     width: auto
+
+.steps-finish
+  height: 100% !important
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  text-align: center
+
+  & > div
+    height: auto
+
+  h1
+    font-size: 6rem
+
+    &.finish-animate
+      opacity: 0
+      animation-name: jack-in-the-box
+      animation-duration: 1.5s
+      animation-delay: 0.5s
+      animation-fill-mode: forwards
+
+  i
+    font-size: 6rem
+
+    &.finish-animate
+      opacity: 0
+      animation-name: rotate-in
+      animation-duration: 0.75s
+      animation-delay: 2s
+      animation-fill-mode: forwards
+
+  .button
+    width: auto
+    margin-top: 25px
+
+    &.finish-animate
+      opacity: 0
+      animation-name: fade-in-up
+      animation-duration: 1s
+      animation-delay: 3.5s
+      animation-fill-mode: forwards

@@ -95,7 +95,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
   }
 
     return (
-      <div className="file-viewer card">
+      <div className={"file-viewer card " + theme}>
         <div className="file-viewer-inner card-content">
           <div className="file-viewer-info-container">
             <div className="file-viewer-file-info">
@@ -121,7 +121,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
                       <input className="input" type="text" placeholder="Add Tag"/>
                     </div>
                     <div className="control">
-                      <input className="button" type="submit" value="Add" />
+                      <input className={"button " + theme} type="submit" value="Add" />
                     </div>
                   </div>
                 </form>
@@ -139,14 +139,14 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
             <div className="commands-container">
               {assetId.file.state != "publish" ?
                 <div className="btn-container">
-                  <div className="button" onClick={(e) => onBtnClick("open_file", true)}>
+                  <div className={"button " + theme} onClick={(e) => onBtnClick("open_file", true)}>
                     <span>Open</span>
                   </div>
-                  <div className="button" onClick={(e) => onBtnClick("open_file_as", true)}>
+                  <div className={"button " + theme} onClick={(e) => onBtnClick("open_file_as", true)}>
                     <span>Open As</span>
                   </div>
                   {assetId.file.state == "work" ?
-                    <div className="button" onClick={() => onPublish()}>
+                    <div className={"button " + theme} onClick={() => onPublish()}>
                       <span>Publish</span>
                     </div>
                     : ""
@@ -155,13 +155,13 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
                 : ""
               }
               {assetId.file.state == "publish" && assetId.file.version != "valid" ?
-                <div className="button">
+                <div className={"button " + theme}>
                   <span>Release</span>
                 </div>
                 : ""
               }
               {assetId.file.state == "work" ?
-                <div className="button">
+                <div className={"button " + theme}>
                   <span>Publish & Release</span>
                 </div>
                 : ""
@@ -207,7 +207,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
                     <CheckBox theme={theme} primaryColor={primaryColor} label="Save current open scene" checked={checked} onCheck={() => checkBox()}/>
                     : ""
                   }
-                  <div className="button" onClick={() => handleClick()}>Open</div>
+                  <div className={"button " + theme} onClick={() => handleClick()}>Open</div>
                 </div>
               :
               <h6>Please select a software.</h6>
@@ -217,7 +217,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
 
 
         <style jsx>{`
-          
+
         `}</style>
       </div>
     );

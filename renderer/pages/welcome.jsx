@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import Head from 'next/head';
+import Router from 'next/router'
 
 import Nav from '../components/Nav';
 
@@ -15,7 +16,7 @@ const colors = [
   "blue",
   "purple",
   "red"
-]
+];
 
 export default class Welcome extends React.Component {
   constructor(props) {
@@ -27,16 +28,15 @@ export default class Welcome extends React.Component {
       primaryColor: "blue",
       saveShortcut: "",
       incrementShortcut: "",
-      projects: {
-        "FILM1": "C:/SynologyDrive/FILM1"
-      },
+      projects: {},
 
       newProjectName: "",
       newProjectPath: "",
 
       navOpen: false,
 
-      step: 0
+      step: 0,
+      finished: false
     };
   }
 
@@ -66,16 +66,15 @@ export default class Welcome extends React.Component {
       ipcRenderer.on('selectedDirectory', (event, data) => {
         this.setState({newProjectPath: data});
       });
+
+      ipcRenderer.on('configSet', (event, data) => {
+        Router.push('/manager')
+      });
     }
   }
 
   selectDirectory() {
     ipcRenderer.send('selectDirectory');
-    // console.log(dialog);
-    // let dir = dialog.showOpenDialog({
-    //   properties: ['openDirectory']
-    // })
-    // this.setState({newProjectPath: dir})
   }
 
   addProject() {
@@ -92,6 +91,21 @@ export default class Welcome extends React.Component {
     let projects = this.state.projects;
     delete projects[project];
     this.setState({projects: projects});
+  }
+
+  finishSetup() {
+    let theme = this.state.theme;
+    let color = this.state.primaryColor;
+    let projects = this.state.projects;
+    let data = {
+      "color": color,
+      "firstUsage": false,
+      "projects": projects,
+      "theme": theme,
+    };
+    console.log(data);
+    ipcRenderer.send('setConfig', data);
+    this.setState({finished: true})
   }
 
   render() {
@@ -207,7 +221,13 @@ export default class Welcome extends React.Component {
 
             <div className={this.state.step == 4 ? "welcome-step welcome-step-4 slide-in-right" : this.state.step < 4 ? "welcome-step welcome-step-4 hidden" : "welcome-step welcome-step-4 slide-out-left"}>
               <div className="steps-finish">
-                <h1 className="display-1">All set up!!!</h1>
+                <div>
+                  <h1 className={this.state.step == 4 ? "display-1 finish-animate" : "display-1"}>All set up!!!</h1>
+                </div>
+                <div>
+                  <i className={this.state.step == 4 ? "las la-check-circle finish-animate " + this.state.primaryColor : "las la-check-circle " + this.state.primaryColor}></i>
+                </div>
+                <div className={this.state.step == 4 ? "button finish-animate" : "button"} onClick={(e) => this.finishSetup()}>Finish</div>
               </div>
             </div>
           </div>

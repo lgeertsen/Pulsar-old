@@ -1,8 +1,9 @@
 @charset 'utf-8'
 @import '~bulma/bulma.sass'
 
-// @import 'abstracts/variables'
+@import 'themes/all'
 @import 'abstracts/all'
+@import 'base/all'
 @import 'components/all'
 @import 'containers/all'
 
@@ -27,5 +28,102 @@
 
 .settings-main
   flex: 1
-  padding: 15px 25px
   overflow-y: auto
+
+.settings-main-inner
+  display: flex
+  flex-direction: column
+
+.settings-title
+  height: auto
+  padding: 15px 25px
+  border-bottom-style: solid
+  border-bottom-width: 1px
+
+  @include themify($themes)
+    border-color: themed('text')
+
+.settings-option
+  height: auto
+  padding: 15px 25px
+  display: flex
+  border-bottom-style: solid
+  border-bottom-width: 1px
+
+  @include themify($themes)
+    border-color: themed('text')
+
+  &.settings-projects
+    flex-direction: column
+
+.settings-option-title
+  width: 150px
+
+.settings-option-choices
+  flex: 1
+  display: flex
+  flex-direction: row
+
+.settings-project
+  height: auto
+  display: flex !important
+  flex-direction: row
+  padding: 5px 10px 5px 0
+
+  &.box
+    margin-bottom: 5px
+
+  &.field
+    padding-left: 0
+
+.settings-project-name
+  flex: 1
+
+  &.padding-left
+    padding-left: 10px
+
+.settings-project-path
+  flex: 2
+  margin: 0 15px
+  overflow: hidden
+
+  .file-label
+    width: 100%
+
+    .file-cta
+      max-width: 100%
+
+.settings-project-delete
+  width: 30px
+  cursor: pointer
+
+  i
+    font-size: 24px
+
+.settings-theme
+  width: 250px
+  height: 250px
+  margin: 0 25px
+  border-radius: $radius
+  cursor: pointer
+  transition: all 0.25s
+
+  @include themify($themes)
+    box-shadow: themed('box-shadow')
+
+  & > div
+    padding: 25px
+
+.settings-theme-box
+  display: flex
+  justify-content: center
+  align-items: center
+
+.settings-color-bullet
+  height: 50px
+  width: 50px
+  margin: 5px
+  border-width: 3px
+  border-style: solid
+  border-radius: $radius-rounded
+  cursor: pointer

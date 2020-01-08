@@ -30,12 +30,14 @@
     font-size: 16px
 
   &:hover
-    background: $white-ter
+    @include themify($themes)
+      background: themed('bg')
 
 
   &.file-header
-    background: $grey-lightest
     cursor: default
+    @include themify($themes)
+      background: themed('bg')
 
   .pulsar-file-name
     // height: 100%

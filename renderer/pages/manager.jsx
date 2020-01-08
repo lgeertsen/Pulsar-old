@@ -15,14 +15,6 @@ import Switch from '../components/Switch';
 
 import "../styles/manager.sass"
 
-import darkTheme from '../themes/dark';
-import lightTheme from '../themes/light';
-
-const themes = {
-  dark: darkTheme,
-  light: lightTheme
-};
-
 const ipcRenderer = electron.ipcRenderer || false;
 
 export default class Manager extends React.Component {
@@ -31,8 +23,8 @@ export default class Manager extends React.Component {
 
     this.state = {
       config: {},
-      theme: "light",
-      primaryColor: "blue",
+      theme: "light-theme",
+      primaryColor: "green",
       saveShortcut: "",
       incrementShortcut: "",
 
@@ -344,10 +336,12 @@ export default class Manager extends React.Component {
         <Nav
           open={this.state.navOpen}
           page="manager"
+          theme={this.state.theme}
+          primaryColor={this.state.primaryColor}
           toggleNav={(v) => this.setState({navOpen: v})}
         />
 
-        <div className={this.state.navOpen ? "main" : "main full"}>
+        <div className={this.state.navOpen ? "main " + this.state.theme : "main full " + this.state.theme}>
           <div className={Object.keys(this.state.softwares).length > 0 ? "software-container open" : "software-container"}>
             <div className="software-title">
               <h3>Open software</h3>
@@ -370,13 +364,13 @@ export default class Manager extends React.Component {
           <div className="manager-container">
             <div className="search-container">
               <div className="create-asset">
-                <div className="create-asset-btn button" onClick={(e) => this.setState({newAssetModal: true})}>
+                <div className={"create-asset-btn button " + this.state.theme} onClick={(e) => this.setState({newAssetModal: true})}>
                   <h5>Create Asset</h5>
                 </div>
               </div>
               <div className="project-select">
                 <Dropdown
-                  theme={themes[this.state.theme]}
+                  theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
                   value={this.state.fileManagerAssetId.project}
                   options={this.state.fileManagerAssetId.projects}
@@ -385,7 +379,7 @@ export default class Manager extends React.Component {
               </div>
               <div className="asset-shot-switch">
                 <Switch
-                  theme={themes[this.state.theme]}
+                  theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
                   value={this.state.fileManagerAssetId.pathType}
                   option1="Assets"
@@ -397,7 +391,7 @@ export default class Manager extends React.Component {
               </div>
               <div className="search-bar-container">
                 <SearchBar
-                  theme={themes[this.state.theme]}
+                  theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
                   assetId={this.state.fileManagerAssetId}
                 />
@@ -408,7 +402,7 @@ export default class Manager extends React.Component {
 
             <div className="filter-container">
               <FiltersContainer
-                theme={themes[this.state.theme]}
+                theme={this.state.theme}
                 primaryColor={this.state.primaryColor}
                 filters={this.state.filters}
                 setFilter={(filter, option, value) => this.setFilter(filter, option, value)}
@@ -421,7 +415,7 @@ export default class Manager extends React.Component {
             <div className="browser-container">
               <div className="browser sequenceBrowser">
                 <Browser
-                  theme={themes[this.state.theme]}
+                  theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
                   title={this.state.fileManagerAssetId.pathType == "asset" ? "Asset Type" : "Sequences"}
                   directories={this.state.fileManagerAssetId.groups}
@@ -434,7 +428,7 @@ export default class Manager extends React.Component {
               </div>
               <div className="browser shotBrowser">
                 <Browser
-                  theme={themes[this.state.theme]}
+                  theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
                   title={this.state.fileManagerAssetId.pathType == "asset" ? "Asset Name" : "Shots"}
                   directories={this.state.fileManagerAssetId.names}
@@ -447,7 +441,7 @@ export default class Manager extends React.Component {
               </div>
               <div className="browser taskBrowser">
                 <Browser
-                  theme={themes[this.state.theme]}
+                  theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
                   title="Tasks"
                   directories={this.state.fileManagerAssetId.tasks}
@@ -460,7 +454,7 @@ export default class Manager extends React.Component {
               </div>
               <div className="browser subtaskBrowser">
                 <Browser
-                  theme={themes[this.state.theme]}
+                  theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
                   title="Subtasks"
                   directories={this.state.fileManagerAssetId.subtasks}
@@ -473,7 +467,7 @@ export default class Manager extends React.Component {
               </div>
               <div className="file-browser">
                 <FileBrowser
-                  theme={themes[this.state.theme]}
+                  theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
                   title="Files"
                   files={this.filteredFiles()}
@@ -488,7 +482,7 @@ export default class Manager extends React.Component {
             <div className={this.state.fileManagerAssetId.file == "" ? "file-container" : "file-container open"}>
               {this.state.fileManagerAssetId.file != "" ?
                 <FileViewer
-                  theme={themes[this.state.theme]}
+                  theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
                   assetId={this.state.fileManagerAssetId}
                   execTask={(task) => this.execTask(task)}
@@ -511,7 +505,7 @@ export default class Manager extends React.Component {
         </div>
 
         <NewAssetContainer
-          theme={themes[this.state.theme]}
+          theme={this.state.theme}
           primaryColor={this.state.primaryColor}
           show={this.state.newAssetModal}
           handleClose={() =>  this.setState({newAssetModal: false})}
@@ -524,7 +518,7 @@ export default class Manager extends React.Component {
           setSaveShortcut={(value) => this.setState({saveShortcut: value})}
           incrementShortcut={this.state.incrementShortcut}
           setIncrementShortcut={(value) => this.setState({incrementShortcut: value})}
-          theme={themes[this.state.theme]}
+          theme={this.state.theme}
           themeName={this.state.theme}
           setTheme={(theme) => this.setTheme(theme)}
           primaryColor={this.state.primaryColor}

@@ -14,9 +14,11 @@
   top: 0
   width: 0
   overflow: hidden
-  background: $white
   border-right: 1px solid $grey-lighter
   transition: all 0.3s
+  @include themify($themes)
+    background-color: themed('bg')
+    color: themed('text')
 
   &.open
     width: 80px
@@ -79,10 +81,11 @@
         position: absolute
         width: 60%
         height: 1px
-        background-color: $grey-dark
         transform-style: preserve-3d
         transform: translate3d(0px, -6px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg)
         transition: 0.4s all ease
+        @include themify($themes)
+          background-color: themed('text')
 
         &.line-bottom
           transform: translate3d(0px, 6px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg)
@@ -109,10 +112,6 @@
   color: $grey-light
   cursor: pointer
   transition: all 0.25s
-
-  &:hover,
-  &.active
-    color: $green
 
   .nav-item-title
     flex: 1

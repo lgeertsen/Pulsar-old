@@ -69,4 +69,20 @@ export default class Config {
       });
     })
   }
+
+  setConfig(data, cb) {
+    let keys = Object.keys(data);
+    for(let i = 0; i < keys.length; i++) {
+      this._config[keys[i]] = data[keys[i]];
+    }
+    let jsonContent = JSON.stringify(this._config, null, 2);
+
+    fs.writeFile(this._filePath, jsonContent, 'utf8', function (err) {
+      if (err) {
+        console.log("An error occured while writing JSON Object to File.");
+        // return console.log(err);
+      }
+      cb();
+    });
+  }
 }

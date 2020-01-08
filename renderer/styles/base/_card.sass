@@ -1,0 +1,14 @@
+.card
+  @include themify($themes)
+    color: themed('text')
+    background: themed('bg-bis')
+    border-color: themed('text')
+
+.card-header
+  border-bottom: 1px solid $grey-lighter
+  @include themify($themes)
+    border-color: themed('text')
+
+.card-header-title
+  @include themify($themes)
+    color: themed('text')

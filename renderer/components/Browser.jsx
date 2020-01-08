@@ -7,9 +7,9 @@ const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDi
   };
 
     return (
-      <div className="card browser">
-        <header className="card-header">
-          <p className="card-header-title">{title}</p>
+      <div className={"card browser " + theme}>
+        <header className={"card-header " + theme}>
+          <p className={"card-header-title " + theme}>{title}</p>
         </header>
         <div className="card-content browser-inner">
           {directories.sort((a, b) => {
@@ -17,7 +17,7 @@ const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDi
             if(a > b) { return 1; }
             return 0;
           }).map((dir, index) => (
-            <div key={index} className={dir == selectedDir ? "directory selected" : "directory"} onClick={(e) => handleChange(dir)}>
+            <div key={index} className={dir == selectedDir ? `directory bg-${primaryColor} ${theme}` : `directory ${theme}`} onClick={(e) => handleChange(dir)}>
               <i className={dir == selectedDir ? "las la-folder-open" : "las la-folder"}></i>
               <span>{dir}</span>
             </div>
@@ -25,7 +25,7 @@ const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDi
         </div>
 
         <style jsx>{`
-    
+
         `}</style>
       </div>
     );
