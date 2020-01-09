@@ -10,15 +10,15 @@ const Modal = ({ theme, primaryColor, title, handleClose, show, children }) => {
     <div className={show ? "modal is-active" : "modal"}>
       <div className="modal-background" onClick={(e) => close(e)}></div>
       <div className="modal-card">
-          <header className="modal-card-head">
-            <div className="modal-card-title">
+          <header className={"modal-card-head " + theme}>
+            <div className={"modal-card-title " + theme}>
               {title}
             </div>
             <div className="close-modal icon" onClick={(e) => close(e)}>
               <i className="las la-times"></i>
             </div>
           </header>
-        <div className="modal-card-body">
+        <div className={"modal-card-body " + theme}>
           {children}
         </div>
       </div>

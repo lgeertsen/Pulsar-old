@@ -194,7 +194,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
               <h4>Open in:</h4>
               <div className="software-selection">
                 {softwares.map((soft, index) => (
-                  <div key={index} className={soft.id == selectedSoftware ? "software selected" : "software"} onClick={(e) => onClickSoft(soft.id, soft.software)}>
+                  <div key={index} className={soft.id == selectedSoftware ? "software selected " + theme : "software " + theme} onClick={(e) => onClickSoft(soft.id, soft.software)}>
                     <img className="software-img" src={"./static/" + soft.software + ".png"}></img>
                     <span>{soft.saved == 1 ? soft.scene : soft.scene + "*"}</span>
                   </div>

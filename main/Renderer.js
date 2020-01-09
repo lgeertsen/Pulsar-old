@@ -60,6 +60,7 @@ export default class Renderer {
     ipcMain.on("execTask", (event, data) => {
       console.log("----- exec task -----", data);
       // socket.emit("execTask", data);
+      this._server.execTask(data);
     });
 
     ipcMain.on("checkSotfwareSaved", (event) => {

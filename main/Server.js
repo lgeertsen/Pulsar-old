@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import { createServer } from 'http';
 import SocketIO from 'socket.io';
 
@@ -93,6 +94,25 @@ export default class Server {
 
   sendMessageMainData(message, data) {
     this._renderer.sendMessageMainData(message, data)
+  }
+
+  execTask(data) {
+    let type = data.type;
+    let task = data.command
+    if(["maya", "houdini", "nuke"].includes(type)) {
+      let args = data.arguments;
+      if(data.id == "new") {
+        let winTask = `${type}_${task}`;
+        node = this._nodeManager.getNode("windows", win_task);
+        dirPath = `${this.config.config.nodes}/scripts/windows/`;
+        file = node.script;
+        file_path = path.join(dirPath, file);
+        Logger.warning(file_path);
+      } else {
+      }
+    } else if(["mayapy", "hython"].includes(data.id)) {
+
+    }
   }
 
   startServer() {

@@ -87,12 +87,17 @@
     align-items: center
     margin: 5px 8px
     padding: 10px 5px
-    background: $white
     border: 1px solid $grey-lightest
     transition: all 0.25s
+    cursor: pointer
+
+    @include themify($themes)
+      background-color: themed('bg')
 
     &.selected
       background: $white-ter
+      @include themify($themes)
+        background-color: themed('bg-bis')
 
     .software-img
       width: 80px

@@ -8,12 +8,13 @@
     position: relative
     width: 20px
     height: 20px
-    background: $white-ter
     border: 1px solid $grey-lighter
     border-radius: $radius
     margin: 0 8px
     cursor: pointer
     transition: all 0.25s
+    @include themify($themes)
+      background: themed('bg')
 
     i
       position: relative
@@ -22,14 +23,12 @@
       transition: all 0.25s
 
     &:hover
-      background: $grey-lightest
+      @include themify($themes)
+        background: themed('bg-bis')
 
     &.checked
-      background: $green
-
       i
         display: block
-        color: white
 
 .checkbox-label
   flex: 1

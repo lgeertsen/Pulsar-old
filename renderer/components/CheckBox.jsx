@@ -9,7 +9,7 @@ const CheckBox = ({ theme, primaryColor, label, checked, onCheck }) => {
 
     return (
       <div className="checkbox-container" onClick={(e) => checkBox()}>
-        <div className={checked ? "checkbox icon checked" : "checkbox icon"}>
+        <div className={checked ? `checkbox icon checked bg-${primaryColor} ${theme}` : "checkbox icon " + theme}>
           <i className={checked ? "las la-check" : "las la-check hidden"}></i>
         </div>
         <div className="checkbox-label">

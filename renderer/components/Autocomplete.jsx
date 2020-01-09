@@ -46,14 +46,14 @@ const Autocomplete = ({
       }) => (
         <div className="autocomplete">
           <div className="autocomplete-input-container">
-            <input className="autocomplete-input"
+            <input className={"autocomplete-input " + theme}
               {...getInputProps({
                 // isOpen,
                 placeholder: 'Enter a name',
               })}
             />
             {selectedItem ? (
-              <div className="autocomplete-controller-button icon"
+              <div className={"autocomplete-controller-button icon " + theme}
                 onClick={clearSelection}
                 aria-label="clear selection"
               >
@@ -66,12 +66,12 @@ const Autocomplete = ({
             )}
           </div>
           <div className="autocomplete-menu-container">
-            <div className={isOpen ? "autocomplete-menu open" : "autocomplete-menu"}
+            <div className={isOpen ? "autocomplete-menu open " + theme : "autocomplete-menu " + theme}
                 {...getMenuProps({isOpen})}
               >
               {isOpen ?
                 getStringItems(type, inputValue).map((item, index) => (
-                  <div className="autocomplete-item"
+                  <div className={"autocomplete-item " + theme}
                     key={index}
                     {...getItemProps({
                       item,
@@ -92,7 +92,7 @@ const Autocomplete = ({
       </Downshift>
 
         <style jsx>{`
-          
+
         `}</style>
         </div>
     );
