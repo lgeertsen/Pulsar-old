@@ -150,29 +150,26 @@ export default class Graph extends React.Component {
             attribute: "output1"
           }
         },
-        edge2: {
-          input: {
-            node: "node3",
-            attribute: "input3"
-          },
-          output: {
-            node: "node2",
-            attribute: "output1"
-          }
-        },
-        edge3: {
-          input: {
-            node: "node3",
-            attribute: "input1"
-          },
-          output: {
-            node: "node1",
-            attribute: "output2"
-          }
-        }
-      },
-      softwares: {
-
+        // edge2: {
+        //   input: {
+        //     node: "node3",
+        //     attribute: "input3"
+        //   },
+        //   output: {
+        //     node: "node2",
+        //     attribute: "output1"
+        //   }
+        // },
+        // edge3: {
+        //   input: {
+        //     node: "node3",
+        //     attribute: "input1"
+        //   },
+        //   output: {
+        //     node: "node1",
+        //     attribute: "output2"
+        //   }
+        // }
       }
     }
   }
@@ -389,6 +386,8 @@ export default class Graph extends React.Component {
     let node = this.state.nodes[nodeId];
     return (
       <Node
+        theme={this.state.theme}
+        primaryColor={this.state.primaryColor}
         key={index}
         selected={this.state.dragItem == nodeId}
         nodeId={nodeId}
@@ -409,10 +408,13 @@ export default class Graph extends React.Component {
     let pinIn = this.state.nodes[edge.input.node].inputs[edge.input.attribute].ref.current;
     if(pinOut != null && pinIn != null) {
       let pinOutPos = pinOut.getBoundingClientRect();
+      console.log(pinOutPos);
       let pinInPos = pinIn.getBoundingClientRect();
 
       let x1 = 10000 + pinOutPos.x - this.state.graphPosition.x;
-      let y1 = 10000 + pinOutPos.y - this.state.graphPosition.y;
+      let y1 = 10000 + pinOutPos.y - this.state.graphPosition.y - 400;
+      console.log(x1);
+      console.log(y1);
       let x2 = 10000 + pinInPos.x - this.state.graphPosition.x;
       let y2 = 10000 + pinInPos.y - this.state.graphPosition.y;
       return (
@@ -421,6 +423,8 @@ export default class Graph extends React.Component {
           y1={y1}
           x2={x2}
           y2={y2}
+          theme={this.state.theme}
+          primaryColor={this.state.primaryColor}
         />
       )
     }
@@ -472,9 +476,9 @@ export default class Graph extends React.Component {
               <div className="edge-container">
                 <svg>
                   {this.state.draggingEdge ?
-                    <path className="dragEdge"
+                    <path className={"drag-edge stroke-" + this.state.primaryColor}
                       d={`M${this.state.dragEdge.x1},${this.state.dragEdge.y1} C${this.state.dragEdge.x1 + Math.min(300, Math.abs(this.state.dragEdge.y1 - this.state.dragEdge.y2)/2)},${this.state.dragEdge.y1} ${this.state.dragEdge.x2 - Math.min(300, Math.abs(this.state.dragEdge.y1 - this.state.dragEdge.y2)/2)},${this.state.dragEdge.y2} ${this.state.dragEdge.x2},${this.state.dragEdge.y2}`}
-                      stroke="#444"
+                      stroke="#888"
                       strokeWidth="1"
                       fill="none"
                     />
@@ -489,17 +493,6 @@ export default class Graph extends React.Component {
 
             </div>
           </div>
-          {/* <div className="softwaresContainer">
-              <h2>Open softwares</h2>
-            <div className="softwares">
-              {Object.keys(this.state.softwares).map((softwareId, index) => (
-                <div key={index} className="software">
-                  <h4 className="softwareName">{this.state.softwares[softwareId].software}</h4>
-                  <img className="softwareImg" src={"./static/" + this.state.softwares[softwareId].software + ".jpg"}></img>
-                </div>
-              ))}
-            </div>
-          </div> */}
         </div>
 
         <style jsx global>{`
