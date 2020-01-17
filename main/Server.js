@@ -103,10 +103,10 @@ export default class Server {
       let args = data.arguments;
       if(data.id == "new") {
         let winTask = `${type}_${task}`;
-        node = this._nodeManager.getNode("windows", win_task);
-        dirPath = `${this.config.config.nodes}/scripts/windows/`;
-        file = node.script;
-        file_path = path.join(dirPath, file);
+        let node = this._nodeManager.getNode("windows", winTask);
+        let dirPath = `${this.config.config.nodes}/scripts/windows/`;
+        let file = node.script;
+        let file_path = path.join(dirPath, file);
         Logger.warning(file_path);
       } else {
       }
