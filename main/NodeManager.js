@@ -17,7 +17,6 @@ export default class NodeManager {
       if(err) {
         Logger.error(err);
       } else {
-        Logger.list(files);
         for(let i = 0; i < files.length; i++) {
           readFile(files[i], (err, data) => {
             try {
@@ -29,7 +28,6 @@ export default class NodeManager {
                 this._nodes[node.type] = {}
                 this._nodes[node.type][node.name] = node
               }
-              console.log(this._nodes);
             } catch (e) {
               Logger.error(e);
             }
