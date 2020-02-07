@@ -16,7 +16,7 @@ export default class Edge extends React.Component {
     };
 
     return (
-      <path className={this.state.hovered ? "edge hovered" : "edge"}
+      <path className={this.state.hovered ? `edge hovered stroke-${this.props.primaryColor} ${this.props.theme}` : `edge ${this.props.theme}`}
         d={`M${this.props.x1},${this.props.y1} C${this.props.x1 + Math.min(300, Math.abs(this.props.y1 - this.props.y2)/2)},${this.props.y1} ${this.props.x2 - Math.min(300, Math.abs(this.props.y1 - this.props.y2)/2)},${this.props.y2} ${this.props.x2},${this.props.y2}`}
         onMouseEnter={(e) => {console.log("enter", e.target); this.setState({hovered: true})}}
         onMouseLeave={(e) => {console.log("leave", e.target); this.setState({hovered: false})}}
@@ -24,15 +24,7 @@ export default class Edge extends React.Component {
 
 
         <style jsx>{`
-          .edge {
-            stroke-width: 2;
-            stroke: #444;
-            fill: none;
-          }
-          .edge.hovered {
-            stroke-width: 5;
-            stroke: #3494e6;
-          }
+
         `}</style>
       </path>
     );

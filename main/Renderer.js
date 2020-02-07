@@ -1,4 +1,6 @@
-import { ipcMain } from 'electron';
+import { ipcMain, dialog } from 'electron';
+
+import Logger from './Logger'
 
 export default class Renderer {
   constructor(server, mainWindow, overlay) {
@@ -9,7 +11,11 @@ export default class Renderer {
     this.listenForMessages();
   }
 
-  sendMessageMain(message, data) {
+  sendMessageMain(message) {
+    this._mainWindow.webContents.send(message)
+  }
+
+  sendMessageMainData(message, data) {
     this._mainWindow.webContents.send(message, data)
   }
 
@@ -40,18 +46,21 @@ export default class Renderer {
       this._server.setAssetIdValue(data.sid, data.type, data.value);
     });
 
+    ipcMain.on("selectDirectory", (event, data) => {
+      dialog.showOpenDialog({ properties: ['openDirectory'] }, (dir) => {
+        event.sender.send('selectedDirectory', dir[0]);
+      });
+    });
 
-
-
-
-    ipcMain.on("setFile", (event, data) => {
-      console.log("----- set file -----", data);
-      // socket.emit("setFile", data);
+    ipcMain.on("setConfig", (event, data) => {
+      console.log("----- set config -----", data);
+      this._server.setConfig(data)
     });
 
     ipcMain.on("execTask", (event, data) => {
       console.log("----- exec task -----", data);
       // socket.emit("execTask", data);
+      this._server.execTask(data);
     });
 
     ipcMain.on("checkSotfwareSaved", (event) => {
@@ -64,14 +73,6 @@ export default class Renderer {
       // socket.emit("saveComment", data);
     });
 
-    ipcMain.on("saveConfig", (event, data) => {
-      removeShortcuts()
-      console.log("----- save config -----", data);
-      // socket.emit("saveConfig", data);
-      config = data;
-      // overlay.webContents.send('config', data);
-      // setShortcuts()
-    });
 
     ipcMain.on("refresh", (event) => {
       console.log("----- refresh browser -----");

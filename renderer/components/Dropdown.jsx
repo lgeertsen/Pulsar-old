@@ -30,7 +30,7 @@ const Dropdown = ({ theme, primaryColor, value, options, onChange }) => {
     return (
       <div ref={node} className={open ? "dropdown is-active" : "dropdown"}>
         <div className="dropdown-trigger">
-          <div className="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={e => setOpen(!open)}>
+          <div className={"button " + theme} aria-haspopup="true" aria-controls="dropdown-menu" onClick={e => setOpen(!open)}>
             <h3>{value}</h3>
             <span className="icon is-small">
               <i className="las la-angle-down" aria-hidden="true"></i>
@@ -38,9 +38,9 @@ const Dropdown = ({ theme, primaryColor, value, options, onChange }) => {
           </div>
         </div>
         <div className="dropdown-menu" role="menu">
-          <div className="dropdown-content">
+          <div className={"dropdown-content " + theme}>
             {options.map((element, index) => (
-              <a key={index} className="dropdown-item" onClick={e => handleChange(element)}>
+              <a key={index} className={"dropdown-item " + theme} onClick={e => handleChange(element)}>
                 {element}
               </a>
             ))}

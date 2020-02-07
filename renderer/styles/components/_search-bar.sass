@@ -4,13 +4,18 @@
   border: 1px solid $grey-lighter
   border-radius: $radius
 
+  @include themify($themes)
+    border-color: themed('text')
+
 .search-bar-type
   width: 60px
   display: flex
   flex-direction: row
   align-items: center
   padding-left: 5px
-  background: $white-ter
+
+  @include themify($themes)
+    background: themed('bg-bis')
 
   .search-bar-type-text
     flex: 1
@@ -39,7 +44,9 @@
   .search-bar-slash
     width: 15px
     justify-content: center
-    background: $grey-lightest
+
+    @include themify($themes)
+      background-color: themed('bg-bis')
 
 .search-bar-copy
   width: 25px
@@ -48,4 +55,5 @@
   transition: all 0.25s
 
   &:hover
-    background: $grey-lightest
+    @include themify($themes)
+      background-color: themed('bg-bis')

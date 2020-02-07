@@ -30,16 +30,18 @@
     font-size: 16px
 
   &:hover
-    background: $white-ter
+    @include themify($themes)
+      background: themed('bg')
 
 
   &.file-header
-    background: $grey-lightest
     cursor: default
+    @include themify($themes)
+      background: themed('bg')
 
   .pulsar-file-name
     // height: 100%
-    flex: 1
+    flex: 2
     display: flex
     flex-direction: row
     align-items: center
@@ -48,12 +50,23 @@
     i
       margin: 3px 5px
 
+  .pulsar-file-state,
+  .pulsar-file-version
+    flex: 1
+    display: flex
+    flex-direction: row
+    align-items: center
+    border-right: 1px solid $grey-lighter
+
   .file-tag
     width: 80px
     margin: 0
     padding: 5px 5px 0 5px
     overflow: hidden
     flex-direction: column
+
+    &.tag-header
+      flex-direction: row
 
     .tag
       height: 20px
@@ -64,7 +77,7 @@
     width: 130px
 
   .file-size
-    width: 50px
+    width: 60px
 
   &.selected
     background: $green
@@ -74,3 +87,13 @@
     .file-modified,
     .file-size
       color: $white
+
+.sort-btn
+  margin: 5px
+  border-radius: $radius-rounded
+  cursor: pointer
+
+  &.selected
+    @include themify($themes)
+      color: themed('bg')
+      background-color: themed('text')

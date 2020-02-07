@@ -10,6 +10,8 @@
   padding: 0
   height: 100%
   overflow: auto
+  @include themify($themes)
+    background: themed('bg-bis')
 
   .directory
     height: auto
@@ -18,12 +20,14 @@
     cursor: pointer
     transition: all 0.25s
 
+    @include themify($themes)
+      color: themed('text')
+      background: themed('bg-bis')
+      border-color: themed('text')
+
     i
       margin: 3px 5px
 
     &:hover
-      background: $white-ter
-
-    &.selected
-      background: $green
-      color: $white
+      @include themify($themes)
+        background: themed('bg-bis')

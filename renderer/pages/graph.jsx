@@ -8,10 +8,17 @@ import Nav from '../components/Nav'
 import Node from '../components/Node';
 import Edge from '../components/Edge';
 
+import "../styles/graph.sass"
+
 export default class Graph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      theme: "theme-light",
+      primaryColor: "green",
+
+      navOpen: false,
+
       graphPosition: {
         x: 0,
         y: 0
@@ -143,29 +150,26 @@ export default class Graph extends React.Component {
             attribute: "output1"
           }
         },
-        edge2: {
-          input: {
-            node: "node3",
-            attribute: "input3"
-          },
-          output: {
-            node: "node2",
-            attribute: "output1"
-          }
-        },
-        edge3: {
-          input: {
-            node: "node3",
-            attribute: "input1"
-          },
-          output: {
-            node: "node1",
-            attribute: "output2"
-          }
-        }
-      },
-      softwares: {
-
+        // edge2: {
+        //   input: {
+        //     node: "node3",
+        //     attribute: "input3"
+        //   },
+        //   output: {
+        //     node: "node2",
+        //     attribute: "output1"
+        //   }
+        // },
+        // edge3: {
+        //   input: {
+        //     node: "node3",
+        //     attribute: "input1"
+        //   },
+        //   output: {
+        //     node: "node1",
+        //     attribute: "output2"
+        //   }
+        // }
       }
     }
   }
@@ -173,16 +177,29 @@ export default class Graph extends React.Component {
   componentDidMount() {
     console.log("----- Component mounted -----");
     if(ipcRenderer) {
-      ipcRenderer.send("getSoftwares")
+      ipcRenderer.send("getConfig")
 
 
 
 
       console.log("----- ipcRenderer exists -----");
-      ipcRenderer.on('softwares', (event, data) => {
-        console.log("----- receive list of open softwares -----");
-        this.setState({softwares: data})
-      })
+      ipcRenderer.on('config', (event, data) => {
+        console.log("----- receive config file -----", data);
+        this.setState({config: data})
+        if(data.theme) {
+          console.log(data.theme);
+          this.setState({theme: data.theme});
+        }
+        if(data.color) {
+          this.setState({primaryColor: data.color});
+        }
+        if(data.overlay.save) {
+          this.setState({saveShortcut: data.overlay.save})
+        }
+        if(data.overlay.increment) {
+          this.setState({incrementShortcut: data.overlay.increment})
+        }
+      });
     }
   }
 
@@ -369,6 +386,8 @@ export default class Graph extends React.Component {
     let node = this.state.nodes[nodeId];
     return (
       <Node
+        theme={this.state.theme}
+        primaryColor={this.state.primaryColor}
         key={index}
         selected={this.state.dragItem == nodeId}
         nodeId={nodeId}
@@ -389,10 +408,13 @@ export default class Graph extends React.Component {
     let pinIn = this.state.nodes[edge.input.node].inputs[edge.input.attribute].ref.current;
     if(pinOut != null && pinIn != null) {
       let pinOutPos = pinOut.getBoundingClientRect();
+      console.log(pinOutPos);
       let pinInPos = pinIn.getBoundingClientRect();
 
       let x1 = 10000 + pinOutPos.x - this.state.graphPosition.x;
-      let y1 = 10000 + pinOutPos.y - this.state.graphPosition.y;
+      let y1 = 10000 + pinOutPos.y - this.state.graphPosition.y - 400;
+      console.log(x1);
+      console.log(y1);
       let x2 = 10000 + pinInPos.x - this.state.graphPosition.x;
       let y2 = 10000 + pinInPos.y - this.state.graphPosition.y;
       return (
@@ -401,6 +423,8 @@ export default class Graph extends React.Component {
           y1={y1}
           x2={x2}
           y2={y2}
+          theme={this.state.theme}
+          primaryColor={this.state.primaryColor}
         />
       )
     }
@@ -426,28 +450,35 @@ export default class Graph extends React.Component {
           <link href="./static/line-awesome/css/line-awesome.min.css" rel="stylesheet"/>
         </Head>
 
-        <Nav/>
+        <Nav
+          open={this.state.navOpen}
+          page="graph"
+          theme={this.state.theme}
+          primaryColor={this.state.primaryColor}
+          toggleNav={(v) => this.setState({navOpen: v})}
+        />
 
-        <div className="main">
-          <div className="graphContainer">
-            <div className="graphEditor"
+        <div className={this.state.navOpen ? "main " + this.state.theme : "main full " + this.state.theme}>
+          <div className="scene-view"></div>
+          <div className="graph-container">
+            <div className="graph-editor"
               style={graphTransform}
               onMouseDown={(e) => this.dragStart(e)}
               onMouseMove={(e) => this.drag(e)}
               onMouseUp={(e) => this.dragEnd(e)}
               onWheel={(e) => this.zoom(e)}
             >
-              <div className="nodeContainer">
+              <div className="node-container">
                 {Object.keys(this.state.nodes).map((nodeId, index) => (
                   this.renderNode(nodeId, index)
                 ))}
               </div>
-              <div className="svgContainer">
+              <div className="edge-container">
                 <svg>
                   {this.state.draggingEdge ?
-                    <path className="dragEdge"
+                    <path className={"drag-edge stroke-" + this.state.primaryColor}
                       d={`M${this.state.dragEdge.x1},${this.state.dragEdge.y1} C${this.state.dragEdge.x1 + Math.min(300, Math.abs(this.state.dragEdge.y1 - this.state.dragEdge.y2)/2)},${this.state.dragEdge.y1} ${this.state.dragEdge.x2 - Math.min(300, Math.abs(this.state.dragEdge.y1 - this.state.dragEdge.y2)/2)},${this.state.dragEdge.y2} ${this.state.dragEdge.x2},${this.state.dragEdge.y2}`}
-                      stroke="#444"
+                      stroke="#888"
                       strokeWidth="1"
                       fill="none"
                     />
@@ -462,105 +493,11 @@ export default class Graph extends React.Component {
 
             </div>
           </div>
-          {/* <div className="softwaresContainer">
-              <h2>Open softwares</h2>
-            <div className="softwares">
-              {Object.keys(this.state.softwares).map((softwareId, index) => (
-                <div key={index} className="software">
-                  <h4 className="softwareName">{this.state.softwares[softwareId].software}</h4>
-                  <img className="softwareImg" src={"./static/" + this.state.softwares[softwareId].software + ".jpg"}></img>
-                </div>
-              ))}
-            </div>
-          </div> */}
         </div>
 
         <style jsx global>{`
-          html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background: #eee;
-          }
-          * {
-            font-family: "Oswald", sans-serif;
-            margin: 0;
-          }
-          div {
-            height: 100%;
-            width: 100%;
-          }
         `}</style>
         <style jsx>{`
-          .main {
-            display: flex;
-            flex-direction: column;
-          }
-          .main > div {
-            width: auto;
-            height: auto;
-          }
-          .main .softwaresContainer {
-            position: relative;
-            z-index: 2;
-            height: 200px;
-            width: 100%;
-            background: #ddd;
-            border-top: 3px solid #444;
-            display: flex;
-            flex-direction: column;
-            padding: 25px;
-          }
-          .main .softwaresContainer .softwares {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-          }
-          .main .softwaresContainer .softwares .software {
-            height: auto;
-            width: 150px;
-            margin-right: 25px;
-          }
-          .main .softwaresContainer .softwares .software .softwareImg {
-            width: 75%;
-          }
-          .main .graphContainer {
-            position: relative;
-            z-index: 2;
-            flex: 1;
-            width: 100%;
-          }
-          .graphEditor {
-            z-index: 1;
-            position: absolute;
-            width: 20000px;
-            height: 20000px;
-            left: -10000px;
-            top: -10000px;
-            background: transparent;
-            border: 5px solid #444;
-            overflow: hidden;
-            touch-action: none;
-          }
-          .nodeContainer {
-            position: absolute;
-            width: 0;
-            top: 0;
-            left: 0;
-            z-index: 3;
-          }
-          .svgContainer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 2;
-          }
-          .svgContainer svg {
-            position: absolute;
-            width: 100%;
-            height 100%;
-          }
         `}</style>
       </React.Fragment>
     );
