@@ -37,6 +37,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
   };
 
   const onPublish = () => {
+    console.log(assetId.file);
     if(["ma", "mb"].includes(assetId.file.extension)) {
       selectSoftware("mayapy", "mayapy")
     } else if(["hip", "hipnc"].includes(assetId.file.extension)) {

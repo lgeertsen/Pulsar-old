@@ -3,6 +3,8 @@ import path from 'path';
 import { createServer } from 'http';
 import SocketIO from 'socket.io';
 
+import { execFile } from 'child_process';
+
 import AssetId from './AssetId';
 import Config from './Config';
 import FileManager from './FileManager'
@@ -107,11 +109,43 @@ export default class Server {
         let dirPath = `${this.config.config.nodes}/scripts/windows/`;
         let file = node.script;
         let file_path = path.join(dirPath, file);
+        let soft_path = this.config.config.softwares[type];
         Logger.warning(file_path);
+        // let command = `start ${file_path} ${soft_path} ${args.file}`
+        // Logger.success(command);
+        execFile(file_path, [soft_path, args.file], (error, stdout, stderr) => {
+          if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+          }
+          if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+          }
+          console.log(`stdout: ${stdout}`);
+        });
       } else {
+
       }
     } else if(["mayapy", "hython"].includes(data.id)) {
-
+      let node = this._nodeManager.getNode(type, task);
+      let dirPath = `${this.config.config.nodes}/scripts/${type}`;
+      let file = node.script;
+      let file_path = path.join(dirPath, file);
+      let soft_path = this.config.config.softwares[type];
+      // let command = `${soft_path} ${file_path} ${data.arguments.file}`;
+      // Logger.info(command);
+      execFile(soft_path, [file_path, data.arguments.file], (error, stdout, stderr) => {
+        if (error) {
+          console.log(`error: ${error.message}`);
+          return;
+        }
+        if (stderr) {
+          console.log(`stderr: ${stderr}`);
+          return;
+        }
+        console.log(`stdout: ${stdout}`);
+      });
     }
   }
 
