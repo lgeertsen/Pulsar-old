@@ -48,6 +48,7 @@ export default class Graph extends React.Component {
       nodes: {
         "node1": {
           name: "Node 1",
+          color: "red",
           x: 10200,
           y: 10400,
           inputs: {
@@ -77,6 +78,7 @@ export default class Graph extends React.Component {
         },
         "node2": {
           name: "Node 2",
+          color: "green",
           x: 10700,
           y: 10500,
           inputs: {
@@ -102,6 +104,7 @@ export default class Graph extends React.Component {
         },
         "node3": {
           name: "Node 3",
+          color: "cyan",
           x: 11000,
           y: 10300,
           inputs: {
@@ -143,7 +146,7 @@ export default class Graph extends React.Component {
         edge1: {
           input: {
             node: "node2",
-            attribute: "input2"
+            attribute: "input1"
           },
           output: {
             node: "node1",
@@ -178,10 +181,6 @@ export default class Graph extends React.Component {
     console.log("----- Component mounted -----");
     if(ipcRenderer) {
       ipcRenderer.send("getConfig")
-
-
-
-
       console.log("----- ipcRenderer exists -----");
       ipcRenderer.on('config', (event, data) => {
         console.log("----- receive config file -----", data);
@@ -200,6 +199,19 @@ export default class Graph extends React.Component {
           this.setState({incrementShortcut: data.overlay.increment})
         }
       });
+    }
+
+    document.addEventListener("keydown", this.onKeyDown, false);
+  }
+
+  componentWillUnmount(){
+    document.removeEventListener("keydown", this.onKeyDown, false);
+  }
+
+  onKeyDown(e) {
+    if(e.keyCode == 9) {
+      e.preventDefault();
+      console.log(e);
     }
   }
 
@@ -376,7 +388,6 @@ export default class Graph extends React.Component {
   }
 
   editNodeName(nodeId, event) {
-    console.log("smqdlkfjsdklmqfjsklmqdfjklm");
     let nodes = this.state.nodes;
     nodes[nodeId].name = event.target.value;
     this.setState({nodes: nodes});
@@ -392,6 +403,7 @@ export default class Graph extends React.Component {
         selected={this.state.dragItem == nodeId}
         nodeId={nodeId}
         name={node.name}
+        color={node.color}
         editName={(nodeId, event) => this.editNodeName(nodeId, event)}
         x={node.x}
         y={node.y}
@@ -406,13 +418,15 @@ export default class Graph extends React.Component {
     let edge = this.state.edges[edgeId];
     let pinOut = this.state.nodes[edge.output.node].outputs[edge.output.attribute].ref.current;
     let pinIn = this.state.nodes[edge.input.node].inputs[edge.input.attribute].ref.current;
+    console.log(pinOut);
+    console.log(pinIn);
     if(pinOut != null && pinIn != null) {
       let pinOutPos = pinOut.getBoundingClientRect();
       console.log(pinOutPos);
       let pinInPos = pinIn.getBoundingClientRect();
 
       let x1 = 10000 + pinOutPos.x - this.state.graphPosition.x;
-      let y1 = 10000 + pinOutPos.y - this.state.graphPosition.y - 400;
+      let y1 = 10000 + pinOutPos.y - this.state.graphPosition.y;
       console.log(x1);
       console.log(y1);
       let x2 = 10000 + pinInPos.x - this.state.graphPosition.x;
@@ -460,6 +474,11 @@ export default class Graph extends React.Component {
 
         <div className={this.state.navOpen ? "main " + this.state.theme : "main full " + this.state.theme}>
           <div className="scene-view"></div>
+          <div className="resizer"
+            onMouseDown={(e) => this.resizeStart(e)}
+            onMouseMove={(e) => this.resize(e)}
+            onMouseUp={(e) => this.resizeEnd(e)}
+          ></div>
           <div className="graph-container">
             <div className="graph-editor"
               style={graphTransform}
