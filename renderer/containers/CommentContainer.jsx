@@ -23,14 +23,14 @@ const CommentContainer = ({ theme, comment, onChange, saveComment }) => {
           <h3>Comment</h3>
         </div>
         <div className="comment-textarea">
-          <textarea className="textarea" disabled={disabled} value={comment} onChange={(e) => onChangeComment(e)} placeholder="Create comment"/>
+          <textarea className={"textarea " + theme}  disabled={disabled} value={comment} onChange={(e) => onChangeComment(e)} placeholder="Create comment"/>
         </div>
         <div className="comment-commands">
-          <div className="button" onClick={(e) => handleClick(disabled ? "edit" : "save")}>{disabled ? "Edit" : "Save"}</div>
+          <div className={"button " + theme} onClick={(e) => handleClick(disabled ? "edit" : "save")}>{disabled ? "Edit" : "Save"}</div>
         </div>
 
         <style jsx>{`
-  
+
         `}</style>
       </div>
     );

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Autocomplete from './Autocomplete';
 import CheckBox from './CheckBox'
 import CommentContainer from '../containers/CommentContainer';
 import Modal from './Modal';
@@ -10,6 +11,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
   const [checked, setChecked] = useState(false);
   const [command, setCommand] = useState(undefined);
   const [newFileName, setNewFileName] = useState(undefined);
+  const [newTag, setNewTag] = useState("");
 
   const onBtnClick  = (command, openModal) => {
     setCommand(command);
@@ -119,7 +121,12 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
                 <form onSubmit={(event) => console.log(event)}>
                   <div className="field has-addons">
                     <div className="control">
-                      <input className="input" type="text" placeholder="Add Tag"/>
+                      <input className="input" type="text" placeholder="Add Tag" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
+                      {/* <Autocomplete
+                        theme={theme}
+                        primaryColor={primaryColor}
+
+                      /> */}
                     </div>
                     <div className="control">
                       <input className={"button " + theme} type="submit" value="Add" />

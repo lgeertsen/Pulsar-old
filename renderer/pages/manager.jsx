@@ -341,7 +341,7 @@ export default class Manager extends React.Component {
           toggleNav={(v) => this.setState({navOpen: v})}
         />
 
-        <div className={this.state.navOpen ? "main " + this.state.theme : "main full " + this.state.theme}>
+        <div className={this.state.navOpen ? `main ${this.state.theme} main-${this.state.primaryColor}` : `main full ${this.state.theme} main-${this.state.primaryColor}`}>
           <div className={Object.keys(this.state.softwares).length > 0 ? "software-container open" : "software-container"}>
             <div className="software-title">
               <h3>Open software</h3>
