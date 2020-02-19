@@ -39,6 +39,8 @@ export default class Server {
 
   get config () { return this._config }
 
+  get nodes () { return this._nodeManager.nodes }
+
   async whenReady() {
     let config = await this._config.readConfig()
     Logger.list(config);

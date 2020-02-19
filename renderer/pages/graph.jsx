@@ -2,11 +2,16 @@ import electron from 'electron';
 import React from 'react';
 import Head from 'next/head';
 
+import * as THREE from 'three';
+import { Canvas } from 'react-three-fiber'
+
 const ipcRenderer = electron.ipcRenderer || false;
 
 import Nav from '../components/Nav'
 import Node from '../components/Node';
 import Edge from '../components/Edge';
+
+import Box from '../components/3D/Box';
 
 import "../styles/graph.sass"
 
@@ -18,6 +23,11 @@ export default class Graph extends React.Component {
       primaryColor: "green",
 
       navOpen: false,
+      nodeSearchOpen: false,
+      nodeSearchPosition: {
+        x: 500,
+        y: 500
+      },
 
       graphPosition: {
         x: 0,
@@ -44,6 +54,9 @@ export default class Graph extends React.Component {
       draggingType: undefined,
       draggingEdgeNodeId: undefined,
       draggingEdgeAttribId: undefined,
+
+      nodeList: {},
+      nodeListType: "",
 
       nodes: {
         "node1": {
@@ -181,6 +194,8 @@ export default class Graph extends React.Component {
     console.log("----- Component mounted -----");
     if(ipcRenderer) {
       ipcRenderer.send("getConfig")
+      ipcRenderer.send("getNodes")
+
       console.log("----- ipcRenderer exists -----");
       ipcRenderer.on('config', (event, data) => {
         console.log("----- receive config file -----", data);
@@ -199,6 +214,11 @@ export default class Graph extends React.Component {
           this.setState({incrementShortcut: data.overlay.increment})
         }
       });
+
+      ipcRenderer.on('nodes', (event, data) => {
+        console.log(data);
+        this.setState({nodeList: data});
+      });
     }
 
     document.addEventListener("keydown", this.onKeyDown, false);
@@ -216,7 +236,6 @@ export default class Graph extends React.Component {
   }
 
   dragStart(e) {
-    console.log(e.target);
     if (e.button == 0 && e.target.getAttribute("draggable") == "true") {
       e.preventDefault();
       let active = true;
@@ -232,9 +251,16 @@ export default class Graph extends React.Component {
       let initialX = e.clientX - this.state.graphPosition.x;
       let initialY = e.clientY - this.state.graphPosition.y;
       this.setState({initialX: initialX, initialY: initialY, active: active, dragItem: dragItem});
-    } else if(e.target.getAttribute("attributetype")) {
+    } else if(e.button == 0 && e.target.getAttribute("attributetype")) {
       e.preventDefault();
       this.startEdgeDrag(e);
+    } else if(e.button == 2) {
+      e.preventDefault();
+      let pos = {
+        x: e.clientX,
+        y: e.clientY
+      };
+      this.setState({nodeSearchOpen: true, nodeSearchPosition: pos, nodeListType: ""});
     }
   }
 
@@ -336,7 +362,6 @@ export default class Graph extends React.Component {
   }
 
   endEdgeDrag(e) {
-    console.log(e.target);
     let attributeType = e.target.getAttribute("attributetype");
     if(attributeType) {
       if(attributeType == this.state.draggingType) { return; }
@@ -418,17 +443,12 @@ export default class Graph extends React.Component {
     let edge = this.state.edges[edgeId];
     let pinOut = this.state.nodes[edge.output.node].outputs[edge.output.attribute].ref.current;
     let pinIn = this.state.nodes[edge.input.node].inputs[edge.input.attribute].ref.current;
-    console.log(pinOut);
-    console.log(pinIn);
     if(pinOut != null && pinIn != null) {
       let pinOutPos = pinOut.getBoundingClientRect();
-      console.log(pinOutPos);
       let pinInPos = pinIn.getBoundingClientRect();
 
       let x1 = 10000 + pinOutPos.x - this.state.graphPosition.x;
       let y1 = 10000 + pinOutPos.y - this.state.graphPosition.y;
-      console.log(x1);
-      console.log(y1);
       let x2 = 10000 + pinInPos.x - this.state.graphPosition.x;
       let y2 = 10000 + pinInPos.y - this.state.graphPosition.y;
       return (
@@ -453,6 +473,13 @@ export default class Graph extends React.Component {
       transform: `translate3d(${x}px, ${y}px, 0px) scale3d(${scale}, ${scale}, 1)`
     }
 
+    var nodesSearchX = this.state.nodeSearchPosition.x;
+    var nodesSearchY = this.state.nodeSearchPosition.y;
+    var nodeSearchPosition = {
+        left: `${nodesSearchX}px`,
+        top: `${nodesSearchY}px`
+    };
+
     return (
       <React.Fragment>
         <Head>
@@ -473,7 +500,14 @@ export default class Graph extends React.Component {
         />
 
         <div className={this.state.navOpen ? "main " + this.state.theme : "main full " + this.state.theme}>
-          <div className="scene-view"></div>
+          <div className="scene-view">
+            <Canvas>
+              <ambientLight />
+              <pointLight position={[10, 10, 10]} />
+             <Box position={[-1.2, 0, 0]} />
+    <Box position={[1.2, 0, 0]} />
+            </Canvas>
+          </div>
           <div className="resizer"
             onMouseDown={(e) => this.resizeStart(e)}
             onMouseMove={(e) => this.resize(e)}
@@ -513,6 +547,28 @@ export default class Graph extends React.Component {
             </div>
           </div>
         </div>
+
+        {this.state.nodeSearchOpen ?
+          <div className="node-search-container" style={nodeSearchPosition}>
+            <div className="node-type-list">
+              {Object.keys(this.state.nodeList).map((type, index) => (
+                <div key={index} className="node-type" onClick={(e) => this.setState({nodeListType: type})}>
+                  <h4>{type}</h4>
+                  <i className="las la-angle-right"></i>
+                </div>
+              ))}
+            </div>
+            {this.state.nodeListType != "" ?
+              <div className="node-list">
+                {Object.keys(this.state.nodeList[this.state.nodeListType]).map((node, index) => (
+                  <div key={index} className="node-select">{node}</div>
+                ))}
+              </div>
+              : ""
+            }
+          </div>
+          : ""
+        }
 
         <style jsx global>{`
         `}</style>

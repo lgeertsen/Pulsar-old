@@ -12,6 +12,8 @@ export default class NodeManager {
 
   set path (path) { this._path = path }
 
+  get nodes () { return this._nodes }
+
   importNodes() {
     glob(`${this._path}/*`, {nodir: true}, (err, files) => {
       if(err) {

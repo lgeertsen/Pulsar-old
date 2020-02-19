@@ -40,9 +40,11 @@
     "node-sass": "^4.13.0",
     "python-shell": "^1.0.8",
     "react-spring": "^8.0.27",
+    "react-three-fiber": "^4.0.17",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
-    "string-format": "^2.0.0"
+    "string-format": "^2.0.0",
+    "three": "^0.113.2"
   },
   "devDependencies": {
     "chalk": "^3.0.0",
