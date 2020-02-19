@@ -11,8 +11,12 @@
       "increment": "Ctrl+Alt+S"
     },
     "paths": {
-      "asset": "{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/scenes/{task}/{subtask}/{state}_{version}/{file}",
-      "shot": "{project}/03_WORK_PIPE/02_SHOT/{dimension}/scenes/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}"
+      "asset": {
+        "scenes": "{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/scenes/{task}/{subtask}/{state}_{version}/{file}"
+      },
+      "shot": {
+        "scenes": "{project}/03_WORK_PIPE/02_SHOT/{dimension}/scenes/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}"
+      }
     },
     "projects": {
         "FILM1": "C:/SynologyDrive/FILM1",

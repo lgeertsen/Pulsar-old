@@ -48,9 +48,21 @@ export default class Manager extends React.Component {
         //   _3D: true
         // },
         state: {
-          work: true,
-          publish: true,
-          wip: false
+          type: "checkbox",
+          options: {
+            work: true,
+            publish: true,
+            wip: false
+          }
+        },
+        pathType: {
+          type: "radioButton",
+          options: {
+            scene: true,
+            render: false,
+            texture: false,
+            cache: false,
+          }
         }
       },
 
@@ -158,7 +170,13 @@ export default class Manager extends React.Component {
 
   setFilter(filter, option, value) {
     let filters = this.state.filters;
-    filters[filter][option] = value;
+    if(filters[filter].type === "radioButton"){
+      let keys = Object.keys(filters[filter].options);
+      for (let i = 0; i < keys.length; i++) {
+        filters[filter].options[keys[i]] = false;
+      }
+    }
+    filters[filter].options[option] = value;
     this.setState({filters: filters});
   }
 

@@ -26,6 +26,7 @@ export default class AssetId {
     this._sid = sid;
     this._paths = paths;
     this._pathType = "asset";
+    this._pathSubType = "scenes";
 
     this._sendToRenderer = sendToRenderer;
 
@@ -60,7 +61,7 @@ export default class AssetId {
   get pathType () { return this._pathType }
   set pathType (pathType) { this._pathType = pathType }
 
-  get path () { return this._paths[this.pathType] }
+  get path () { return this._paths[this.pathType][this._pathSubType] }
 
   get project () { return this._projects[this._project] }
   set project (project) { this._project = project }
@@ -168,6 +169,7 @@ export default class AssetId {
       projects:   this.projects,
       project:    this.projectName,
       pathType:   this.pathType,
+      pathSubType: this._pathSubType,
       dimension:  this.dimension,
       group:      this.group == "<>" ? "" : this.group,
       name:       this.name == "<>" ? "" : this.name,

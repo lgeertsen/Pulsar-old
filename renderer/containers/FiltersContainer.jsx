@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
 import CheckBox from '../components/CheckBox'
+import RadioButton from '../components/RadioButton'
 
 const FiltersContainer = ({ theme, primaryColor, filters, setFilter }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
     return (
       <div className="filter-container-inner">
@@ -17,17 +18,28 @@ const FiltersContainer = ({ theme, primaryColor, filters, setFilter }) => {
             </div>
           </div>
           {Object.keys(filters).map((filter, index) => (
+
             <div key={index} className={open ? "filter-type" : "filter-type filter-type-closed"}>
 
-              {Object.keys(filters[filter]).map((option, index) => (
+              {Object.keys(filters[filter]['options']).map((option, index) => (
                 <div key={index} className="filter-option">
-                  <CheckBox
-                    theme={theme}
-                    primaryColor={primaryColor}
-                    label={(option.charAt(0).toUpperCase() + option.slice(1)).split("_").join(" ")}
-                    checked={filters[filter][option]}
-                    onCheck={() => setFilter(filter, option, !filters[filter][option])}
-                  />
+                  { filters[filter].type == "checkbox" ?
+                    <CheckBox
+                      theme={theme}
+                      primaryColor={primaryColor}
+                      label={(option.charAt(0).toUpperCase() + option.slice(1)).split("_").join(" ")}
+                      checked={filters[filter]['options'][option]}
+                      onCheck={() => setFilter(filter, option, !filters[filter]['options'][option])}
+                      />
+                    :
+                    <RadioButton
+                      theme={theme}
+                      primaryColor={primaryColor}
+                      label={(option.charAt(0).toUpperCase() + option.slice(1)).split("_").join(" ")}
+                      checked={filters[filter]['options'][option]}
+                      onCheck={() => setFilter(filter, option, !filters[filter]['options'][option])}
+                      />
+                   }
                 </div>
               ))}
             </div>

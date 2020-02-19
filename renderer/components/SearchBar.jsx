@@ -33,6 +33,12 @@ export default class SearchBar extends React.Component {
             <span>/</span>
           </div>
           <div className="search-bar-input">
+            <span>{this.props.assetId.pathSubType}</span>
+          </div>
+          <div className={"search-bar-slash " + this.props.theme}>
+            <span>/</span>
+          </div>
+          <div className="search-bar-input">
             <span>{this.props.assetId.group}</span>
           </div>
           <div className={"search-bar-slash " + this.props.theme}>
