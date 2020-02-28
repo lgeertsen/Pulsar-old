@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import { homedir } from 'os';
 import { createServer } from 'http';
 import SocketIO from 'socket.io';
 
@@ -53,8 +54,16 @@ export default class Server {
   }
 
   onConfig (message, config) {
-    this._nodeManager.path = config.nodes;
+    if (process.env.NODE_ENV === 'production') {
+      this._nodeManager.path = path.join(__dirname, '../../../nodes');
+      console.log(path.join(__dirname, '../../../nodes'));
+      // result = spawn.sync(executable, [], { encoding: 'utf8' });
+    } else {
+      this._nodeManager.path = config.nodes;
+    }
     this._nodeManager.importNodes();
+
+
     // this.sendMessageMain(message, config)
     if(this._assetIds["fileManager"] == undefined) {
       Logger.info("----- fileManager AssetId doesn't exist -----");
@@ -81,6 +90,14 @@ export default class Server {
   }
 
   setConfig(data) {
+    if(this._config.config.firstUsage == true && data.firstUsage == false) {
+      if(Object.keys(data.projects).length > 0) {
+        this._assetIds["fileManager"].projects = data.projects;
+        this._assetIds["fileManager"].project = Object.keys(data.projects)[0];
+        this._assetIds["newAsset"].projects = data.projects;
+        this._assetIds["newAsset"].project = Object.keys(data.projects)[0];
+      }
+    }
     this._config.setConfig(data, () => this.sendMessageMain("configSet"));
   }
 
@@ -106,7 +123,13 @@ export default class Server {
       if(data.id == "new") {
         let winTask = `${type}_${task}`;
         let node = this._nodeManager.getNode("windows", winTask);
-        let dirPath = `${this.config.config.nodes}/scripts/windows/`;
+        let dirPath;
+        if (process.env.NODE_ENV === 'production') {
+          dirPath = path.join(__dirname, '../../../nodes/scripts/windows');
+          // result = spawn.sync(executable, [], { encoding: 'utf8' });
+        } else {
+          dirPath = `${this.config.config.nodes}/scripts/windows`;
+        }
         let file = node.script;
         let file_path = path.join(dirPath, file);
         let soft_path = this.config.config.softwares[type];
@@ -129,7 +152,14 @@ export default class Server {
       }
     } else if(["mayapy", "hython"].includes(data.id)) {
       let node = this._nodeManager.getNode(type, task);
-      let dirPath = `${this.config.config.nodes}/scripts/${type}`;
+      // let dirPath = `${this.config.config.nodes}/scripts/${type}`;
+      let dirPath;
+      if (process.env.NODE_ENV === 'production') {
+        dirPath = path.join(__dirname, `../../../nodes/scripts/${type}`);
+        // result = spawn.sync(executable, [], { encoding: 'utf8' });
+      } else {
+        let dirPath = `${this.config.config.nodes}/scripts/${type}`;
+      }
       let file = node.script;
       let file_path = path.join(dirPath, file);
       let soft_path = this.config.config.softwares[type];

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import CheckBox from '../components/CheckBox'
 
 const FiltersContainer = ({ theme, primaryColor, filters, setFilter }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
     return (
       <div className="filter-container-inner">

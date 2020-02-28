@@ -1,0 +1,11 @@
+/* Webfont: Architectural-Regular */@font-face {
+    font-family: 'Architectural';
+    src: url('Architectural.eot'); /* IE9 Compat Modes */
+    src: url('Architectural.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('Architectural.woff') format('woff'), /* Modern Browsers */
+         url('Architectural.ttf') format('truetype'); /* Safari, Android, iOS */
+             font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+

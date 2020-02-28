@@ -18,13 +18,8 @@
   "build": {
     "productName": "Pulsar",
     "extraFiles": [
-      {
-        "from": "python/dist",
-        "to": "resources",
-        "filter": [
-          "**/*"
-        ]
-      }
+      ".pulsar.json",
+      "nodes"
     ]
   },
   "dependencies": {

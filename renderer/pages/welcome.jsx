@@ -116,12 +116,13 @@ export default class Welcome extends React.Component {
           <title>Pulsar</title>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet"/>
+          <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet"/>
           <link href="https://fonts.googleapis.com/css?family=Big+Shoulders+Text:400,500,700&display=swap" rel="stylesheet"/>
           {/* <link href="./static/fontawesome/css/all.css" rel="stylesheet"/> */}
           <link href="./static/line-awesome/css/line-awesome.min.css" rel="stylesheet"/>
         </Head>
 
-        <div className={this.state.navOpen ? "main " + this.state.theme : "main full " + this.state.theme}>
+        <div className={this.state.navOpen ? "main main-start " + this.state.theme : "main main-start full " + this.state.theme}>
           <div className={"box welcome-box " + this.state.theme}>
             <div className={this.state.step == 0 ? "welcome-step welcome-step-0" : "welcome-step welcome-step-0 slide-out-left"}>
               <div className="welcome-title-container">

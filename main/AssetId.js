@@ -66,6 +66,7 @@ export default class AssetId {
   set project (project) { this._project = project }
   get projectName () { return this._project }
   get projects () { return Object.keys(this._projects) }
+  set projects (projects) { this._projects = projects }
 
   get dimension () { return this._dimension }
   set dimension (dimension) { this._dimension = dimension }

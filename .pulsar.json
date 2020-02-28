@@ -15,9 +15,7 @@
       "shot": "{project}/03_WORK_PIPE/02_SHOT/{dimension}/scenes/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}"
     },
     "projects": {
-        "FILM1": "C:/SynologyDrive/FILM1",
-        "FILM2": "C:/SynologyDrive/FILM2",
-        "FILM3": "C:/SynologyDrive/FILM3"
+
     },
     "softwares": {
         "houdini": "C:/Houdini17/bin/houdinifx.exe",
