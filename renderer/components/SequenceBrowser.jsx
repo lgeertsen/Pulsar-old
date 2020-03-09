@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
+const SequenceBrowser = ({ theme, primaryColor, title, files, onChange }) => {
 
   const [selectedFile, setSelectedFile] = useState(-1);
   const [sortType, setSortType] = useState("version");
@@ -32,15 +32,6 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
     return bytes.toString() + suffixes[counter];
   }
 
- const renderSequence = file => {
-   if(file.class == "sequence"){
-     return (
-       <h1>jqhqsdkmjfqslmkdjfqmlskdqsdfjk</h1>
-     );
-   }
-   return "";
- }
-
     return (
       <div className={"card file-browser " + theme}>
         <header className={"card-header " + theme}>
@@ -52,6 +43,12 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
               <span>Name</span>
               <div className={sortType == "name" ? "icon sort-btn selected " + theme : "icon sort-btn hover-bg-" + primaryColor} onClick={(e) => changeSort("name")}>
                 <i className={sortType == "name" ? sortDirection ? "las la-sort-alpha-down" : "las la-sort-alpha-down-alt" : "las la-sort-alpha-down"}></i>
+              </div>
+            </div>
+            <div className="pulsar-file-sequence state-header">
+              <span>Frames</span>
+              <div className={sortType == "state" ? "icon sort-btn selected " + theme : "icon sort-btn hover-bg-" + primaryColor} onClick={(e) => changeSort("frame")}>
+                <i className={sortType == "state" ? sortDirection ? "las la-sort-alpha-down" : "las la-sort-alpha-down-alt" : "las la-sort-alpha-down"}></i>
               </div>
             </div>
             <div className="pulsar-file-state state-header">
@@ -141,6 +138,9 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
                 <i className="las la-file"></i>
                 <span>{file.name + "." + file.extension}</span>
               </div>
+              <div className="pulsar-file-sequence">
+                <span>{file.affichageFrames}</span>
+              </div>
               <div className="pulsar-file-state">
                 <span>{file.state}</span>
               </div>
@@ -171,4 +171,4 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
     );
 };
 
-export default FileBrowser;
+export default SequenceBrowser;

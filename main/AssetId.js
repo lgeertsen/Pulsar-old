@@ -6,6 +6,7 @@ import Renderer from './Renderer';
 const typeToDirMap = {
   project:  "groups",
   pathType: "groups",
+  pathSubType: "groups",
   group:    "names",
   name:     "tasks",
   task:     "subtasks",
@@ -15,6 +16,7 @@ const typeToDirMap = {
 const typeToClearMap = {
   project:  ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   pathType: ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
+  pathSubType: ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   group:    ["name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   name:     ["task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   task:     ["subtask", "subtasks", "state", "version", "file", "files"],
@@ -26,7 +28,7 @@ export default class AssetId {
     this._sid = sid;
     this._paths = paths;
     this._pathType = "asset";
-    this._pathSubType = "scenes";
+    this._pathSubType = "scene";
 
     this._sendToRenderer = sendToRenderer;
 
@@ -60,6 +62,9 @@ export default class AssetId {
 
   get pathType () { return this._pathType }
   set pathType (pathType) { this._pathType = pathType }
+
+  get pathSubType () { return this._pathSubType }
+  set pathSubType (pathSubType) { this._pathSubType = pathSubType }
 
   get path () { return this._paths[this.pathType][this._pathSubType] }
 
@@ -118,7 +123,12 @@ export default class AssetId {
     if(this.searchDir != undefined) {
       this[type] = value;
       if(this.searchDir == "files") {
-        FileManager.getProjectFiles(this, (files) => this.setFiles(files));
+        if(this.pathSubType == "render"){
+          FileManager.getSequenceFiles(this, (files) => this.setFiles(files));
+        }
+        else{
+          FileManager.getProjectFiles(this, (files) => this.setFiles(files));
+        }
       } else {
         FileManager.getDirectories(this, (dirs) => this.setDirs(dirs));
       }

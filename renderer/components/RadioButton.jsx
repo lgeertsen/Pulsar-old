@@ -4,7 +4,6 @@ const RadioButton = ({ theme, primaryColor, label, checked, onCheck }) => {
   // const [checked, setChecked] = useState(false);
 
   const RadioButton = () => {
-    
     onCheck();
   }
 

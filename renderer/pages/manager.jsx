@@ -6,6 +6,8 @@ import Browser from '../components/Browser';
 import Dropdown from '../components/Dropdown';
 import FileBrowser from '../components/FileBrowser';
 import FileViewer from '../components/FileViewer';
+import SequenceBrowser from '../components/SequenceBrowser';
+import SequenceViewver from '../components/SequenceViewver';
 import FiltersContainer from '../containers/FiltersContainer';
 import Nav from '../components/Nav';
 import NewAssetContainer from '../containers/NewAssetContainer';
@@ -175,8 +177,14 @@ export default class Manager extends React.Component {
       for (let i = 0; i < keys.length; i++) {
         filters[filter].options[keys[i]] = false;
       }
+      filters[filter].options[option] = true;
+      if(filter == "pathType") {
+        this.setAssetIdValue("fileManager", "pathSubType", option);
+      }
     }
-    filters[filter].options[option] = value;
+    else {
+      filters[filter].options[option] = value;
+    }
     this.setState({filters: filters});
   }
 
@@ -189,17 +197,17 @@ export default class Manager extends React.Component {
       switch (filter) {
         case "state":
           let states = [];
-          if(filters[filter]["work"]) { states.push("work") }
-          if(filters[filter]["publish"]) { states.push("publish") }
-          if(filters[filter]["wip"]) { states.push("wip") }
+          if(filters[filter].options["work"]) { states.push("work") }
+          if(filters[filter].options["publish"]) { states.push("publish") }
+          if(filters[filter].options["wip"]) { states.push("wip") }
           let filtered = files.filter(file => {
             return states.includes(file.state);
           });
-
           filteredFiles = filteredFiles.concat(filtered);
           break;
       }
     }
+
     return filteredFiles
   }
 
@@ -484,14 +492,26 @@ export default class Manager extends React.Component {
                 <i className="las la-angle-right"></i>
               </div>
               <div className="file-browser">
-                <FileBrowser
-                  theme={this.state.theme}
-                  primaryColor={this.state.primaryColor}
-                  title="Files"
-                  files={this.filteredFiles()}
-                  onChange={(file) => this.setAssetIdValue("fileManager", "file", file)}
-                  selectedFile={this.state.fileManagerAssetId.file}
-                />
+                {
+                  this.state.filters.pathType.options.render == true ?
+                  <SequenceBrowser
+                    theme={this.state.theme}
+                    primaryColor={this.state.primaryColor}
+                    title="Files"
+                    files={this.filteredFiles()}
+                    onChange={(file) => this.setAssetIdValue("fileManager", "file", file)}
+                    selectedFile={this.state.fileManagerAssetId.file}
+                  />
+                  :
+                  <FileBrowser
+                    theme={this.state.theme}
+                    primaryColor={this.state.primaryColor}
+                    title="Files"
+                    files={this.filteredFiles()}
+                    onChange={(file) => this.setAssetIdValue("fileManager", "file", file)}
+                    selectedFile={this.state.fileManagerAssetId.file}
+                  />
+                }
               </div>
             </div>
 
@@ -499,21 +519,38 @@ export default class Manager extends React.Component {
 
             <div className={this.state.fileManagerAssetId.file == "" ? "file-container" : "file-container open"}>
               {this.state.fileManagerAssetId.file != "" ?
-                <FileViewer
-                  theme={this.state.theme}
-                  primaryColor={this.state.primaryColor}
-                  assetId={this.state.fileManagerAssetId}
-                  execTask={(task) => this.execTask(task)}
-                  onChangeComment={(e) => this.editComment(e)}
-                  onSaveComment={() => this.saveComment()}
-                  softwares={this.getCompatibleSoftware()}
-                  selectSoftware={(id, software) => this.setState({selectedSoftware: id, selectedSoftwareType: software})}
-                  selectedSoftware={this.state.selectedSoftware}
-                  selectedSoft={this.state.softwares[this.state.selectedSoftware]}
-                  checkSotfwareSaved={() => this.checkSotfwareSaved()}
-                  getWipName={() => this.getWipName()}
-                  refresh={() => this.refreshBrowser()}
-                />
+                this.state.filters.pathType.options.render == true ?
+                  <SequenceViewver
+                    theme={this.state.theme}
+                    primaryColor={this.state.primaryColor}
+                    assetId={this.state.fileManagerAssetId}
+                    execTask={(task) => this.execTask(task)}
+                    onChangeComment={(e) => this.editComment(e)}
+                    onSaveComment={() => this.saveComment()}
+                    softwares={this.getCompatibleSoftware()}
+                    selectSoftware={(id, software) => this.setState({selectedSoftware: id, selectedSoftwareType: software})}
+                    selectedSoftware={this.state.selectedSoftware}
+                    selectedSoft={this.state.softwares[this.state.selectedSoftware]}
+                    checkSotfwareSaved={() => this.checkSotfwareSaved()}
+                    getWipName={() => this.getWipName()}
+                    refresh={() => this.refreshBrowser()}
+                  />
+                :
+                  <FileViewer
+                    theme={this.state.theme}
+                    primaryColor={this.state.primaryColor}
+                    assetId={this.state.fileManagerAssetId}
+                    execTask={(task) => this.execTask(task)}
+                    onChangeComment={(e) => this.editComment(e)}
+                    onSaveComment={() => this.saveComment()}
+                    softwares={this.getCompatibleSoftware()}
+                    selectSoftware={(id, software) => this.setState({selectedSoftware: id, selectedSoftwareType: software})}
+                    selectedSoftware={this.state.selectedSoftware}
+                    selectedSoft={this.state.softwares[this.state.selectedSoftware]}
+                    checkSotfwareSaved={() => this.checkSotfwareSaved()}
+                    getWipName={() => this.getWipName()}
+                    refresh={() => this.refreshBrowser()}
+                  />
                 : ""
               }
             </div>

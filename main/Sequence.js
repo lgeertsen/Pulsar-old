@@ -1,42 +1,38 @@
 import Logger from './Logger';
+import File from './File';
 
-export default class File {
-  constructor(name, state, version, extension, size, modified, comment, tags, path) {
+export default class Sequence extends File {
+
+  constructor(name) {
+    super(name, null, null, null, 0, null, null, null, null);
+
+    this._frames = [];
+  }
+
+  get frames() { return this._frames; }
+  get affichageFrames() { return this._frames[0] + "-" + this._frames[this._frames.length - 1]; }
+  get name() { return this._name; }
+
+  addFile(name, state, version, extension, size, modified, comment, tags, path, frame){
     this._name = name;
     this._state = state;
     this._version = version;
     this._extension = extension;
-    this._size = size;
+    this._size += size;
     this._modified = modified;
     this._comment = comment;
     this._tags = tags;
     this._path = path;
-  }
 
-  get fullName () { return `${this._name}.${this._extension}` }
-
-  get name () { return this._name }
-  get state () { return this._state }
-  get version () { return this._version }
-  get path () { return this._path }
-  get size () { return this._size }
-  set size (size) { this._size = size }
-
-  formatDate() {
-    let year = this._modified.getFullYear();
-    let month = this._modified.getMonth() + 1;
-    let day = this._modified.getDate();
-    let hours = this._modified.getHours();
-    let minutes = this._modified.getMinutes();
-    // let seconds = this._modified.getSeconds();
-
-    return `${month}/${day}/${year} ${hours}:${minutes}`;
+    this._frames.push(frame);
+    this._frames.sort();
   }
 
   formatForRender() {
     let file = {
-      class: "file",
+      class: "sequence",
       name: this._name,
+      frames: this._frames[0] + "-" + this._frames[this._frames.length - 1],
       state: this._state,
       version: this._version,
       extension: this._extension,
@@ -51,6 +47,7 @@ export default class File {
   format() {
     let file = {
       name: this._name,
+      frames: this._frames,
       state: this._state,
       version: this._version,
       extension: this._extension,

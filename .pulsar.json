@@ -12,10 +12,16 @@
     },
     "paths": {
       "asset": {
-        "scenes": "{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/scenes/{task}/{subtask}/{state}_{version}/{file}"
+        "scene": "{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/scenes/{task}/{subtask}/{state}_{version}/{file}",
+        "render": "{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/render/{task}/{subtask}/{state}_{version}/{file}",
+        "cache": "{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/caches/{task}/{subtask}/{state}_{version}/{file}",
+        "texture": "{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/images/{state}_{version}/{file}"
       },
       "shot": {
-        "scenes": "{project}/03_WORK_PIPE/02_SHOT/{dimension}/scenes/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}"
+        "scene": "{project}/03_WORK_PIPE/02_SHOT/{dimension}/scenes/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}",
+        "render": "{project}/03_WORK_PIPE/02_SHOT/{dimension}/render/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}",
+        "cache": "{project}/03_WORK_PIPE/02_SHOT/{dimension}/caches/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}",
+        "texture": "{project}/03_WORK_PIPE/02_SHOT/{dimension}/images/{group}/{name}/{state}_{version}/{file}"
       }
     },
     "projects": {
