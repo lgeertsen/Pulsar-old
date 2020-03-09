@@ -29,12 +29,12 @@ export default class Node extends React.Component {
           />
         </div>
         <div className="node-inner">
-          <div className={"node-header bg-" + this.props.primaryColor}></div>
+          <div className={"node-header bg-" + this.props.color}></div>
           <div className="attribute-container">
             <div className="inputs-container">
               {Object.keys(this.props.inputs).map((inputId, index) => (
                 <div className="input-container" key={index}>
-                  <div className={`attribute-pin bg-${this.props.primaryColor} ${this.props.theme}`} attributetype="input" nodeid={this.props.nodeId} attributeid={inputId} ref={this.props.inputs[inputId].ref}></div>
+                  <div className={`attribute-pin bg-${this.props.color} ${this.props.theme}`} attributetype="input" nodeid={this.props.nodeId} attributeid={inputId} ref={this.props.inputs[inputId].ref}></div>
                   <div className="attribute-name-container" attributetype="input" nodeid={this.props.nodeId} attributeid={inputId} >
                     <span className="attribute-name" attributetype="input" nodeid={this.props.nodeId} attributeid={inputId} >{inputId}</span>
                   </div>
@@ -47,7 +47,7 @@ export default class Node extends React.Component {
                   <div className="attribute-name-container" attributetype="output" nodeid={this.props.nodeId} attributeid={outputId}>
                     <span className="attribute-name" attributetype="output" nodeid={this.props.nodeId} attributeid={outputId}>{outputId}</span>
                   </div>
-                  <div className={`attribute-pin bg-${this.props.primaryColor} ${this.props.theme}`} attributetype="output" nodeid={this.props.nodeId} attributeid={outputId} ref={this.props.outputs[outputId].ref}></div>
+                  <div className={`attribute-pin bg-${this.props.color} ${this.props.theme}`} attributetype="output" nodeid={this.props.nodeId} attributeid={outputId} ref={this.props.outputs[outputId].ref}></div>
                 </div>
               ))}
             </div>

@@ -37,6 +37,10 @@ export default class Renderer {
       }
     });
 
+    ipcMain.on("getNodes", (event) => {
+      event.sender.send('nodes', this._server.nodes);
+    });
+
     ipcMain.on("getAssetId", (event) => {
       this._server._assetIds["fileManager"].formatForRender()
       this._server._assetIds["newAsset"].formatForRender()
