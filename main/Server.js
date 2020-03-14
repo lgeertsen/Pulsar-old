@@ -180,8 +180,8 @@ export default class Server {
   }
 
   startServer() {
-    // this._http.listen(9846, function(){
-    //   console.log('----- listening on *:9846 -----')
-    // });
+    this._http.listen(7846, function(){
+      console.log('----- listening on *:7846 -----')
+    });
   }
 }

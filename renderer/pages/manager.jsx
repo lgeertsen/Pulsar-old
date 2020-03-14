@@ -212,6 +212,26 @@ export default class Manager extends React.Component {
     ipcRenderer.send("saveComment", {sid: sid, comment: comment});
   }
 
+  saveTag(tag) {
+    let sid = this.state.fileManagerAssetId.sid;
+    let assetId = this.state.fileManagerAssetId;
+    assetId.file.tags.push(tag);
+    this.setState({fileManagerAssetId: assetId});
+    ipcRenderer.send("saveTag", {sid: sid, tag: tag});
+  }
+
+  deleteTag(tag) {
+    let sid = this.state.fileManagerAssetId.sid;
+    let assetId = this.state.fileManagerAssetId;
+    for(let i in assetId.file.tags) {
+      if(assetId.file.tags[i] == tag) {
+        assetId.file.tags.splice(i, 1);
+      }
+    }
+    this.setState({fileManagerAssetId: assetId});
+    ipcRenderer.send("deleteTag", {sid: sid, tag: tag});
+  }
+
   getCompatibleSoftware() {
     let file = this.state.fileManagerAssetId.file;
     var softwares = this.state.softwares;
@@ -364,11 +384,11 @@ export default class Manager extends React.Component {
 
           <div className="manager-container">
             <div className="search-container">
-              {/* <div className="create-asset">
+              <div className="create-asset">
                 <div className={"create-asset-btn button " + this.state.theme} onClick={(e) => this.setState({newAssetModal: true})}>
                   <h5>Create Asset</h5>
                 </div>
-              </div> */}
+              </div>
               <div className="project-select">
                 <Dropdown
                   theme={this.state.theme}
@@ -496,6 +516,8 @@ export default class Manager extends React.Component {
                   checkSotfwareSaved={() => this.checkSotfwareSaved()}
                   getWipName={() => this.getWipName()}
                   refresh={() => this.refreshBrowser()}
+                  saveTag={(tag) => this.saveTag(tag)}
+                  deleteTag={(tag) => this.deleteTag(tag)}
                 />
                 : ""
               }

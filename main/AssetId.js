@@ -194,4 +194,25 @@ export default class AssetId {
     }
     return files;
   }
+
+  saveComment(comment) {
+    if(this._file == "<>") {
+      return;
+    }
+    this._file.saveComment(comment);
+  }
+
+  saveTag(tag) {
+    if(this._file == "<>") {
+      return;
+    }
+    this._file.saveTag(tag);
+  }
+
+  deleteTag(tag) {
+    if(this._file == "<>") {
+      return;
+    }
+    this._file.deleteTag(tag);
+  }
 }

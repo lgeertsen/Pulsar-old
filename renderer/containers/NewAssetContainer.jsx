@@ -90,10 +90,10 @@ const NewAssetContainer = ({
                   <Autocomplete
                     theme={theme}
                     primaryColor={primaryColor}
-                    assetId={assetId}
-                    setAssetIdValue={(type, value) => setAssetIdValue(type, value)}
-                    type="groups"
-                    value="group"
+                    setValue={(value) => setAssetIdValue("group", value)}
+                    items={assetId["groups"]}
+                    value={assetId["group"]}
+                    placeholder=""
                   />
                 </div>
               </div>
@@ -105,10 +105,10 @@ const NewAssetContainer = ({
                   <Autocomplete
                     theme={theme}
                     primaryColor={primaryColor}
-                    assetId={assetId}
-                    setAssetIdValue={(type, value) => setAssetIdValue(type, value)}
-                    type="names"
-                    value="name"
+                    setValue={(value) => setAssetIdValue("name", value)}
+                    items={assetId["names"]}
+                    value={assetId["name"]}
+                    placeholder=""
                   />
                 </div>
               </div>
@@ -123,9 +123,10 @@ const NewAssetContainer = ({
                     theme={theme}
                     primaryColor={primaryColor}
                     assetId={assetId}
-                    setAssetIdValue={(type, value) => setAssetIdValue(type, value)}
-                    type="tasks"
-                    value="task"
+                    setValue={(value) => setAssetIdValue("task", value)}
+                    items={assetId["tasks"]}
+                    value={assetId["task"]}
+                    placeholder=""
                   />
                 </div>
               </div>
@@ -138,9 +139,10 @@ const NewAssetContainer = ({
                     theme={theme}
                     primaryColor={primaryColor}
                     assetId={assetId}
-                    setAssetIdValue={(type, value) => setAssetIdValue(type, value)}
-                    type="subtasks"
-                    value="subtask"
+                    setValue={(value) => setAssetIdValue("subtask", value)}
+                    items={assetId["subtasks"]}
+                    value={assetId["subtask"]}
+                    placeholder=""
                   />
                 </div>
               </div>

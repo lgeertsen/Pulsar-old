@@ -70,9 +70,16 @@ export default class Renderer {
 
     ipcMain.on("saveComment", (event, data) => {
       console.log("----- save comment -----", data);
-      // socket.emit("saveComment", data);
+      this._server._assetIds[data.sid].saveComment(data.comment);
     });
 
+    ipcMain.on("saveTag", (event, data) => {
+      this._server._assetIds[data.sid].saveTag(data.tag);
+    });
+
+    ipcMain.on("deleteTag", (event, data) => {
+      this._server._assetIds[data.sid].deleteTag(data.tag);
+    });
 
     ipcMain.on("refresh", (event) => {
       console.log("----- refresh browser -----");

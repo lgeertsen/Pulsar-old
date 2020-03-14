@@ -28,7 +28,6 @@ export default class NodeManager {
                 this._nodes[node.type] = {}
                 this._nodes[node.type][node.name] = node
               }
-              console.log(this._nodes);
             } catch (e) {
               Logger.error(e);
             }

@@ -6,10 +6,10 @@ export default class SoftwareSocket {
 
     this.io = io.of('/software').on('connection', (socket) => {
       console.log("----- software connected -----")
-      console.log(`software.id: ${socket}`)
+      console.log(`software.id: ${socket.id}`)
 
-      let software = new Software(socket)
-      this._server.client = software
+      // let software = new Software(socket)
+      // this._server.client = software
     });
   }
 }
