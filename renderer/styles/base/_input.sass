@@ -1,4 +1,12 @@
 .input
+  background: transparent
+  border: none
+  box-shadow: none
+
+  &:focus
+    border: none
+    box-shadow: none
+
   @include themify($themes)
     color: themed('text')
     background: themed('bg')
