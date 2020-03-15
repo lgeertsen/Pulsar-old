@@ -1,12 +1,109 @@
 import React, { useState } from 'react';
 
-const FileViewer = ({ file, execTask }) => {
+import Autocomplete from './Autocomplete';
+import CheckBox from './CheckBox'
+import CommentContainer from '../containers/CommentContainer';
+import Modal from './Modal';
 
-  // const [selectedFile, setSelectedFile] = useState(-1);
+const tags = [
+  "DONE",
+  "RETAKE",
+  "TODO",
+  "VALID",
+  "WFA",
+  "WIP"
+]
 
-  const handleClick = command => {
-    execTask(command)
+const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName, refresh, saveTag, deleteTag }) => {
+
+  const [showModal, setShowModal] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [command, setCommand] = useState(undefined);
+  const [newFileName, setNewFileName] = useState(undefined);
+  const [newTag, setNewTag] = useState("");
+
+  const onBtnClick  = (command, openModal) => {
+    setCommand(command);
+    if(command = "open_file_as") {
+      let wipName = getWipName()
+      setNewFileName(wipName)
+    }
+    handleModal(openModal);
+  }
+
+  const handleClick = () => {
+    handleModal(false);
+    let task = {
+      command: command,
+      arguments: {
+        file: assetId.file.path,
+        force: checked ? 1 : 0
+      }
+    };
+    if(command == "open_file_as") {
+      refresh()
+      task.arguments["name"] = newFileName;
+    }
+    execTask(task);
   };
+
+  const onPublish = () => {
+    console.log(assetId.file);
+    if(["ma", "mb"].includes(assetId.file.extension)) {
+      selectSoftware("mayapy", "mayapy")
+    } else if(["hip", "hipnc"].includes(assetId.file.extension)) {
+      selectSoftware("hython", "hython")
+    } else if(["nk"].includes(assetId.file.extension)) {
+
+    }
+    let task = {
+      command: "publish",
+      arguments: {
+        file: assetId.file.path
+      }
+    }
+    execTask(task)
+  }
+
+  const handleModal = value => {
+    if(value == true) {
+      checkSotfwareSaved();
+    } else {
+      selectSoftware(undefined);
+      setChecked(false);
+    }
+    setShowModal(value);
+  }
+
+  const editComment = e => {
+    onChangeComment(e);
+  }
+
+  const onSave = () => {
+    onSaveComment();
+  }
+
+  const onClickSoft = (id, software) => {
+    selectSoftware(id, software);
+  }
+
+  const checkBox = () => {
+    setChecked(!checked);
+  }
+
+  const onFileNameChange = value => {
+    setNewFileName(value);
+  }
+
+  const addTag = e => {
+    e.preventDefault();
+    if(newTag.trim() == "") {
+      setNewTag("");
+      return;
+    }
+    saveTag(newTag);
+    setNewTag("");
+  }
 
   const getSize = bytes => {
     let suffixes =  ["B", "KB", "MB", "GB", "TB"];
@@ -20,137 +117,137 @@ const FileViewer = ({ file, execTask }) => {
   }
 
     return (
-      <div className="fileViewer">
-        <div className="fileContainer">
-          <div className="fileContainerInner">
-            <div className="fileInfoContainer">
-              <div className="fileInfo">
-                <h3>{file.name + "_" + file.state + "_" + file.version + "." + file.extension}</h3>
-                <span></span>
+      <div className={"file-viewer card " + theme}>
+        <div className="file-viewer-inner card-content">
+          <div className="file-viewer-info-container">
+            <div className="file-viewer-file-info">
+
+              <div className="file-viewer-file-state field is-grouped is-grouped-multiline">
+                <div className="control">
+                  <div className=" tags has-addons">
+                    <span className="tag">{assetId.file.state}</span>
+                    <span className="tag is-primary">{assetId.file.version}</span>
+                  </div>
+                </div>
+                {assetId.file.tags.map((tag, index) => (
+                  <div key={index} className="control">
+                    <div className="tags has-addons">
+                      <span className={`tag tag-${tag.toLowerCase()}`}>{tag}</span>
+                      <a className="tag is-delete" onClick={(e) => deleteTag(tag)}></a>
+                    </div>
+                  </div>
+                ))}
+                <form onSubmit={(e) => addTag(e)}>
+                  <div className="field has-addons">
+                    <div className="tag-autocomplete control">
+                      {/* <input className="input" type="text" placeholder="Add Tag" value={newTag} onChange={(e) => setNewTag(e.target.value)}/> */}
+                      <Autocomplete
+                        theme={theme}
+                        primaryColor={primaryColor}
+                        setValue={value => setNewTag(value)}
+                        items={tags}
+                        value={newTag}
+                        placeholder="Enter Tag"
+                      />
+                    </div>
+                    <div className="control">
+                      <input className={"button " + theme} value="Add" type="submit" />
+                    </div>
+                  </div>
+                </form>
               </div>
 
-              <div className="commandsContainer">
-                <div className="btn" onClick={(e) => handleClick("open_file")}>
-                  <span>Open</span>
-                </div>
-                <div className="btn">
-                  <span>Open As</span>
-                </div>
-                <div className="btn">
-                  <span>Save</span>
-                </div>
-                <div className="btn">
-                  <span>Save As</span>
-                </div>
-                {file.state == "work" ?
-                  <div className="btn">
-                    <span>Publish</span>
-                  </div>
-                  : ""
-                }
-                {file.state == "publish" ?
-                  <div className="btn">
-                    <span>Release</span>
-                  </div>
-                  : ""
-                }
-                {file.state == "work" ?
-                  <div className="btn">
-                    <span>Publish & Release</span>
-                  </div>
-                  : ""
-                }
-                <div className="btn">
-                  <span>Close</span>
-                </div>
-              </div>
+
+
+              <h3>{assetId.file.name}</h3>
+              <h4>Last modified: {assetId.file.modified}</h4>
+              <h4>File size: {getSize(assetId.file.size)}</h4>
+              <h4>AssetId: {`${assetId.project}/${assetId.dimension}/${assetId.group}/${assetId.name}/${assetId.task}/${assetId.subtask}/${assetId.file.state}/${assetId.file.version}/${assetId.file.name}.${assetId.file.extension}`}</h4>
+              <h4>Path: {assetId.file.path}</h4>
             </div>
-            <div className="fileComment">
-              <h3>Comment</h3>
-              <div></div>
-            </div>
-            <div className="fileScreenshot">
-              <h3>Screenshot</h3>
+
+            <div className="commands-container">
+              {assetId.file.state != "publish" ?
+                <div className="btn-container">
+                  <div className={"button " + theme} onClick={(e) => onBtnClick("open_file", true)}>
+                    <span>Open</span>
+                  </div>
+                  <div className={"button " + theme} onClick={(e) => onBtnClick("open_file_as", true)}>
+                    <span>Open As</span>
+                  </div>
+                  {assetId.file.state == "work" ?
+                    <div className={"button " + theme} onClick={() => onPublish()}>
+                      <span>Publish</span>
+                    </div>
+                    : ""
+                  }
+                </div>
+                : ""
+              }
+              {assetId.file.state == "publish" && assetId.file.version != "valid" ?
+                <div className={"button " + theme}>
+                  <span>Release</span>
+                </div>
+                : ""
+              }
+              {assetId.file.state == "work" ?
+                <div className={"button " + theme}>
+                  <span>Publish & Release</span>
+                </div>
+                : ""
+              }
             </div>
           </div>
+          <div className="file-viewer-comment-container">
+            <CommentContainer theme={theme} comment={assetId.file.comment} onChange={(e) => editComment(e)} saveComment={() => onSave()}/>
+          </div>
+          {/* <div className="file-screenshot">
+            <h3>Screenshot</h3>
+          </div> */}
         </div>
+
+        <Modal theme={theme} primaryColor={primaryColor} title="Open file" show={showModal} handleClose={(value) => handleModal(value)}>
+          <div className="open-soft-modal">
+            <div className="modal-title">
+              <h3>{assetId.file.name + "_" + assetId.file.state + "_" + assetId.file.version + "." + assetId.file.extension}</h3>
+            </div>
+            {command == "open_file_as" ?
+              <div className="new-name-container">
+                <div className="label"><h4>Open As:</h4></div>
+                <div className="name-input-container">
+                  <input className="name-input input" value={newFileName} onChange={(e) => onFileNameChange(e.target.value)}/>
+                </div>
+              </div>
+              : ""
+            }
+            <div className="modal-software-container">
+              <h4>Open in:</h4>
+              <div className="software-selection">
+                {softwares.map((soft, index) => (
+                  <div key={index} className={soft.id == selectedSoftware ? "software selected " + theme : "software " + theme} onClick={(e) => onClickSoft(soft.id, soft.software)}>
+                    <img className="software-img" src={"./static/" + soft.software + ".png"}></img>
+                    <span>{soft.saved == 1 ? soft.scene : soft.scene + "*"}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {selectedSoftware != undefined ?
+                <div>
+                  {!["new", "mayapy", "hython"].includes(selectedSoftware) && selectedSoft.saved == 0 ?
+                    <CheckBox theme={theme} primaryColor={primaryColor} label="Save current open scene" checked={checked} onCheck={() => checkBox()}/>
+                    : ""
+                  }
+                  <div className={"button " + theme} onClick={() => handleClick()}>Open</div>
+                </div>
+              :
+              <h6>Please select a software.</h6>
+            }
+          </div>
+        </Modal>
 
 
         <style jsx>{`
-          .fileViewer {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-          }
-          .fileContainer {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-          .fileContainerInner {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            margin: 15px 25px;
-            background: #fff;
-            border-radius: 6px;
-            border: 1px solid #e3e3e3;
-          }
 
-          .fileInfoContainer {
-            width: 400px;
-            display: flex;
-            flex-direction: row;
-            padding-top: 10px;
-            margin: 0 15px;
-            border-right: 1px solid #f2f2f2;
-          }
-          .fileInfo {
-            flex: 1;
-          }
-          .fileComment {
-            width: 350px;
-            padding-top: 10px;
-            margin-right: 15px;
-            border-right: 1px solid #f2f2f2;
-          }
-          .fileScreenshot {
-            flex: 1;
-            padding-top: 10px;
-            margin-right: 15px;
-          }
-
-
-
-          .commandsContainer {
-            width: auto;
-            display: flex;
-            flex-direction: column;
-            // flex-wrap: wrap;
-          }
-          .btn {
-            display: flex;
-            align-items: center;
-            width: 100px;
-            height: 25px;
-            margin: 5px;
-            padding: 2px 5px;
-            border-radius: 6px;
-            font-size: 14px;
-            background: #fff;
-            color: #444F60;
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-            border:  1px solid #e3e3e3;
-            cursor: pointer;
-            transition: all ease 0.3s;
-          }
-          .btn:hover {
-            background: #f2f2f2;
-          }
         `}</style>
       </div>
     );

@@ -12,5 +12,8 @@ node_modules
 npm-debug.log
 
 *.pyc
+python/_pycache_
+python/build
+python/dist
 
 config.json

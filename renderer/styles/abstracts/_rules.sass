@@ -1,0 +1,89 @@
+// @font-face
+//   font-family: "Architectural"
+//   src: url("./static/architectural/Architectural.woff") format("woff")
+// //
+// @font-face
+//   font-family: "Apex Mk3 ExtraLight"
+//   src: url("../../static/Apex/Apex Mk3-ExtraLight.otf") format("truetype")
+
+html, body
+  height: 100%
+  margin: 0
+  padding: 0
+  overflow: hidden
+
+div
+  height: 100%
+  width: 100%
+
+div, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea
+  font-family: "Big Shoulders Text", sans-serif
+  font-weight: 500
+  letter-spacing: 0.03rem
+
+#__next
+  display: flex
+  flex-direction: row
+
+.main
+  position: fixed
+  top: 0
+  right: 0
+  width: calc(100% - 250px)
+  display: flex
+  flex-direction: column
+  transition: all 0.3s
+
+  @include themify($themes)
+    color: themed('text')
+    background-color: themed('bg')
+    border-color: themed('text')
+
+  &.full
+    width: calc(100% - 80px)
+
+.bg-main
+  @include themify($themes)
+    color: themed('text')
+    background-color: themed('bg')
+
+.dropdown
+  display: inline-block
+
+  *
+    height: auto
+
+  a.dropdown-item
+    font-size: 16px
+
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6
+  font-family: "Open Sans Condensed", sans-serif
+  // font-family: "Architectural", sans-serif
+
+
+  &.sub-display
+    font-family: "Big Shoulders Text", sans-serif
+    // font-family: "Apex Mk3 ExtraLight", sans-serif
+
+.display-1
+  font-size: 4rem
+
+.display-2
+  font-size: 3.5rem
+
+.display-3
+  font-size: 3rem
+
+.display-4
+  font-size: 2.5rem
+
+.display-5
+  font-size: 2rem
+
+.display-6
+  font-size: 1.5rem

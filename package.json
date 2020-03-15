@@ -15,14 +15,32 @@
     "build:mac": "nextron build --mac --x64",
     "build:linux": "nextron build --linux"
   },
+  "build": {
+    "productName": "Pulsar",
+    "extraFiles": [
+      ".pulsar.json",
+      "nodes"
+    ]
+  },
   "dependencies": {
+    "@zeit/next-sass": "^1.0.1",
+    "bulma": "^0.8.0",
     "cross-spawn": "^6.0.5",
+    "downshift": "^3.4.7",
     "electron-serve": "^0.4.0",
     "electron-store": "^5.0.0",
+    "express": "^4.17.1",
+    "glob": "^7.1.6",
+    "match-sorter": "^4.0.2",
+    "node-sass": "^4.13.0",
     "python-shell": "^1.0.8",
-    "socket.io-client": "^2.3.0"
+    "react-spring": "^8.0.27",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
+    "string-format": "^2.0.0"
   },
   "devDependencies": {
+    "chalk": "^3.0.0",
     "electron": "^6.0.10",
     "electron-builder": "^21.2.0",
     "next": "9.0.6",

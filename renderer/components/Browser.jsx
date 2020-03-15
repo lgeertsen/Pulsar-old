@@ -1,70 +1,31 @@
 import React, { useState } from 'react';
 
-const Browser = ({ title, directories, onChange }) => {
+const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDir }) => {
 
-  const [selectedDir, setSelectedDir] = useState(-1);
-
-  const handleChange = index => {
-    onChange(index);
-    setSelectedDir(index);
+  const handleChange = dir => {
+    onChange(dir);
   };
 
     return (
-      <div className="browser">
-        <div className="browserTitle">
-          <h4>{title}</h4>
-        </div>
-        <div className="browserInner">
+      <div className={"card browser " + theme}>
+        <header className={"card-header " + theme}>
+          <p className={"card-header-title " + theme}>{title}</p>
+        </header>
+        <div className="card-content browser-inner">
           {directories.sort((a, b) => {
             if(a < b) { return -1; }
             if(a > b) { return 1; }
             return 0;
           }).map((dir, index) => (
-            <div key={index} className={index == selectedDir ? "directory selected" : "directory"} onClick={(e) => handleChange(index)}>
-              <i className={index == selectedDir ? "fas fa-folder-open" : "fas fa-folder"}></i>
+            <div key={index} className={dir == selectedDir ? `directory bg-${primaryColor} ${theme}` : `directory ${theme}`} onClick={(e) => handleChange(dir)}>
+              <i className={dir == selectedDir ? "las la-folder-open" : "las la-folder"}></i>
               <span>{dir}</span>
             </div>
           ))}
         </div>
 
         <style jsx>{`
-          .browser {
-            display: flex;
-            flex-direction: column;
-            background: #fff;
-            border-radius: 6px;
-            border: 1px solid #e3e3e3;
-          }
-          .browserTitle {
-            height: 25px;
-            background: #f2f2f2;
-          }
-          .browserTitle h4 {
-            margin-left: 10px;
-          }
-          .browserInner {
-            overflow-x: auto;
-            overflow-y: auto;
-          }
-          .directory {
-            height: auto;
-            border-bottom: 1px solid #f2f2f2;
-            color: #444F60;
-            cursor: pointer;
-            transition: all ease 0.2s;
-          }
-          .directory:hover {
-            background: #f2f2f2;
-          }
-          .directory.selected {
-            background: #f2f244;
-          }
-          .directory i {
-            margin: 3px 5px;
-          }
-          .directory span {
-            font-family: "Open Sans Condensed", "Oswald", sans-serif;
-          }
+
         `}</style>
       </div>
     );

@@ -1,0 +1,255 @@
+@charset 'utf-8'
+@import '~bulma/bulma.sass'
+
+@import 'themes/all'
+@import 'abstracts/all'
+@import 'base/all'
+@import 'components/all'
+@import 'containers/all'
+
+.main-start.full
+  position: relative
+  width: 100%
+  align-items: center
+  justify-content: center
+
+.welcome-box
+  position: relative
+  width: 600px
+  height: 500px
+  white-space: nowrap
+  overflow: hidden
+  padding: 0
+  transition: all 0.3s
+
+  @include inline-animation(3s)
+    0%
+      top: 1000px
+      width: 0px
+      height: 0px
+      border-radius: $radius-rounded
+
+    33%
+      top: 0px
+      width: 80px
+      height: 80px
+
+    66%
+      width: 600px
+      height: 20px
+      border-radius: $radius
+
+    100%
+      top: 0px
+      width: 600px
+      height: 500px
+
+.welcome-step
+  position: absolute
+  top: 0
+  left: 0
+  padding: 25px
+  display: flex
+  flex-direction: column
+  align-items: center
+
+  & > div
+    height: auto
+
+  &.hidden
+    display: none
+
+  &.slide-out-left
+    animation-name: slide-out-left
+    animation-duration: 0.5s
+    // animation-delay: 4s
+    animation-fill-mode: forwards
+
+  &.slide-in-right
+    animation-name: slide-in-right
+    animation-duration: 0.5s
+    // animation-delay: 4s
+    animation-fill-mode: forwards
+
+.welcome-step-0
+  justify-content: center
+  text-align: center
+
+.welcome-top-title
+  opacity: 0
+  animation-name: fade-in-down
+  animation-duration: 1s
+  animation-delay: 3s
+  animation-fill-mode: forwards
+
+.welcome-title
+  font-size: 6rem
+  opacity: 0
+  animation-name: fade-in-down
+  animation-duration: 1s
+  animation-delay: 4s
+  animation-fill-mode: forwards
+
+.get-started
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: center
+  font-size: 24px
+  cursor: pointer
+
+  opacity: 0
+  animation-name: fade-in-up
+  animation-duration: 1s
+  animation-delay: 6s
+  animation-fill-mode: forwards
+
+  &:hover
+
+  i
+    font-size: 28px
+
+.step-title
+  position: relative
+
+.step-divider
+  position: relative
+  top: -20px
+  width: 130px
+  height: 3px
+  border-top-width: 1px
+  border-top-style: solid
+  border-bottom-width: 1px
+  border-bottom-style: solid
+
+.step-themes,
+.step-colors,
+.step-projects
+  flex: 1
+  display: flex
+  flex-direction: row
+
+.step-projects
+  flex-direction: column
+  padding: 10px 0
+
+.step-theme
+  flex: 1
+  height: calc(100% - 50px)
+  margin: 25px
+  cursor: pointer
+  transition: all 0.25s
+
+  &:hover
+    @include themify($themes)
+      box-shadow: themed('box-shadow')
+
+  & > div
+    padding: 25px
+
+
+.step-theme-box
+  display: flex
+  justify-content: center
+  align-items: center
+  text-align: center
+
+.step-colors
+  justify-content: space-between
+  align-items: center
+
+.step-color-bullet
+  height: 50px
+  width: 50px
+  margin: 5px
+  border-width: 3px
+  border-style: solid
+  border-radius: $radius-rounded
+  cursor: pointer
+
+.step-project
+  height: auto
+  display: flex
+  flex-direction: row
+  padding: 5px 10px 5px 0
+
+  &.box
+    margin-bottom: 5px
+
+  &.field
+    padding-left: 0
+
+.step-project-name
+  flex: 1
+
+  &.padding-left
+    padding-left: 10px
+
+.step-project-path
+  flex: 2
+  margin: 0 15px
+  overflow: hidden
+
+  .file-label
+    width: 100%
+
+    .file-cta
+      max-width: 100%
+
+.step-project-delete
+  width: 30px
+  cursor: pointer
+
+  i
+    font-size: 24px
+
+
+.step-footer
+  display: flex
+  flex-direction: row
+  justify-content: flex-end
+
+  .button
+    width: auto
+
+.steps-finish
+  height: 100% !important
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  text-align: center
+
+  & > div
+    height: auto
+
+  h1
+    font-size: 6rem
+
+    &.finish-animate
+      opacity: 0
+      animation-name: jack-in-the-box
+      animation-duration: 1.5s
+      animation-delay: 0.5s
+      animation-fill-mode: forwards
+
+  i
+    font-size: 6rem
+
+    &.finish-animate
+      opacity: 0
+      animation-name: rotate-in
+      animation-duration: 0.75s
+      animation-delay: 2s
+      animation-fill-mode: forwards
+
+  .button
+    width: auto
+    margin-top: 25px
+
+    &.finish-animate
+      opacity: 0
+      animation-name: fade-in-up
+      animation-duration: 1s
+      animation-delay: 3.5s
+      animation-fill-mode: forwards

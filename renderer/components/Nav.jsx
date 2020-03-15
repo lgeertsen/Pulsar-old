@@ -6,99 +6,84 @@ export default class Nav extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
     }
-
-    this.remote = electron.remote || false;
-
-    this.minimize = this.minimize.bind(this);
-    this.maximize = this.maximize.bind(this);
-    this.close = this.close.bind(this);
-  }
-
-  minimize() {
-    const window = this.remote.getCurrentWindow();
-    window.minimize();
-  }
-
-  maximize() {
-    const window = this.remote.getCurrentWindow();
-    if(window.isMaximized()) {
-      window.unmaximize();
-    } else {
-      window.maximize();
-    }
-  }
-
-  close() {
-    const window = this.remote.getCurrentWindow();
-    window.close();
   }
 
   render() {
 
     return (
-      <div className="nav">
-        <div className="navigation-container">
-          <div className="back-btn" onClick={() => Router.back()}>
-            <i className="fas fa-angle-left"></i>
+      <div className={this.props.open ? "nav" : "nav nav-compressed"}>
+        <div className={this.props.open ? "nav-compressed-sidebar "  + this.props.theme : "nav-compressed-sidebar open " + this.props.theme }>
+          <div className="nav-compressed-header">
+            <h1>P</h1>
+          </div>
+          <div className="menu-divider"></div>
+          <div className="menu-collapse">
+            <div className="hamburger-wrapper">
+              <div className={this.props.open ? "hamburger-square cross" : "hamburger-square" } onClick={(e) => this.props.toggleNav(true)}>
+                <div className={"hamburger-line " + this.props.theme}></div>
+                <div className={"hamburger-line line-bottom " + this.props.theme}></div>
+              </div>
+            </div>
+          </div>
+          <div className="menu-divider"></div>
+          <div className="nav-menu">
+            <div className={this.props.page == "manager" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/manager')}>
+              <i className="las la-folder-open"></i>
+            </div>
+            {/* <div className={this.props.page == "graph" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/graph')}>
+              <i className="las la-project-diagram"></i>
+            </div> */}
+            {/* <div className={this.props.page == "farm" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
+              <i className="las la-tractor"></i>
+            </div> */}
+            {/* <div className={this.props.page == "vyewer" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
+              <i className="las la-photo-video"></i>
+            </div> */}
+            <div className={this.props.page == "settings" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/settings')}>
+              <i className="las la-cog"></i>
+            </div>
           </div>
         </div>
-        <div className="nav-btns-container">
-          <div id="btn-minimize" className="nav-btn" onClick={this.minimize}>
-            <i className="fas fa-minus"></i>
+        <div className={this.props.open ? "nav-sidebar open "  + this.props.theme : "nav-sidebar "  + this.props.theme}>
+          <div className="nav-header">
+            <h1>Pulsar</h1>
+            <div className="menu-collapse">
+              <div className="hamburger-wrapper">
+                <div className={this.props.open ? "hamburger-square cross" : "hamburger-square" } onClick={(e) => this.props.toggleNav(false)}>
+                  <div className={"hamburger-line " + this.props.theme}></div>
+                  <div className={"hamburger-line line-bottom " + this.props.theme}></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div id="btn-maximize" className="nav-btn" onClick={this.maximize}>
-            <i className="far fa-square"></i>
-          </div>
-          <div id="btn-close" className="nav-btn" onClick={this.close}>
-            <i className="fas fa-times"></i>
+          <div className="menu-divider"></div>
+          <div className="nav-menu">
+            <div className={this.props.page == "manager" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/manager')}>
+              <i className="las la-folder-open"></i>
+              <div className="nav-item-title">Asset Manager</div>
+            </div>
+            {/* <div className={this.props.page == "graph" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/graph')}>
+              <i className="las la-project-diagram"></i>
+              <div className="nav-item-title">Graph Editor</div>
+            </div> */}
+            {/* <div className={this.props.page == "farm" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
+              <i className="las la-tractor"></i>
+              <div className="nav-item-title">Render Farm</div>
+            </div> */}
+            {/* <div className={this.props.page == "vyewer" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
+              <i className="las la-photo-video"></i>
+              <div className="nav-item-title">Vyewer</div>
+            </div> */}
+            <div className={this.props.page == "settings" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/settings')}>
+              <i className="las la-cog"></i>
+              <div className="nav-item-title">Settings</div>
+            </div>
           </div>
         </div>
 
         <style jsx>{`
-          div {
-            width: auto;
-            height: 25px;
-          }
-          .nav {
-            width: 100%;
-            height: 25px;
-            background: #fff;
-            display: flex;
-            border-bottom: 1px solid #ededed;
-            -webkit-app-region: drag;
-            box-shadow: 0 2px 0 0 #f5f5f5;
-          }
-          .navigation-container {
-            flex: 1;
-            -webkit-app-region: drag;
-          }
-          .nav-btns-container {
-            display: flex;
-            flex-direction: row;
-          }
-          .nav-btn,
-          .back-btn {
-            -webkit-app-region: no-drag;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 50px;
-            height: 25px;
-            background: #fff;
-            color: #cecece;
-            border-left: 1px solid #cecece;
-            transition: all ease 0.2s;
-          }
-          .back-btn {
-            border: none;
-            border-right: 1px solid #cecece;
-          }
-          .nav-btn:hover,
-          .back-btn:hover {
-            color: #999;
-          }
+
         `}</style>
       </div>
     );

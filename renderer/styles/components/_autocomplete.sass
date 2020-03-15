@@ -1,0 +1,51 @@
+.autocomplete-input-container
+  display: flex
+
+.autocomplete-input
+  flex: 1
+  margin-left: 10px
+  border: none
+  border-right: 1px solid $grey-lighter
+  font-size: 16px
+  @include themify($themes)
+    color: themed('text')
+    background: themed('bg')
+
+  &:focus
+    outline: none
+
+.autocomplete-controller-button
+  width: 30px
+  height: 100%
+
+  &:hover
+    @include themify($themes)
+      background: themed('bg-bis')
+
+.autocomplete-menu.open
+  position: absolute
+  height: auto
+  width: 100%
+  left: 0
+  top: 39px
+  border-radius: $radius
+  box-shadow: $box-shadow
+  z-index: 10
+  margin-bottom: 20px
+
+  @include themify($themes)
+    background: themed('bg-bis')
+
+.autocomplete-item
+  width: auto
+  padding-left: 10px
+  border-bottom: 1px solid $grey-lightest
+  transition: all 0.25s
+  cursor: pointer
+  @include themify($themes)
+    color: themed('text')
+
+  &:hover
+  &[aria-selected="true"]
+      @include themify($themes)
+        background: themed('bg')

@@ -1,0 +1,114 @@
+.node
+  position: relative
+  z-index: 2
+  width: 200px
+  height: auto
+  border-radius: $radius
+  touch-action: none
+  user-select: none
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2)
+  transition: box-shadow 0.2s
+
+  @include themify($themes)
+    color: themed('text')
+    background-color: themed('bg-bis')
+    // box-shadow: themed('box-shadow')
+
+  selected
+    z-index: 42
+    box-shadow: 0 8px 17px 2px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2)
+
+.node-top
+  position: absolute
+  top: -32px
+  left: 0
+  width: 100%
+  height: auto
+  display: flex
+  flex-direction: row
+  align-items: center
+
+.node-name
+  width: 100%
+  outline: none
+  overflow: visible
+  height: 28px
+  padding: 0
+  padding-left: 5px
+  border: none
+  background: transparent
+  font-size: 20px
+  border-radius: $radius
+
+  @include themify($themes)
+    color: themed('text')
+
+  &.editing
+    border-style: solid
+    border-width: 1px
+
+    @include themify($themes)
+      background-color: themed('bg-bis')
+      border-color: themd('text')
+
+.node-header
+  width: 100%
+  height: 20px
+  cursor: move
+  touch-action: none
+  user-select: none
+  border-top-left-radius: $radius
+  border-top-right-radius: $radius
+
+.attribute-container
+  width: 100%
+  height: 100%
+  display: flex
+  flex-direction: row
+
+.input-container,
+.output-container
+  height: 20px
+  width: 100%
+  display: flex
+  align-items: center
+
+  .attribute-pin
+    z-index: 4
+    width: 8px
+    height: 8px
+    border-radius: $radius-rounded
+    margin-left: -4px
+    margin-right: 5px
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2)
+    cursor: pointer
+
+    &:hover
+      @include themify($themes)
+        background-color: themed('text') !important
+
+    .attribute-name-container
+      display: flex
+      align-items: center
+
+.output-container
+  .attribute-pin
+    margin-left: 5px
+    margin-right: -4px
+
+  .attribute-name-container
+    justify-content: flex-end
+
+.attribute-name
+  font-size: 12px
+  font-family: sans-serif
+
+.drag-overlay,
+.no-overlay
+  position: absolute
+  top: 0
+  left: 0
+  z-index: 3
+
+.no-overlay
+  z-index: -1

@@ -1,0 +1,21 @@
+{
+    "node" : {
+        "id" : "hython.publish",
+        "name": "publish",
+        "color": "#44f",
+        "type": "hython",
+        "script": "publish.py",
+        "inputs": [
+          {
+            "name": "file",
+            "type": "string"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "is_save",
+            "type": "bool"
+          }
+        ]
+    }
+}

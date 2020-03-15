@@ -1,0 +1,9 @@
+.edge
+  stroke-width: 2
+  fill: none
+
+  @include themify($themes)
+    stroke: themed('text')
+
+  &.hovered
+    stroke-width: 5

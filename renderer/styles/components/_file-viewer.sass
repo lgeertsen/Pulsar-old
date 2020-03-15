@@ -1,0 +1,117 @@
+.file-viewer
+  flex: 1
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+.file-viewer-inner
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+  height: 100%
+
+.file-viewer-info-container
+  flex: 4
+  display: flex
+  flex-direction: column
+
+.file-viewer-file-info
+  flex: 1
+
+.file-viewer-file-state
+  height: auto
+
+  .control,
+  .tags
+    width: auto
+
+  .tag
+    height: 30px
+    font-size: 16px
+
+  input
+    width: 80px
+    height: 30px
+    padding-top: 2px
+    padding-bottom: 2px
+    margin-bottom: 8px
+
+    &.button
+      height: 32px
+      width: 40px
+      padding-left: 3px
+      padding-right: 3px
+
+  .tag-autocomplete
+    background: #242424
+    border: 1px solid #fff
+    height: 32px
+    border-top-left-radius: 4px
+    border-bottom-left-radius: 4px
+
+.commands-container
+  height: 40px
+  display: flex
+  flex-direction: row
+
+  .btn-container
+    width: auto
+    display: flex
+    flex-direction: row
+
+  .button
+    width: 120px
+    margin: 5px
+
+.file-viewer-comment-container
+  flex: 2
+
+.open-soft-modal
+  div
+    height: auto
+
+  .modal-title
+    height: auto
+    margin-bottom: 15px
+
+    h3
+      font-size: 16px
+
+  .modal-software-container
+    display: flex
+    flex-direction: column
+    margin: 15px 0
+
+  .software-selection
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+
+  .software
+    min-width: 100px
+    width: auto
+    display: flex
+    flex-direction: column
+    align-items: center
+    margin: 5px 8px
+    padding: 10px 5px
+    border: 1px solid $grey-lightest
+    transition: all 0.25s
+    cursor: pointer
+
+    @include themify($themes)
+      background-color: themed('bg')
+
+    &.selected
+      background: $white-ter
+      @include themify($themes)
+        background-color: themed('bg-bis')
+
+    .software-img
+      width: 80px
+      margin-bottom: 10px
+
+    &:hover
+      box-shadow: $box-shadow

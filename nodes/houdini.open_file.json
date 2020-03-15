@@ -1,0 +1,19 @@
+{
+    "node" : {
+        "id" : "houdini.open_file",
+        "name": "open_file",
+        "color": "#44f",
+        "type": "houdini",
+        "script": "open_file.py",
+        "inputs": [
+          {
+            "name": "file",
+            "type": "string"
+          },
+          {
+            "name": "force",
+            "type": "bool"
+          }
+        ]
+    }
+}

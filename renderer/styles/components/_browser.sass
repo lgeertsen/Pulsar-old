@@ -1,0 +1,33 @@
+.browser
+  display: flex
+  flex-direction: column
+
+  .card-header-title
+    padding: 0.25rem 1rem
+    font-weight: 400
+
+.browser-inner
+  padding: 0
+  height: 100%
+  overflow: auto
+  @include themify($themes)
+    background: themed('bg-bis')
+
+  .directory
+    height: auto
+    font-size: 16px
+    border-bottom: 1px solid $grey-lighter
+    cursor: pointer
+    transition: all 0.25s
+
+    @include themify($themes)
+      color: themed('text')
+      background: themed('bg-bis')
+      border-color: themed('text')
+
+    i
+      margin: 3px 5px
+
+    &:hover
+      @include themify($themes)
+        background: themed('bg-bis')

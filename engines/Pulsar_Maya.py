@@ -8,17 +8,6 @@ import logging
 import maya.cmds as cmds
 import maya.utils as utils
 
-try:
-    from shiboken2 import wrapInstance
-except:
-    from shiboken import wrapInstance
-
-try:
-    from PySide2 import QtGui, QtCore, QtWidgets
-except ImportError:
-    from PySide import QtGui, QtCore
-    QtWidgets = QtGui
-
 parent_dir = os.path.abspath(os.path.dirname(__file__))
 vendor_dir = os.path.join(parent_dir, 'vendor')
 if vendor_dir not in sys.path:
@@ -37,15 +26,26 @@ def maya_useNewAPI():
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.WARNING)
 
-class MayaSocket(socketio.ClientNamespace):
+class PulsarSocket(socketio.ClientNamespace):
     def __init__(self, namespace, pulsar):
-        super(MayaSocket, self).__init__(namespace)
+        super(PulsarSocket, self).__init__(namespace)
         self._pulsar = pulsar
 
     def on_connect(self):
-        print("----- connected to maya namespace -----")
+        print("----- connected to pulsar socket -----")
         self._pulsar._connected = True
-        self.emit("software", {"software": "maya", "scene": self._pulsar._scene})
+        saved = self._pulsar.execute(self._pulsar.check_state)
+        self.emit("software", {"software": "maya", "scene": self._pulsar._scene, "saved": saved})
+
+    def on_checkSaved(self, data):
+        saved = self._pulsar.execute(self._pulsar.check_state)
+        self.emit("saved", saved)
+
+    def on_getSceneName(self, data):
+        self._pulsar._scene = self._pulsar.execute(self._pulsar.getSceneName)
+        saved = self._pulsar.execute(self._pulsar.check_state)
+
+        self.emit("software", {"software": "maya", "scene": self._pulsar._scene, "saved": saved})
 
     def on_execTask(self, data):
         path = data["path"]
@@ -61,6 +61,12 @@ class MayaSocket(socketio.ClientNamespace):
         reload(task)
         self._pulsar.execute(task.main, arguments)
 
+        self._pulsar._scene = self._pulsar.execute(self._pulsar.getSceneName)
+        saved = self._pulsar.execute(self._pulsar.check_state)
+
+        self.emit("software", {"software": "maya", "scene": self._pulsar._scene, "saved": saved})
+
+
     def on_disconnect(self):
         print("disconnected")
         self._pulsar._connected = False
@@ -70,11 +76,12 @@ class Pulsar():
     def __init__(self):
         self._sio = socketio.Client(logger=logger, engineio_logger=logger)
         #self._sio = socketio.Client()
-        self._sio.register_namespace(MayaSocket('/software', self))
+        self._sio.register_namespace(PulsarSocket('/software', self))
         self._connected = False
         self._scene = self.getSceneName()
 
-        self.createUI()
+        self.launch()
+        # self.createUI()
 
     def getSceneName(self):
         filepath = cmds.file(q=True, sn=True)
@@ -111,5 +118,11 @@ class Pulsar():
             self._sio.emit("close", namespace="/software")
         cmds.deleteUI( self._window, window=True)
 
+    def check_state(self):
+        changed = cmds.file(q=True, modified=True)
+        if changed:
+            return 0
+        return 1
+
     def execute(self, func, *args):
-        utils.executeInMainThreadWithResult(func, *args)
+        return utils.executeInMainThreadWithResult(func, *args)
