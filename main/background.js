@@ -1,5 +1,5 @@
 import path from 'path';
-import { app, ipcMain, globalShortcut } from 'electron';
+import { app, autoUpdater, ipcMain, globalShortcut } from 'electron';
 import serve from 'electron-serve';
 import {
   createWindow,
@@ -10,6 +10,11 @@ import {
 
 import Server from "./Server";
 const server = new Server();
+
+const updateServer = "hazel.lgeertsen.now.sh";
+const feed = `${updateServer}/update/${process.platform}/${app.getVersion()}`;
+
+autoUpdater.setFeedURL(feed);
 
 // import {PythonShell} from 'python-shell';
 
