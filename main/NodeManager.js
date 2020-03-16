@@ -38,6 +38,7 @@ export default class NodeManager {
   }
 
   getNode(type, task) {
+    console.log(type, task);
     return this._nodes[type][task];
   }
 }

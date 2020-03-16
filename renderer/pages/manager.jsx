@@ -10,7 +10,6 @@ import FiltersContainer from '../containers/FiltersContainer';
 import Nav from '../components/Nav';
 import NewAssetContainer from '../containers/NewAssetContainer';
 import SearchBar from '../components/SearchBar';
-import SettingsContainer from '../containers/SettingsContainer';
 import Switch from '../components/Switch';
 
 import "../styles/manager.sass"
@@ -535,25 +534,25 @@ export default class Manager extends React.Component {
           assetId={this.state.newAssetId}
           setAssetIdValue={(type, element) => this.setAssetIdValue("newAsset", type, element)}
         />
-{/*
-        <SettingsContainer
-          saveShortcut={this.state.saveShortcut}
-          setSaveShortcut={(value) => this.setState({saveShortcut: value})}
-          incrementShortcut={this.state.incrementShortcut}
-          setIncrementShortcut={(value) => this.setState({incrementShortcut: value})}
-          theme={this.state.theme}
-          themeName={this.state.theme}
-          setTheme={(theme) => this.setTheme(theme)}
-          primaryColor={this.state.primaryColor}
-          setPrimaryColor={(color) => this.setPrimaryColor(color)}
-          show={this.state.settingsModal}
-          handleClose={() =>  this.setState({settingsModal: false})}
-          cancelSettings={() => this.cancelSettings()}
-          saveSettings={() => this.saveSettings()}
-        /> */}
 
         <style jsx global>{`
+          @font-face {
+              font-family: 'Architectural';
+              src: url('./static/architectural/Architectural.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                   url('./static/architectural/Architectural.woff') format('woff'), /* Modern Browsers */
+                   url('./static/architectural/Architectural.ttf') format('truetype'); /* Safari, Android, iOS */
+                       font-style: normal;
+              font-weight: normal;
+              text-rendering: optimizeLegibility;
+          }
 
+          @font-face {
+              font-family: 'Apex Mk3 ExtraLight';
+              src: url('./static/Apex/apex_mk3-extralight-webfont.woff2') format('woff2'),
+                   url('./static/Apex/apex_mk3-extralight-webfont.woff') format('woff');
+              font-weight: normal;
+              font-style: normal;
+          }
         `}</style>
         <style jsx>{`
 

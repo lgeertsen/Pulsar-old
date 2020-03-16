@@ -3,6 +3,8 @@ import Downshift from 'downshift';
 import matchSorter from 'match-sorter';
 import { ipcRenderer } from 'electron';
 
+import format from 'string-format';
+
 import Autocomplete from '../components/Autocomplete';
 import CheckBox from '../components/CheckBox';
 import Dropdown from '../components/Dropdown';
@@ -19,7 +21,7 @@ const NewAssetContainer = ({
 }) => {
   const [newFileName, setNewFileName] = useState("");
   const [newFileType, setNewFileType] = useState("maya");
-  const [useExistingFile, setUseExistingFile] = useState(false);
+  const [useExistingFile, setUseExistingFile] = useState(true);
   const [existingFilePath, setExistingFilePath] = useState("");
 
   const close = () => {
@@ -64,6 +66,39 @@ const NewAssetContainer = ({
     if(newFileName == "") return false;
     if(useExistingFile && existingFilePath == "") return false;
     return true;
+  }
+
+  const createAsset = () => {
+    if(useExistingFile) {
+      console.log(assetId);
+      let asset = assetId;
+      asset.project = asset.projectPath;
+      asset.state = "<>";
+
+      let pathSplit = existingFilePath.split(".");
+      let ext = pathSplit[pathSplit.length-1]
+
+      let formattedPath = format(asset.path, asset);
+      let index = formattedPath.indexOf("<>");
+      formattedPath = formattedPath.slice(0, index);
+      let filePath = `${formattedPath}work_v001/${newFileName}.${ext}`;
+
+      let path = `${formattedPath}work_v001/`;
+
+      let data = {
+        "file": newFileName,
+        "type": newFileType,
+        "id": "new",
+        "command": "create_asset_from_existing",
+        customArgs: true,
+        "arguments": [
+          existingFilePath,
+          filePath,
+          path
+        ]
+      }
+      ipcRenderer.send("execTask", data);
+    }
   }
 
   useEffect(() => {
@@ -169,7 +204,7 @@ const NewAssetContainer = ({
                   <h3>Subtask:</h3>
                 </div>
                 <div className="new-asset-dropdown new-asset-option-autocomplete">
-                  <Autocomplete
+                  {/* <Autocomplete
                     theme={theme}
                     primaryColor={primaryColor}
                     assetId={assetId}
@@ -177,7 +212,8 @@ const NewAssetContainer = ({
                     items={assetId["subtasks"]}
                     value={assetId["subtask"]}
                     placeholder=""
-                  />
+                  /> */}
+                  <input className={`input ${theme}`} value={assetId.subtask} onChange={(e) => setAssetIdValue("subtask", e.target.value)}/>
                 </div>
               </div>
             </div>
@@ -224,13 +260,13 @@ const NewAssetContainer = ({
                     primaryColor={primaryColor}
                     label="Use existing file or template"
                     checked={useExistingFile}
-                    onCheck={() => setUseExistingFile(!useExistingFile)}
+                    // onCheck={() => setUseExistingFile(!useExistingFile)}
                   />
                 </div>
                 {useExistingFile ?
                   <div className="new-asset-dropdown new-asset-option-autocomplete">
                     <div className="file-label" onClick={(e) => selectFile()}>
-                      <div className="file-cta">
+                      <div className={`file-cta ${theme}`}>
                         <span className="file-icon">
                           <i className="las la-file"></i>
                         </span>
@@ -247,7 +283,7 @@ const NewAssetContainer = ({
             {canCreate() ?
               <div className="new-asset-option-row">
                 <div className="new-asset-option">
-                  <div className="button create-asset-btn">Create</div>
+                  <div className={"button create-asset-btn " + theme} onClick={(e) => createAsset()}>Create</div>
                 </div>
               </div>
               : ""

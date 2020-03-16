@@ -160,7 +160,7 @@ export default class Settings extends React.Component {
           ))}
           <div className="settings-project">
             <div className="settings-project-name">
-              <input className="input" type="text" placeholder="Project Name" value={this.state.newProjectName} onChange={(e) => this.setState({newProjectName: e.target.value.trim()})}/>
+              <input className={"border-input input " + this.state.theme} type="text" placeholder="Project Name" value={this.state.newProjectName} onChange={(e) => this.setState({newProjectName: e.target.value.trim()})}/>
             </div>
             <div className="file settings-project-path">
               <div className="file-label" onClick={(e) => this.selectDirectory()}>
@@ -281,7 +281,23 @@ export default class Settings extends React.Component {
 
 
         <style jsx global>{`
+          @font-face {
+              font-family: 'Architectural';
+              src: url('./static/architectural/Architectural.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                   url('./static/architectural/Architectural.woff') format('woff'), /* Modern Browsers */
+                   url('./static/architectural/Architectural.ttf') format('truetype'); /* Safari, Android, iOS */
+                       font-style: normal;
+              font-weight: normal;
+              text-rendering: optimizeLegibility;
+          }
 
+          @font-face {
+              font-family: 'Apex Mk3 ExtraLight';
+              src: url('./static/Apex/apex_mk3-extralight-webfont.woff2') format('woff2'),
+                   url('./static/Apex/apex_mk3-extralight-webfont.woff') format('woff');
+              font-weight: normal;
+              font-style: normal;
+          }
         `}</style>
         <style jsx>{`
 

@@ -32,7 +32,7 @@ export default class AssetId {
     this._projects = projects
 
     this._project = "<>";
-    this._dimension = "*";
+    this._dimension = "3d";
     this._group = "<>";
     this._name = "<>";
     this._task = "<>";
@@ -164,23 +164,26 @@ export default class AssetId {
 
   formatForRender() {
     let asset = {
-      sid:        this.sid,
+      sid:         this.sid,
 
-      projects:   this.projects,
-      project:    this.projectName,
-      pathType:   this.pathType,
-      dimension:  this.dimension,
-      group:      this.group == "<>" ? "" : this.group,
-      name:       this.name == "<>" ? "" : this.name,
-      task:       this.task == "<>" ? "" : this.task,
-      subtask:    this.subtask == "<>" ? "" : this.subtask,
-      file:       this.formatFile == "<>" ? "" : this.formatFile,
+      path:        this.path,
 
-      groups:     this.groups,
-      names:      this.names,
-      tasks:      this.tasks,
-      subtasks:   this.subtasks,
-      files:      this.formatFiles(),
+      projects:    this.projects,
+      project:     this.projectName,
+      projectPath: this.project,
+      pathType:    this.pathType,
+      dimension:   this.dimension,
+      group:       this.group == "<>" ? "" : this.group,
+      name:        this.name == "<>" ? "" : this.name,
+      task:        this.task == "<>" ? "" : this.task,
+      subtask:     this.subtask == "<>" ? "" : this.subtask,
+      file:        this.formatFile == "<>" ? "" : this.formatFile,
+
+      groups:      this.groups,
+      names:       this.names,
+      tasks:       this.tasks,
+      subtasks:    this.subtasks,
+      files:       this.formatFiles(),
     }
 
     this._sendToRenderer(asset);

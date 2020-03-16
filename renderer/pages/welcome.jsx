@@ -126,7 +126,7 @@ export default class Welcome extends React.Component {
           <div className={"box welcome-box " + this.state.theme}>
             <div className={this.state.step == 0 ? "welcome-step welcome-step-0" : "welcome-step welcome-step-0 slide-out-left"}>
               <div className="welcome-title-container">
-                <h1 className="welcome-top-title display-4 sub-display">Welcome To</h1>
+                <h1 className="welcome-top-title display-4 sub-display">WELCOME TO</h1>
                 <h1 className="welcome-title display-1">Pulsar</h1>
               </div>
               <div className="get-started" onClick={(e) => this.setState({step: 1})}>
@@ -144,20 +144,20 @@ export default class Welcome extends React.Component {
                 <div className={"step-theme " + this.state.theme} onClick={(e) => this.setState({theme: "theme-light"})}>
                   <div className="theme-light bg-main">
                     <div className="step-theme-box box theme-light">
-                      <h1 className="display-4 sub-display">Light</h1>
+                      <h1 className="display-4 sub-display">LIGHT</h1>
                     </div>
                   </div>
                 </div>
                 <div className={"step-theme " + this.state.theme} onClick={(e) => this.setState({theme: "theme-dark"})}>
                   <div className="theme-dark bg-main">
                     <div className="step-theme-box box theme-dark">
-                      <h1 className="display-4 sub-display">Dark</h1>
+                      <h1 className="display-4 sub-display">DARK</h1>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="step-footer">
-                <div className="step-next button" onClick={(e) => this.setState({step: 2})}>Next</div>
+                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 2})}>Next</div>
               </div>
             </div>
             <div className={this.state.step == 2 ? "welcome-step welcome-step-2 slide-in-right" : this.state.step < 2 ? "welcome-step welcome-step-2 hidden" : "welcome-step welcome-step-2 slide-out-left"}>
@@ -172,7 +172,7 @@ export default class Welcome extends React.Component {
                 ))}
               </div>
               <div className="step-footer">
-                <div className="step-next button" onClick={(e) => this.setState({step: 3})}>Next</div>
+                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 3})}>Next</div>
               </div>
             </div>
             <div className={this.state.step == 3 ? "welcome-step welcome-step-3 slide-in-right" : this.state.step < 3 ? "welcome-step welcome-step-3 hidden" : "welcome-step welcome-step-3 slide-out-left"}>
@@ -193,12 +193,12 @@ export default class Welcome extends React.Component {
                 ))}
                 <div className="step-project">
                   <div className="step-project-name">
-                    <input className="input" type="text" placeholder="Project Name" value={this.state.newProjectName} onChange={(e) => this.setState({newProjectName: e.target.value.trim()})}/>
+                    <input className={"border-input input " + this.state.theme} type="text" placeholder="Project Name" value={this.state.newProjectName} onChange={(e) => this.setState({newProjectName: e.target.value.trim()})}/>
                   </div>
                   <div className="file step-project-path">
                     <div className="file-label" onClick={(e) => this.selectDirectory()}>
                       {/* <input className="file-input" type="file" onChange={(e) => this.setState({newProjectPath: e.target.value})}/> */}
-                      <div className="file-cta">
+                      <div className={"file-cta " + this.state.theme}>
                         <span className="file-icon">
                           <i className="las la-folder-open"></i>
                         </span>
@@ -216,7 +216,7 @@ export default class Welcome extends React.Component {
                 </div>
               </div>
               <div className="step-footer">
-                <div className="step-next button" onClick={(e) => this.setState({step: 4})}>Next</div>
+                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 4})}>Next</div>
               </div>
             </div>
 
@@ -228,7 +228,7 @@ export default class Welcome extends React.Component {
                 <div>
                   <i className={this.state.step == 4 ? "las la-check-circle finish-animate " + this.state.primaryColor : "las la-check-circle " + this.state.primaryColor}></i>
                 </div>
-                <div className={this.state.step == 4 ? "button finish-animate" : "button"} onClick={(e) => this.finishSetup()}>Finish</div>
+                <div className={this.state.step == 4 ? "button finish-animate " + this.state.theme : "button " + this.state.theme} onClick={(e) => this.finishSetup()}>Finish</div>
               </div>
             </div>
           </div>
@@ -237,7 +237,23 @@ export default class Welcome extends React.Component {
 
 
         <style jsx global>{`
+          @font-face {
+              font-family: 'Architectural';
+              src: url('./static/architectural/Architectural.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                   url('./static/architectural/Architectural.woff') format('woff'), /* Modern Browsers */
+                   url('./static/architectural/Architectural.ttf') format('truetype'); /* Safari, Android, iOS */
+                       font-style: normal;
+              font-weight: normal;
+              text-rendering: optimizeLegibility;
+          }
 
+          @font-face {
+              font-family: 'Apex Mk3 ExtraLight';
+              src: url('./static/Apex/apex_mk3-extralight-webfont.woff2') format('woff2'),
+                   url('./static/Apex/apex_mk3-extralight-webfont.woff') format('woff');
+              font-weight: normal;
+              font-style: normal;
+          }
         `}</style>
         <style jsx>{`
 

@@ -59,7 +59,7 @@ export default class Server {
       console.log(path.join(__dirname, '../../../nodes'));
       // result = spawn.sync(executable, [], { encoding: 'utf8' });
     } else {
-      this._nodeManager.path = config.nodes;
+      this._nodeManager.path = "./nodes";
     }
     this._nodeManager.importNodes();
 
@@ -122,6 +122,9 @@ export default class Server {
       let args = data.arguments;
       if(data.id == "new") {
         let winTask = `${type}_${task}`;
+        if(data.customArgs) {
+          winTask = task;
+        }
         let node = this._nodeManager.getNode("windows", winTask);
         let dirPath;
         if (process.env.NODE_ENV === 'production') {
@@ -136,17 +139,32 @@ export default class Server {
         Logger.warning(file_path);
         // let command = `start ${file_path} ${soft_path} ${args.file}`
         // Logger.success(command);
-        execFile(file_path, [soft_path, args.file], (error, stdout, stderr) => {
-          if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-          }
-          if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-          }
-          console.log(`stdout: ${stdout}`);
-        });
+        if(data.customArgs) {
+          execFile(file_path, args, (error, stdout, stderr) => {
+            if (error) {
+              console.log(`error: ${error.message}`);
+              return;
+            }
+            if (stderr) {
+              console.log(`stderr: ${stderr}`);
+              return;
+            }
+            console.log(`stdout: ${stdout}`);
+          });
+        } else {
+          execFile(file_path, [soft_path, args.file], (error, stdout, stderr) => {
+            if (error) {
+              console.log(`error: ${error.message}`);
+              return;
+            }
+            if (stderr) {
+              console.log(`stderr: ${stderr}`);
+              return;
+            }
+            console.log(`stdout: ${stdout}`);
+          });
+        }
+
       } else {
 
       }
