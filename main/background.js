@@ -11,8 +11,10 @@ import {
 import Server from "./Server";
 const server = new Server();
 
-const updateServer = "hazel.lgeertsen.now.sh";
+const updateServer = "https://hazel-cyan.now.sh/";
 const feed = `${updateServer}/update/${process.platform}/${app.getVersion()}`;
+
+console.log(feed);
 
 autoUpdater.setFeedURL(feed);
 
@@ -57,6 +59,7 @@ if (isProd) {
     minWidth: 1200,
     minHeight: 800,
     frame: true,
+    title: "Pulsar",
     icon: path.join(__dirname, '../main/pulsar.png')
   });
 
