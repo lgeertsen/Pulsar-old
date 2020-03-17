@@ -118,7 +118,7 @@ You can also add new assets or shots to your project by clicking on the `Create 
 
 ![Pulsar](https://github.com/ArtFXDev/Pulsar/raw/master/docs/img/pulsar-4.png)
 
-For the moment you can only create an asset from an existing project file (Maya, Houdini or Nuke)
+For the moment you can only create an asset from an existing scene file (Maya, Houdini or Nuke). This is can also be useful to conform scenes.
 
 ![Pulsar](https://github.com/ArtFXDev/Pulsar/raw/master/docs/img/pulsar-5.png)
 
