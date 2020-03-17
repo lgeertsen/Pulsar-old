@@ -1,6 +1,7 @@
 import path from 'path';
-import { app, autoUpdater, ipcMain, globalShortcut } from 'electron';
+import { app, ipcMain, globalShortcut } from 'electron';
 import serve from 'electron-serve';
+const {autoUpdater} = require("electron-updater");
 import {
   createWindow,
   exitOnChange,
@@ -11,13 +12,23 @@ import {
 import Server from "./Server";
 const server = new Server();
 
-const updateServer = "https://hazel-cyan.now.sh/";
-const feed = `${updateServer}/update/${process.platform}/${app.getVersion()}`;
+setInterval(() => {
+  try {
+    autoUpdater.checkForUpdates()
+  } catch (e) {
+    console.error("Cannont update");
+    console.error(e);
+  }
+}, 1000 * 60);
 
-console.log(feed);
+autoUpdater.on('update-available', () => {
+  console.log("----- update available -----");
+});
 
-autoUpdater.setFeedURL(feed);
-
+autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+  console.log("update-downloaded");
+  autoUpdater.quitAndInstall();
+});
 // import {PythonShell} from 'python-shell';
 
 const isProd = process.env.NODE_ENV === 'production';
