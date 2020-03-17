@@ -76,7 +76,7 @@ Fill in the project name on the left. **Don't use spaces in the name!!!**.
 If your project is called 'My Project' you can fill in `MyProject` or `My_Project`
 
 The click on `Select Project Directory` on select your project folder.
-If your project path is `C:/Users/JeanJacques/Documents/SynologyDrive/ARAL/` you select the `ARAL` folder.
+If your project path is `I:/SynologyDrive/ARAL/` you select the `ARAL` folder.
 
 ![Select Project](https://github.com/ArtFXDev/Pulsar/raw/master/docs/img/first-usage-4.png)
 
@@ -87,5 +87,39 @@ If your project path is `C:/Users/JeanJacques/Documents/SynologyDrive/ARAL/` you
 Awesome. Everything is set up and you can now dive into Pulsar
 
 ![All set up](https://github.com/ArtFXDev/Pulsar/raw/master/docs/img/first-usage-6.png)
+
+#### IV - Using Pulsar
+
+The usage of the Pulsar file manager is pretty easy.
+
+On the top you can select the project you want to browse. Next to the project selection you can to choose to browse `Assets` of `Shots`
+
+Underneath that you have the filters. With this you can decide to only show work or published scenes.
+
+On the bottom you have a classic file manager where you can browse the directories of your assets & shots.
+
+In the most right browser window, the file browser you can sort the files by version, size, state, tags,...
+
+![Pulsar](https://github.com/ArtFXDev/Pulsar/raw/master/docs/img/pulsar-1.png)
+
+When you click on a file, a file view opens on the bottom. Here you have more details on the project file. You can edit the comment, or add/remove tags.
+
+![Pulsar](https://github.com/ArtFXDev/Pulsar/raw/master/docs/img/pulsar-2.png)
+
+When you click open button on the bottom left of the file detail window, you can choose to open file in the supported software.
+
+**For the moment only Maya, Houdini & Nuke files can be opened with Pulsar**
+
+![Pulsar](https://github.com/ArtFXDev/Pulsar/raw/master/docs/img/pulsar-3.png)
+
+#### V - Adding assets
+
+You can also add new assets or shots to your project by clicking on the `Create Asset` button on the top left of the file manager. This will open a window were you can put in the information for the new asset/shot.
+
+![Pulsar](https://github.com/ArtFXDev/Pulsar/raw/master/docs/img/pulsar-4.png)
+
+For the moment you can only create an asset from an existing project file (Maya, Houdini or Nuke)
+
+![Pulsar](https://github.com/ArtFXDev/Pulsar/raw/master/docs/img/pulsar-5.png)
 
 [GithubRelease]: [https://github.com/ArtFXDev/Pulsar/releases
