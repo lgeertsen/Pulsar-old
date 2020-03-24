@@ -32,7 +32,7 @@ export default class AssetId {
     this._projects = projects
 
     this._project = "<>";
-    this._dimension = "3d";
+    this._dimension = "*";
     this._group = "<>";
     this._name = "<>";
     this._task = "<>";

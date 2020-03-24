@@ -21,7 +21,7 @@ const NewAssetContainer = ({
 }) => {
   const [newFileName, setNewFileName] = useState("");
   const [newFileType, setNewFileType] = useState("maya");
-  const [useExistingFile, setUseExistingFile] = useState(true);
+  const [useExistingFile, setUseExistingFile] = useState(false);
   const [existingFilePath, setExistingFilePath] = useState("");
 
   const close = () => {
@@ -69,24 +69,24 @@ const NewAssetContainer = ({
   }
 
   const createAsset = () => {
-    if(useExistingFile) {
-      console.log(assetId);
-      let asset = assetId;
-      asset.project = asset.projectPath;
-      asset.state = "<>";
+    let asset = assetId;
+    asset.project = asset.projectPath;
+    asset.state = "<>";
 
+    let formattedPath = format(asset.path, asset);
+    let index = formattedPath.indexOf("<>");
+    formattedPath = formattedPath.slice(0, index);
+    let path = `${formattedPath}work_v001/`;
+
+
+
+    if(useExistingFile) {
       let pathSplit = existingFilePath.split(".");
       let ext = pathSplit[pathSplit.length-1]
 
-      let formattedPath = format(asset.path, asset);
-      let index = formattedPath.indexOf("<>");
-      formattedPath = formattedPath.slice(0, index);
-      let filePath = `${formattedPath}work_v001/${newFileName}.${ext}`;
-
-      let path = `${formattedPath}work_v001/`;
+      let filePath = `${path}${newFileName}.${ext}`;
 
       let data = {
-        "file": newFileName,
         "type": newFileType,
         "id": "new",
         "command": "create_asset_from_existing",
@@ -97,6 +97,21 @@ const NewAssetContainer = ({
           path
         ]
       }
+      ipcRenderer.send("execTask", data);
+    } else {
+      let softType = newFileType == "maya" ? "mayapy" : newFileType == "houdini" ? "hython" : "";
+      let ext = newFileType == "maya" ? "ma" : newFileType == "houdini" ? "hipnc" : "nk";
+      let filePath = `${path}${newFileName}.${ext}`;
+
+      let data = {
+        "type": softType,
+        "id": softType,
+        "command": "create_asset",
+        "arguments": [
+          filePath
+        ]
+      }
+
       ipcRenderer.send("execTask", data);
     }
   }
@@ -260,7 +275,7 @@ const NewAssetContainer = ({
                     primaryColor={primaryColor}
                     label="Use existing file or template"
                     checked={useExistingFile}
-                    // onCheck={() => setUseExistingFile(!useExistingFile)}
+                    onCheck={() => setUseExistingFile(!useExistingFile)}
                   />
                 </div>
                 {useExistingFile ?
