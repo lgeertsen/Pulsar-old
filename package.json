@@ -41,6 +41,7 @@
     "electron-updater": "^4.2.5",
     "express": "^4.17.1",
     "glob": "^7.1.6",
+    "kind-of": "^6.0.3",
     "match-sorter": "^4.0.2",
     "node-sass": "^4.13.0",
     "python-shell": "^1.0.8",
