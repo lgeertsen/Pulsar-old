@@ -139,7 +139,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
                 ))}
                 <form onSubmit={(e) => addTag(e)}>
                   <div className="field has-addons">
-                    <div className="tag-autocomplete control">
+                    <div className={"tag-autocomplete control " + theme}>
                       {/* <input className="input" type="text" placeholder="Add Tag" value={newTag} onChange={(e) => setNewTag(e.target.value)}/> */}
                       <Autocomplete
                         theme={theme}

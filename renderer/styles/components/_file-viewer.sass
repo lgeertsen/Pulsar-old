@@ -45,11 +45,13 @@
       padding-right: 3px
 
   .tag-autocomplete
-    background: #242424
-    border: 1px solid #fff
     height: 32px
     border-top-left-radius: 4px
     border-bottom-left-radius: 4px
+
+    @include themify($themes)
+      color: themed('text')
+      background-color: themed('bg')
 
 .commands-container
   height: 40px

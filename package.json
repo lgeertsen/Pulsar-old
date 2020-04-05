@@ -2,7 +2,7 @@
   "private": true,
   "name": "pulsar",
   "description": "Pulsar | A Pipeline Tool",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Lee Geertsen <lgeertsen@artfx.fr>",
   "main": "app/background.js",
   "scripts": {
@@ -17,9 +17,18 @@
   },
   "build": {
     "productName": "Pulsar",
+    "win": {
+      "icon": "build/pulsar.png"
+    },
     "extraFiles": [
       ".pulsar.json",
       "nodes"
+    ],
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://pulsar-updater.herokuapp.com/"
+      }
     ]
   },
   "dependencies": {
@@ -29,6 +38,7 @@
     "downshift": "^3.4.7",
     "electron-serve": "^0.4.0",
     "electron-store": "^5.0.0",
+    "electron-updater": "^4.2.5",
     "express": "^4.17.1",
     "glob": "^7.1.6",
     "match-sorter": "^4.0.2",
