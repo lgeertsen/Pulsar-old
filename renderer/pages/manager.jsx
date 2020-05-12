@@ -42,14 +42,20 @@ export default class Manager extends React.Component {
       newFileName: undefined,
 
       filters: {
-        // scened2D3D: {
-        //   _2D: false,
-        //   _3D: true
-        // },
+        scened2D3D: {
+          type: "radio",
+          options: {
+            _2D: false,
+            _3D: true
+          }
+        },
         state: {
-          work: true,
-          publish: true,
-          wip: false
+          type: "checkbox",
+          options: {
+            work: true,
+            publish: true,
+            wip: false
+          }
         }
       },
 
@@ -157,7 +163,15 @@ export default class Manager extends React.Component {
 
   setFilter(filter, option, value) {
     let filters = this.state.filters;
-    filters[filter][option] = value;
+    if(filters[filter].type == "radio") {
+      for(let i in filters[filter].options) {
+        filters[filter].options[i] = false;
+      }
+      filters[filter].options[option] = true;
+      this.setAssetIdValue("fileManager", "dimension", option == "_3D" ? "3d" : "2d");
+    } else {
+      filters[filter].options[option] = value;
+    }
     this.setState({filters: filters});
   }
 
@@ -170,9 +184,9 @@ export default class Manager extends React.Component {
       switch (filter) {
         case "state":
           let states = [];
-          if(filters[filter]["work"]) { states.push("work") }
-          if(filters[filter]["publish"]) { states.push("publish") }
-          if(filters[filter]["wip"]) { states.push("wip") }
+          if(filters[filter].options["work"]) { states.push("work") }
+          if(filters[filter].options["publish"]) { states.push("publish") }
+          if(filters[filter].options["wip"]) { states.push("wip") }
           let filtered = files.filter(file => {
             return states.includes(file.state);
           });

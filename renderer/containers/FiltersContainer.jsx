@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import CheckBox from '../components/CheckBox'
+import RadioButton from '../components/RadioButton';
 
 const FiltersContainer = ({ theme, primaryColor, filters, setFilter }) => {
   const [open, setOpen] = useState(true);
@@ -19,17 +20,32 @@ const FiltersContainer = ({ theme, primaryColor, filters, setFilter }) => {
           {Object.keys(filters).map((filter, index) => (
             <div key={index} className={open ? "filter-type" : "filter-type filter-type-closed"}>
 
-              {Object.keys(filters[filter]).map((option, index) => (
+            {filters[filter].type == "radio" ?
+              Object.keys(filters[filter].options).map((option, index) => (
                 <div key={index} className="filter-option">
-                  <CheckBox
-                    theme={theme}
-                    primaryColor={primaryColor}
-                    label={(option.charAt(0).toUpperCase() + option.slice(1)).split("_").join(" ")}
-                    checked={filters[filter][option]}
-                    onCheck={() => setFilter(filter, option, !filters[filter][option])}
-                  />
+                <RadioButton
+                theme={theme}
+                primaryColor={primaryColor}
+                label={(option.charAt(0).toUpperCase() + option.slice(1)).split("_").join(" ")}
+                checked={filters[filter].options[option]}
+                onCheck={() => setFilter(filter, option, true)}
+                />
                 </div>
-              ))}
+              ))
+            :
+              Object.keys(filters[filter].options).map((option, index) => (
+                <div key={index} className="filter-option">
+                <CheckBox
+                theme={theme}
+                primaryColor={primaryColor}
+                label={(option.charAt(0).toUpperCase() + option.slice(1)).split("_").join(" ")}
+                checked={filters[filter].options[option]}
+                onCheck={() => setFilter(filter, option, !filters[filter].options[option])}
+                />
+                </div>
+              ))
+            }
+
             </div>
           ))}
         </div>

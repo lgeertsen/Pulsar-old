@@ -8,7 +8,8 @@ import format from 'string-format';
 import Autocomplete from '../components/Autocomplete';
 import CheckBox from '../components/CheckBox';
 import Dropdown from '../components/Dropdown';
-import Modal from '../components/Modal'
+import Modal from '../components/Modal';
+import RadioButton from '../components/RadioButton';
 import Switch from '../components/Switch';
 
 const NewAssetContainer = ({
@@ -21,7 +22,7 @@ const NewAssetContainer = ({
 }) => {
   const [newFileName, setNewFileName] = useState("");
   const [newFileType, setNewFileType] = useState("maya");
-  const [useExistingFile, setUseExistingFile] = useState(false);
+  const [useExistingFile, setUseExistingFile] = useState(true);
   const [existingFilePath, setExistingFilePath] = useState("");
 
   const close = () => {
@@ -168,6 +169,29 @@ const NewAssetContainer = ({
             <div className="new-asset-option-row">
               <div className="new-asset-option">
                 <div className="new-asset-option-title">
+                  <h3>Dimension:</h3>
+                </div>
+                <div className="new-asset-dropdown new-asset-file-type-list">
+                  <RadioButton
+                    theme={theme}
+                    primaryColor={primaryColor}
+                    label="3d"
+                    checked={assetId["dimension"] == "3d"}
+                    onCheck={() => setAssetIdValue("dimension", "3d")}
+                  />
+                  <RadioButton
+                    theme={theme}
+                    primaryColor={primaryColor}
+                    label="2d"
+                    checked={assetId["dimension"] == "2d"}
+                    onCheck={() => setAssetIdValue("dimension", "2d")}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="new-asset-option-row">
+              <div className="new-asset-option">
+                <div className="new-asset-option-title">
                   <h3>Asset Type:</h3>
                 </div>
                 <div className="new-asset-dropdown new-asset-option-autocomplete">
@@ -275,7 +299,8 @@ const NewAssetContainer = ({
                     primaryColor={primaryColor}
                     label="Use existing file or template"
                     checked={useExistingFile}
-                    onCheck={() => setUseExistingFile(!useExistingFile)}
+                    // onCheck={() => setUseExistingFile(!useExistingFile)}
+                    onCheck={() => console.log("noooo")}
                   />
                 </div>
                 {useExistingFile ?
