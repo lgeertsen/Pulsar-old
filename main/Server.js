@@ -118,6 +118,7 @@ export default class Server {
   execTask(data) {
     let type = data.type;
     let task = data.command
+
     if(["maya", "houdini", "nuke"].includes(type)) {
       let args = data.arguments;
       if(data.id == "new") {
@@ -176,14 +177,18 @@ export default class Server {
         dirPath = path.join(__dirname, `../../../nodes/scripts/${type}`);
         // result = spawn.sync(executable, [], { encoding: 'utf8' });
       } else {
-        let dirPath = `${this.config.config.nodes}/scripts/${type}`;
+        dirPath = `${this.config.config.nodes}/scripts/${type}`;
       }
       let file = node.script;
       let file_path = path.join(dirPath, file);
+
+      let args = data.arguments;
+      args.unshift(file_path);
+
       let soft_path = this.config.config.softwares[type];
       // let command = `${soft_path} ${file_path} ${data.arguments.file}`;
       // Logger.info(command);
-      execFile(soft_path, [file_path, data.arguments.file], (error, stdout, stderr) => {
+      execFile(soft_path, args, (error, stdout, stderr) => {
         if (error) {
           console.log(`error: ${error.message}`);
           return;
@@ -198,8 +203,12 @@ export default class Server {
   }
 
   startServer() {
-    // this._http.listen(7846, function(){
-    //   console.log('----- listening on *:7846 -----')
-    // });
+    try {
+      // this._http.listen(7846, function(){
+      //   console.log('----- listening on *:7846 -----')
+      // });
+    } catch (e) {
+
+    }
   }
 }

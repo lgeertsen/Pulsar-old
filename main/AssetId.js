@@ -6,6 +6,7 @@ import Renderer from './Renderer';
 const typeToDirMap = {
   project:  "groups",
   pathType: "groups",
+  dimension: "groups",
   group:    "names",
   name:     "tasks",
   task:     "subtasks",
@@ -15,6 +16,7 @@ const typeToDirMap = {
 const typeToClearMap = {
   project:  ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   pathType: ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
+  dimension: ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   group:    ["name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   name:     ["task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   task:     ["subtask", "subtasks", "state", "version", "file", "files"],

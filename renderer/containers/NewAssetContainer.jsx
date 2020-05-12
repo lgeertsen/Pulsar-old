@@ -8,7 +8,8 @@ import format from 'string-format';
 import Autocomplete from '../components/Autocomplete';
 import CheckBox from '../components/CheckBox';
 import Dropdown from '../components/Dropdown';
-import Modal from '../components/Modal'
+import Modal from '../components/Modal';
+import RadioButton from '../components/RadioButton';
 import Switch from '../components/Switch';
 
 const NewAssetContainer = ({
@@ -69,24 +70,24 @@ const NewAssetContainer = ({
   }
 
   const createAsset = () => {
-    if(useExistingFile) {
-      console.log(assetId);
-      let asset = assetId;
-      asset.project = asset.projectPath;
-      asset.state = "<>";
+    let asset = assetId;
+    asset.project = asset.projectPath;
+    asset.state = "<>";
 
+    let formattedPath = format(asset.path, asset);
+    let index = formattedPath.indexOf("<>");
+    formattedPath = formattedPath.slice(0, index);
+    let path = `${formattedPath}work_v001/`;
+
+
+
+    if(useExistingFile) {
       let pathSplit = existingFilePath.split(".");
       let ext = pathSplit[pathSplit.length-1]
 
-      let formattedPath = format(asset.path, asset);
-      let index = formattedPath.indexOf("<>");
-      formattedPath = formattedPath.slice(0, index);
-      let filePath = `${formattedPath}work_v001/${newFileName}.${ext}`;
-
-      let path = `${formattedPath}work_v001/`;
+      let filePath = `${path}${newFileName}.${ext}`;
 
       let data = {
-        "file": newFileName,
         "type": newFileType,
         "id": "new",
         "command": "create_asset_from_existing",
@@ -97,6 +98,21 @@ const NewAssetContainer = ({
           path
         ]
       }
+      ipcRenderer.send("execTask", data);
+    } else {
+      let softType = newFileType == "maya" ? "mayapy" : newFileType == "houdini" ? "hython" : "";
+      let ext = newFileType == "maya" ? "ma" : newFileType == "houdini" ? "hipnc" : "nk";
+      let filePath = `${path}${newFileName}.${ext}`;
+
+      let data = {
+        "type": softType,
+        "id": softType,
+        "command": "create_asset",
+        "arguments": [
+          filePath
+        ]
+      }
+
       ipcRenderer.send("execTask", data);
     }
   }
@@ -146,6 +162,29 @@ const NewAssetContainer = ({
                     option2="Shots"
                     value2="shot"
                     onChange={(choice) => setAssetIdValue("pathType", choice)}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="new-asset-option-row">
+              <div className="new-asset-option">
+                <div className="new-asset-option-title">
+                  <h3>Dimension:</h3>
+                </div>
+                <div className="new-asset-dropdown new-asset-file-type-list">
+                  <RadioButton
+                    theme={theme}
+                    primaryColor={primaryColor}
+                    label="3d"
+                    checked={assetId["dimension"] == "3d"}
+                    onCheck={() => setAssetIdValue("dimension", "3d")}
+                  />
+                  <RadioButton
+                    theme={theme}
+                    primaryColor={primaryColor}
+                    label="2d"
+                    checked={assetId["dimension"] == "2d"}
+                    onCheck={() => setAssetIdValue("dimension", "2d")}
                   />
                 </div>
               </div>
@@ -261,6 +300,7 @@ const NewAssetContainer = ({
                     label="Use existing file or template"
                     checked={useExistingFile}
                     // onCheck={() => setUseExistingFile(!useExistingFile)}
+                    onCheck={() => console.log("noooo")}
                   />
                 </div>
                 {useExistingFile ?
