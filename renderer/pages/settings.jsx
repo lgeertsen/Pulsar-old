@@ -246,7 +246,7 @@ export default class Settings extends React.Component {
           <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet"/>
           <link href="https://fonts.googleapis.com/css?family=Big+Shoulders+Text:400,500,700&display=swap" rel="stylesheet"/>
           {/* <link href="./static/fontawesome/css/all.css" rel="stylesheet"/> */}
-          <link href="./static/line-awesome/css/line-awesome.min.css" rel="stylesheet"/>
+          <link href="line-awesome/css/line-awesome.min.css" rel="stylesheet"/>
         </Head>
 
         <Nav
@@ -283,9 +283,9 @@ export default class Settings extends React.Component {
         <style jsx global>{`
           @font-face {
               font-family: 'Architectural';
-              src: url('./static/architectural/Architectural.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-                   url('./static/architectural/Architectural.woff') format('woff'), /* Modern Browsers */
-                   url('./static/architectural/Architectural.ttf') format('truetype'); /* Safari, Android, iOS */
+              src: url('architectural/Architectural.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                   url('architectural/Architectural.woff') format('woff'), /* Modern Browsers */
+                   url('architectural/Architectural.ttf') format('truetype'); /* Safari, Android, iOS */
                        font-style: normal;
               font-weight: normal;
               text-rendering: optimizeLegibility;
@@ -293,8 +293,8 @@ export default class Settings extends React.Component {
 
           @font-face {
               font-family: 'Apex Mk3 ExtraLight';
-              src: url('./static/Apex/apex_mk3-extralight-webfont.woff2') format('woff2'),
-                   url('./static/Apex/apex_mk3-extralight-webfont.woff') format('woff');
+              src: url('Apex/apex_mk3-extralight-webfont.woff2') format('woff2'),
+                   url('Apex/apex_mk3-extralight-webfont.woff') format('woff');
               font-weight: normal;
               font-style: normal;
           }

@@ -272,19 +272,19 @@ const NewAssetContainer = ({
                 <div className="new-asset-dropdown new-asset-file-type-list">
                   <div className={newFileType == "maya" ? `new-asset-file-type selected` : `new-asset-file-type`} onClick={(e) => setNewFileType("maya")}>
                     <div className="new-asset-type-file-type-img">
-                      <img src="./static/maya.png"/>
+                      <img src="softwareLogos/maya.png"/>
                     </div>
                     {/* <div className="new-asset-file-type-title">Maya</div> */}
                   </div>
                   <div className={newFileType == "houdini" ? `new-asset-file-type selected` : `new-asset-file-type`} onClick={(e) => setNewFileType("houdini")}>
                     <div className="new-asset-type-file-type-img">
-                      <img src="./static/houdini.png"/>
+                      <img src="softwareLogos/houdini.png"/>
                     </div>
                     {/* <div className="new-asset-file-type-title">Houdini</div> */}
                   </div>
                   <div className={newFileType == "nuke" ? `new-asset-file-type selected` : `new-asset-file-type`} onClick={(e) => setNewFileType("nuke")}>
                     <div className="new-asset-type-file-type-img">
-                      <img src="./static/nuke.png"/>
+                      <img src="softwareLogos/nuke.png"/>
                     </div>
                     {/* <div className="new-asset-file-type-title">Nuke</div> */}
                   </div>

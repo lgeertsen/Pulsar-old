@@ -47,14 +47,27 @@ export default class Renderer {
     });
 
     ipcMain.on("selectDirectory", (event, data) => {
-      dialog.showOpenDialog({ properties: ['openDirectory'] }, (dir) => {
-        event.sender.send('selectedDirectory', dir[0]);
+      dialog.showOpenDialog(this._mainWindow, { properties: ['openDirectory'] }, (dir) => {
+        if(dir.length > 0) {
+          event.sender.send('selectedDirectory', dir[0]);
+        }
+      });
+    });
+
+    ipcMain.on("selectSoftwarePath", (event, data) => {
+      dialog.showOpenDialog(this._mainWindow, { properties: ['openFile'], filters: [{name: "Executables", extensions: ["exe"]}] }, (files) => {
+        if(files.length > 0) {
+          data.path = files[0]
+          event.sender.send('selectedSoftwarePath', data);
+        }
       });
     });
 
     ipcMain.on("selectFile", (event, data) => {
-      dialog.showOpenDialog({ properties: ['openFile'], filters: data.extensions }, (files) => {
-        event.sender.send(data.response, files[0]);
+      dialog.showOpenDialog(this._mainWindow, { properties: ['openFile'], filters: data.extensions }, (files) => {
+        if(files.length > 0) {
+          event.sender.send(data.response, files[0]);
+        }
       });
     });
 
