@@ -55,3 +55,7 @@ An example config file can be found in `nodes/.node.json`
 * Unity
 * UE
 * Mari
+* davinci resolve
+* natron
+* after effects
+* premier pro
