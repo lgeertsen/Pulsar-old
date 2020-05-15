@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import CheckBox from '../components/CheckBox'
-import RadioButton from '../components/RadioButton';
 import RadioButton from '../components/RadioButton'
 
 const FiltersContainer = ({ theme, primaryColor, filters, setFilter }) => {
@@ -42,20 +41,7 @@ const FiltersContainer = ({ theme, primaryColor, filters, setFilter }) => {
                       />
                    }
                 </div>
-              ))
-            :
-              Object.keys(filters[filter].options).map((option, index) => (
-                <div key={index} className="filter-option">
-                <CheckBox
-                theme={theme}
-                primaryColor={primaryColor}
-                label={(option.charAt(0).toUpperCase() + option.slice(1)).split("_").join(" ")}
-                checked={filters[filter].options[option]}
-                onCheck={() => setFilter(filter, option, !filters[filter].options[option])}
-                />
-                </div>
-              ))
-            }
+              ))}
 
             </div>
           ))}

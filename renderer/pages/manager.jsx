@@ -60,7 +60,7 @@ export default class Manager extends React.Component {
           }
         },
         pathType: {
-          type: "radioButton",
+          type: "radio",
           options: {
             scene: true,
             render: false,
@@ -174,16 +174,8 @@ export default class Manager extends React.Component {
 
   setFilter(filter, option, value) {
     let filters = this.state.filters;
-    if(filters[filter].type == "radio") {
-      for(let i in filters[filter].options) {
-        filters[filter].options[i] = false;
-      }
-      filters[filter].options[option] = true;
-      this.setAssetIdValue("fileManager", "dimension", option == "_3D" ? "3d" : "2d");
-    } else {
-      filters[filter].options[option] = value;
-    }
-    if(filters[filter].type === "radioButton"){
+
+    if(filters[filter].type === "radio"){
       let keys = Object.keys(filters[filter].options);
       for (let i = 0; i < keys.length; i++) {
         filters[filter].options[keys[i]] = false;
@@ -191,6 +183,9 @@ export default class Manager extends React.Component {
       filters[filter].options[option] = true;
       if(filter == "pathType") {
         this.setAssetIdValue("fileManager", "pathSubType", option);
+      }
+      if(filter == "scened2D3D") {
+        this.setAssetIdValue("fileManager", "dimension", option == "_3D" ? "3d" : "2d");
       }
     }
     else {
