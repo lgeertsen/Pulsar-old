@@ -40,6 +40,7 @@
     "electron-store": "^5.0.0",
     "electron-updater": "^4.2.5",
     "express": "^4.17.1",
+    "fileseq": "^0.0.3",
     "glob": "^7.1.6",
     "kind-of": "^6.0.3",
     "match-sorter": "^4.0.2",
