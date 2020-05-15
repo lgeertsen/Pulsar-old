@@ -5,33 +5,32 @@ import matchSorter from 'match-sorter';
 const Autocomplete = ({
   theme,
   primaryColor,
-  assetId,
-  setAssetIdValue,
-  type,
-  value
+  setValue,
+  items,
+  value,
+  placeholder
 }) => {
-  const autocompleteHandleChange = (type, changes) => {
+  const autocompleteHandleChange = (changes) => {
     if (changes.hasOwnProperty('selectedItem')) {
-      setAssetIdValue(type, changes.selectedItem)
+      setValue(changes.selectedItem)
     } else if (changes.hasOwnProperty('inputValue')) {
-      setAssetIdValue(type, changes.inputValue)
+      setValue(changes.inputValue)
     }
   }
 
-  const getItems = (type, filter) => {
-    console.log(assetId);
+  const getItems = (filter) => {
     return filter
-      ? matchSorter(assetId[type], filter)
-      : assetId[type]
+      ? matchSorter(items, filter)
+      : items
   }
 
-  function getStringItems(type, filter) {
-    return getItems(type, filter)
+  function getStringItems(filter) {
+    return getItems(filter)
   }
 
   return (
     <div>
-    <Downshift selectedItem={assetId[value]} onStateChange={(changes) => autocompleteHandleChange(value, changes)}>
+    <Downshift selectedItem={value} onStateChange={(changes) => autocompleteHandleChange(changes)}>
       {({
         getLabelProps,
         getInputProps,
@@ -49,7 +48,7 @@ const Autocomplete = ({
             <input className={"autocomplete-input " + theme}
               {...getInputProps({
                 // isOpen,
-                placeholder: 'Enter a name',
+                placeholder: placeholder,
               })}
             />
             {selectedItem ? (
@@ -70,7 +69,7 @@ const Autocomplete = ({
                 {...getMenuProps({isOpen})}
               >
               {isOpen ?
-                getStringItems(type, inputValue).map((item, index) => (
+                getStringItems(inputValue).map((item, index) => (
                   <div className={"autocomplete-item " + theme}
                     key={index}
                     {...getItemProps({

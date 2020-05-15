@@ -113,4 +113,4 @@ class Pulsar():
         return hdefereval.executeInMainThreadWithResult(func, *args)
 
 
-Pulsar()
+# Pulsar()

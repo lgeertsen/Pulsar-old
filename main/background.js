@@ -1,6 +1,7 @@
 import path from 'path';
 import { app, ipcMain, globalShortcut } from 'electron';
 import serve from 'electron-serve';
+const {autoUpdater} = require("electron-updater");
 import {
   createWindow,
   exitOnChange,
@@ -11,6 +12,23 @@ import {
 import Server from "./Server";
 const server = new Server();
 
+setInterval(() => {
+  try {
+    autoUpdater.checkForUpdates()
+  } catch (e) {
+    console.error("Cannont update");
+    console.error(e);
+  }
+}, 1000 * 60);
+
+autoUpdater.on('update-available', () => {
+  console.log("----- update available -----");
+});
+
+autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+  console.log("update-downloaded");
+  autoUpdater.quitAndInstall();
+});
 // import {PythonShell} from 'python-shell';
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -52,6 +70,7 @@ if (isProd) {
     minWidth: 1200,
     minHeight: 800,
     frame: true,
+    title: "Pulsar",
     icon: path.join(__dirname, '../main/pulsar.png')
   });
 

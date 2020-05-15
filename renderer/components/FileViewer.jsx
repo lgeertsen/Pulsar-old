@@ -5,7 +5,16 @@ import CheckBox from './CheckBox'
 import CommentContainer from '../containers/CommentContainer';
 import Modal from './Modal';
 
-const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName, refresh }) => {
+const tags = [
+  "DONE",
+  "RETAKE",
+  "TODO",
+  "VALID",
+  "WFA",
+  "WIP"
+]
+
+const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName, refresh, saveTag, deleteTag }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -86,6 +95,16 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
     setNewFileName(value);
   }
 
+  const addTag = e => {
+    e.preventDefault();
+    if(newTag.trim() == "") {
+      setNewTag("");
+      return;
+    }
+    saveTag(newTag);
+    setNewTag("");
+  }
+
   const getSize = bytes => {
     let suffixes =  ["B", "KB", "MB", "GB", "TB"];
     let counter = 0;
@@ -114,22 +133,25 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
                   <div key={index} className="control">
                     <div className="tags has-addons">
                       <span className={`tag tag-${tag.toLowerCase()}`}>{tag}</span>
-                      <a className="tag is-delete"></a>
+                      <a className="tag is-delete" onClick={(e) => deleteTag(tag)}></a>
                     </div>
                   </div>
                 ))}
-                <form onSubmit={(event) => console.log(event)}>
+                <form onSubmit={(e) => addTag(e)}>
                   <div className="field has-addons">
-                    <div className="control">
-                      <input className="input" type="text" placeholder="Add Tag" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
-                      {/* <Autocomplete
+                    <div className={"tag-autocomplete control " + theme}>
+                      {/* <input className="input" type="text" placeholder="Add Tag" value={newTag} onChange={(e) => setNewTag(e.target.value)}/> */}
+                      <Autocomplete
                         theme={theme}
                         primaryColor={primaryColor}
-
-                      /> */}
+                        setValue={value => setNewTag(value)}
+                        items={tags}
+                        value={newTag}
+                        placeholder="Enter Tag"
+                      />
                     </div>
                     <div className="control">
-                      <input className={"button " + theme} type="submit" value="Add" />
+                      <input className={"button " + theme} value="Add" type="submit" />
                     </div>
                   </div>
                 </form>
@@ -203,7 +225,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
               <div className="software-selection">
                 {softwares.map((soft, index) => (
                   <div key={index} className={soft.id == selectedSoftware ? "software selected " + theme : "software " + theme} onClick={(e) => onClickSoft(soft.id, soft.software)}>
-                    <img className="software-img" src={"./static/" + soft.software + ".png"}></img>
+                    <img className="software-img" src={"softwareLogos/" + soft.software + ".png"}></img>
                     <span>{soft.saved == 1 ? soft.scene : soft.scene + "*"}</span>
                   </div>
                 ))}

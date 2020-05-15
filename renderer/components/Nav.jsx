@@ -31,15 +31,15 @@ export default class Nav extends React.Component {
             <div className={this.props.page == "manager" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/manager')}>
               <i className="las la-folder-open"></i>
             </div>
-            <div className={this.props.page == "graph" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/graph')}>
+            {/* <div className={this.props.page == "graph" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/graph')}>
               <i className="las la-project-diagram"></i>
-            </div>
-            <div className={this.props.page == "farm" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
+            </div> */}
+            {/* <div className={this.props.page == "farm" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
               <i className="las la-tractor"></i>
-            </div>
-            <div className={this.props.page == "vyewer" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
+            </div> */}
+            {/* <div className={this.props.page == "vyewer" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
               <i className="las la-photo-video"></i>
-            </div>
+            </div> */}
             <div className={this.props.page == "settings" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/settings')}>
               <i className="las la-cog"></i>
             </div>
@@ -61,23 +61,23 @@ export default class Nav extends React.Component {
           <div className="nav-menu">
             <div className={this.props.page == "manager" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/manager')}>
               <i className="las la-folder-open"></i>
-              <div className="nav-item-title">Asset Manager</div>
+              <div className="nav-item-title">ASSET MANAGER</div>
             </div>
-            <div className={this.props.page == "graph" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/graph')}>
+            {/* <div className={this.props.page == "graph" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/graph')}>
               <i className="las la-project-diagram"></i>
               <div className="nav-item-title">Graph Editor</div>
-            </div>
-            <div className={this.props.page == "farm" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
+            </div> */}
+            {/* <div className={this.props.page == "farm" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
               <i className="las la-tractor"></i>
               <div className="nav-item-title">Render Farm</div>
-            </div>
-            <div className={this.props.page == "vyewer" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
+            </div> */}
+            {/* <div className={this.props.page == "vyewer" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
               <i className="las la-photo-video"></i>
               <div className="nav-item-title">Vyewer</div>
-            </div>
+            </div> */}
             <div className={this.props.page == "settings" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/settings')}>
               <i className="las la-cog"></i>
-              <div className="nav-item-title">Settings</div>
+              <div className="nav-item-title">SETTINGS</div>
             </div>
           </div>
         </div>

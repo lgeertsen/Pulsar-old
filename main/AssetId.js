@@ -7,6 +7,7 @@ const typeToDirMap = {
   project:  "groups",
   pathType: "groups",
   pathSubType: "groups",
+  dimension: "groups",
   group:    "names",
   name:     "tasks",
   task:     "subtasks",
@@ -17,6 +18,7 @@ const typeToClearMap = {
   project:  ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   pathType: ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   pathSubType: ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
+  dimension: ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   group:    ["name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   name:     ["task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
   task:     ["subtask", "subtasks", "state", "version", "file", "files"],
@@ -35,7 +37,7 @@ export default class AssetId {
     this._projects = projects
 
     this._project = "<>";
-    this._dimension = "*";
+    this._dimension = "3d";
     this._group = "<>";
     this._name = "<>";
     this._task = "<>";
@@ -72,6 +74,7 @@ export default class AssetId {
   set project (project) { this._project = project }
   get projectName () { return this._project }
   get projects () { return Object.keys(this._projects) }
+  set projects (projects) { this._projects = projects }
 
   get dimension () { return this._dimension }
   set dimension (dimension) { this._dimension = dimension }
@@ -174,24 +177,27 @@ export default class AssetId {
 
   formatForRender() {
     let asset = {
-      sid:        this.sid,
+      sid:         this.sid,
 
-      projects:   this.projects,
-      project:    this.projectName,
-      pathType:   this.pathType,
+      path:        this.path,
       pathSubType: this._pathSubType,
-      dimension:  this.dimension,
-      group:      this.group == "<>" ? "" : this.group,
-      name:       this.name == "<>" ? "" : this.name,
-      task:       this.task == "<>" ? "" : this.task,
-      subtask:    this.subtask == "<>" ? "" : this.subtask,
-      file:       this.formatFile == "<>" ? "" : this.formatFile,
 
-      groups:     this.groups,
-      names:      this.names,
-      tasks:      this.tasks,
-      subtasks:   this.subtasks,
-      files:      this.formatFiles(),
+      projects:    this.projects,
+      project:     this.projectName,
+      projectPath: this.project,
+      pathType:    this.pathType,
+      dimension:   this.dimension,
+      group:       this.group == "<>" ? "" : this.group,
+      name:        this.name == "<>" ? "" : this.name,
+      task:        this.task == "<>" ? "" : this.task,
+      subtask:     this.subtask == "<>" ? "" : this.subtask,
+      file:        this.formatFile == "<>" ? "" : this.formatFile,
+
+      groups:      this.groups,
+      names:       this.names,
+      tasks:       this.tasks,
+      subtasks:    this.subtasks,
+      files:       this.formatFiles(),
     }
 
     this._sendToRenderer(asset);
@@ -204,5 +210,26 @@ export default class AssetId {
       files.push(file);
     }
     return files;
+  }
+
+  saveComment(comment) {
+    if(this._file == "<>") {
+      return;
+    }
+    this._file.saveComment(comment);
+  }
+
+  saveTag(tag) {
+    if(this._file == "<>") {
+      return;
+    }
+    this._file.saveTag(tag);
+  }
+
+  deleteTag(tag) {
+    if(this._file == "<>") {
+      return;
+    }
+    this._file.deleteTag(tag);
   }
 }

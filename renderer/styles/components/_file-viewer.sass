@@ -39,7 +39,19 @@
     margin-bottom: 8px
 
     &.button
+      height: 32px
       width: 40px
+      padding-left: 3px
+      padding-right: 3px
+
+  .tag-autocomplete
+    height: 32px
+    border-top-left-radius: 4px
+    border-bottom-left-radius: 4px
+
+    @include themify($themes)
+      color: themed('text')
+      background-color: themed('bg')
 
 .commands-container
   height: 40px

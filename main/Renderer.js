@@ -51,8 +51,27 @@ export default class Renderer {
     });
 
     ipcMain.on("selectDirectory", (event, data) => {
-      dialog.showOpenDialog({ properties: ['openDirectory'] }, (dir) => {
-        event.sender.send('selectedDirectory', dir[0]);
+      dialog.showOpenDialog(this._mainWindow, { properties: ['openDirectory'] }, (dir) => {
+        if(dir.length > 0) {
+          event.sender.send('selectedDirectory', dir[0]);
+        }
+      });
+    });
+
+    ipcMain.on("selectSoftwarePath", (event, data) => {
+      dialog.showOpenDialog(this._mainWindow, { properties: ['openFile'], filters: [{name: "Executables", extensions: ["exe"]}] }, (files) => {
+        if(files.length > 0) {
+          data.path = files[0]
+          event.sender.send('selectedSoftwarePath', data);
+        }
+      });
+    });
+
+    ipcMain.on("selectFile", (event, data) => {
+      dialog.showOpenDialog(this._mainWindow, { properties: ['openFile'], filters: data.extensions }, (files) => {
+        if(files.length > 0) {
+          event.sender.send(data.response, files[0]);
+        }
       });
     });
 
@@ -74,9 +93,16 @@ export default class Renderer {
 
     ipcMain.on("saveComment", (event, data) => {
       console.log("----- save comment -----", data);
-      // socket.emit("saveComment", data);
+      this._server._assetIds[data.sid].saveComment(data.comment);
     });
 
+    ipcMain.on("saveTag", (event, data) => {
+      this._server._assetIds[data.sid].saveTag(data.tag);
+    });
+
+    ipcMain.on("deleteTag", (event, data) => {
+      this._server._assetIds[data.sid].deleteTag(data.tag);
+    });
 
     ipcMain.on("refresh", (event) => {
       console.log("----- refresh browser -----");

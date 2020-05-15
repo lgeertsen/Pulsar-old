@@ -1,3 +1,5 @@
+import { unlink, writeFile } from 'fs';
+
 import Logger from './Logger';
 
 export default class File {
@@ -21,6 +23,48 @@ export default class File {
   get path () { return this._path }
   get size () { return this._size }
   set size (size) { this._size = size }
+
+  saveComment(comment) {
+    this._comment = comment;
+    let splitPath = this._path.split("/");
+    let i = splitPath.length - 1;
+    splitPath[i] = "comment.txt";
+    let path = splitPath.join("/");
+
+    writeFile(path, comment, err => {
+      if (err) return console.log(err);
+      console.log("comment saved");
+    });
+  }
+
+  saveTag(tag) {
+    this._tags.push(tag);
+    let splitPath = this._path.split("/");
+    let i = splitPath.length - 1;
+    splitPath[i] = `${tag}.tag`;
+    let path = splitPath.join("/");
+
+    writeFile(path, "", err => {
+      if (err) return console.log(err);
+      console.log("tag saved");
+    });
+  }
+
+  deleteTag(tag) {
+    this._tags.push(tag);
+    let splitPath = this._path.split("/");
+    let i = splitPath.length - 1;
+    splitPath[i] = `${tag}.tag`;
+    let path = splitPath.join("/");
+
+    unlink(path, (err) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      //file removed
+    })
+  }
 
   formatDate() {
     let year = this._modified.getFullYear();

@@ -12,7 +12,6 @@ import FiltersContainer from '../containers/FiltersContainer';
 import Nav from '../components/Nav';
 import NewAssetContainer from '../containers/NewAssetContainer';
 import SearchBar from '../components/SearchBar';
-import SettingsContainer from '../containers/SettingsContainer';
 import Switch from '../components/Switch';
 
 import "../styles/manager.sass"
@@ -45,10 +44,13 @@ export default class Manager extends React.Component {
       newFileName: undefined,
 
       filters: {
-        // scened2D3D: {
-        //   _2D: false,
-        //   _3D: true
-        // },
+        scened2D3D: {
+          type: "radio",
+          options: {
+            _2D: false,
+            _3D: true
+          }
+        },
         state: {
           type: "checkbox",
           options: {
@@ -172,6 +174,15 @@ export default class Manager extends React.Component {
 
   setFilter(filter, option, value) {
     let filters = this.state.filters;
+    if(filters[filter].type == "radio") {
+      for(let i in filters[filter].options) {
+        filters[filter].options[i] = false;
+      }
+      filters[filter].options[option] = true;
+      this.setAssetIdValue("fileManager", "dimension", option == "_3D" ? "3d" : "2d");
+    } else {
+      filters[filter].options[option] = value;
+    }
     if(filters[filter].type === "radioButton"){
       let keys = Object.keys(filters[filter].options);
       for (let i = 0; i < keys.length; i++) {
@@ -236,6 +247,26 @@ export default class Manager extends React.Component {
     let sid = this.state.fileManagerAssetId.sid
     let comment = this.state.fileManagerAssetId.file.comment;
     ipcRenderer.send("saveComment", {sid: sid, comment: comment});
+  }
+
+  saveTag(tag) {
+    let sid = this.state.fileManagerAssetId.sid;
+    let assetId = this.state.fileManagerAssetId;
+    assetId.file.tags.push(tag);
+    this.setState({fileManagerAssetId: assetId});
+    ipcRenderer.send("saveTag", {sid: sid, tag: tag});
+  }
+
+  deleteTag(tag) {
+    let sid = this.state.fileManagerAssetId.sid;
+    let assetId = this.state.fileManagerAssetId;
+    for(let i in assetId.file.tags) {
+      if(assetId.file.tags[i] == tag) {
+        assetId.file.tags.splice(i, 1);
+      }
+    }
+    this.setState({fileManagerAssetId: assetId});
+    ipcRenderer.send("deleteTag", {sid: sid, tag: tag});
   }
 
   getCompatibleSoftware() {
@@ -355,8 +386,9 @@ export default class Manager extends React.Component {
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet"/>
           <link href="https://fonts.googleapis.com/css?family=Big+Shoulders+Text:400,500,700&display=swap" rel="stylesheet"/>
+          <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet"/>
           {/* <link href="./static/fontawesome/css/all.css" rel="stylesheet"/> */}
-          <link href="./static/line-awesome/css/line-awesome.min.css" rel="stylesheet"/>
+          <link href="line-awesome/css/line-awesome.min.css" rel="stylesheet"/>
         </Head>
 
         <Nav
@@ -378,7 +410,7 @@ export default class Manager extends React.Component {
                   <i className="far fa-window-restore"></i>
                 </div>
                 <div className="softwareHeader">
-                  <img className="softwareImg" src={"./static/" + this.state.softwares[softwareId].software + ".png"}></img>
+                  <img className="softwareImg" src={"softwareLogos/" + this.state.softwares[softwareId].software + ".png"}></img>
                   <h4 className="softwareName">{this.state.softwares[softwareId].software.charAt(0).toUpperCase() + this.state.softwares[softwareId].software.slice(1)}</h4>
                 </div>
                 <span className="softwareSceneName"><i className="las la-sync" onClick={(e) => this.reloadSceneName(softwareId)}></i>{this.state.softwares[softwareId].saved == 1 ? this.state.softwares[softwareId].scene : this.state.softwares[softwareId].scene + "*"}</span>
@@ -567,25 +599,25 @@ export default class Manager extends React.Component {
           assetId={this.state.newAssetId}
           setAssetIdValue={(type, element) => this.setAssetIdValue("newAsset", type, element)}
         />
-{/*
-        <SettingsContainer
-          saveShortcut={this.state.saveShortcut}
-          setSaveShortcut={(value) => this.setState({saveShortcut: value})}
-          incrementShortcut={this.state.incrementShortcut}
-          setIncrementShortcut={(value) => this.setState({incrementShortcut: value})}
-          theme={this.state.theme}
-          themeName={this.state.theme}
-          setTheme={(theme) => this.setTheme(theme)}
-          primaryColor={this.state.primaryColor}
-          setPrimaryColor={(color) => this.setPrimaryColor(color)}
-          show={this.state.settingsModal}
-          handleClose={() =>  this.setState({settingsModal: false})}
-          cancelSettings={() => this.cancelSettings()}
-          saveSettings={() => this.saveSettings()}
-        /> */}
 
         <style jsx global>{`
+          @font-face {
+              font-family: 'Architectural';
+              src: url('architectural/Architectural.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                   url('architectural/Architectural.woff') format('woff'), /* Modern Browsers */
+                   url('architectural/Architectural.ttf') format('truetype'); /* Safari, Android, iOS */
+                       font-style: normal;
+              font-weight: normal;
+              text-rendering: optimizeLegibility;
+          }
 
+          @font-face {
+              font-family: 'Apex Mk3 ExtraLight';
+              src: url('Apex/apex_mk3-extralight-webfont.woff2') format('woff2'),
+                   url('Apex/apex_mk3-extralight-webfont.woff') format('woff');
+              font-weight: normal;
+              font-style: normal;
+          }
         `}</style>
         <style jsx>{`
 

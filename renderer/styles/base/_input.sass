@@ -1,4 +1,26 @@
 .input
+  background: transparent
+  border: none
+  box-shadow: none
+
+  &:focus
+    border: none
+    box-shadow: none
+
+  &.border-input
+    border: 1px solid #fff
+
   @include themify($themes)
     color: themed('text')
     background: themed('bg')
+
+.file-cta
+  @include themify($themes)
+    color: themed('text')
+    background-color: themed('bg')
+    border-color: themed('text')
+
+  &:hover
+    @include themify($themes)
+      background-color: themed('bg-bis')
+      color: themed('text')
