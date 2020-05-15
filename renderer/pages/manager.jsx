@@ -44,6 +44,15 @@ export default class Manager extends React.Component {
       newFileName: undefined,
 
       filters: {
+        pathType: {
+          type: "radio",
+          options: {
+            scene: true,
+            render: false,
+            texture: false,
+            cache: false,
+          }
+        },
         scened2D3D: {
           type: "radio",
           options: {
@@ -57,15 +66,6 @@ export default class Manager extends React.Component {
             work: true,
             publish: true,
             wip: false
-          }
-        },
-        pathType: {
-          type: "radio",
-          options: {
-            scene: true,
-            render: false,
-            texture: false,
-            cache: false,
           }
         }
       },
