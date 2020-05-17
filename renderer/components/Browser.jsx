@@ -7,7 +7,7 @@ const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDi
   };
 
     return (
-      <div className={"card browser " + theme}>
+      <div className={"card card-browser " + theme}>
         <header className={"card-header " + theme}>
           <p className={"card-header-title " + theme}>{title}</p>
         </header>

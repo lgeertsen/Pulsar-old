@@ -11,6 +11,7 @@ import Config from './Config';
 import FileManager from './FileManager'
 import Logger from './Logger';
 import NodeManager from './NodeManager';
+import Project from './Project';
 import Renderer from './Renderer';
 import SoftwareSocket from './SoftwareSocket';
 // import router from './Router'
@@ -29,22 +30,23 @@ export default class Server {
 
     this._softwares = {};
 
-    this._assetIds = {}
+    // this._assetIds = {}
+    this._projects = {}
+    this._project = undefined;
   }
 
-  get assetIds () { return this.assetIds }
+  // get assetIds () { return this.assetIds }
 
+  get project() { return this._projects[this._project] }
+  set project(project) { this._project = project }
   set software (software) { this._softwares[software.id] = software }
-
   get softwares () { return this._softwares }
-
   get config () { return this._config }
-
   get nodes () { return this._nodeManager.nodes }
 
   async whenReady() {
     let config = await this._config.readConfig()
-    Logger.list(config);
+    // Logger.list(config);
     this.onConfig("config", config)
     return config
   }
@@ -65,30 +67,40 @@ export default class Server {
     }
     this._nodeManager.importNodes();
 
-
     // this.sendMessageMain(message, config)
-    if(this._assetIds["fileManager"] == undefined) {
-      Logger.info("----- fileManager AssetId doesn't exist -----");
-      let fm = new AssetId("fileManager", config.paths, config.projects, (data) => this.sendMessageMainData("assetId", data));
-      this._assetIds["fileManager"] = fm;
-      let keys = Object.keys(config.projects);
-      if(keys.length > 0) {
-        this.setAssetIdValue("fileManager", "project", keys[0])
-        // fm.project = keys[0];
-      }
-      // fm.formatForRender();
+
+    for(let p in config.projects) {
+      let project = new Project(p, config.projects[p], (data) => this.sendMessageMainData("project", data));
+      this._projects[p] = project;
     }
-    if(this._assetIds["newAsset"] == undefined) {
-      Logger.log("----- newAsset AssetId doesn't exist -----");
-      let na = new AssetId("newAsset", config.paths, config.projects, (data) => this.sendMessageMainData("assetId", data));
-      this._assetIds["newAsset"] = na;
-      let keys = Object.keys(config.projects);
-      if(keys.length > 0) {
-        this.setAssetIdValue("newAsset", "project", keys[0])
-        // na.project = keys[0];
-      }
-      // na.formatForRender();
+
+    let keys = Object.keys(config.projects);
+    if(keys.length > 0) {
+      this._project = keys[0];
     }
+
+    // if(this._assetIds["fileManager"] == undefined) {
+    //   Logger.info("----- fileManager AssetId doesn't exist -----");
+    //   let fm = new AssetId("fileManager", config.paths, config.projects, (data) => this.sendMessageMainData("assetId", data));
+    //   this._assetIds["fileManager"] = fm;
+    //   let keys = Object.keys(config.projects);
+    //   if(keys.length > 0) {
+    //     this.setAssetIdValue("fileManager", "project", keys[0])
+    //     // fm.project = keys[0];
+    //   }
+    //   // fm.formatForRender();
+    // }
+    // if(this._assetIds["newAsset"] == undefined) {
+    //   Logger.log("----- newAsset AssetId doesn't exist -----");
+    //   let na = new AssetId("newAsset", config.paths, config.projects, (data) => this.sendMessageMainData("assetId", data));
+    //   this._assetIds["newAsset"] = na;
+    //   let keys = Object.keys(config.projects);
+    //   if(keys.length > 0) {
+    //     this.setAssetIdValue("newAsset", "project", keys[0])
+    //     // na.project = keys[0];
+    //   }
+    //   // na.formatForRender();
+    // }
   }
 
   setConfig(data) {
@@ -106,7 +118,7 @@ export default class Server {
   setAssetIdValue(sid, type, value) {
     Logger.info(`sid = ${sid}`)
     Logger.warning(`${type}: ${value}`)
-    this._assetIds[sid].setValue(type, value);
+    // this._assetIds[sid].setValue(type, value);
   }
 
   sendMessageMain(message) {

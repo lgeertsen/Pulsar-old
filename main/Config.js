@@ -28,7 +28,6 @@ export default class Config {
 
   readConfig() {
     return new Promise((resolve, reject) => {
-      console.log("----- Read config -----");
       fs.readFile(this._filePath, (err, data) => {
         if (err) {
           console.error(err)

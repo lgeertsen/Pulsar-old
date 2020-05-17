@@ -35,6 +35,15 @@ export default class Manager extends React.Component {
       settingsModal: false,
 
       projects: [],
+      projectName: "",
+      project: {
+        project: "",
+        pathType: "asset",
+        pathSubType: "scene",
+        groups: {},
+        directories: {},
+        directoriesOrder: []
+      },
 
       selectedSoftware: undefined,
       selectedSoftwareType: undefined,
@@ -110,7 +119,8 @@ export default class Manager extends React.Component {
     if(ipcRenderer) {
       ipcRenderer.send("getConfig");
       ipcRenderer.send("getSoftwares");
-      ipcRenderer.send("getAssetId");
+      ipcRenderer.send("getProjects");
+      ipcRenderer.send("getProject");
 
       ipcRenderer.on('config', (event, data) => {
         console.log("----- receive config file -----", data);
@@ -128,6 +138,15 @@ export default class Manager extends React.Component {
         if(data.overlay.increment) {
           this.setState({incrementShortcut: data.overlay.increment})
         }
+      });
+
+      ipcRenderer.on("projects", (event, data) => {
+        this.setState({projects: data.projects, projectName: data.project});
+      });
+
+      ipcRenderer.on("project", (event, data) => {
+        console.log(data);
+        this.setState({project: data});
       });
 
       ipcRenderer.on('assetId', (event, data) => {
@@ -158,6 +177,15 @@ export default class Manager extends React.Component {
         }
       });
     }
+  }
+
+  setProject(project) {
+    ipcRenderer.send("setProject", project);
+    this.setState({projectName: project});
+  }
+
+  setPathType(pathType) {
+    ipcRenderer.send("setPathType", pathType);
   }
 
   setAssetIdValue(sid, type, data) {
@@ -425,21 +453,21 @@ export default class Manager extends React.Component {
                 <Dropdown
                   theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
-                  value={this.state.fileManagerAssetId.project}
-                  options={this.state.fileManagerAssetId.projects}
-                  onChange={(element) => this.setAssetIdValue("fileManager", "project", element)}
+                  value={this.state.projectName}
+                  options={this.state.projects}
+                  onChange={(element) => this.setProject(element)}
                 />
               </div>
               <div className="asset-shot-switch">
                 <Switch
                   theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
-                  value={this.state.fileManagerAssetId.pathType}
+                  value={this.state.project.pathType}
                   option1="Assets"
                   value1="asset"
                   option2="Shots"
                   value2="shot"
-                  onChange={(choice) => this.setAssetIdValue("fileManager", "pathType", choice)}
+                  onChange={(choice) => this.setPathType(choice)}
                 />
               </div>
               <div className="search-bar-container">
@@ -466,7 +494,42 @@ export default class Manager extends React.Component {
 
 
             <div className="browser-container">
-              <div className="browser sequenceBrowser">
+              {this.state.project.directoriesOrder.map((dir, index) => (
+                dir != "file" ?
+                <div className="browser">
+                  <Browser
+                    theme={this.state.theme}
+                    primaryColor={this.state.primaryColor}
+                    title={dir.split("_").join(" ")}
+                    directories={this.state.project.directories[dir]}
+                    onChange={(dir) => this.setAssetIdValue("fileManager", "group", dir)}
+                    selectedDir={this.state.project.groups[dir]}
+                  />
+                  <div className="chevron-container">
+                    <i className="las la-angle-right"></i>
+                  </div>
+                </div>
+                :
+                this.state.filters.pathType.options.render == true ?
+                  <SequenceBrowser
+                    theme={this.state.theme}
+                    primaryColor={this.state.primaryColor}
+                    title="Files"
+                    files={this.filteredFiles()}
+                    onChange={(file) => this.setAssetIdValue("fileManager", "file", file)}
+                    selectedFile={this.state.project.groups.file}
+                  />
+                  :
+                  <FileBrowser
+                    theme={this.state.theme}
+                    primaryColor={this.state.primaryColor}
+                    title="Files"
+                    files={this.filteredFiles()}
+                    onChange={(file) => this.setAssetIdValue("fileManager", "file", file)}
+                    selectedFile={this.state.project.groups.file}
+                  />
+              ))}
+              {/* <div className="browser sequenceBrowser">
                 <Browser
                   theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
@@ -539,14 +602,14 @@ export default class Manager extends React.Component {
                     selectedFile={this.state.fileManagerAssetId.file}
                   />
                 }
-              </div>
+              </div> */}
             </div>
 
 
 
             <div className={this.state.fileManagerAssetId.file == "" ? "file-container" : "file-container open"}>
               {this.state.fileManagerAssetId.file != "" ?
-                this.state.filters.pathType.options.render == true ?
+                this.state.filters.pathType.options.render == true && this.state.fileManagerAssetId.frames != undefined ?
                   <SequenceViewver
                     theme={this.state.theme}
                     primaryColor={this.state.primaryColor}

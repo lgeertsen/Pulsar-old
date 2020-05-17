@@ -35,22 +35,22 @@ const isProd = process.env.NODE_ENV === 'production';
 
 var overlaySoftware = undefined;
 
-var softwares = {};
-var config = {};
-var directories = {
-  type: [],
-  name: [],
-  task: [],
-  subtask: [],
-  file: []
-};
-var assetDirectories = {
-  type: [],
-  name: [],
-  task: [],
-  subtask: [],
-  file: []
-};
+// var softwares = {};
+// var config = {};
+// var directories = {
+//   type: [],
+//   name: [],
+//   task: [],
+//   subtask: [],
+//   file: []
+// };
+// var assetDirectories = {
+//   type: [],
+//   name: [],
+//   task: [],
+//   subtask: [],
+//   file: []
+// };
 
 if (isProd) {
   serve({ directory: 'app' });
@@ -74,8 +74,6 @@ if (isProd) {
     icon: path.join(__dirname, '../main/pulsar.png')
   });
 
-  console.log(path.join(__dirname, '../main/pulsar.png'));
-
   mainWindow.maximize();
 
   // var overlay = createWindow('overlay', {
@@ -93,8 +91,7 @@ if (isProd) {
   server.setWindows(mainWindow, 'overlay')
   server.startServer();
 
-  // let config = server.config.config
-  console.log("-----config-----", config);
+  // console.log("-----config-----", config);
   if(config.firstUsage) {
     const homeUrl = isProd ? 'app://./welcome.html' : 'http://localhost:8888/welcome';
     await mainWindow.loadURL(homeUrl);

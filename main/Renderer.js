@@ -41,9 +41,28 @@ export default class Renderer {
       event.sender.send('nodes', this._server.nodes);
     });
 
-    ipcMain.on("getAssetId", (event) => {
-      this._server._assetIds["fileManager"].formatForRender()
-      this._server._assetIds["newAsset"].formatForRender()
+    ipcMain.on("getProjects", (event) => {
+      let projects = this._server._projects;
+      let projList = []
+      for(let p in projects) {
+        projList.push(p);
+      }
+      let project = this._server._project;
+      event.sender.send("projects", {projects: projList, project: project});
+    });
+
+    ipcMain.on("getProject", (event) => {
+      this._server.project.formatForRender();
+    });
+
+    ipcMain.on("setProject", (event, data) => {
+      this._server._project = data;
+      this._server.project.formatForRender();
+    });
+
+    ipcMain.on("setPathType", (event, data) => {
+      this._server.project.pathType = data;
+      this._server.project.formatForRender();
     });
 
     ipcMain.on("setAssetId", (event, data) => {
