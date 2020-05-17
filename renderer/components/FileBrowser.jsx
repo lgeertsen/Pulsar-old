@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
+const FileBrowser = ({ theme, primaryColor, title, files, onChange, groups }) => {
 
   const [selectedFile, setSelectedFile] = useState(-1);
   const [sortType, setSortType] = useState("version");
@@ -54,18 +54,25 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
                 <i className={sortType == "name" ? sortDirection ? "las la-sort-alpha-down" : "las la-sort-alpha-down-alt" : "las la-sort-alpha-down"}></i>
               </div>
             </div>
-            <div className="pulsar-file-state state-header">
-              <span>State</span>
-              <div className={sortType == "state" ? "icon sort-btn selected " + theme : "icon sort-btn hover-bg-" + primaryColor} onClick={(e) => changeSort("state")}>
-                <i className={sortType == "state" ? sortDirection ? "las la-sort-alpha-down" : "las la-sort-alpha-down-alt" : "las la-sort-alpha-down"}></i>
+            {Object.keys(groups).includes("state") ?
+              <div className="pulsar-file-state state-header">
+                <span>State</span>
+                <div className={sortType == "state" ? "icon sort-btn selected " + theme : "icon sort-btn hover-bg-" + primaryColor} onClick={(e) => changeSort("state")}>
+                  <i className={sortType == "state" ? sortDirection ? "las la-sort-alpha-down" : "las la-sort-alpha-down-alt" : "las la-sort-alpha-down"}></i>
+                </div>
               </div>
-            </div>
-            <div className="pulsar-file-version version-header">
-              <span>Version</span>
-              <div className={sortType == "version" ? "icon sort-btn selected " + theme : "icon sort-btn hover-bg-" + primaryColor} onClick={(e) => changeSort("version")}>
-                <i className={sortType == "version" ? sortDirection ? "las la-sort-numeric-down" : "las la-sort-numeric-down-alt" : "las la-sort-numeric-down"}></i>
+              : ""
+            }
+            {Object.keys(groups).includes("version") ?
+              <div className="pulsar-file-version version-header">
+                <span>Version</span>
+                <div className={sortType == "version" ? "icon sort-btn selected " + theme : "icon sort-btn hover-bg-" + primaryColor} onClick={(e) => changeSort("version")}>
+                  <i className={sortType == "version" ? sortDirection ? "las la-sort-numeric-down" : "las la-sort-numeric-down-alt" : "las la-sort-numeric-down"}></i>
+                </div>
               </div>
-            </div>
+
+              : ""
+            }
             <div className="file-tag tag-header">
               <span>Tags</span>
               <div className={sortType == "tag" ? "icon sort-btn selected " + theme : "icon sort-btn hover-bg-" + primaryColor} onClick={(e) => changeSort("tag")}>
@@ -93,10 +100,10 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
               let name_b = b.name.toLowerCase();
               if(name_a < name_b) { return sortUp; }
               if(name_a > name_b) { return sortDown; }
-            } else if(sortType == "state") {
+            } else if(sortType == "state" && Object.keys(groups).includes("state")) {
               if(a.state < b.state) { return sortUp; }
               if(a.state > b.state) { return sortDown; }
-            } else if(sortType == "version") {
+            } else if(sortType == "version" && Object.keys(groups).includes("version")) {
               if(a.version < b.version) { return sortUp; }
               if(a.version > b.version) { return sortDown; }
             } else if(sortType == "tag") {
@@ -141,12 +148,18 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange }) => {
                 <i className="las la-file"></i>
                 <span>{file.name + "." + file.extension}</span>
               </div>
-              <div className="pulsar-file-state">
-                <span>{file.state}</span>
-              </div>
-              <div className="pulsar-file-version">
-                <span>{file.version}</span>
-              </div>
+              {Object.keys(groups).includes("state") ?
+                <div className="pulsar-file-state">
+                  <span>{file.state}</span>
+                </div>
+                : ""
+              }
+              {Object.keys(groups).includes("version") ?
+                <div className="pulsar-file-version">
+                  <span>{file.version}</span>
+                </div>
+                : ""
+              }
               <div className="file-tag">
                 {file.tags.sort().map((tag, index) => (
                   <div key={index} className={"tag tag-" + tag.toLowerCase()}>

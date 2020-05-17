@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import CheckBox from '../components/CheckBox'
 import RadioButton from '../components/RadioButton'
 
-const FiltersContainer = ({ theme, primaryColor, filters, setFilter }) => {
+const FiltersContainer = ({ theme, primaryColor, filters, setFilter, groups }) => {
   const [open, setOpen] = useState(true);
 
     return (
@@ -18,9 +18,11 @@ const FiltersContainer = ({ theme, primaryColor, filters, setFilter }) => {
             </div>
           </div>
           {Object.keys(filters).map((filter, index) => (
-
+            filter == "scene2D3D" && !Object.keys(groups).includes("dimension") ?
+              ""
+            :
             <div key={index} className={open ? "filter-type" : "filter-type filter-type-closed"}>
-
+              <h6>{filters[filter].title}</h6>
               {Object.keys(filters[filter]['options']).map((option, index) => (
                 <div key={index} className="filter-option">
                   { filters[filter].type == "checkbox" ?

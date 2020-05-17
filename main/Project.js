@@ -5,17 +5,19 @@ export default class Project {
   constructor(name, paths, sendToRenderer) {
     this._name = name;
     this._path = paths["path"];
-    this._asset = {
-      scene: new AssetId(paths["asset"]["scene"], this._path),
-      render: new AssetId(paths["asset"]["render"], this._path),
-      cache: new AssetId(paths["asset"]["cache"], this._path),
-      texture: new AssetId(paths["asset"]["scene"], this._path)
-    };
-    this._shot = {
-      scene: new AssetId(paths["shot"]["scene"], this._path),
-      render: new AssetId(paths["shot"]["render"], this._path),
-      cache: new AssetId(paths["shot"]["cache"], this._path),
-      texture: new AssetId(paths["shot"]["scene"], this._path)
+    this._pathTypes = {
+      "asset": {
+        scene: new AssetId(paths["asset"]["scene"], this._path),
+        render: new AssetId(paths["asset"]["render"], this._path),
+        cache: new AssetId(paths["asset"]["cache"], this._path),
+        texture: new AssetId(paths["asset"]["scene"], this._path)
+      },
+      "shot": {
+        scene: new AssetId(paths["shot"]["scene"], this._path),
+        render: new AssetId(paths["shot"]["render"], this._path),
+        cache: new AssetId(paths["shot"]["cache"], this._path),
+        texture: new AssetId(paths["shot"]["scene"], this._path)
+      }
     }
 
     this._pathType = "asset";
@@ -25,23 +27,22 @@ export default class Project {
   }
 
   set pathType(pathType) { this._pathType = pathType }
+  set pathSubType(pathSubType) { this._pathSubType = pathSubType }
+
+  setDimension(dimension) {
+    this._pathTypes[this._pathType][this._pathSubType].setDimension(dimension);
+  }
+
 
   formatForRender() {
     let directories = {};
     let dirOrder = [];
     let groups = {};
 
-    if(this._pathType == "asset") {
-      let assetId = this._asset[this._pathSubType];
-      directories = assetId.directories;
-      dirOrder = assetId.directoriesOrder;
-      groups = assetId.groups;
-    } else {
-      let assetId = this._shot[this._pathSubType];
-      directories = assetId.directories;
-      dirOrder = assetId.directoriesOrder;
-      groups = assetId.groups;
-    }
+    let assetId = this._pathTypes[this._pathType][this._pathSubType];
+    directories = assetId.directories;
+    dirOrder = assetId.directoriesOrder;
+    groups = assetId.groups;
 
     let asset = {
       project: this._name,

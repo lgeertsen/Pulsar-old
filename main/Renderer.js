@@ -65,6 +65,15 @@ export default class Renderer {
       this._server.project.formatForRender();
     });
 
+    ipcMain.on("setPathSubType", (event, data) => {
+      this._server.project.pathSubType = data;
+      this._server.project.formatForRender();
+    });
+
+    ipcMain.on("dimension", (event, data) => {
+      this._server.project.setDimension(data);
+    });
+
     ipcMain.on("setAssetId", (event, data) => {
       this._server.setAssetIdValue(data.sid, data.type, data.value);
     });

@@ -41,6 +41,7 @@ export default class AssetId {
     let groups = reg[Symbol.split](path);
 
     let finalGroups = {};
+    let groupOrder = [];
     let dirs = {};
     let dirOrder = [];
 
@@ -49,6 +50,7 @@ export default class AssetId {
       if(g[0] == "{" && g[g.length-1] == "}") {
         let group = g.slice(1, -1);
         finalGroups[group] = "<>";
+        groupOrder.push(group);
         // this[group] = "<>";
         if(groups == "dimension") {
           finalGroups[group] = "3d";
@@ -66,6 +68,7 @@ export default class AssetId {
 
     this._groups = finalGroups;
     this._groups.project = project;
+    this._groupOrder = groupOrder;
 
     this._directories = dirs;
     this._directoriesOrder = dirOrder;
@@ -104,6 +107,14 @@ export default class AssetId {
   get directories() { return this._directories }
   get directoriesOrder() { return this._directoriesOrder }
   get groups() { return this._groups }
+
+  setDimension(dimension) {
+    if(Object.keys(this._groups).includes("dimension")) {
+      this.clearValues("dimension");
+      this.setSearchDir("project");
+      this._groups["dimension"] = dimension;
+    }
+  }
 
   // get sid () { return this._sid }
   //
@@ -193,22 +204,44 @@ export default class AssetId {
   //   }
   // }
   //
-  // clearValues(type) {
-  //   let values = typeToClearMap[type];
-  //   if(values) {
-  //     for(let i = 0; i < values.length; i++) {
-  //       if(typeof(this[values[i]]) == "object") {
-  //         this[values[i]] = [];
-  //       } else {
-  //         this[values[i]] = "<>";
-  //       }
-  //     }
-  //   }
-  // }
-  //
-  // setSearchDir(type) {
-  //   this._searchDir = typeToDirMap[type];
-  // }
+  clearValues(type) {
+    let index = this._groupOrder.indexOf(type);
+    if(index == -1) {
+      return
+    }
+
+    for(let i = index+1; i < this._groupOrder.length; i++) {
+      let item = this._groupOrder[i];
+      this._groups[item] = "<>";
+      if(item in this._directoriesOrder) {
+        this._directories[item] = [];
+      }
+    }
+  }
+
+  setSearchDir(type) {
+    console.log("setSearchDir");
+    let index = this._groupOrder.indexOf(type);
+    if(index == -1) {
+      return;
+    }
+
+    index += 1;
+    let group = this._groupOrder[index];
+    while(!(group in this._directories) && index <= this._groupOrder.length) {
+      index += 1;
+      group = this._groupOrder[index];
+      console.log(index);
+      console.log(group);
+    }
+
+    console.log("################");
+    console.log(group);
+    console.log("################");
+
+
+    this._searchDir = group;
+  }
   //
   // setFiles(files) {
   //   this._files = files;

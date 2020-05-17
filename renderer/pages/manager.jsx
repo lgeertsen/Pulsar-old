@@ -54,6 +54,7 @@ export default class Manager extends React.Component {
 
       filters: {
         pathType: {
+          title: "Path Type",
           type: "radio",
           options: {
             scene: true,
@@ -62,7 +63,8 @@ export default class Manager extends React.Component {
             cache: false,
           }
         },
-        scened2D3D: {
+        scene2D3D: {
+          title: "2D/3D",
           type: "radio",
           options: {
             _2D: false,
@@ -70,6 +72,7 @@ export default class Manager extends React.Component {
           }
         },
         state: {
+          title: "State",
           type: "checkbox",
           options: {
             work: true,
@@ -188,6 +191,14 @@ export default class Manager extends React.Component {
     ipcRenderer.send("setPathType", pathType);
   }
 
+  setPathSubType(pathSubType) {
+    ipcRenderer.send("setPathSubType", pathSubType);
+  }
+
+  setDimension(dimension) {
+    ipcRenderer.send("dimension", dimension);
+  }
+
   setAssetIdValue(sid, type, data) {
     ipcRenderer.send("setAssetId", {sid: sid, type: type, value: data});
   }
@@ -210,10 +221,10 @@ export default class Manager extends React.Component {
       }
       filters[filter].options[option] = true;
       if(filter == "pathType") {
-        this.setAssetIdValue("fileManager", "pathSubType", option);
+        this.setPathSubType(option);
       }
-      if(filter == "scened2D3D") {
-        this.setAssetIdValue("fileManager", "dimension", option == "_3D" ? "3d" : "2d");
+      if(filter == "scene2D3D") {
+        this.setDimension(option == "_3D" ? "3d" : "2d");
       }
     }
     else {
@@ -487,6 +498,7 @@ export default class Manager extends React.Component {
                 primaryColor={this.state.primaryColor}
                 filters={this.state.filters}
                 setFilter={(filter, option, value) => this.setFilter(filter, option, value)}
+                groups={this.state.project.groups}
               />
             </div>
 
@@ -527,6 +539,7 @@ export default class Manager extends React.Component {
                     files={this.filteredFiles()}
                     onChange={(file) => this.setAssetIdValue("fileManager", "file", file)}
                     selectedFile={this.state.project.groups.file}
+                    groups={this.state.project.groups}
                   />
               ))}
               {/* <div className="browser sequenceBrowser">
