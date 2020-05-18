@@ -57,17 +57,18 @@ export default class Renderer {
 
     ipcMain.on("setProject", (event, data) => {
       this._server._project = data;
-      this._server.project.formatForRender();
+      this._server.project.getData();
+      // this._server.project.formatForRender();
     });
 
     ipcMain.on("setPathType", (event, data) => {
       this._server.project.pathType = data;
-      this._server.project.formatForRender();
+      // this._server.project.formatForRender();
     });
 
     ipcMain.on("setPathSubType", (event, data) => {
       this._server.project.pathSubType = data;
-      this._server.project.formatForRender();
+      // this._server.project.formatForRender();
     });
 
     ipcMain.on("dimension", (event, data) => {

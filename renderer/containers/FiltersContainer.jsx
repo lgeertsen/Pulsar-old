@@ -18,7 +18,7 @@ const FiltersContainer = ({ theme, primaryColor, filters, setFilter, groups }) =
             </div>
           </div>
           {Object.keys(filters).map((filter, index) => (
-            filter == "scene2D3D" && !Object.keys(groups).includes("dimension") ?
+            (filter == "scene2D3D" && !Object.keys(groups).includes("dimension")) || (filter == "state" && !Object.keys(groups).includes("state")) ?
               ""
             :
             <div key={index} className={open ? "filter-type" : "filter-type filter-type-closed"}>

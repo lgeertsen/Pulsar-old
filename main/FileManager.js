@@ -157,7 +157,7 @@ export default class FileManager {
   }
 
   static formatPath(asset) {
-    let formattedPath = format(asset.path, asset);
+    let formattedPath = format(asset.path, asset.groups);
     return formattedPath;
   }
 

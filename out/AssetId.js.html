@@ -1,4 +1,32 @@
-import File from './File';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: AssetId.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: AssetId.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import File from './File';
 import FileManager from './FileManager';
 import Logger from './Logger';
 import Renderer from './Renderer';
@@ -57,13 +85,13 @@ class AssetId {
     let dirs = {};
     let dirOrder = [];
 
-    for(let i = 0; i < groups.length; i++) {
+    for(let i = 0; i &lt; groups.length; i++) {
       let g = groups[i];
-      if(g[0] == "{" && g[g.length-1] == "}") {
+      if(g[0] == "{" &amp;&amp; g[g.length-1] == "}") {
         let group = g.slice(1, -1);
-        finalGroups[group] = "<>";
+        finalGroups[group] = "&lt;>";
         groupOrder.push(group);
-        // this[group] = "<>";
+        // this[group] = "&lt;>";
         if(group == "dimension") {
           finalGroups[group] = "3d";
         }
@@ -96,17 +124,17 @@ class AssetId {
     //
     // this._projects = projects
     //
-    // this._project = "<>";
+    // this._project = "&lt;>";
     // this._dimension = "3d";
-    // this._group = "<>";
-    // this._name = "<>";
-    // this._task = "<>";
-    // this._subtask = "<>";
-    // this._state = "<>";
-    // this._subtask = "<>";
-    // this._state = "<>";
-    // this._verstion = "<>";
-    // this._file = "<>";
+    // this._group = "&lt;>";
+    // this._name = "&lt;>";
+    // this._task = "&lt;>";
+    // this._subtask = "&lt;>";
+    // this._state = "&lt;>";
+    // this._subtask = "&lt;>";
+    // this._state = "&lt;>";
+    // this._verstion = "&lt;>";
+    // this._file = "&lt;>";
     //
     // // Directories
     // this._groups = [];
@@ -144,7 +172,7 @@ class AssetId {
   /**
    * get groups - Getter of the value of all groups used for formatting the path
    *
-   * @returns {Object}  Object of all groups with their values, "<>" for empty values
+   * @returns {Object}  Object of all groups with their values, "&lt;>" for empty values
    */
   get groups() { return this._groups }
 
@@ -205,10 +233,10 @@ class AssetId {
   //
   // get file () { return this._file.fullName }
   // set file (file) { this._file = file }
-  // get formatFile () { return this._file == "<>" ? "<>" : this._file.format() }
+  // get formatFile () { return this._file == "&lt;>" ? "&lt;>" : this._file.format() }
   //
   //
-  // // Directories get & set
+  // // Directories get &amp; set
   // get groups () { return this._groups }
   // set groups (groups) { this._groups = groups }
   //
@@ -268,12 +296,12 @@ class AssetId {
       return
     }
 
-    for(let i = index+1; i < this._groupOrder.length; i++) {
+    for(let i = index+1; i &lt; this._groupOrder.length; i++) {
       let item = this._groupOrder[i];
       if(item == "dimension") {
         continue;
       }
-      this._groups[item] = "<>";
+      this._groups[item] = "&lt;>";
       if(item in this._directoriesOrder) {
         this._directories[item] = [];
       }
@@ -294,7 +322,7 @@ class AssetId {
 
     index += 1;
     let searchGroup = this._groupOrder[index];
-    while(!(searchGroup in this._directories) && index <= this._groupOrder.length) {
+    while(!(searchGroup in this._directories) &amp;&amp; index &lt;= this._groupOrder.length) {
       index += 1;
       searchGroup = this._groupOrder[index];
     }
@@ -349,11 +377,11 @@ class AssetId {
   //     projectPath: this.project,
   //     pathType:    this.pathType,
   //     dimension:   this.dimension,
-  //     group:       this.group == "<>" ? "" : this.group,
-  //     name:        this.name == "<>" ? "" : this.name,
-  //     task:        this.task == "<>" ? "" : this.task,
-  //     subtask:     this.subtask == "<>" ? "" : this.subtask,
-  //     file:        this.formatFile == "<>" ? "" : this.formatFile,
+  //     group:       this.group == "&lt;>" ? "" : this.group,
+  //     name:        this.name == "&lt;>" ? "" : this.name,
+  //     task:        this.task == "&lt;>" ? "" : this.task,
+  //     subtask:     this.subtask == "&lt;>" ? "" : this.subtask,
+  //     file:        this.formatFile == "&lt;>" ? "" : this.formatFile,
   //
   //     groups:      this.groups,
   //     names:       this.names,
@@ -367,7 +395,7 @@ class AssetId {
   //
   // formatFiles() {
   //   let files = [];
-  //   for(let i = 0; i < this._files.length; i++) {
+  //   for(let i = 0; i &lt; this._files.length; i++) {
   //     let file = this._files[i].formatForRender();
   //     files.push(file);
   //   }
@@ -375,21 +403,21 @@ class AssetId {
   // }
   //
   // saveComment(comment) {
-  //   if(this._file == "<>") {
+  //   if(this._file == "&lt;>") {
   //     return;
   //   }
   //   this._file.saveComment(comment);
   // }
   //
   // saveTag(tag) {
-  //   if(this._file == "<>") {
+  //   if(this._file == "&lt;>") {
   //     return;
   //   }
   //   this._file.saveTag(tag);
   // }
   //
   // deleteTag(tag) {
-  //   if(this._file == "<>") {
+  //   if(this._file == "&lt;>") {
   //     return;
   //   }
   //   this._file.deleteTag(tag);
@@ -397,3 +425,26 @@ class AssetId {
 }
 
 export default AssetId
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AssetId.html">AssetId</a></li><li><a href="Project.html">Project</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Mon May 18 2020 17:01:03 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

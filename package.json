@@ -13,7 +13,8 @@
     "build:win32": "nextron build --win --ia32",
     "build:win64": "nextron build --win --x64",
     "build:mac": "nextron build --mac --x64",
-    "build:linux": "nextron build --linux"
+    "build:linux": "nextron build --linux",
+    "document": "jsdoc"
   },
   "build": {
     "productName": "Pulsar",
@@ -57,6 +58,7 @@
     "chalk": "^3.0.0",
     "electron": "^6.0.10",
     "electron-builder": "^21.2.0",
+    "jsdoc": "^3.6.4",
     "next": "9.3.2",
     "nextron": "^5.11.1",
     "react": "^16.13.0",
