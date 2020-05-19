@@ -18,16 +18,16 @@ class Project {
     this._path = paths["path"];
     this._pathTypes = {
       "asset": {
-        scene: new AssetId(paths["asset"]["scene"], this._path, () => this.formatForRender()),
-        render: new AssetId(paths["asset"]["render"], this._path, () => this.formatForRender()),
-        cache: new AssetId(paths["asset"]["cache"], this._path, () => this.formatForRender()),
-        texture: new AssetId(paths["asset"]["texture"], this._path, () => this.formatForRender())
+        scene: new AssetId("scene", paths["asset"]["scene"], this._path, () => this.formatForRender()),
+        render: new AssetId("render", paths["asset"]["render"], this._path, () => this.formatForRender()),
+        cache: new AssetId("cache", paths["asset"]["cache"], this._path, () => this.formatForRender()),
+        texture: new AssetId("texture", paths["asset"]["texture"], this._path, () => this.formatForRender())
       },
       "shot": {
-        scene: new AssetId(paths["shot"]["scene"], this._path, () => this.formatForRender()),
-        render: new AssetId(paths["shot"]["render"], this._path, () => this.formatForRender()),
-        cache: new AssetId(paths["shot"]["cache"], this._path, () => this.formatForRender()),
-        texture: new AssetId(paths["shot"]["texture"], this._path, () => this.formatForRender())
+        scene: new AssetId("scene", paths["shot"]["scene"], this._path, () => this.formatForRender()),
+        render: new AssetId("render", paths["shot"]["render"], this._path, () => this.formatForRender()),
+        cache: new AssetId("cache", paths["shot"]["cache"], this._path, () => this.formatForRender()),
+        texture: new AssetId("texture", paths["shot"]["texture"], this._path, () => this.formatForRender())
       }
     }
 
@@ -42,7 +42,6 @@ class Project {
    * set pathType - pathType setter
    *
    * @param  {string} pathType "asset" or "shot"
-   * @returns {void}             void
    */
   set pathType(pathType) {
     this._pathType = pathType;
@@ -57,7 +56,6 @@ class Project {
    * set pathSubType - pathSubType setter
    *
    * @param  {string} pathSubType "scene", "render", "texture" or "cache"
-   * @returns {void}             void
    */
   set pathSubType(pathSubType) {
     this._pathSubType = pathSubType
@@ -72,7 +70,6 @@ class Project {
    * setDimension - set the dimension of the current used AssetId of the project
    *
    * @param  {string} dimension "3d" or "2d"
-   * @returns {void}           void
    */
   setDimension(dimension) {
     this._pathTypes[this._pathType][this._pathSubType].setDimension(dimension);
@@ -82,17 +79,30 @@ class Project {
   /**
    * getData - Get the files/directories found for the current selected AssetId of the project
    *
-   * @returns {type}  description
    */
   getData() {
+    let assetId = this._pathTypes[this._pathType][this._pathSubType];
+    assetId.clearValues("project");
+    assetId.setSearchDir("project");
     assetId.searchNext();
+  }
+
+
+  /**
+   * setGroupValue - Set the value of a group in the current selected AssetId
+   *
+   * @param  {string} group name of the group
+   * @param  {string} value     the value the set for the group
+   */
+  setGroupValue(group, value) {
+    let assetId = this._pathTypes[this._pathType][this._pathSubType];
+    assetId.setGroupValue(group, value);
   }
 
 
   /**
    * formatForRender - Format the data of the project into an Object to send to the Render Screen
    *
-   * @returns {void}  void   
    */
   formatForRender() {
     let directories = {};

@@ -33,15 +33,17 @@ class AssetId {
   /**
    * constructor - Construcor for an AssetId
    *
+   * @param  {string} type            The type of the path
    * @param  {string} path            Unformatted path used to descripe the path to find files
    * @param  {string} project         The name of the project where the AssetId belongs to
    * @param  {type} formatForRender   Function to send the assetId to the Render Screen
    * @returns {AssetId}               AssetId Object
    */
-  constructor(path, project, formatForRender) {
+  constructor(type, path, project, formatForRender) {
     let reg = /({[\w|\d]*})+/;
     // console.log(reg[Symbol.split](path);
 
+    this._type = type;
     this._path = path;
 
     // let pathsSetup = {}
@@ -153,7 +155,6 @@ class AssetId {
    * setDimension - Setter for the "dimension" group if it exists
    *
    * @param  {string} dimension "3d" or "2d"
-   * @returns {void}           void
    */
   setDimension(dimension) {
     if(Object.keys(this._groups).includes("dimension")) {
@@ -255,12 +256,17 @@ class AssetId {
   //
   //
 
+  setGroupValue(group, value) {
+    this.clearValues(group);
+    this.groups[group] = value;
+    this.setSearchDir(group);
+    this.searchNext();
+  }
 
   /**
    * clearValues - function to clear all groups and directories that come after the given group in the groupOrder Array
    *
    * @param  {string} group   the name of the group for wich all groups that come after in the groupOrder list should be cleared
-   * @returns {void}      void
    */
   clearValues(group) {
     let index = this._groupOrder.indexOf(group);
@@ -274,7 +280,11 @@ class AssetId {
         continue;
       }
       this._groups[item] = "<>";
-      if(item in this._directoriesOrder) {
+      console.log("#############");
+      console.log(item);
+      console.log(this._directoriesOrder);
+      if(item in this._directories) {
+        console.log("sqdkjfsqmlkjfdsq " + item);
         this._directories[item] = [];
       }
     }
@@ -284,7 +294,6 @@ class AssetId {
    * setSearchDir - Find the next name of the next group for wich directories or files should be searched for on disk
    *
    * @param  {string} group the name of the last set group variable
-   * @returns {void}      void
    */
   setSearchDir(group) {
     let index = this._groupOrder.indexOf(group);
@@ -306,12 +315,15 @@ class AssetId {
   /**
    * searchNext - Search disk for the files/directories based on the value of _searchGroup
    *
-   * @returns {void}  void
    */
   searchNext() {
     if(this._searchGroup != undefined) {
-      if(this._searchGroup == "files") {
-
+      if(this._searchGroup == "file") {
+        if(this._type == "render"){
+          // FileManager.getSequenceFiles(this, (files) => this.setFiles(files));
+        } else {
+          FileManager.getFiles(this, (files) => this.setFiles(files));
+        }
       } else {
         FileManager.getDirectories(this, (dirs) => this.setDirs(dirs));
       }
@@ -327,7 +339,6 @@ class AssetId {
    * setDirs - Set the found directories and send the AssetId to the Screen Renderer
    *
    * @param  {Array} dirs Array of directories
-   * @returns {void}      void
    */
   setDirs(dirs) {
     let formattedDirs = FileManager.formatDirs(dirs);
@@ -336,6 +347,19 @@ class AssetId {
 
     this._formatForRender();
   }
+
+
+  /**
+   * setFiles - Set the found files and send the AssetId to the Screen Renderer
+   *
+   * @param  {Array} files Array of files
+   */
+  setFiles(files) {
+    this._directories["file"] = files
+
+    this._formatForRender();
+  }
+
   //
   // formatForRender() {
   //   let asset = {

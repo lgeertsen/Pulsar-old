@@ -52,7 +52,7 @@ export default class Renderer {
     });
 
     ipcMain.on("getProject", (event) => {
-      this._server.project.formatForRender();
+      this._server.project.getData();
     });
 
     ipcMain.on("setProject", (event, data) => {
@@ -73,6 +73,10 @@ export default class Renderer {
 
     ipcMain.on("dimension", (event, data) => {
       this._server.project.setDimension(data);
+    });
+
+    ipcMain.on("setGroupValue", (event, data) => {
+      this._server.project.setGroupValue(data.group, data.value);
     });
 
     ipcMain.on("setAssetId", (event, data) => {

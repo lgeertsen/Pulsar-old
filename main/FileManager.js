@@ -21,7 +21,7 @@ export default class FileManager {
     });
   }
 
-  static getProjectFiles(asset, cb) {
+  static getFiles(asset, cb) {
     FileManager.getDirectories(asset, dirs => {
       let allFiles = [];
       let formattedDirs = FileManager.formatDirs(dirs);

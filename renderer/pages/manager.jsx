@@ -199,6 +199,10 @@ export default class Manager extends React.Component {
     ipcRenderer.send("dimension", dimension);
   }
 
+  setGroupValue(group, value) {
+    ipcRenderer.send("setGroupValue", {group: group, value: value});
+  }
+
   setAssetIdValue(sid, type, data) {
     ipcRenderer.send("setAssetId", {sid: sid, type: type, value: data});
   }
@@ -514,7 +518,7 @@ export default class Manager extends React.Component {
                     primaryColor={this.state.primaryColor}
                     title={dir.split("_").join(" ")}
                     directories={this.state.project.directories[dir]}
-                    onChange={(dir) => this.setAssetIdValue("fileManager", "group", dir)}
+                    onChange={(value) => this.setGroupValue(dir, value)}
                     selectedDir={this.state.project.groups[dir]}
                   />
                   <div className="chevron-container">
