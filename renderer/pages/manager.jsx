@@ -42,7 +42,8 @@ export default class Manager extends React.Component {
         pathSubType: "scene",
         groups: {},
         directories: {},
-        directoriesOrder: []
+        directoriesOrder: [],
+        file: {}
       },
 
       selectedSoftware: undefined,
@@ -148,6 +149,7 @@ export default class Manager extends React.Component {
       });
 
       ipcRenderer.on("project", (event, data) => {
+        console.log("received DATA");
         console.log(data);
         this.setState({project: data});
       });
@@ -238,22 +240,28 @@ export default class Manager extends React.Component {
   }
 
   filteredFiles() {
-    let files = this.state.fileManagerAssetId.files;
-    let filteredFiles = [];
+    let files = this.state.project.directories.file;
 
-    let filters = this.state.filters;
-    for(const filter in filters) {
-      switch (filter) {
-        case "state":
-          let states = [];
-          if(filters[filter].options["work"]) { states.push("work") }
-          if(filters[filter].options["publish"]) { states.push("publish") }
-          if(filters[filter].options["wip"]) { states.push("wip") }
-          let filtered = files.filter(file => {
-            return states.includes(file.state);
-          });
-          filteredFiles = filteredFiles.concat(filtered);
+    let filteredFiles = [];
+    if(files.length > 0) {
+      let filters = this.state.filters;
+      for(const filter in filters) {
+        switch (filter) {
+          case "state":
+          if(files[0].state) {
+            let states = [];
+            if(filters[filter].options["work"]) { states.push("work") }
+            if(filters[filter].options["publish"]) { states.push("publish") }
+            if(filters[filter].options["wip"]) { states.push("wip") }
+            let filtered = files.filter(file => {
+              return states.includes(file.state);
+            });
+            filteredFiles = filteredFiles.concat(filtered);
+          } else {
+            filteredFiles = files;
+          }
           break;
+        }
       }
     }
 
@@ -532,8 +540,9 @@ export default class Manager extends React.Component {
                     primaryColor={this.state.primaryColor}
                     title="Files"
                     files={this.filteredFiles()}
-                    onChange={(file) => this.setAssetIdValue("fileManager", "file", file)}
+                    onChange={(file) => this.setGroupValue("file", file)}
                     selectedFile={this.state.project.groups.file}
+                    groups={this.state.project.groups}
                   />
                   :
                   <FileBrowser
@@ -541,7 +550,7 @@ export default class Manager extends React.Component {
                     primaryColor={this.state.primaryColor}
                     title="Files"
                     files={this.filteredFiles()}
-                    onChange={(file) => this.setAssetIdValue("fileManager", "file", file)}
+                    onChange={(file) => this.setGroupValue("file", file)}
                     selectedFile={this.state.project.groups.file}
                     groups={this.state.project.groups}
                   />
@@ -624,9 +633,9 @@ export default class Manager extends React.Component {
 
 
 
-            <div className={this.state.fileManagerAssetId.file == "" ? "file-container" : "file-container open"}>
-              {this.state.fileManagerAssetId.file != "" ?
-                this.state.filters.pathType.options.render == true && this.state.fileManagerAssetId.frames != undefined ?
+            <div className={this.state.project.groups.file == "<>" ? "file-container" : "file-container open"}>
+              {this.state.project.groups.file != "<>" ?
+                this.state.filters.pathType.options.render == true && this.state.project.groups.file.frames != undefined ?
                   <SequenceViewver
                     theme={this.state.theme}
                     primaryColor={this.state.primaryColor}
@@ -646,7 +655,7 @@ export default class Manager extends React.Component {
                   <FileViewer
                     theme={this.state.theme}
                     primaryColor={this.state.primaryColor}
-                    assetId={this.state.fileManagerAssetId}
+                    assetId={this.state.project}
                     execTask={(task) => this.execTask(task)}
                     onChangeComment={(e) => this.editComment(e)}
                     onSaveComment={() => this.saveComment()}
@@ -658,6 +667,7 @@ export default class Manager extends React.Component {
                     getWipName={() => this.getWipName()}
                     refresh={() => this.refreshBrowser()}
                   />
+                  //<h1>sdf</h1>
                 : ""
               }
             </div>

@@ -113,6 +113,7 @@ class Project {
     directories = assetId.directories;
     dirOrder = assetId.directoriesOrder;
     groups = assetId.groups;
+    let file = groups.file == "<>" ? {} : groups.file;
 
     let asset = {
       project: this._name,
@@ -120,7 +121,8 @@ class Project {
       pathSubType: this._pathSubType,
       groups: groups,
       directories: directories,
-      directoriesOrder: dirOrder
+      directoriesOrder: dirOrder,
+      file: file
     }
     //   let asset = {
     //     sid:         this.sid,

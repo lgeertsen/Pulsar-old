@@ -280,11 +280,7 @@ class AssetId {
         continue;
       }
       this._groups[item] = "<>";
-      console.log("#############");
-      console.log(item);
-      console.log(this._directoriesOrder);
       if(item in this._directories) {
-        console.log("sqdkjfsqmlkjfdsq " + item);
         this._directories[item] = [];
       }
     }
@@ -320,13 +316,15 @@ class AssetId {
     if(this._searchGroup != undefined) {
       if(this._searchGroup == "file") {
         if(this._type == "render"){
-          // FileManager.getSequenceFiles(this, (files) => this.setFiles(files));
+          FileManager.getSequenceFiles(this, (files) => this.setFiles(files));
         } else {
           FileManager.getFiles(this, (files) => this.setFiles(files));
         }
       } else {
         FileManager.getDirectories(this, (dirs) => this.setDirs(dirs));
       }
+    } else {
+      this._formatForRender();
     }
   }
   //

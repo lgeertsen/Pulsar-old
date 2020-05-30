@@ -125,18 +125,18 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
               <div className="file-viewer-file-state field is-grouped is-grouped-multiline">
                 <div className="control">
                   <div className=" tags has-addons">
-                    <span className="tag">{assetId.file.state}</span>
+                    <span className="tag">{assetId.file.state ? assetId.file.state : "Version"}</span>
                     <span className="tag is-primary">{assetId.file.version}</span>
                   </div>
                 </div>
-                {assetId.file.tags.map((tag, index) => (
+                {assetId.file.tags ? assetId.file.tags.map((tag, index) => (
                   <div key={index} className="control">
                     <div className="tags has-addons">
                       <span className={`tag tag-${tag.toLowerCase()}`}>{tag}</span>
                       <a className="tag is-delete" onClick={(e) => deleteTag(tag)}></a>
                     </div>
                   </div>
-                ))}
+                )) : ""}
                 <form onSubmit={(e) => addTag(e)}>
                   <div className="field has-addons">
                     <div className={"tag-autocomplete control " + theme}>
@@ -162,7 +162,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
               <h3>{assetId.file.name}</h3>
               <h4>Last modified: {assetId.file.modified}</h4>
               <h4>File size: {getSize(assetId.file.size)}</h4>
-              <h4>AssetId: {`${assetId.project}/${assetId.dimension}/${assetId.group}/${assetId.name}/${assetId.task}/${assetId.subtask}/${assetId.file.state}/${assetId.file.version}/${assetId.file.name}.${assetId.file.extension}`}</h4>
+              {/* <h4>AssetId: {`${assetId.project}/${assetId.dimension}/${assetId.group}/${assetId.name}/${assetId.task}/${assetId.subtask}/${assetId.file.state}/${assetId.file.version}/${assetId.file.name}.${assetId.file.extension}`}</h4> */}
               <h4>Path: {assetId.file.path}</h4>
             </div>
 

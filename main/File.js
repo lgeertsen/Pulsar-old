@@ -3,26 +3,26 @@ import { unlink, writeFile } from 'fs';
 import Logger from './Logger';
 
 export default class File {
-  constructor(name, state, version, extension, size, modified, comment, tags, path) {
-    this._name = name;
-    this._state = state;
-    this._version = version;
-    this._extension = extension;
-    this._size = size;
-    this._modified = modified;
-    this._comment = comment;
-    this._tags = tags;
-    this._path = path;
+  constructor(name, extension, size, modified, comment, tags, path) {
+    this.name = name;
+    this.state;
+    this.version;
+    this.extension = extension;
+    this.size = size;
+    this.modified = modified;
+    this.comment = comment;
+    this.tags = tags;
+    this.path = path;
   }
 
   get fullName () { return `${this._name}.${this._extension}` }
 
-  get name () { return this._name }
-  get state () { return this._state }
-  get version () { return this._version }
-  get path () { return this._path }
-  get size () { return this._size }
-  set size (size) { this._size = size }
+  // get name () { return this._name }
+  // get state () { return this._state }
+  // get version () { return this._version }
+  // get path () { return this._path }
+  // get size () { return this._size }
+  // set size (size) { this._size = size }
 
   saveComment(comment) {
     this._comment = comment;

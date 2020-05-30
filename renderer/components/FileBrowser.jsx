@@ -143,7 +143,7 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange, groups }) =>
             if(a.state > b.state) { return sortUp; }
             return 0;
           }).map((file, index) => (
-            <div key={index} className={index == selectedFile ? `pulsar-file bg-${primaryColor} ${theme}` : `pulsar-file ${theme}`} onClick={(e) => handleChange(index, file.path)}>
+            <div key={index} className={index == selectedFile ? `pulsar-file bg-${primaryColor} ${theme}` : `pulsar-file ${theme}`} onClick={(e) => handleChange(index, file)}>
               <div className="pulsar-file-name">
                 <i className="las la-file"></i>
                 <span>{file.name + "." + file.extension}</span>
