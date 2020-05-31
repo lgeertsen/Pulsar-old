@@ -17,8 +17,6 @@ export default class FileManager {
       if(err) {
         Logger.error(err);
       } else {
-        Logger.info(`----- Directories found in ${slicedPath} -----`);
-        console.log(dirs);
         cb(dirs);
       }
     });
@@ -27,8 +25,6 @@ export default class FileManager {
   static getFiles(asset, cb) {
     if("version" in asset.groups) {
       FileManager.getDirectories(asset, dirs => {
-
-        console.log(dirs);
 
         let allFiles = [];
         let formattedDirs = FileManager.formatDirs(dirs);
@@ -129,8 +125,6 @@ export default class FileManager {
   static getSequenceFiles(asset, cb){
     if("version" in asset.groups) {
       FileManager.getDirectories(asset, dirs => {
-
-        console.log(dirs);
 
         let allFiles = [];
         let formattedDirs = FileManager.formatDirs(dirs);

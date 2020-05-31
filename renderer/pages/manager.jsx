@@ -202,6 +202,8 @@ export default class Manager extends React.Component {
   }
 
   setGroupValue(group, value) {
+    console.log(group);
+    console.log(value);
     ipcRenderer.send("setGroupValue", {group: group, value: value});
   }
 
@@ -635,11 +637,11 @@ export default class Manager extends React.Component {
 
             <div className={this.state.project.groups.file == "<>" ? "file-container" : "file-container open"}>
               {this.state.project.groups.file != "<>" ?
-                this.state.filters.pathType.options.render == true && this.state.project.groups.file.frames != undefined ?
+                this.state.filters.pathType.options.render == true && this.state.project.groups.file?.frames != undefined ?
                   <SequenceViewver
                     theme={this.state.theme}
                     primaryColor={this.state.primaryColor}
-                    assetId={this.state.fileManagerAssetId}
+                    assetId={this.state.project}
                     execTask={(task) => this.execTask(task)}
                     onChangeComment={(e) => this.editComment(e)}
                     onSaveComment={() => this.saveComment()}
@@ -667,7 +669,6 @@ export default class Manager extends React.Component {
                     getWipName={() => this.getWipName()}
                     refresh={() => this.refreshBrowser()}
                   />
-                  //<h1>sdf</h1>
                 : ""
               }
             </div>

@@ -5,6 +5,15 @@ import CheckBox from './CheckBox'
 import CommentContainer from '../containers/CommentContainer';
 import Modal from './Modal';
 
+const tags = [
+  "DONE",
+  "RETAKE",
+  "TODO",
+  "VALID",
+  "WFA",
+  "WIP"
+]
+
 const SequenceViewver = ({ theme, primaryColor, assetId, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName, refresh }) => {
 
   const [showModal, setShowModal] = useState(false);
@@ -113,27 +122,35 @@ const SequenceViewver = ({ theme, primaryColor, assetId, execTask, onChangeComme
               <div className="file-viewer-file-state field is-grouped is-grouped-multiline">
                 <div className="control">
                   <div className=" tags has-addons">
-                    <span className="tag">{assetId.file.state}</span>
+                    <span className="tag">{assetId.file.state ? assetId.file.state : "Version"}</span>
                     <span className="tag is-primary">{assetId.file.version}</span>
                   </div>
                 </div>
-                {assetId.file.tags.map((tag, index) => (
+                {assetId.file.tags ? assetId.file.tags.map((tag, index) => (
                   <div key={index} className="control">
                     <div className="tags has-addons">
                       <span className={`tag tag-${tag.toLowerCase()}`}>{tag}</span>
-                      <a className="tag is-delete"></a>
+                      <a className="tag is-delete" onClick={(e) => deleteTag(tag)}></a>
                     </div>
                   </div>
-                ))}
-                <form onSubmit={(event) => console.log(event)}>
+                )) : ""}
+                <form onSubmit={(e) => addTag(e)}>
                   <div className="field has-addons">
-                    <div className="control">
-                      <input className="input" type="text" placeholder="Add Tag" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
+                    <div className={"tag-autocomplete control " + theme}>
+                      {/* <input className="input" type="text" placeholder="Add Tag" value={newTag} onChange={(e) => setNewTag(e.target.value)}/> */}
                       {/* <Autocomplete
                         theme={theme}
                         primaryColor={primaryColor}
 
                       /> */}
+                      <Autocomplete
+                        theme={theme}
+                        primaryColor={primaryColor}
+                        setValue={value => setNewTag(value)}
+                        items={tags}
+                        value={newTag}
+                        placeholder="Enter Tag"
+                      />
                     </div>
                     <div className="control">
                       <input className={"button " + theme} type="submit" value="Add" />
@@ -145,7 +162,8 @@ const SequenceViewver = ({ theme, primaryColor, assetId, execTask, onChangeComme
 
 
               <h3>{assetId.file.name}</h3>
-            <h3>Frames : {(assetId.file.frames[0] + "-" + assetId.file.frames[assetId.file.frames.length - 1])}</h3>
+              <h3>{assetId.file.frames}</h3>
+            {/* <h3>Frames : {(assetId.file.frames[0] + "-" + assetId.file.frames[assetId.file.frames.length - 1])}</h3> */}
               <h4>Last modified: {assetId.file.modified}</h4>
               <h4>File size: {getSize(assetId.file.size)}</h4>
               <h4>AssetId: {`${assetId.project}/${assetId.dimension}/${assetId.group}/${assetId.name}/${assetId.task}/${assetId.subtask}/${assetId.file.state}/${assetId.file.version}/${assetId.file.name}.${assetId.file.extension}`}</h4>
@@ -185,13 +203,13 @@ const SequenceViewver = ({ theme, primaryColor, assetId, execTask, onChangeComme
             </div>
           </div>
 
-          <div className="image-container">
+          {/* <div className="image-container">
             <select id="frames">
               {assetId.file.frames.map((frame) => (
                 <option value={frame}>{frame}</option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           <div className="file-viewer-comment-container">
             <CommentContainer theme={theme} comment={assetId.file.comment} onChange={(e) => editComment(e)} saveComment={() => onSave()}/>
