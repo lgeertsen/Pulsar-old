@@ -131,7 +131,22 @@ export default class Welcome extends React.Component {
     let name = this.state.newProjectName;
     let path = this.state.newProjectPath;
     if(name != "" && path != "") {
-      projects[name] = path;
+      let data = {
+        path: path,
+        asset: {
+          scene: "{project}/ASSET/{asset_type}/scenes/{task}/{state}_{version}/{file}",
+          render: "{project}/ASSET/{asset_type}/render/{version}/{file}",
+          cache: "{project}/ASSET/{asset_type}/cache/{file}",
+          texture: "{project}/ASSET/{asset_type}/images/{version}/{file}"
+        },
+        shot: {
+          scene: "{project}/SHOT/scenes/{sequence}/{shot}/{task}/{state}_{version}/{file}",
+          render: "{project}/SHOT/render/{sequence}/{shot}/{version}/{file}",
+          cache: "{project}/SHOT/caches/{sequence}/{shot}/{file}",
+          texture: "{project}/SHOT/images/{sequence}/{shot}/{version}/{file}"
+        }
+      }
+      projects[name] = data;
       this.setState({projects: projects, newProjectName: "", newProjectPath: ""});
     }
   }
@@ -256,7 +271,7 @@ export default class Welcome extends React.Component {
                 {Object.keys(this.state.projects).length > 0 ? Object.keys(this.state.projects).map((project, index) => (
                   <div key={index} className={"step-project box " + this.state.theme}>
                     <div className="step-project-name padding-left">{project}</div>
-                    <div className="step-project-path">{this.state.projects[project]}</div>
+                    <div className="step-project-path">{this.state.projects[project].path}</div>
                     <div className="step-project-delete icon" onClick={(e) => this.removeProject(project)}>
                       <i className="las la-times"></i>
                     </div>
@@ -287,10 +302,13 @@ export default class Welcome extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="step-footer">
+              <div className="step-footer step-projects-footer">
                 <div className={"step-previous button " + this.state.theme} onClick={(e) => this.setState({step: 2})}>Back</div>
                 <div className="flex-fill"></div>
-                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 4})}>Next</div>
+                {Object.keys(this.state.projects).length > 0 ?
+                  <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 4})}>Next</div>
+                  : ""
+                }
               </div>
             </div>
 
@@ -298,9 +316,20 @@ export default class Welcome extends React.Component {
               <div className="step-title">
                 <h1 className="display-2">Projects PART II</h1>
                 <div className={"step-divider border-" + this.state.primaryColor}></div>
-                <h5>Projects:</h5>
               </div>
               <div className="step-projects">
+                <h5>Setup the abstract paths for the project.</h5>
+                <h6>Every path will already be filled in with an example wich can be changed to correspond to your project structure.</h6>
+                <h6>For any directory that has a variable name, put a format tag: <samp>{"{nameOfTag}"}</samp>.<br/>The tag can be anything you want except: <samp>{"{project}"}</samp>, <samp>{"{state}"}</samp>,<samp>{"{version}"}</samp> or <samp>{"{file}"}</samp>.</h6>
+                <h6>The abstract path should always start with <samp>{"{project}"}</samp>. This corresponds with the path of the directory selected in the previous step.</h6>
+                <h6>The abstract path should end with <samp>{"/{file}"}</samp>, <samp>{"/{version}/{file}"}</samp> or <samp>{"/{state}_{version}/{file}"}</samp>.</h6>
+                <hr/>
+                {Object.keys(this.state.projects).map((project, index) => (
+                  <div key={index} className="step-project-setup">
+                    {project}
+                  </div>
+                ))}
+
                 {/* {Object.keys(this.state.projects).length > 0 ? Object.keys(this.state.projects).map((project, index) => (
                   <div key={index} className={"step-project box " + this.state.theme}>
                     <div className="step-project-name padding-left">{project}</div>

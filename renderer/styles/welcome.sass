@@ -15,9 +15,9 @@
 
 .welcome-box
   position: relative
-  width: 600px
-  height: 500px
-  white-space: nowrap
+  width: 900px
+  height: 700px
+  // white-space: nowrap
   overflow: hidden
   padding: 0
   transition: all 0.3s
@@ -35,14 +35,14 @@
       height: 80px
 
     66%
-      width: 600px
+      width: 900px
       height: 20px
       border-radius: $radius
 
     100%
       top: 0px
-      width: 600px
-      height: 500px
+      width: 900px
+      height: 700px
 
 .welcome-step
   position: absolute
@@ -132,6 +132,7 @@
 .step-projects
   flex-direction: column
   padding: 10px 0
+  overflow-y: auto
 
 .step-theme
   flex: 1
@@ -316,6 +317,9 @@
 
   .button
     width: auto
+
+  &.step-projects-footer
+    margin-top: 20px
 
 .flex-fill
   flex: 1
