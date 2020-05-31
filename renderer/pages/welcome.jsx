@@ -18,6 +18,8 @@ const colors = [
   "red"
 ];
 
+const matchProjectPath = /{project}((\/[\w]+)*(\/{[\w]+})*)*(\/{state}_{version})?\/{file}/;
+
 export default class Welcome extends React.Component {
   constructor(props) {
     super(props);
@@ -246,12 +248,12 @@ export default class Welcome extends React.Component {
 
             <div className={this.state.step == 3 ? "welcome-step welcome-step-3 slide-in-right" : this.state.step < 3 ? "welcome-step welcome-step-3 hidden" : "welcome-step welcome-step-3 slide-out-left"}>
               <div className="step-title">
-                <h1 className="display-2">Projects</h1>
+                <h1 className="display-2">Projects PART I</h1>
                 <div className={"step-divider border-" + this.state.primaryColor}></div>
                 <h5>Projects:</h5>
               </div>
               <div className="step-projects">
-                {Object.keys(this.state.projects).map((project, index) => (
+                {Object.keys(this.state.projects).length > 0 ? Object.keys(this.state.projects).map((project, index) => (
                   <div key={index} className={"step-project box " + this.state.theme}>
                     <div className="step-project-name padding-left">{project}</div>
                     <div className="step-project-path">{this.state.projects[project]}</div>
@@ -259,7 +261,7 @@ export default class Welcome extends React.Component {
                       <i className="las la-times"></i>
                     </div>
                   </div>
-                ))}
+                )) : <h6 className="step-project-empty">No Projects added</h6>}
                 <span>Add project</span>
                 <div className="step-project">
                   <div className="step-project-name">
@@ -294,6 +296,53 @@ export default class Welcome extends React.Component {
 
             <div className={this.state.step == 4 ? "welcome-step welcome-step-4 slide-in-right" : this.state.step < 4 ? "welcome-step welcome-step-4 hidden" : "welcome-step welcome-step-4 slide-out-left"}>
               <div className="step-title">
+                <h1 className="display-2">Projects PART II</h1>
+                <div className={"step-divider border-" + this.state.primaryColor}></div>
+                <h5>Projects:</h5>
+              </div>
+              <div className="step-projects">
+                {/* {Object.keys(this.state.projects).length > 0 ? Object.keys(this.state.projects).map((project, index) => (
+                  <div key={index} className={"step-project box " + this.state.theme}>
+                    <div className="step-project-name padding-left">{project}</div>
+                    <div className="step-project-path">{this.state.projects[project]}</div>
+                    <div className="step-project-delete icon" onClick={(e) => this.removeProject(project)}>
+                      <i className="las la-times"></i>
+                    </div>
+                  </div>
+                )) : <h6 className="step-project-empty">No Projects added</h6>}
+                <span>Add project</span>
+                <div className="step-project">
+                  <div className="step-project-name">
+                    <input className={"border-input input " + this.state.theme} type="text" placeholder="Project Name" value={this.state.newProjectName} onChange={(e) => this.setState({newProjectName: e.target.value.trim()})}/>
+                  </div>
+                  <div className="file step-project-path">
+                    <div className="file-label" onClick={(e) => this.selectDirectory()}>
+                      <div className={"file-cta " + this.state.theme}>
+                        <span className="file-icon">
+                          <i className="las la-folder-open"></i>
+                        </span>
+                        <div className={this.state.newProjectPath == "" ? "file-label-inner empty" : "file-label-inner"}>
+                          {this.state.newProjectPath == "" ? "Select Project Directory" : this.state.newProjectPath}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="step-project-delete" onClick={(e) => this.addProject()}>
+                    <div className={"button bg-" + this.state.primaryColor}>
+                      <i className="las la-plus"></i>
+                    </div>
+                  </div>
+                </div> */}
+              </div>
+              <div className="step-footer">
+                <div className={"step-previous button " + this.state.theme} onClick={(e) => this.setState({step: 3})}>Back</div>
+                <div className="flex-fill"></div>
+                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 5})}>Next</div>
+              </div>
+            </div>
+
+            <div className={this.state.step == 5 ? "welcome-step welcome-step-5 slide-in-right" : this.state.step < 5 ? "welcome-step welcome-step-5 hidden" : "welcome-step welcome-step-5 slide-out-left"}>
+              <div className="step-title">
                 <h1 className="display-2">Software configuration PART I</h1>
                 <div className={"step-divider border-" + this.state.primaryColor}></div>
                 <span>Select the softwares you use</span>
@@ -310,13 +359,13 @@ export default class Welcome extends React.Component {
                 ))}
               </div>
               <div className="step-footer">
-                <div className={"step-previous button " + this.state.theme} onClick={(e) => this.setState({step: 3})}>Back</div>
+                <div className={"step-previous button " + this.state.theme} onClick={(e) => this.setState({step: 4})}>Back</div>
                 <div className="flex-fill"></div>
-                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 5})}>Next</div>
+                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 6})}>Next</div>
               </div>
             </div>
 
-            <div className={this.state.step == 5 ? "welcome-step welcome-step-5 slide-in-right" : this.state.step < 5 ? "welcome-step welcome-step-5 hidden" : "welcome-step welcome-step-5 slide-out-left"}>
+            <div className={this.state.step == 6 ? "welcome-step welcome-step-6 slide-in-right" : this.state.step < 6 ? "welcome-step welcome-step-6 hidden" : "welcome-step welcome-step-6 slide-out-left"}>
               <div className="step-title">
                 <h1 className="display-2">Software configuration PART II</h1>
                 <div className={"step-divider border-" + this.state.primaryColor}></div>
@@ -365,21 +414,21 @@ export default class Welcome extends React.Component {
 
               </div>
               <div className="step-footer">
-                <div className={"step-previous button " + this.state.theme} onClick={(e) => this.setState({step: 4})}>Back</div>
+                <div className={"step-previous button " + this.state.theme} onClick={(e) => this.setState({step: 5})}>Back</div>
                 <div className="flex-fill"></div>
-                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 6})}>Next</div>
+                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 7})}>Next</div>
               </div>
             </div>
 
-            <div className={this.state.step == 6 ? "welcome-step welcome-step-6 slide-in-right" : this.state.step < 6 ? "welcome-step welcome-step-6 hidden" : "welcome-step welcome-step-6 slide-out-left"}>
+            <div className={this.state.step == 7 ? "welcome-step welcome-step-7 slide-in-right" : this.state.step < 7 ? "welcome-step welcome-step-7 hidden" : "welcome-step welcome-step-7 slide-out-left"}>
               <div className="steps-finish">
                 <div>
-                  <h1 className={this.state.step == 6 ? "display-1 finish-animate" : "display-1"}>All set up!!!</h1>
+                  <h1 className={this.state.step == 7 ? "display-1 finish-animate" : "display-1"}>All set up!!!</h1>
                 </div>
                 <div>
-                  <i className={this.state.step == 6 ? "las la-check-circle finish-animate " + this.state.primaryColor : "las la-check-circle " + this.state.primaryColor}></i>
+                  <i className={this.state.step == 7 ? "las la-check-circle finish-animate " + this.state.primaryColor : "las la-check-circle " + this.state.primaryColor}></i>
                 </div>
-                <div className={this.state.step == 6 ? "button finish-animate " + this.state.theme : "button " + this.state.theme} onClick={(e) => this.finishSetup()}>Finish</div>
+                <div className={this.state.step == 7 ? "button finish-animate " + this.state.theme : "button " + this.state.theme} onClick={(e) => this.finishSetup()}>Finish</div>
               </div>
             </div>
           </div>
