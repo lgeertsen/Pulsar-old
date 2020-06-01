@@ -215,6 +215,32 @@
   font-size: 14px
   margin-bottom: 15px
 
+
+.project-path-inputs
+  width: calc(100% - 25px)
+  height: auto
+  margin-left: 10px
+  padding-left: 15px
+  border-left-width: 1px
+  border-left-style: solid
+  display: flex
+  flex-direction: column
+
+  @include themify($themes)
+    border-color: themed('text')
+
+  .project-path-input-box
+    height: auto
+    display: flex
+    flex-direction: row
+    align-items: center
+
+    .project-path-type
+      width: 70px
+
+    .project-path-input
+      flex-grow: 1
+
 .step-software-select
   flex: 1
   display: flex

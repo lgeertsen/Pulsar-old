@@ -18,7 +18,7 @@ const colors = [
   "red"
 ];
 
-const matchProjectPath = /{project}((\/[\w]+)*(\/{[\w]+})*)*(\/{state}_{version})?\/{file}/;
+const matchProjectPath = /^{project}((\/[\w]+)*(\/{[\w]+})*)*(\/{state}_{version})?\/{file}$/g;
 
 export default class Welcome extends React.Component {
   constructor(props) {
@@ -134,21 +134,57 @@ export default class Welcome extends React.Component {
       let data = {
         path: path,
         asset: {
-          scene: "{project}/ASSET/{asset_type}/scenes/{task}/{state}_{version}/{file}",
-          render: "{project}/ASSET/{asset_type}/render/{version}/{file}",
-          cache: "{project}/ASSET/{asset_type}/cache/{file}",
-          texture: "{project}/ASSET/{asset_type}/images/{version}/{file}"
+          scene: {
+            path: "{project}/ASSET/{asset_type}/scenes/{task}/{state}_{version}/{file}",
+            valid: true
+          },
+          render: {
+            path: "{project}/ASSET/{asset_type}/render/{version}/{file}",
+            valid: true
+          },
+          cache: {
+            path: "{project}/ASSET/{asset_type}/cache/{file}",
+            valid: true
+          },
+          texture: {
+            path: "{project}/ASSET/{asset_type}/images/{version}/{file}",
+            valid: true
+          }
         },
         shot: {
-          scene: "{project}/SHOT/scenes/{sequence}/{shot}/{task}/{state}_{version}/{file}",
-          render: "{project}/SHOT/render/{sequence}/{shot}/{version}/{file}",
-          cache: "{project}/SHOT/caches/{sequence}/{shot}/{file}",
-          texture: "{project}/SHOT/images/{sequence}/{shot}/{version}/{file}"
+          scene: {
+            path: "{project}/SHOT/scenes/{sequence}/{shot}/{task}/{state}_{version}/{file}",
+            valid: true
+          },
+          render: {
+            path: "{project}/SHOT/render/{sequence}/{shot}/{version}/{file}",
+            valid: true
+          },
+          cache: {
+            path: "{project}/SHOT/caches/{sequence}/{shot}/{file}",
+            valid: true
+          },
+          texture: {
+            path: "{project}/SHOT/images/{sequence}/{shot}/{version}/{file}",
+            valid: true
+          }
         }
       }
       projects[name] = data;
       this.setState({projects: projects, newProjectName: "", newProjectPath: ""});
     }
+  }
+
+  setProjectPathType(project, type, subtype, value) {
+    let res = value.match(matchProjectPath);
+    let valid = true;
+    if(res == null) {
+      valid = false;
+    }
+    let projects = this.state.projects;
+    projects[project][type][subtype].path = value;
+    projects[project][type][subtype].valid = valid;
+    this.setState({projects: projects});
   }
 
   removeProject(project) {
@@ -326,7 +362,25 @@ export default class Welcome extends React.Component {
                 <hr/>
                 {Object.keys(this.state.projects).map((project, index) => (
                   <div key={index} className="step-project-setup">
-                    {project}
+                    <h3 className="display-4 sub-display">{project}</h3>
+                    <h4>Asset:</h4>
+                    <div className={"project-path-inputs " + this.state.theme}>
+                      {Object.keys(this.state.projects[project].asset).map((type, index) => (
+                        <div className="project-path-input-box">
+                          <div className="project-path-type">{type}</div>
+                          <input type="text" className="project-path-input" onChange={(e) => this.setProjectPathType(project, "asset", type, e.target.value.trim())} value={this.state.projects[project].asset[type].path}/>
+                        </div>
+                      ))}
+                    </div>
+                    <h4>Shot:</h4>
+                    <div className={"project-path-inputs " + this.state.theme}>
+                      {Object.keys(this.state.projects[project].shot).map((type, index) => (
+                        <div className="project-path-input-box">
+                          <div className="project-path-type">{type}</div>
+                          <div className="project-path-input">{this.state.projects[project].shot[type].path}</div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
 
@@ -363,7 +417,7 @@ export default class Welcome extends React.Component {
                   </div>
                 </div> */}
               </div>
-              <div className="step-footer">
+              <div className="step-footer step-projects-footer">
                 <div className={"step-previous button " + this.state.theme} onClick={(e) => this.setState({step: 3})}>Back</div>
                 <div className="flex-fill"></div>
                 <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 5})}>Next</div>
