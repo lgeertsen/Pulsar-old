@@ -105,12 +105,21 @@ export default class Server {
 
   setConfig(data) {
     if(this._config.config.firstUsage == true && data.firstUsage == false) {
-      if(Object.keys(data.projects).length > 0) {
-        this._assetIds["fileManager"].projects = data.projects;
-        this._assetIds["fileManager"].project = Object.keys(data.projects)[0];
-        this._assetIds["newAsset"].projects = data.projects;
-        this._assetIds["newAsset"].project = Object.keys(data.projects)[0];
+      for(let p in data.projects) {
+        let project = new Project(p, data.projects[p], (data) => this.sendMessageMainData("project", data));
+        this._projects[p] = project;
       }
+
+      let keys = Object.keys(data.projects);
+      if(keys.length > 0) {
+        this._project = keys[0];
+      }
+      // if(Object.keys(data.projects).length > 0) {
+        // this._assetIds["fileManager"].projects = data.projects;
+        // this._assetIds["fileManager"].project = Object.keys(data.projects)[0];
+        // this._assetIds["newAsset"].projects = data.projects;
+        // this._assetIds["newAsset"].project = Object.keys(data.projects)[0];
+      // }
     }
     this._config.setConfig(data, () => this.sendMessageMain("configSet"));
   }

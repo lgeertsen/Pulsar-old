@@ -35,7 +35,7 @@ export default class FileManager {
           if("state" in asset.groups) {
             let dirSplit = formattedDirs[i].split("_");
             state = dirSplit[0];
-            version = state == "wip" ? "_" : dirSplit[1].substr(1);
+            version = state == "wip" || state == "render" ? "_" : dirSplit[1].substr(1);
           } else {
             // version = parseInt(formattedDirs[i].substr(1));
             version = formattedDirs[i];
@@ -136,7 +136,7 @@ export default class FileManager {
           if("state" in asset.groups) {
             let dirSplit = formattedDirs[i].split("_");
             state = dirSplit[0];
-            version = state == "wip" ? "_" : dirSplit[1].substr(1);
+            version = state == "wip" || state == "render" ? "_" : dirSplit[1].substr(1);
           } else {
             // version = parseInt(formattedDirs[i].substr(1));
             version = formattedDirs[i];
