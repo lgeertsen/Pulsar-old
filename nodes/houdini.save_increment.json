@@ -3,6 +3,7 @@
         "id" : "houdini.save_increment",
         "name": "save_increment",
         "color": "orange",
+        "icon": "houdini.png",
         "type": "houdini",
         "script": "save_increment.py",
         "inputs": [

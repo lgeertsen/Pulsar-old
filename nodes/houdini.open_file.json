@@ -3,6 +3,7 @@
         "id" : "houdini.open_file",
         "name": "open_file",
         "color": "orange",
+        "icon": "houdini.png",
         "type": "houdini",
         "script": "open_file.py",
         "inputs": [

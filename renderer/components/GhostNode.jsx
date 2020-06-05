@@ -16,8 +16,15 @@ export default class Node extends React.Component {
     };
 
     return (
-      <div className={"node ghost-node selected" + this.props.theme } style={nodePosition}>
+      <div className={"node ghost-node dragging" + this.props.theme } style={nodePosition}>
         <div className="node-top">
+          {this.props.icon != undefined ?
+            this.props.icon.includes("lab la-") || this.props.icon.includes("las la-")?
+              <i className={`node-icon ${this.props.icon}`}></i>
+              :
+              <img className="node-icon" src={`/${this.props.icon}`}/>
+            : ""
+          }
           <input
             className={"node-name " + this.props.theme}
             readOnly={true}
@@ -33,7 +40,7 @@ export default class Node extends React.Component {
             <div className="inputs-container">
               {this.props.inputs.map((input, index) => (
                 <div className="input-container" key={index}>
-                  <div className={`attribute-pin bg-${this.props.color} ${this.props.theme}`}></div>
+                  <div className={`attribute-pin attribute-type-${input.type} ${this.props.theme}`}></div>
                   <div className="attribute-name-container">
                     <span className="attribute-name">{input.name}</span>
                   </div>
@@ -46,7 +53,7 @@ export default class Node extends React.Component {
                   <div className="attribute-name-container">
                     <span className="attribute-name">{output.name}</span>
                   </div>
-                  <div className={`attribute-pin bg-${this.props.color} ${this.props.theme}`}></div>
+                  <div className={`attribute-pin attribute-type-${output.type} ${this.props.theme}`}></div>
                 </div>
               ))}
             </div>

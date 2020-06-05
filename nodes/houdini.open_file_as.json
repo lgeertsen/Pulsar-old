@@ -4,6 +4,7 @@
         "name": "open_file_as",
         "type": "houdini",
         "color": "orange",
+        "icon": "houdini.png",
         "script": "open_file_as.py",
         "inputs": [
           {

@@ -4,6 +4,7 @@
         "name": "houdini_open_file",
         "type": "windows",
         "color": "blue",
+        "icon": "lab la-windows",
         "script": "houdini_open_file.bat",
         "inputs": [
           {

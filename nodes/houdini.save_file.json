@@ -3,6 +3,7 @@
         "id" : "houdini.save_file",
         "name": "save_file",
         "color": "orange",
+        "icon": "houdini.png",
         "type": "houdini",
         "script": "save_file.py",
         "inputs": [

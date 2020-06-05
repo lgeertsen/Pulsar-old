@@ -10,6 +10,7 @@ const ipcRenderer = electron.ipcRenderer || false;
 import GhostNode from '../components/GhostNode';
 import Nav from '../components/Nav';
 import Node from '../components/Node';
+import NodeProperties from '../containers/NodeProperties';
 import Edge from '../components/Edge';
 
 import Box from '../components/3D/Box';
@@ -41,7 +42,9 @@ export default class Graph extends React.Component {
       currentX: 0,
       currentX: 0,
       active: false,
+      moved: false,
       dragItem: undefined,
+      dragType: "",
       moveGraph: false,
 
       graphScale: 1,
@@ -60,6 +63,8 @@ export default class Graph extends React.Component {
       nodeList: {},
       nodeListType: "",
 
+      selectedNode: undefined,
+
       ghostNodeActive: false,
       ghostNodeType: undefined,
       ghostNodeNode: undefined,
@@ -68,135 +73,9 @@ export default class Graph extends React.Component {
         y: 0
       },
 
-      nodes: {
-        // "node1": {
-        //   name: "Node 1",
-        //   color: "red",
-        //   x: 10200,
-        //   y: 10400,
-        //   inputs: [
-        //     {
-        //       name: "input1",
-        //       ref: React.createRef()
-        //     },
-        //     {
-        //       name: "input2",
-        //       ref: React.createRef()
-        //     },
-        //     {
-        //       name: "input3",
-        //       ref: React.createRef()
-        //     },
-        //   ],
-        //   outputs: [
-        //     {
-        //       name: "output1",
-        //       ref: React.createRef()
-        //     },
-        //     {
-        //       name: "output2",
-        //       ref: React.createRef()
-        //     },
-        //   ]
-        // },
-        // "node2": {
-        //   name: "Node 2",
-        //   color: "green",
-        //   x: 10700,
-        //   y: 10500,
-        //   inputs: [
-        //     {
-        //       name: "input1",
-        //       ref: React.createRef()
-        //     },
-        //     {
-        //       name: "input2",
-        //       ref: React.createRef()
-        //     },
-        //   ],
-        //   outputs: [
-        //     {
-        //       name: "output1",
-        //       ref: React.createRef()
-        //     },
-        //     {
-        //       name: "output2",
-        //       ref: React.createRef()
-        //     },
-        //   ]
-        // },
-        // "node3": {
-        //   name: "Node 3",
-        //   color: "cyan",
-        //   x: 11000,
-        //   y: 10300,
-        //   inputs: [
-        //     {
-        //       name: "input1",
-        //       ref: React.createRef()
-        //     },
-        //     {
-        //       name: "input2",
-        //       ref: React.createRef()
-        //     },
-        //     {
-        //       name: "input3",
-        //       ref: React.createRef()
-        //     }
-        //   ],
-        //   outputs: [
-        //     {
-        //       name: "output1",
-        //       ref: React.createRef()
-        //     },
-        //     {
-        //       name: "output2",
-        //       ref: React.createRef()
-        //     },
-        //     {
-        //       name: "output3",
-        //       ref: React.createRef()
-        //     },
-        //     {
-        //       name: "output4",
-        //       ref: React.createRef()
-        //     }
-        //   ]
-        // }
-      },
+      nodes: {},
 
-      edges: {
-        // edge1: {
-        //   input: {
-        //     node: "node2",
-        //     attribute: "input1"
-        //   },
-        //   output: {
-        //     node: "node1",
-        //     attribute: "output1"
-        //   }
-        // },
-        // edge2: {
-        //   input: {
-        //     node: "node3",
-        //     attribute: "input3"
-        //   },
-        //   output: {
-        //     node: "node2",
-        //     attribute: "output1"
-        //   }
-        // },
-        // edge3: {
-        //   input: {
-        //     node: "node3",
-        //     attribute: "input1"
-        //   },
-        //   output: {
-        //     node: "node1",
-        //     attribute: "output2"
-        //   }
-        // }
-      }
+      edges: {}
     }
   }
 
@@ -222,6 +101,7 @@ export default class Graph extends React.Component {
       ipcRenderer.on('nodes', (event, data) => {
         console.log(data);
         this.setState({nodeList: data});
+        this.addBaseNodes();
       });
     }
 
@@ -239,8 +119,71 @@ export default class Graph extends React.Component {
     }
   }
 
+  addBaseNodes() {
+    let nodes = this.state.nodeList;
+    if(!nodes.base) {
+      nodes.base = {}
+    }
+
+    if(!nodes.base.string) {
+      let node = {
+        id: "base.string",
+        type: "base",
+        name: "string",
+        color: "red",
+        icon: "las la-ad",
+        script: null,
+        inputs: [],
+        outputs: [
+          {
+            name: "output",
+            type: "string"
+          }
+        ]
+      }
+      nodes.base[node.name] = node
+    }
+    if(!nodes.base.number) {
+      let node = {
+        id: "base.number",
+        type: "base",
+        name: "number",
+        color: "red",
+        icon: "0",
+        script: null,
+        inputs: [],
+        outputs: [
+          {
+            name: "output",
+            type: "number"
+          }
+        ]
+      }
+      nodes.base[node.name] = node
+    }
+    if(!nodes.base.OUTPUT) {
+      let node = {
+        id: "base.OUTPUT",
+        type: "base",
+        name: "OUTPUT",
+        color: "purple",
+        icon: "las la-flag-checkered",
+        script: null,
+        inputs: [
+          {
+            name: "output",
+            type: "bool"
+          }
+        ],
+        outputs: []
+      }
+      nodes.base[node.name] = node
+    }
+
+    this.setState({nodeList: nodes});
+  }
+
   dragStart(e) {
-    console.log(e.screenX);
     if(e.button != 2) {
       this.setState({nodeSearchOpen: false, nodeListType: ""});
     }
@@ -251,20 +194,21 @@ export default class Graph extends React.Component {
       let active = true;
       let dragItem =  e.target.getAttribute("nodeid");
       let node = this.state.nodes[dragItem];
+      console.log(dragItem);
       let initialX = e.clientX - node.x;
       let initialY = e.clientY - node.y;
-      this.setState({initialX: initialX, initialY: initialY, active: active, dragItem: dragItem});
+      this.setState({initialX: initialX, initialY: initialY, active: active, dragItem: dragItem, dragType: "node"});
     } else if(e.button == 1) {
       e.preventDefault();
       let active = true;
       let dragItem = "46541654165graph465146541651";
       let initialX = e.clientX - this.state.graphPosition.x;
       let initialY = e.clientY - this.state.graphPosition.y;
-      this.setState({initialX: initialX, initialY: initialY, active: active, dragItem: dragItem, moveGraph: true});
+      this.setState({initialX: initialX, initialY: initialY, active: active, dragItem: dragItem, dragType: "graph", moveGraph: true});
     } else if(e.button == 0 && e.target.getAttribute("attributetype")) {
       e.preventDefault();
       this.startEdgeDrag(e);
-    } else if(e.button == 2) {
+    } else if(e.button == 2  && e.target.getAttribute("draggable") != "true") {
       e.preventDefault();
       let pos = {
         x: e.clientX,
@@ -277,9 +221,28 @@ export default class Graph extends React.Component {
   dragEnd(e) {
     let initialX = this.state.currentX;
     let initialY = this.state.currentY;
-    let active = false;
-    let dragItem = undefined;
-    this.setState({initialX: initialX, initialY: initialY, active: active, dragItem: dragItem, draggingEdge: false, moveGraph: false});
+
+    let moved = this.state.moved;
+    let dragType = this.state.dragType;
+    let dragItem = this.state.dragItem
+    let selectedNode = this.state.selectedNode;
+    if(!moved) {
+      if(dragType == "node") {
+        selectedNode = dragItem;
+      } else if(dragType == "graph") {
+        selectedNode = undefined;
+      }
+    }
+    this.setState({
+      moved: false,
+      initialX: initialX,
+      initialY: initialY,
+      active: false,
+      dragItem: undefined,
+      draggingEdge: false,
+      moveGraph: false,
+      selectedNode: selectedNode
+    });
     if(this.state.draggingEdge) {
       this.endEdgeDrag(e);
     }
@@ -295,7 +258,7 @@ export default class Graph extends React.Component {
         let yOffset = currentY;
         let position =  { x: currentX, y: currentY };
 
-        this.setState({currentX: currentX, currentY: currentY, xOffset: xOffset, yOffset: yOffset, graphPosition: position});
+        this.setState({moved: true, currentX: currentX, currentY: currentY, xOffset: xOffset, yOffset: yOffset, graphPosition: position});
       } else if (this.state.active && this.state.dragItem != undefined) {
         e.preventDefault();
         let currentX = e.clientX - this.state.initialX;
@@ -304,11 +267,10 @@ export default class Graph extends React.Component {
         let yOffset = currentY;
 
         let nodes = this.state.nodes
-        console.log(this.state.dragItem);
         nodes[this.state.dragItem].x = currentX;
         nodes[this.state.dragItem].y = currentY;
 
-        this.setState({currentX: currentX, currentY: currentY, xOffset: xOffset, yOffset: yOffset, nodes: nodes});
+        this.setState({moved: true, currentX: currentX, currentY: currentY, xOffset: xOffset, yOffset: yOffset, nodes: nodes});
       }
     } else if(this.state.draggingEdge) {
       this.dragEdge(e);
@@ -402,20 +364,28 @@ export default class Graph extends React.Component {
         attribOut = e.target.getAttribute("attributeid");
       }
 
-      let edges = this.state.edges;
+      let nodes = this.state.nodes;
+      let inIndex = nodes[nodeIn].inputs.findIndex((item) => {return item.name == attribIn});
+      let inType = nodes[nodeIn].inputs[inIndex].type;
+      let outIndex = nodes[nodeOut].outputs.findIndex((item) => {return item.name == attribOut});
+      let outType = nodes[nodeOut].outputs[outIndex].type;
 
-      edges[edgeId] = {
-        input: {
-          node: nodeIn,
-          attribute: attribIn
-        },
-        output: {
-          node: nodeOut,
-          attribute: attribOut
+      if(inType == outType) {
+        let edges = this.state.edges;
+
+        edges[edgeId] = {
+          input: {
+            node: nodeIn,
+            attribute: attribIn
+          },
+          output: {
+            node: nodeOut,
+            attribute: attribOut
+          }
         }
-      }
 
-      this.setState({edges: edges});
+        this.setState({edges: edges});
+      }
     }
   }
 
@@ -448,13 +418,13 @@ export default class Graph extends React.Component {
       }
     }
     let id = `${node.id}_${idCount+1}`;
-    console.log(id);
     let newNode = {
       id: node.id,
       type: node.type,
       script: node.script,
       name: `${node.name} ${idCount+1}`,
       color: node.color,
+      icon: node.icon,
       x: e.clientX - this.state.graphPosition.x + 10000 - 100,
       y: e.clientY - this.state.graphPosition.y + 10000 - 15,
       inputs: node.inputs,
@@ -470,7 +440,11 @@ export default class Graph extends React.Component {
     }
 
     nodes[id] = newNode;
-    this.setState({nodes: nodes, ghostNodeActive: false, ghostNodeType: undefined, ghostNodeNode: undefined});
+    this.setState({nodes: nodes, ghostNodeActive: false, ghostNodeType: undefined, ghostNodeNode: undefined, selectedNode: id});
+  }
+
+  executeGraph() {
+
   }
 
   renderNode(nodeId, index) {
@@ -480,9 +454,11 @@ export default class Graph extends React.Component {
         theme={this.state.theme}
         primaryColor={this.state.primaryColor}
         key={index}
-        selected={this.state.dragItem == nodeId}
+        selected={this.state.selectedNode == nodeId}
+        dragging={this.state.dragItem == nodeId}
         nodeId={nodeId}
         name={node.name}
+        icon={node.icon}
         color={node.color}
         editName={(nodeId, event) => this.editNodeName(nodeId, event)}
         x={node.x}
@@ -557,7 +533,15 @@ export default class Graph extends React.Component {
           toggleNav={(v) => this.setState({navOpen: v})}
         />
 
-        <div className={this.state.navOpen ? "main " + this.state.theme : "main full " + this.state.theme}>
+        <button style={{zIndex: 5000, position: "fixed", top: "50px", left: "100px"}} onClick={(e) => this.executeGraph()}>Execute</button>
+
+        <div className={this.state.navOpen ? `main ${this.state.theme} main-${this.state.primaryColor}` : `main full ${this.state.theme} main-${this.state.primaryColor}`}>
+          <NodeProperties
+            theme={this.state.theme}
+            primaryColor={this.state.primaryColor}
+            node={this.state.nodes[this.state.selectedNode]}
+          />
+
           {/* <div className="scene-view">
             <Canvas>
               <ambientLight />
@@ -585,6 +569,7 @@ export default class Graph extends React.Component {
                     theme={this.state.theme}
                     primaryColor={this.state.primaryColor}
                     name={this.state.nodeList[this.state.ghostNodeType][this.state.ghostNodeNode].name}
+                    icon={this.state.nodeList[this.state.ghostNodeType][this.state.ghostNodeNode].icon}
                     color={this.state.nodeList[this.state.ghostNodeType][this.state.ghostNodeNode].color}
                     x={this.state.ghostNodePos.x}
                     y={this.state.ghostNodePos.y}

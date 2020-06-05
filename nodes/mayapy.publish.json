@@ -3,6 +3,7 @@
         "id" : "mayapy.publish",
         "name": "publish",
         "color": "cyan",
+        "icon": "maya.png",
         "type": "mayapy",
         "script": "publish.py",
         "inputs": [

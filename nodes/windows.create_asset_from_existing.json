@@ -4,6 +4,7 @@
         "name": "create_asset_from_existing",
         "type": "windows",
         "color": "blue",
+        "icon": "lab la-windows",
         "script": "create_asset_from_existing.bat",
         "inputs": [
           {

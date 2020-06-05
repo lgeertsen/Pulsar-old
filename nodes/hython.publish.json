@@ -3,6 +3,7 @@
         "id" : "hython.publish",
         "name": "publish",
         "color": "orange",
+        "icon": "houdini.png",
         "type": "hython",
         "script": "publish.py",
         "inputs": [

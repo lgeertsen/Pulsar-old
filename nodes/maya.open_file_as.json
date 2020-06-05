@@ -4,6 +4,7 @@
         "name": "open_file_as",
         "type": "maya",
         "color": "cyan",
+        "icon": "maya.png",
         "script": "open_file_as.py",
         "inputs": [
           {

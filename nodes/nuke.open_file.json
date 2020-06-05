@@ -3,6 +3,7 @@
         "id" : "nuke.open_file",
         "name": "open_file",
         "color": "yellow",
+        "icon": "nuke.png",
         "type": "nuke",
         "script": "open_file.py",
         "inputs": [

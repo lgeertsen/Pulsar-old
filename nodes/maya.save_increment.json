@@ -3,6 +3,7 @@
         "id" : "maya.save_increment",
         "name": "save_increment",
         "color": "cyan",
+        "icon": "maya.png",
         "type": "maya",
         "script": "save_increment.py",
         "inputs": [
