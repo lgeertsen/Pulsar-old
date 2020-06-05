@@ -3,7 +3,7 @@
         "id" : "maya.open_file_as",
         "name": "open_file_as",
         "type": "maya",
-        "color": "#44f",
+        "color": "cyan",
         "script": "open_file_as.py",
         "inputs": [
           {
@@ -18,6 +18,7 @@
             "name": "force",
             "type": "bool"
           }
-        ]
+        ],
+        "outputs": []
     }
 }

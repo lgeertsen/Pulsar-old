@@ -2,7 +2,7 @@
     "node" : {
         "id" : "maya.save_increment",
         "name": "save_increment",
-        "color": "#44f",
+        "color": "cyan",
         "type": "maya",
         "script": "save_increment.py",
         "inputs": [

@@ -2,7 +2,7 @@
     "node" : {
         "id" : "mayapy.publish",
         "name": "publish",
-        "color": "#44f",
+        "color": "cyan",
         "type": "mayapy",
         "script": "publish.py",
         "inputs": [

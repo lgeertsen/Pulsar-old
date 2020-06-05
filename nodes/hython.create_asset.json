@@ -2,7 +2,7 @@
     "node" : {
         "id" : "hython.create_asset",
         "name": "create_asset",
-        "color": "#44f",
+        "color": "orange",
         "type": "hython",
         "script": "create_asset.py",
         "inputs": [

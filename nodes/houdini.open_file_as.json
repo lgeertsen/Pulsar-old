@@ -3,7 +3,7 @@
         "id" : "houdini.open_file_as",
         "name": "open_file_as",
         "type": "houdini",
-        "color": "#44f",
+        "color": "orange",
         "script": "open_file_as.py",
         "inputs": [
           {
@@ -18,6 +18,7 @@
             "name": "force",
             "type": "bool"
           }
-        ]
+        ],
+        "outputs": []
     }
 }

@@ -2,7 +2,7 @@
     "node" : {
         "id" : "houdini.save_increment",
         "name": "save_increment",
-        "color": "#44f",
+        "color": "orange",
         "type": "houdini",
         "script": "save_increment.py",
         "inputs": [

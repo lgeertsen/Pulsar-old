@@ -31,9 +31,9 @@ export default class Nav extends React.Component {
             <div className={this.props.page == "manager" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/manager')}>
               <i className="las la-folder-open"></i>
             </div>
-            {/* <div className={this.props.page == "graph" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/graph')}>
+            <div className={this.props.page == "graph" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/graph')}>
               <i className="las la-project-diagram"></i>
-            </div> */}
+            </div>
             {/* <div className={this.props.page == "farm" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
               <i className="las la-tractor"></i>
             </div> */}
@@ -63,10 +63,10 @@ export default class Nav extends React.Component {
               <i className="las la-folder-open"></i>
               <div className="nav-item-title">ASSET MANAGER</div>
             </div>
-            {/* <div className={this.props.page == "graph" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/graph')}>
+            <div className={this.props.page == "graph" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor} onClick={() => Router.push('/graph')}>
               <i className="las la-project-diagram"></i>
               <div className="nav-item-title">Graph Editor</div>
-            </div> */}
+            </div>
             {/* <div className={this.props.page == "farm" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
               <i className="las la-tractor"></i>
               <div className="nav-item-title">Render Farm</div>

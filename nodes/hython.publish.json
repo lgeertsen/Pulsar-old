@@ -2,7 +2,7 @@
     "node" : {
         "id" : "hython.publish",
         "name": "publish",
-        "color": "#44f",
+        "color": "orange",
         "type": "hython",
         "script": "publish.py",
         "inputs": [
