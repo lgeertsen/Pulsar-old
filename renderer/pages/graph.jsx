@@ -73,7 +73,26 @@ export default class Graph extends React.Component {
         y: 0
       },
 
-      nodes: {},
+      nodes: {
+        "base.OUTPUT": {
+          x: 10800,
+          y: 10400,
+          color: "purple",
+          icon: "las la-flag-checkered",
+          id: "base.OUTPUT",
+          inputs: [
+            {
+              name: "output",
+              ref: React.createRef(),
+              type: "bool"
+            }
+          ],
+          name: "OUTPUT",
+          outputs: [],
+          script: null,
+          type: "base",
+        }
+      },
 
       edges: {}
     }
@@ -102,6 +121,13 @@ export default class Graph extends React.Component {
         console.log(data);
         this.setState({nodeList: data});
         this.addBaseNodes();
+      });
+
+      ipcRenderer.on('selectedInputFile', (event, data) => {
+        let nodes = this.state.nodes;
+        let inputIndex = nodes[data.node].inputs.findIndex((item) => {return item.name == data.input});
+        nodes[data.node].inputs[inputIndex].value = data.file;
+        this.setState({nodes: nodes});
       });
     }
 
@@ -423,6 +449,8 @@ export default class Graph extends React.Component {
       type: node.type,
       script: node.script,
       name: `${node.name} ${idCount+1}`,
+      label: node.label,
+      description: node.description,
       color: node.color,
       icon: node.icon,
       x: e.clientX - this.state.graphPosition.x + 10000 - 100,
@@ -441,6 +469,17 @@ export default class Graph extends React.Component {
 
     nodes[id] = newNode;
     this.setState({nodes: nodes, ghostNodeActive: false, ghostNodeType: undefined, ghostNodeNode: undefined, selectedNode: id});
+  }
+
+  changeInputValue(input, value) {
+    let nodes = this.state.nodes;
+    let inputIndex = nodes[this.state.selectedNode].inputs.findIndex((item) => {return item.name == input});
+    nodes[this.state.selectedNode].inputs[inputIndex].value = value;
+    this.setState({nodes: nodes});
+  }
+
+  selectInputFile(input, extensions) {
+    ipcRenderer.send('selectInputFile', {node: this.state.selectedNode, input: input, extensions: extensions});
   }
 
   executeGraph() {
@@ -540,6 +579,8 @@ export default class Graph extends React.Component {
             theme={this.state.theme}
             primaryColor={this.state.primaryColor}
             node={this.state.nodes[this.state.selectedNode]}
+            onValueChange={(input, value) => this.changeInputValue(input, value)}
+            selectFile={(input, extensions) => this.selectInputFile(input, extensions)}
           />
 
           {/* <div className="scene-view">

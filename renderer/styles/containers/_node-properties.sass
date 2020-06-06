@@ -50,7 +50,29 @@
   overflow-y: auto
 
 .node-properties-parameter
-  height: 400px
+  height: auto
+  display: flex
+  flex-direction: row
+  align-items: center
+  margin: 2px 0
+
+.node-properties-parameter-label
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: flex-end
+  width: 120px
+  margin-right: 10px
+
+.node-properties-parameter-input
+  flex: 1
+  overflow: hidden
+
+  .checkbox-container
+    justify-content: flex-start
+
+    .checkbox
+      margin: 0
 
 .node-properties-no-node
   width: 100%

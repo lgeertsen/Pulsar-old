@@ -108,6 +108,15 @@ export default class Renderer {
       });
     });
 
+    ipcMain.on("selectInputFile", (event, data) => {
+      dialog.showOpenDialog(this._mainWindow, { properties: ['openFile'], filters: data.extensions }, (files) => {
+        if(files.length > 0) {
+          data.file = files[0];
+          event.sender.send("selectedInputFile", data);
+        }
+      });
+    });
+
     ipcMain.on("setConfig", (event, data) => {
       console.log("----- set config -----", data);
       this._server.setConfig(data)

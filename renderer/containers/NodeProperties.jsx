@@ -1,8 +1,56 @@
 import React, { useState } from 'react';
 
-const NodeProperties = ({ theme, primaryColor, node }) => {
+import CheckBox from '../components/CheckBox';
 
+const NodeProperties = ({ theme, primaryColor, node, onValueChange, selectFile }) => {
 
+  const renderParameterInput = (input) => {
+    let parameter = ("")
+    switch (input.type) {
+      case "string":
+        parameter = (
+          <input value={input.value} onChange={(e) => onValueChange(input.name, e.target.value)}/>
+        )
+        break;
+
+      case "number":
+        parameter = (
+          <input type="number" value={input.value} onChange={(e) => onValueChange(input.name, e.target.value)}/>
+        )
+        break;
+
+      case "bool":
+        parameter = (
+          <CheckBox
+            theme={theme}
+            primaryColor={primaryColor}
+            labal={undefined}
+            checked={input.value}
+            onCheck={() => onValueChange(input.name, !input.value)}
+          />
+        )
+        break;
+
+      case "file":
+        parameter = (
+          <div className="file-label" onClick={(e) => selectFile(input.name, input.extensions)}>
+            <div className={"file-cta " + theme}>
+              <span className="file-icon">
+                <i className="las la-folder-open"></i>
+              </span>
+              <div className={input.value == "" ? "file-label-inner empty" : "file-label-inner"}>
+                {input.value == "" ? "Select file" : input.value}
+              </div>
+            </div>
+          </div>
+        )
+        break;
+
+      default:
+        parameter = ("")
+    }
+    return parameter
+  }
 
   return (
     <div className={"node-properties " + theme}>
@@ -25,7 +73,10 @@ const NodeProperties = ({ theme, primaryColor, node }) => {
             <div className="node-properties-parameters-container">
               {node.inputs.map((input, index) => (
                 <div key={index} className="node-properties-parameter">
-                  <h1>{input.name}</h1>
+                  <div className="node-properties-parameter-label">{input.label}</div>
+                  <div className="node-properties-parameter-input">
+                    {renderParameterInput(input)}
+                  </div>
                 </div>
               ))}
             </div>

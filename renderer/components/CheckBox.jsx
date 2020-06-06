@@ -12,9 +12,12 @@ const CheckBox = ({ theme, primaryColor, label, checked, onCheck }) => {
         <div className={checked ? `checkbox icon checked bg-${primaryColor} ${theme}` : "checkbox icon " + theme}>
           <i className={checked ? "las la-check" : "las la-check hidden"}></i>
         </div>
-        <div className="checkbox-label">
+        {label != undefined ?
+          <div className="checkbox-label">
           <span>{label}</span>
-        </div>
+          </div>
+          : ""
+        }
 
         <style jsx>{`
 

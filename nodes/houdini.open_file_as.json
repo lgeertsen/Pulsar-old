@@ -9,17 +9,42 @@
         "inputs": [
           {
             "name": "file",
-            "type": "string"
+            "label": "File Path",
+            "description": "Path to the Houdini project file you want to open",
+            "value": "",
+            "type": "file",
+            "extensions": [
+              "hip",
+              "hipnc"
+            ]
           },
           {
             "name": "name",
+            "label": "New File Name",
+            "description": "The name you want to open the project file as",
+            "value": "test",
             "type": "string"
           },
           {
             "name": "force",
+            "label": "Force Open",
+            "description": "Open the file without saving the scene that is already open",
+            "value": false,
             "type": "bool"
+          },
+          {
+            "name": "number",
+            "label": "Number Test",
+            "description": "Number Test",
+            "value": 2,
+            "type": "number"
           }
         ],
-        "outputs": []
+        "outputs": [
+          {
+            "name": "output",
+            "type": "bool"
+          }
+        ]
     }
 }
