@@ -19,10 +19,13 @@ export default class Node extends React.Component {
       <div className={"node ghost-node dragging" + this.props.theme } style={nodePosition}>
         <div className="node-top">
           {this.props.icon != undefined ?
-            this.props.icon.includes("lab la-") || this.props.icon.includes("las la-")?
+            this.props.icon.includes("lab la-") || this.props.icon.includes("las la-") ?
               <i className={`node-icon ${this.props.icon}`}></i>
               :
-              <img className="node-icon" src={`/${this.props.icon}`}/>
+              this.props.icon.includes(".png") ?
+                <img className="node-icon" src={`/${this.props.icon}`}/>
+                :
+                <span className="node-icon">{this.props.icon}</span>
             : ""
           }
           <input

@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
 
 import CheckBox from '../components/CheckBox';
+import Dropdown from '../components/Dropdown';
+import Switch from '../components/Switch';
 
-const NodeProperties = ({ theme, primaryColor, node, onValueChange, selectFile }) => {
+const NodeProperties = ({
+  theme,
+  primaryColor,
+  projects,
+  node,
+  onValueChange,
+  selectFile,
+  setNodeProject,
+  setNodePathType
+}) => {
 
   const renderParameterInput = (input) => {
     let parameter = ("")
-    switch (input.type) {
+    let type = input.type.split(".")[0];
+    let subtype = input.type.split(".")[1];
+    switch (type) {
       case "string":
         parameter = (
           <input value={input.value} onChange={(e) => onValueChange(input.name, e.target.value)}/>
@@ -46,6 +59,37 @@ const NodeProperties = ({ theme, primaryColor, node, onValueChange, selectFile }
         )
         break;
 
+      case "dropdown":
+        if(subtype == "project") {
+          parameter = (
+            <Dropdown
+              theme={theme}
+              primaryColor={primaryColor}
+              value={input.value}
+              options={Object.keys(projects)}
+              onChange={(value) => setNodeProject(value)}
+            />
+          )
+        }
+        break;
+
+      case "switch":
+        if(subtype == "assetshot") {
+          parameter = (
+            <Switch
+              theme={theme}
+              primaryColor={primaryColor}
+              value={input.value}
+              option1={"Asset"}
+              value1={"asset"}
+              option2={"Shot"}
+              value2={"shot"}
+              onChange={(value) => setNodePathType(value)}
+            />
+          )
+        }
+        break;
+
       default:
         parameter = ("")
     }
@@ -82,11 +126,11 @@ const NodeProperties = ({ theme, primaryColor, node, onValueChange, selectFile }
             </div>
             :
             <div className="node-properties-parameters-container">
-              {node.outputs.map((output, index) => (
+              {/* {node.outputs.map((output, index) => (
                 <div key={index} className="node-properties-parameter">
                   <h1>{output.name}</h1>
                 </div>
-              ))}
+              ))} */}
             </div>
           }
         </div>

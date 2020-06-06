@@ -24,6 +24,8 @@ export default class Graph extends React.Component {
       theme: "theme-light",
       primaryColor: "green",
 
+      projects: {},
+
       navOpen: false,
       nodeSearchOpen: false,
       nodeSearchPosition: {
@@ -77,7 +79,7 @@ export default class Graph extends React.Component {
         "base.OUTPUT": {
           x: 10800,
           y: 10400,
-          color: "purple",
+          color: "black",
           icon: "las la-flag-checkered",
           id: "base.OUTPUT",
           inputs: [
@@ -115,6 +117,9 @@ export default class Graph extends React.Component {
         if(data.color) {
           this.setState({primaryColor: data.color});
         }
+        if(data.projects) {
+          this.setState({projects: data.projects});
+        }
       });
 
       ipcRenderer.on('nodes', (event, data) => {
@@ -147,16 +152,16 @@ export default class Graph extends React.Component {
 
   addBaseNodes() {
     let nodes = this.state.nodeList;
-    if(!nodes.base) {
-      nodes.base = {}
+    if(!nodes.constants) {
+      nodes.constants = {}
     }
 
-    if(!nodes.base.string) {
+    if(!nodes.constants.string) {
       let node = {
-        id: "base.string",
-        type: "base",
+        id: "constants.string",
+        type: "constants",
         name: "string",
-        color: "red",
+        color: "green",
         icon: "las la-ad",
         script: null,
         inputs: [],
@@ -167,14 +172,14 @@ export default class Graph extends React.Component {
           }
         ]
       }
-      nodes.base[node.name] = node
+      nodes.constants[node.name] = node
     }
-    if(!nodes.base.number) {
+    if(!nodes.constants.number) {
       let node = {
-        id: "base.number",
-        type: "base",
+        id: "constants.number",
+        type: "constants",
         name: "number",
-        color: "red",
+        color: "cyan",
         icon: "0",
         script: null,
         inputs: [],
@@ -185,14 +190,57 @@ export default class Graph extends React.Component {
           }
         ]
       }
-      nodes.base[node.name] = node
+      nodes.constants[node.name] = node
     }
+
+    if(!nodes.constants.bool) {
+      let node = {
+        id: "constants.bool",
+        type: "constants",
+        name: "bool",
+        color: "purple",
+        icon: "las la-check-square",
+        script: null,
+        inputs: [],
+        outputs: [
+          {
+            name: "output",
+            type: "bool"
+          }
+        ]
+      }
+      nodes.constants[node.name] = node
+    }
+
+    if(!nodes.constants.file) {
+      let node = {
+        id: "constants.file",
+        type: "constants",
+        name: "file",
+        color: "red",
+        icon: "las la-file",
+        script: null,
+        inputs: [],
+        outputs: [
+          {
+            name: "output",
+            type: "file"
+          }
+        ]
+      }
+      nodes.constants[node.name] = node
+    }
+
+    if(!nodes.base) {
+      nodes.base = {}
+    }
+
     if(!nodes.base.OUTPUT) {
       let node = {
         id: "base.OUTPUT",
         type: "base",
         name: "OUTPUT",
-        color: "purple",
+        color: "black",
         icon: "las la-flag-checkered",
         script: null,
         inputs: [
@@ -202,6 +250,43 @@ export default class Graph extends React.Component {
           }
         ],
         outputs: []
+      }
+      nodes.base[node.name] = node
+    }
+
+    if(!nodes.base.project_file) {
+      let node = {
+        id: "base.project_file",
+        type: "base",
+        name: "project_file",
+        color: "red",
+        icon: "las la-folder",
+        script: null,
+        inputs: [
+          {
+            name: "project",
+            label: "Project",
+            description: "Name of the project",
+            value: "",
+            type: "dropdown.project",
+            hidden: true
+          },
+          {
+            name: "assetshot",
+            label: "Asset or Shot",
+            description: "Asset or Shot",
+            value: "asset",
+            type: "switch.assetshot",
+            hidden: true
+          }
+        ],
+        outputs: [
+          {
+            name: "file",
+            label: "file",
+            type: "file"
+          }
+        ]
       }
       nodes.base[node.name] = node
     }
@@ -482,6 +567,24 @@ export default class Graph extends React.Component {
     ipcRenderer.send('selectInputFile', {node: this.state.selectedNode, input: input, extensions: extensions});
   }
 
+  setNodeProject(project) {
+    let nodes = this.state.nodes;
+    let node = nodes[this.state.selectedNode];
+    let inputIndex = node.inputs.findIndex((item) => {return item.name == "project"});
+    node.inputs[inputIndex].value = project;
+    nodes[this.state.selectedNode] = node;
+    this.setState({nodes: nodes});
+  }
+
+  setNodePathType(type) {
+    let nodes = this.state.nodes;
+    let node = nodes[this.state.selectedNode];
+    let inputIndex = node.inputs.findIndex((item) => {return item.name == "assetshot"});
+    node.inputs[inputIndex].value = type;
+    nodes[this.state.selectedNode] = node;
+    this.setState({nodes: nodes});
+  }
+
   executeGraph() {
 
   }
@@ -578,9 +681,12 @@ export default class Graph extends React.Component {
           <NodeProperties
             theme={this.state.theme}
             primaryColor={this.state.primaryColor}
+            projects={this.state.projects}
             node={this.state.nodes[this.state.selectedNode]}
             onValueChange={(input, value) => this.changeInputValue(input, value)}
             selectFile={(input, extensions) => this.selectInputFile(input, extensions)}
+            setNodeProject={(project) => this.setNodeProject(project)}
+            setNodePathType={(type) => this.setNodePathType(type)}
           />
 
           {/* <div className="scene-view">

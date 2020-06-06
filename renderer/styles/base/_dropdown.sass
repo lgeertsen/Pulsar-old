@@ -1,6 +1,10 @@
 .dropdown-content
+  border-width: 1px
+  border-style: solid
+
   @include themify($themes)
     background-color: themed('bg-bis')
+    border-color: themed("text")
 
 .dropdown-item
   transition: all 0.25s
