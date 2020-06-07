@@ -5,6 +5,7 @@ export default class Node {
     this.id = `${node.id}_${id}`;
 
     this.type = node.type;
+    this.subType = node.subType;
     this.software = node.software;
     this.script = node.script;
     this.name = `${node.name} ${id}`;

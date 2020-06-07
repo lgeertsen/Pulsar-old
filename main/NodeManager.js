@@ -192,6 +192,33 @@ export default class NodeManager {
       }
       this._nodes.base[node.name] = node
     }
+
+    if(!this._nodes.operations) {
+      this._nodes.operations = {}
+    }
+
+    if(!this._nodes.operations.merge) {
+      let node = {
+        id: "operations.merge",
+        type: "operations",
+        subType: "merge",
+        name: "merge",
+        color: "turquoise",
+        icon: "las la-compress-arrows-alt",
+        script: null,
+        inputs: [
+          {
+            name: "input1",
+            label: "Input 1",
+            description: "Input",
+            value: "",
+            type: "any"
+          }
+        ],
+        outputs: []
+      }
+      this._nodes.operations[node.name] = node
+    }
   }
 
   importNodes(cb) {
@@ -222,7 +249,6 @@ export default class NodeManager {
   }
 
   getNode(type, task) {
-    console.log(type, task);
     return this._nodes[type][task];
   }
 }

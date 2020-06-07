@@ -337,7 +337,23 @@ export default class Graph extends React.Component {
         attribOut = e.target.getAttribute("attributeid");
       }
 
+      let nodes = this.state.nodes;
+      if(nodes[nodeIn].subType == "merge") {
+        let count = nodes[nodeIn].inputs.length;
+        let newInput = {
+          name: `input${count+1}`,
+          label: `Input ${count+1}`,
+          description: "Input",
+          value: "",
+          type: "any",
+          ref: React.createRef()
+          // hidden: true
+        }
+        nodes[nodeIn].inputs.push(newInput);
+      }
+
       ipcRenderer.send("addEdge", {nodeIn: nodeIn, attribIn: attribIn, nodeOut: nodeOut, attribOut: attribOut});
+      this.setState({nodes: nodes});
     }
   }
 

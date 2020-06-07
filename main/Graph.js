@@ -44,6 +44,18 @@ export default class Graph {
     let outType = this._nodes[nodeOut].outputs[outIndex].type;
 
     this._edges[`${nodeIn}#${attribIn}`] = new Edge(nodeIn, attribIn, nodeOut, attribOut);
+
+    if(this._nodes[nodeIn].subType == "merge") {
+      let count = this._nodes[nodeIn].inputs.length;
+      let newInput = {
+        name: `input${count+1}`,
+        label: `Input ${count+1}`,
+        description: "Input",
+        value: "",
+        type: "any"
+      }
+      this._nodes[nodeIn].inputs.push(newInput);
+    }
   }
 
   setNodeName(id, name) {
@@ -63,7 +75,9 @@ export default class Graph {
       if(this._edges[input].inputNode == node.id) {
         let outputId = this._edges[input].outputNode;
         let outputNode = this._nodes[outputId];
-        if(outputNode.type == "constants") {
+        if(outputNode.subType == "merge") {
+          this.walkGraph(outputNode, depth);
+        } else if(outputNode.type == "constants") {
           let inputAttribute = this._edges[input].inputAttribute;
           let inputIndex = node.inputs.findIndex((item) => {return item.name == inputAttribute});
           node.inputs[inputIndex].value = outputNode.inputs[0].value;
@@ -81,27 +95,31 @@ export default class Graph {
 
   execute(id) {
     let node = this._nodes[id];
-    this._executionPriority[0] = [];
-    this._executionPriority[0].push(node)
-    let walked = this.walkGraph(node, 1);
-    console.log(this._executionPriority);
+    let d = 0;
+    if(node.subType != "merge" && node.type != constants) {
+      this._executionPriority[0] = [];
+      this._executionPriority[0].push(node)
+      d += 1;
+    }
+    let walked = this.walkGraph(node, d);
     let depth = Object.keys(this._executionPriority).length;
     for(let i = depth-1; i >= 0; i--) {
       for(let j in this._executionPriority[i]) {
         this._executionOrder.push(this._executionPriority[i][j])
       }
     }
+    console.log(this._executionOrder);
     this.executeTask();
   }
 
   executeTask() {
+    Logger.info("Execute Task")
     let task = this._executionOrder.shift();
 
     if(task.software == "bat") {
       let args = [];
       for(let i in task.inputs) {
         if(task.inputs[i].type.split(".")[0] == "tuple") {
-          console.log("msqlkdjmsqlkjdfm");
           for(let j in task.inputs[i].value) {
             args.push(task.inputs[i].value[j]);
           }
@@ -128,7 +146,6 @@ export default class Graph {
         }
       }
 
-      console.log(cmd);
       const bat = spawn(cmd, { shell: true });
 
       bat.stdout.on('data', (data) => {
@@ -141,6 +158,10 @@ export default class Graph {
 
       bat.on('exit', (code) => {
         console.log(`Child exited with code ${code}`);
+        console.log(this._executionOrder);
+        if(this._executionOrder.length > 0) {
+          this.executeTask();
+        }
       });
     }
   }

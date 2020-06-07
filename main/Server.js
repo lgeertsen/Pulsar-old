@@ -69,8 +69,11 @@ export default class Server {
     }
     this._nodeManager.importNodes(() => {
       // let output = this._graph.addNode("base", "OUTPUT", {x: 11000, y: 10500});
+      let merge = this._graph.addNode("operations", "merge", {x: 11000, y: 10600});
       let render = this._graph.addNode("houdini", "render", {x: 10700, y: 10500});
       this._graph.setNodeInputValue(render, "frames", [1, 5]);
+      let render2 = this._graph.addNode("houdini", "render", {x: 10700, y: 10700});
+      this._graph.setNodeInputValue(render2, "frames", [10, 15]);
       let file1 = this._graph.addNode("constants", "file", {x: 10400, y: 10450});
       this._graph.setNodeInputValue(file1, "file", "C:\\Program Files\\Side Effects Software\\Houdini 18.0.391\\bin\\hrender.py");
       let file2 = this._graph.addNode("constants", "file", {x: 10400, y: 10550});
@@ -78,9 +81,14 @@ export default class Server {
       let string = this._graph.addNode("constants", "string", {x: 10400, y: 10650});
       this._graph.setNodeInputValue(string, "string", "/out/mantra_ipr");
       // this._graph.addEdge(output, "output", render, "output");
+      this._graph.addEdge(merge, "input1", render, "output");
+      this._graph.addEdge(merge, "input2", render2, "output");
       this._graph.addEdge(render, "hrender.py", file1, "output");
       this._graph.addEdge(render, "scene", file2, "output");
       this._graph.addEdge(render, "render_node", string, "output");
+      this._graph.addEdge(render2, "hrender.py", file1, "output");
+      this._graph.addEdge(render2, "scene", file2, "output");
+      this._graph.addEdge(render2, "render_node", string, "output");
     });
 
     // this.sendMessageMain(message, config)
