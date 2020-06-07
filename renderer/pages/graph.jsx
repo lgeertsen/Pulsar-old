@@ -126,8 +126,6 @@ export default class Graph extends React.Component {
       ipcRenderer.on('nodes', (event, data) => {
         console.log(data);
         this.setState({nodeList: data});
-        // this.addBaseNodes();
-        // this.createTemp();
       });
 
       ipcRenderer.on('selectedInputFile', (event, data) => {
@@ -151,380 +149,6 @@ export default class Graph extends React.Component {
       e.preventDefault();
       console.log(e);
     }
-  }
-
-  createTemp() {
-    // this.setState({ghostNodeType: "houdini", ghostNodeNode: "render"});
-    // this.createNode({clientX: 590, clientY: 400});
-    // this.setState({ghostNodeType: "constants", ghostNodeNode: "file"});
-    // this.createNode({clientX: 300, clientY: 400});
-    // this.setState({ghostNodeType: "constants", ghostNodeNode: "file"});
-    // this.createNode({clientX: 300, clientY: 500});
-    // this.setState({ghostNodeType: "constants", ghostNodeNode: "string"});
-    // this.createNode({clientX: 300, clientY: 600});
-    // let nodes = this.state.nodes;
-    // nodes["constants.file_1"] = {
-    //   color: "red",
-    //   description: undefined,
-    //   icon: "las la-file",
-    //   id: "constants.file",
-    //   inputs: [
-    //     {
-    //       description: "File",
-    //       extensions: [],
-    //       hidden: true,
-    //       label: "File",
-    //       name: "file",
-    //       ref: {current: null},
-    //       type: "file",
-    //       value: ""
-    //     }
-    //   ],
-    //   label: undefined,
-    //   name: "file 1",
-    //   outputs: [
-    //     {
-    //       description: undefined,
-    //       extensions: undefined,
-    //       hidden: undefined,
-    //       label: undefined,
-    //       name: "output",
-    //       ref: React.createRef(),
-    //       type: "file",
-    //       value: undefined
-    //     }
-    //   ],
-    //   script: null,
-    //   type: "constants",
-    //   x: 10200,
-    //   y: 10385
-    // };
-    // nodes["constants.file_2"] = {
-    //   color: "red",
-    //   description: undefined,
-    //   icon: "las la-file",
-    //   id: "constants.file",
-    //   inputs: [
-    //     {
-    //       description: "File",
-    //       extensions: [],
-    //       hidden: true,
-    //       label: "File",
-    //       name: "file",
-    //       ref: {current: null},
-    //       type: "file",
-    //       value: ""
-    //     }
-    //   ],
-    //   label: undefined,
-    //   name: "file 2",
-    //   outputs: [
-    //     {
-    //       description: undefined,
-    //       extensions: undefined,
-    //       hidden: undefined,
-    //       label: undefined,
-    //       name: "output",
-    //       ref: React.createRef(),
-    //       type: "file",
-    //       value: undefined,
-    //     }
-    //   ],
-    //   script: null,
-    //   type: "constants",
-    //   x: 10200,
-    //   y: 10485
-    // };
-    // nodes["constants.string_1"] = {
-    //   color: "green",
-    //   description: undefined,
-    //   icon: "las la-ad",
-    //   id: "constants.string",
-    //   inputs: [
-    //     {
-    //       description: "String",
-    //       extensions: [],
-    //       hidden: true,
-    //       label: "String",
-    //       name: "string",
-    //       ref: {current: null},
-    //       type: "string",
-    //       value: ""
-    //     }
-    //   ],
-    //   label: undefined,
-    //   name: "file 1",
-    //   outputs: [
-    //     {
-    //       description: undefined,
-    //       extensions: undefined,
-    //       hidden: undefined,
-    //       label: undefined,
-    //       name: "output",
-    //       ref: React.createRef(),
-    //       type: "string",
-    //       value: undefined
-    //     }
-    //   ],
-    //   script: null,
-    //   type: "constants",
-    //   x: 10200,
-    //   y: 10585
-    // };
-    // nodes["houdini.render_1"] = {
-    //   color: "orange",
-    //   description: undefined,
-    //   icon: "houdini.png",
-    //   id: "houdini.render",
-    //   inputs: [
-    //     {
-    //       description: "hrender.py, normally located in: C:/Program Files/Side Effects Software/Houdini X.Y.ZZZ/bin/hrender.py",
-    //       extensions: ["py"],
-    //       hidden: undefined,
-    //       label: "hrender.py",
-    //       name: "hrender.py",
-    //       ref: React.createRef(),
-    //       type: "file",
-    //       value: ""
-    //     },
-    //     {
-    //       description: "The houdini scene file you'd like to render",
-    //       extensions: (2) ["hip", "hipnc"],
-    //       hidden: undefined,
-    //       label: "Scene",
-    //       name: "scene",
-    //       ref: React.createRef(),
-    //       type: "file",
-    //       value: ""
-    //     },
-    //     {
-    //       description: "The path of the node you want to render your scene with",
-    //       extensions: undefined,
-    //       hidden: undefined,
-    //       label: "Render Node",
-    //       name: "render_node",
-    //       ref: React.createRef(),
-    //       type: "string",
-    //       value: "/out/"
-    //     },
-    //     {
-    //       description: "The frame range you want to render",
-    //       extensions: undefined,
-    //       hidden: undefined,
-    //       label: "Frame Range",
-    //       name: "frames",
-    //       ref: React.createRef(),
-    //       type: "tuple.number",
-    //       value: (2) [1, 100]
-    //     }
-    //   ],
-    //   label: undefined,
-    //   name: "render 1",
-    //   outputs: [
-    //     {
-    //       description: "output",
-    //       extensions: undefined,
-    //       hidden: undefined,
-    //       label: "output",
-    //       name: "output",
-    //       ref: React.createRef(),
-    //       type: "bool",
-    //       value: ""
-    //     }
-    //   ],
-    //   script: "render.bat",
-    //   type: "houdini",
-    //   x: 10490,
-    //   y: 10385
-    // }
-    // let edges = {
-    //   "base.OUTPUT#output": "houdini.render_1#output",
-    //   "houdini.render_1#output": "base.file_1#output",
-    //   "houdini.render_1#output": "base.file_#output",
-    //   "houdini.render_1#output": "base.string_1#output",
-    // }
-    // this.setState({nodes: nodes})
-  }
-
-  addBaseNodes() {
-    let nodes = this.state.nodeList;
-    if(!nodes.constants) {
-      nodes.constants = {}
-    }
-
-    if(!nodes.constants.string) {
-      let node = {
-        id: "constants.string",
-        type: "constants",
-        name: "string",
-        color: "green",
-        icon: "las la-ad",
-        script: null,
-        inputs: [
-          {
-            name: "string",
-            label: "String",
-            description: "String",
-            value: "",
-            type: "string",
-            hidden: true
-          }
-        ],
-        outputs: [
-          {
-            name: "output",
-            type: "string"
-          }
-        ]
-      }
-      nodes.constants[node.name] = node
-    }
-    if(!nodes.constants.number) {
-      let node = {
-        id: "constants.number",
-        type: "constants",
-        name: "number",
-        color: "cyan",
-        icon: "0",
-        script: null,
-        inputs: [
-          {
-            name: "number",
-            label: "Number",
-            description: "Number",
-            value: 0,
-            type: "number",
-            hidden: true
-          }
-        ],
-        outputs: [
-          {
-            name: "output",
-            type: "number"
-          }
-        ]
-      }
-      nodes.constants[node.name] = node
-    }
-
-    if(!nodes.constants.bool) {
-      let node = {
-        id: "constants.bool",
-        type: "constants",
-        name: "bool",
-        color: "purple",
-        icon: "las la-check-square",
-        script: null,
-        inputs: [
-          {
-            name: "bool",
-            label: "Bool",
-            description: "Boolean",
-            value: true,
-            type: "bool",
-            hidden: true
-          }
-        ],
-        outputs: [
-          {
-            name: "output",
-            type: "bool"
-          }
-        ]
-      }
-      nodes.constants[node.name] = node
-    }
-
-    if(!nodes.constants.file) {
-      let node = {
-        id: "constants.file",
-        type: "constants",
-        name: "file",
-        color: "red",
-        icon: "las la-file",
-        script: null,
-        inputs: [
-          {
-            name: "file",
-            label: "File",
-            description: "File",
-            value: "",
-            type: "file",
-            extensions: [],
-            hidden: true
-          }
-        ],
-        outputs: [
-          {
-            name: "output",
-            type: "file"
-          }
-        ]
-      }
-      nodes.constants[node.name] = node
-    }
-
-    if(!nodes.base) {
-      nodes.base = {}
-    }
-
-    if(!nodes.base.OUTPUT) {
-      let node = {
-        id: "base.OUTPUT",
-        type: "base",
-        name: "OUTPUT",
-        color: "black",
-        icon: "las la-flag-checkered",
-        script: null,
-        inputs: [
-          {
-            name: "output",
-            type: "any"
-          }
-        ],
-        outputs: []
-      }
-      nodes.base[node.name] = node
-    }
-
-    if(!nodes.base.project_file) {
-      let node = {
-        id: "base.project_file",
-        type: "base",
-        name: "project_file",
-        color: "red",
-        icon: "las la-folder",
-        script: null,
-        inputs: [
-          {
-            name: "project",
-            label: "Project",
-            description: "Name of the project",
-            value: "",
-            type: "dropdown.project",
-            hidden: true
-          },
-          {
-            name: "assetshot",
-            label: "Asset or Shot",
-            description: "Asset or Shot",
-            value: "asset",
-            type: "switch.assetshot",
-            hidden: true
-          }
-        ],
-        outputs: [
-          {
-            name: "file",
-            label: "file",
-            type: "file"
-          }
-        ]
-      }
-      nodes.base[node.name] = node
-    }
-
-    this.setState({nodeList: nodes});
   }
 
   dragStart(e) {
@@ -712,30 +336,8 @@ export default class Graph extends React.Component {
         nodeOut = e.target.getAttribute("nodeid");
         attribOut = e.target.getAttribute("attributeid");
       }
-      //
-      // let nodes = this.state.nodes;
-      // let inIndex = nodes[nodeIn].inputs.findIndex((item) => {return item.name == attribIn});
-      // let inType = nodes[nodeIn].inputs[inIndex].type;
-      // let outIndex = nodes[nodeOut].outputs.findIndex((item) => {return item.name == attribOut});
-      // let outType = nodes[nodeOut].outputs[outIndex].type;
-      //
-      // if(inType == outType || inType == "any") {
-      //   let edges = this.state.edges;
 
-        ipcRenderer.send("addEdge", {nodeIn: nodeIn, attribIn: attribIn, nodeOut: nodeOut, attribOut: attribOut});
-        // edges[`${nodeIn}#${attribIn}`] = `${nodeOut}#${attribOut}`
-        //   input: {
-        //     node: nodeIn,
-        //     attribute: attribIn
-        //   },
-        //   output: {
-        //     node: nodeOut,
-        //     attribute: attribOut
-        //   }
-        // }
-
-        // this.setState({edges: edges});
-      // }
+      ipcRenderer.send("addEdge", {nodeIn: nodeIn, attribIn: attribIn, nodeOut: nodeOut, attribOut: attribOut});
     }
   }
 
@@ -754,6 +356,7 @@ export default class Graph extends React.Component {
   editNodeName(nodeId, event) {
     let nodes = this.state.nodes;
     nodes[nodeId].name = event.target.value;
+    ipcRenderer.send("setNodeName", {id: nodeId, name: event.target.value});
     this.setState({nodes: nodes});
   }
 
@@ -776,66 +379,13 @@ export default class Graph extends React.Component {
     let id = `${node.id}_${idCount+1}`;
 
     this.setState({ghostNodeActive: false, ghostNodeType: undefined, ghostNodeNode: undefined, selectedNode: id});
-
-    // let nodes = this.state.nodes;
-    // let node = this.state.nodeList[this.state.ghostNodeType][this.state.ghostNodeNode];
-    // console.log(node);
-    // let idCount = 0;
-    // for(let key in nodes) {
-    //   if(key.startsWith(node.id)) {
-    //     idCount += 1;
-    //   }
-    // }
-    // let id = `${node.id}_${idCount+1}`;
-    // let newNode = {
-    //   id: node.id,
-    //   type: node.type,
-    //   script: node.script,
-    //   name: `${node.name} ${idCount+1}`,
-    //   label: node.label,
-    //   description: node.description,
-    //   color: node.color,
-    //   icon: node.icon,
-    //   x: e.clientX - this.state.graphPosition.x + 10000 - 100,
-    //   y: e.clientY - this.state.graphPosition.y + 10000 - 15,
-    //   inputs: [],
-    //   outputs: []
-    // }
-    //
-    // for(let i in node.inputs) {
-    //   newNode.inputs[i] = {
-    //     name: node.inputs[i].name,
-    //     label: node.inputs[i].label,
-    //     description: node.inputs[i].description,
-    //     value: node.inputs[i].value,
-    //     type: node.inputs[i].type,
-    //     extensions: node.inputs[i].extensions,
-    //     hidden: node.inputs[i].hidden,
-    //     ref: React.createRef()
-    //   }
-    // }
-    //
-    // for(let i in node.outputs) {
-    //   newNode.outputs[i] = {
-    //     name: node.outputs[i].name,
-    //     label: node.outputs[i].label,
-    //     description: node.outputs[i].description,
-    //     value: node.outputs[i].value,
-    //     type: node.outputs[i].type,
-    //     extensions: node.outputs[i].extensions,
-    //     hidden: node.outputs[i].hidden,
-    //     ref: React.createRef()
-    //   }
-    // }
-    //
-    // nodes[id] = newNode;
-    // this.setState({nodes: nodes, ghostNodeActive: false, ghostNodeType: undefined, ghostNodeNode: undefined, selectedNode: id});
   }
 
   changeInputValue(input, value) {
     let nodes = this.state.nodes;
     let inputIndex = nodes[this.state.selectedNode].inputs.findIndex((item) => {return item.name == input});
     nodes[this.state.selectedNode].inputs[inputIndex].value = value;
+    ipcRenderer.send("setNodeInputValue", {id: this.state.selectedNode, input: input, value: value});
     this.setState({nodes: nodes});
   }
 
@@ -862,9 +412,7 @@ export default class Graph extends React.Component {
   }
 
   executeGraph() {
-    console.log(this.state.nodes);
-    console.log(this.state.edges);
-    ipcRenderer.send('executeGraph', {nodes: this.state.nodes, edges: this.state.edges});
+    ipcRenderer.send('executeGraph', this.state.selectedNode);
   }
 
   renderNode(nodeId, index) {
@@ -959,7 +507,10 @@ export default class Graph extends React.Component {
           toggleNav={(v) => this.setState({navOpen: v})}
         />
 
-        <button style={{zIndex: 5000, position: "fixed", top: "50px", left: "100px"}} onClick={(e) => this.executeGraph()}>Execute</button>
+        {this.state.selectedNode != undefined ?
+          <button style={{zIndex: 5000, position: "fixed", top: "50px", left: "100px"}} onClick={(e) => this.executeGraph()}>Execute</button>
+          : ""
+        }
 
         <div className={this.state.navOpen ? `main ${this.state.theme} main-${this.state.primaryColor}` : `main full ${this.state.theme} main-${this.state.primaryColor}`}>
           <NodeProperties

@@ -65,15 +65,19 @@ export default class Server {
       console.log(path.join(__dirname, '../../../nodes'));
       // result = spawn.sync(executable, [], { encoding: 'utf8' });
     } else {
-      this._nodeManager.path = "./nodes";
+      this._nodeManager.path = "E:/2TD/Lee/Pulsar/nodes";
     }
     this._nodeManager.importNodes(() => {
-      let output = this._graph.addNode("base", "OUTPUT", {x: 11000, y: 10500});
+      // let output = this._graph.addNode("base", "OUTPUT", {x: 11000, y: 10500});
       let render = this._graph.addNode("houdini", "render", {x: 10700, y: 10500});
+      this._graph.setNodeInputValue(render, "frames", [1, 5]);
       let file1 = this._graph.addNode("constants", "file", {x: 10400, y: 10450});
+      this._graph.setNodeInputValue(file1, "file", "C:\\Program Files\\Side Effects Software\\Houdini 18.0.391\\bin\\hrender.py");
       let file2 = this._graph.addNode("constants", "file", {x: 10400, y: 10550});
+      this._graph.setNodeInputValue(file2, "file", "E:\\2TD\\Lee\\pulsar-render-test.hipnc");
       let string = this._graph.addNode("constants", "string", {x: 10400, y: 10650});
-      this._graph.addEdge(output, "output", render, "output");
+      this._graph.setNodeInputValue(string, "string", "/out/mantra_ipr");
+      // this._graph.addEdge(output, "output", render, "output");
       this._graph.addEdge(render, "hrender.py", file1, "output");
       this._graph.addEdge(render, "scene", file2, "output");
       this._graph.addEdge(render, "render_node", string, "output");

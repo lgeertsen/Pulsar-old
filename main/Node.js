@@ -2,9 +2,10 @@ import Logger from './Logger';
 
 export default class Node {
   constructor(id, node, position) {
-    this.id = `${node.id}_id`;
+    this.id = `${node.id}_${id}`;
 
     this.type = node.type;
+    this.software = node.software;
     this.script = node.script;
     this.name = `${node.name} ${id}`;
     this.label = node.label;
@@ -41,8 +42,15 @@ export default class Node {
     }
   }
 
+  set newName(name) { this.name = name }
+
   set position(position) {
     this.x = position.x;
     this.y = position.y;
+  }
+
+  setInputValue(input, value) {
+    let inputIndex = this.inputs.findIndex((item) => {return item.name == input});
+    this.inputs[inputIndex].value = value;
   }
 }

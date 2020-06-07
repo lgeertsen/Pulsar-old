@@ -1,3 +1,5 @@
+import { spawn } from 'child_process';
+
 import Edge from './Edge';
 import Logger from './Logger';
 import Node from './Node';
@@ -15,11 +17,13 @@ export default class Graph {
     // for(let input in edges) {
     //   this._edges[input] = new Edge(input, edges[input]);
     // }
+
+    this._executionPriority = {};
+    this._executionOrder = [];
   }
 
   addNode(type, task, position) {
     let node = this._nodeManager.getNode(type, task);
-    console.log(node);
 
     let idCount = 0;
     for(let key in this._nodes) {
@@ -42,8 +46,103 @@ export default class Graph {
     this._edges[`${nodeIn}#${attribIn}`] = new Edge(nodeIn, attribIn, nodeOut, attribOut);
   }
 
+  setNodeName(id, name) {
+    this._nodes[id].newName = name;
+  }
+
   setNodePosition(id, position) {
     this._nodes[id].position = position;
+  }
+
+  setNodeInputValue(id, input, value) {
+    this._nodes[id].setInputValue(input, value);
+  }
+
+  walkGraph(node, depth) {
+    for(let input in this._edges) {
+      if(this._edges[input].inputNode == node.id) {
+        let outputId = this._edges[input].outputNode;
+        let outputNode = this._nodes[outputId];
+        if(outputNode.type == "constants") {
+          let inputAttribute = this._edges[input].inputAttribute;
+          let inputIndex = node.inputs.findIndex((item) => {return item.name == inputAttribute});
+          node.inputs[inputIndex].value = outputNode.inputs[0].value;
+        } else {
+          if(this._executionPriority[depth] == undefined) {
+            this._executionPriority[depth] = [];
+          }
+          this._executionPriority[depth].push(outputNode);
+          this.walkGraph(outputNode, depth+1);
+        }
+      }
+    }
+    return true;
+  }
+
+  execute(id) {
+    let node = this._nodes[id];
+    this._executionPriority[0] = [];
+    this._executionPriority[0].push(node)
+    let walked = this.walkGraph(node, 1);
+    console.log(this._executionPriority);
+    let depth = Object.keys(this._executionPriority).length;
+    for(let i = depth-1; i >= 0; i--) {
+      for(let j in this._executionPriority[i]) {
+        this._executionOrder.push(this._executionPriority[i][j])
+      }
+    }
+    this.executeTask();
+  }
+
+  executeTask() {
+    let task = this._executionOrder.shift();
+
+    if(task.software == "bat") {
+      let args = [];
+      for(let i in task.inputs) {
+        if(task.inputs[i].type.split(".")[0] == "tuple") {
+          console.log("msqlkdjmsqlkjdfm");
+          for(let j in task.inputs[i].value) {
+            args.push(task.inputs[i].value[j]);
+          }
+        } else {
+          args.push(task.inputs[i].value);
+        }
+      }
+
+      let dirPath;
+      // if (process.env.NODE_ENV === 'production') {
+      //   dirPath = path.join(__dirname, '../../../nodes/scripts');
+      //   // result = spawn.sync(executable, [], { encoding: 'utf8' });
+      // } else {
+        dirPath = `${this._nodeManager._path}/scripts`;
+      // }
+
+      let cmd = `${dirPath}/${task.type}/${task.script}`;
+
+      for(let i in args) {
+        if(args[i].toString().includes(" ")) {
+          cmd += ` "${args[i]}"`;
+        } else {
+          cmd += ` ${args[i]}`;
+        }
+      }
+
+      console.log(cmd);
+      const bat = spawn(cmd, { shell: true });
+
+      bat.stdout.on('data', (data) => {
+        console.log(data.toString());
+      });
+
+      bat.stderr.on('data', (data) => {
+        console.error(data.toString());
+      });
+
+      bat.on('exit', (code) => {
+        console.log(`Child exited with code ${code}`);
+      });
+    }
   }
 
   formatForRender() {

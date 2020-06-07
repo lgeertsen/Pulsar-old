@@ -51,8 +51,26 @@ export default class Renderer {
       this._server._graph.formatForRender();
     });
 
+    ipcMain.on("setNodeName", (event, data) => {
+      this._server._graph.setNodeName(data.id, data.name);
+    })
+
     ipcMain.on("setNodePosition", (event, data) => {
       this._server._graph.setNodePosition(data.id, data.position);
+    });
+
+    ipcMain.on("setNodeInputValue", (event, data) => {
+      this._server._graph.setNodeInputValue(data.id, data.input, data.value);
+    });
+
+    ipcMain.on("selectInputFile", (event, data) => {
+      dialog.showOpenDialog(this._mainWindow, { properties: ['openFile'], filters: data.extensions }, (files) => {
+        if(files.length > 0) {
+          data.file = files[0];
+          this._server._graph.setNodeInputValue(data.node, data.input, files[0]);
+          event.sender.send("selectedInputFile", data);
+        }
+      });
     });
 
     ipcMain.on("addEdge", (event, data) => {
@@ -61,7 +79,7 @@ export default class Renderer {
     });
 
     ipcMain.on("executeGraph", (event, data) => {
-      this._server.executeGraph(data.nodes, data.edges);
+      this._server._graph.execute(data);
     });
 
     ipcMain.on("getProjects", (event) => {
@@ -127,15 +145,6 @@ export default class Renderer {
       dialog.showOpenDialog(this._mainWindow, { properties: ['openFile'], filters: data.extensions }, (files) => {
         if(files.length > 0) {
           event.sender.send(data.response, files[0]);
-        }
-      });
-    });
-
-    ipcMain.on("selectInputFile", (event, data) => {
-      dialog.showOpenDialog(this._mainWindow, { properties: ['openFile'], filters: data.extensions }, (files) => {
-        if(files.length > 0) {
-          data.file = files[0];
-          event.sender.send("selectedInputFile", data);
         }
       });
     });
