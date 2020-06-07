@@ -1,0 +1,57 @@
+{
+    "node" : {
+        "id" : "houdini.render",
+        "name": "render",
+        "type": "houdini",
+        "software": "bat",
+        "color": "orange",
+        "icon": "houdini.png",
+        "script": "render.bat",
+        "inputs": [
+          {
+            "name": "hrender.py",
+            "label": "hrender.py",
+            "description": "hrender.py, normally located in: C:/Program Files/Side Effects Software/Houdini X.Y.ZZZ/bin/hrender.py",
+            "value": "",
+            "type": "file",
+            "extensions": [
+              "py"
+            ]
+          },
+          {
+            "name": "scene",
+            "label": "Scene",
+            "description": "The houdini scene file you'd like to render",
+            "value": "",
+            "type": "file",
+            "extensions": [
+              "hip",
+              "hipnc"
+            ]
+          },
+          {
+            "name": "render_node",
+            "label": "Render Node",
+            "description": "The path of the node you want to render your scene with",
+            "value": "/out/",
+            "type": "string"
+          },
+          {
+            "name": "frames",
+            "label": "Frame Range",
+            "description": "The frame range you want to render",
+            "value": [1, 100],
+            "type": "tuple.number"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "output",
+            "label": "output",
+            "description": "output",
+            "value": "",
+            "type": "bool"
+          }
+        ]
+    }
+}

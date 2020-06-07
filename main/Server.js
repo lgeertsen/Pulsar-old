@@ -8,7 +8,8 @@ import { execFile } from 'child_process';
 
 import AssetId from './AssetId';
 import Config from './Config';
-import FileManager from './FileManager'
+import FileManager from './FileManager';
+import Graph from './Graph';
 import Logger from './Logger';
 import NodeManager from './NodeManager';
 import Project from './Project';
@@ -33,6 +34,7 @@ export default class Server {
     // this._assetIds = {}
     this._projects = {}
     this._project = undefined;
+    this._graph = new Graph(this._nodeManager, (data) => this.sendMessageMainData("graph", data));
   }
 
   // get assetIds () { return this.assetIds }
@@ -65,7 +67,17 @@ export default class Server {
     } else {
       this._nodeManager.path = "./nodes";
     }
-    this._nodeManager.importNodes();
+    this._nodeManager.importNodes(() => {
+      let output = this._graph.addNode("base", "OUTPUT", {x: 11000, y: 10500});
+      let render = this._graph.addNode("houdini", "render", {x: 10700, y: 10500});
+      let file1 = this._graph.addNode("constants", "file", {x: 10400, y: 10450});
+      let file2 = this._graph.addNode("constants", "file", {x: 10400, y: 10550});
+      let string = this._graph.addNode("constants", "string", {x: 10400, y: 10650});
+      this._graph.addEdge(output, "output", render, "output");
+      this._graph.addEdge(render, "hrender.py", file1, "output");
+      this._graph.addEdge(render, "scene", file2, "output");
+      this._graph.addEdge(render, "render_node", string, "output");
+    });
 
     // this.sendMessageMain(message, config)
 
@@ -78,6 +90,7 @@ export default class Server {
     if(keys.length > 0) {
       this._project = keys[0];
     }
+
 
     // if(this._assetIds["fileManager"] == undefined) {
     //   Logger.info("----- fileManager AssetId doesn't exist -----");

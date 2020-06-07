@@ -42,12 +42,14 @@ export default class Node extends React.Component {
           <div className="attribute-container">
             <div className="inputs-container">
               {this.props.inputs.map((input, index) => (
-                <div className="input-container" key={index}>
-                  <div className={`attribute-pin attribute-type-${input.type} ${this.props.theme}`}></div>
-                  <div className="attribute-name-container">
-                    <span className="attribute-name">{input.name}</span>
+                input.hidden != true ?
+                  <div className="input-container" key={index}>
+                    <div className={`attribute-pin attribute-type-${input.type} ${this.props.theme}`}></div>
+                    <div className="attribute-name-container">
+                      <span className="attribute-name">{input.name}</span>
+                    </div>
                   </div>
-                </div>
+                  : ""
               ))}
             </div>
             <div className="outputs-container">

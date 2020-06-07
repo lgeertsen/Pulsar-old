@@ -41,6 +41,29 @@ export default class Renderer {
       event.sender.send('nodes', this._server.nodes);
     });
 
+    ipcMain.on("getGraph", (event) => {
+      // event.sender.send('nodes', this._server.nodes);
+      this._server._graph.formatForRender();
+    });
+
+    ipcMain.on("addNode", (event, data) => {
+      this._server._graph.addNode(data.type, data.task, data.position);
+      this._server._graph.formatForRender();
+    });
+
+    ipcMain.on("setNodePosition", (event, data) => {
+      this._server._graph.setNodePosition(data.id, data.position);
+    });
+
+    ipcMain.on("addEdge", (event, data) => {
+      this._server._graph.addEdge(data.nodeIn, data.attribIn, data.nodeOut, data.attribOut);
+      this._server._graph.formatForRender();
+    });
+
+    ipcMain.on("executeGraph", (event, data) => {
+      this._server.executeGraph(data.nodes, data.edges);
+    });
+
     ipcMain.on("getProjects", (event) => {
       let projects = this._server._projects;
       let projList = []

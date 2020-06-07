@@ -52,7 +52,7 @@ export default class Node extends React.Component {
               {this.props.inputs.map((input, index) => (
                 input.hidden != true ?
                 <div className="input-container" key={index}>
-                  <div className={`attribute-pin attribute-type-${input.type} ${this.props.theme}`} attributetype="input" nodeid={this.props.nodeId} attributeid={input.name} ref={input.ref}></div>
+                  <div className={`attribute-pin attribute-type-${input.type.split(".")[0]} ${this.props.theme}`} attributetype="input" nodeid={this.props.nodeId} attributeid={input.name} ref={input.ref}></div>
                   <div className="attribute-name-container" attributetype="input" nodeid={this.props.nodeId} attributeid={input.name} >
                     <span className="attribute-name" attributetype="input" nodeid={this.props.nodeId} attributeid={input.name} >{input.label}</span>
                   </div>

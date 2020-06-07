@@ -59,6 +59,15 @@ const NodeProperties = ({
         )
         break;
 
+      case "tuple":
+        parameter = (
+          <div className="node-properties-parameter-tuple">
+            <input type="number" value={input.value[0]} onChange={(e) => onValueChange(input.name, e.target.value)}/>
+            <input type="number" value={input.value[1]} onChange={(e) => onValueChange(input.name, e.target.value)}/>
+          </div>
+        )
+        break;
+
       case "dropdown":
         if(subtype == "project") {
           parameter = (
@@ -113,26 +122,16 @@ const NodeProperties = ({
             }
             <div className="node-properties-name">{node.name}</div>
           </div>
-          {node.inputs.length > 0 ?
-            <div className="node-properties-parameters-container">
-              {node.inputs.map((input, index) => (
-                <div key={index} className="node-properties-parameter">
-                  <div className="node-properties-parameter-label">{input.label}</div>
-                  <div className="node-properties-parameter-input">
-                    {renderParameterInput(input)}
-                  </div>
+          <div className="node-properties-parameters-container">
+            {node.inputs.map((input, index) => (
+              <div key={index} className="node-properties-parameter">
+                <div className="node-properties-parameter-label">{input.label}</div>
+                <div className="node-properties-parameter-input">
+                  {renderParameterInput(input)}
                 </div>
-              ))}
-            </div>
-            :
-            <div className="node-properties-parameters-container">
-              {/* {node.outputs.map((output, index) => (
-                <div key={index} className="node-properties-parameter">
-                  <h1>{output.name}</h1>
-                </div>
-              ))} */}
-            </div>
-          }
+              </div>
+            ))}
+          </div>
         </div>
         :
         <div className="node-properties-no-node">No node selected</div>
