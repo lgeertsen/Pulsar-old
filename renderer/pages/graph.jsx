@@ -128,6 +128,10 @@ export default class Graph extends React.Component {
         this.setState({nodeList: data});
       });
 
+      ipcRenderer.on('clearGraph', (event) => {
+        this.setState({nodes: {}, edges: {}});
+      });
+
       ipcRenderer.on('selectedInputFile', (event, data) => {
         let nodes = this.state.nodes;
         console.log(data);

@@ -125,7 +125,13 @@ const NodeProperties = ({
           <div className="node-properties-parameters-container">
             {node.inputs.map((input, index) => (
               <div key={index} className="node-properties-parameter">
-                <div className="node-properties-parameter-label">{input.label}</div>
+                <div
+                  className="node-properties-parameter-label"
+                  data-tooltip={input.description}
+                  data-tooltip-location="right"
+                >
+                  {input.label}
+                </div>
                 <div className="node-properties-parameter-input">
                   {renderParameterInput(input)}
                 </div>

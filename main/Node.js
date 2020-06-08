@@ -1,14 +1,14 @@
 import Logger from './Logger';
 
 export default class Node {
-  constructor(id, node, position) {
-    this.id = `${node.id}_${id}`;
+  constructor(id, name, node, position) {
+    this.id = id;
 
     this.type = node.type;
     this.subType = node.subType;
     this.software = node.software;
     this.script = node.script;
-    this.name = `${node.name} ${id}`;
+    this.name = name;
     this.label = node.label;
     this.description = node.description;
     this.color = node.color;

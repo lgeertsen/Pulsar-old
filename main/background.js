@@ -12,6 +12,11 @@ import {
 import Server from "./Server";
 const server = new Server();
 
+
+console.log("#######################################################");
+console.log(process.argv);
+console.log("#######################################################");
+
 setInterval(() => {
   try {
     autoUpdater.checkForUpdates()
@@ -95,8 +100,10 @@ if (isProd) {
   if(config.firstUsage) {
     const homeUrl = isProd ? 'app://./welcome.html' : 'http://localhost:8888/welcome';
     await mainWindow.loadURL(homeUrl);
+    server.page = "welcome";
   } else {
     const homeUrl = isProd ? 'app://./manager.html' : 'http://localhost:8888/graph';
+    server.page = "graph"
     await mainWindow.loadURL(homeUrl);
   }
 

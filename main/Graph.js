@@ -5,9 +5,14 @@ import Logger from './Logger';
 import Node from './Node';
 
 export default class Graph {
-  constructor(nodeManager, sendToRenderer) {
+  constructor(nodeManager, server, sendToRenderer) {
     this._nodeManager = nodeManager;
+    this._server = server;
     this._sendToRenderer = sendToRenderer;
+
+    this._name = undefined;
+    this._path = undefined;
+
     this._nodes = {};
     // for(let id in nodes) {
     //   this._nodes[id] = new Node(nodes[id]);
@@ -22,6 +27,26 @@ export default class Graph {
     this._executionOrder = [];
   }
 
+  get name() {return this._name}
+
+  set graph(data) {
+    this._name = data.name;
+    this._path = data.path;
+    this._nodes = {};
+    for(let id in data.nodes) {
+      let pos = {
+        x: data.nodes[id].x,
+        y: data.nodes[id].y
+      }
+      this._nodes[id] = new Node(data.nodes[id].id, data.nodes[id].name, data.nodes[id], pos);
+    }
+    this._edges = {};
+    for(let id in data.edges) {
+      this._edges[id] = new Edge(data.edges[id]._inputNode, data.edges[id]._inputAttribute, data.edges[id]._outputNode, data.edges[id]._outputAttribute);
+    }
+    this.formatForRender();
+  }
+
   addNode(type, task, position) {
     let node = this._nodeManager.getNode(type, task);
 
@@ -33,7 +58,7 @@ export default class Graph {
     }
     idCount += 1;
     let id = `${node.id}_${idCount}`;
-    this._nodes[id] = new Node(idCount, node, position);
+    this._nodes[id] = new Node(id, `${node.name} ${idCount}`, node, position);
     return id;
   }
 
@@ -123,6 +148,8 @@ export default class Graph {
           for(let j in task.inputs[i].value) {
             args.push(task.inputs[i].value[j]);
           }
+        } else if(task.inputs[i].type.split(".")[0] == "software") {
+          args.push(this._server._config.config.softwares[task.inputs[i].type.split(".")[1]]);
         } else {
           args.push(task.inputs[i].value);
         }
@@ -172,5 +199,15 @@ export default class Graph {
       edges[id] = this._edges[id].formatForRender();
     }
     this._sendToRenderer({nodes: this._nodes, edges: edges});
+  }
+
+  formatForSave() {
+    let data = {
+      name: this._name,
+      path: this._path,
+      nodes: this._nodes,
+      edges: this._edges
+    }
+    return data;
   }
 }

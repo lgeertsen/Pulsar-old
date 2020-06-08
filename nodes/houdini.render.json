@@ -9,6 +9,13 @@
         "script": "render.bat",
         "inputs": [
           {
+            "name": "hython",
+            "label": "hython",
+            "description": "hython",
+            "value": "",
+            "type": "software.hython"
+          },
+          {
             "name": "hrender.py",
             "label": "hrender.py",
             "description": "hrender.py, normally located in: C:/Program Files/Side Effects Software/Houdini X.Y.ZZZ/bin/hrender.py",

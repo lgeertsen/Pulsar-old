@@ -1,6 +1,9 @@
-set hr=%1
-set scene=%2
-set node=%3
-set fs=%4
-set fend=%5
-"C:\Program Files\Side Effects Software\Houdini 18.0.391\bin\hython.exe" %hr% %scene% -d %node% -e -f %fs% %fend%
+echo off
+set hython=%1
+set hr=%2
+set scene=%3
+set node=%4
+set fs=%5
+set fend=%6
+echo on
+%hython% %hr% %scene% -d %node% -e -f %fs% %fend%
