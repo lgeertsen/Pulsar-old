@@ -1,11 +1,12 @@
 {
     "node" : {
-        "id" : "windows.houdini_open_file",
-        "name": "houdini_open_file",
-        "type": "windows",
+        "id" : "maya.open_file_new",
+        "name": "open_file_new",
+        "type": "maya",
+        "software": "bat",
         "color": "blue",
         "icon": "lab la-windows",
-        "script": "houdini_open_file.bat",
+        "script": "open_file_new.bat",
         "inputs": [
           {
             "name": "path",

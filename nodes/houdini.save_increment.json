@@ -5,6 +5,7 @@
         "color": "orange",
         "icon": "houdini.png",
         "type": "houdini",
+        "software": "houdini",
         "script": "save_increment.py",
         "inputs": [
           {

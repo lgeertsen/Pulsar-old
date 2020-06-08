@@ -10,6 +10,7 @@ export default class NodeManager {
     this._nodes = {};
 
     this.addBaseNodes();
+    this.addTractorNodes();
   }
 
   set path (path) { this._path = path }
@@ -218,6 +219,90 @@ export default class NodeManager {
         outputs: []
       }
       this._nodes.operations[node.name] = node
+    }
+  }
+
+  addTractorNodes() {
+    if(!this._nodes.tractor) {
+      this._nodes.tractor = {}
+    }
+
+    if(!this._nodes.tractor.submit) {
+      let node = {
+        id: "tractor.submit",
+        type: "tractor",
+        subType: "submit",
+        name: "submit",
+        color: "seabrook",
+        icon: "las la-tractor",
+        script: null,
+        inputs: [
+          {
+            name: "pool",
+            label: "Pool",
+            description: "Pool",
+            value: "",
+            type: "string"
+          }
+        ],
+        outputs: []
+      }
+      this._nodes.tractor[node.name] = node
+    }
+
+    if(!this._nodes.tractor.render_houdini) {
+      let node = {
+        id: "tractor.render_houdini",
+        type: "tractor",
+        name: "render_houdini",
+        color: "orange",
+        icon: "las la-tractor",
+        script: null,
+        inputs: [
+          {
+            "name": "scene",
+            "label": "Scene",
+            "description": "The houdini scene file you'd like to render",
+            "value": "",
+            "type": "file",
+            "extensions": [
+              "hip",
+              "hipnc"
+            ]
+          },
+          {
+            "name": "render_node",
+            "label": "Render Node",
+            "description": "The path of the node you want to render your scene with",
+            "value": "/out/",
+            "type": "string"
+          },
+          {
+            "name": "frames",
+            "label": "Frames",
+            "description": "The frames you want to render",
+            "value": "",
+            "type": "string"
+          },
+          {
+            "name": "pool",
+            "label": "Pool",
+            "description": "The pools you want to render on",
+            "value": "",
+            "type": "string"
+          }
+        ],
+        outputs: [
+          {
+            "name": "output",
+            "label": "output",
+            "description": "output",
+            "value": "",
+            "type": "bool"
+          }
+        ]
+      }
+      this._nodes.tractor[node.name] = node
     }
   }
 

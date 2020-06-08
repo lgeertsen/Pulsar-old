@@ -352,6 +352,16 @@ export default class Server {
           }
         });
       });
+    } else {
+      let data = this._graph.formatForSave();
+      let jsonContent = JSON.stringify(data, null, 2);
+
+      fs.writeFile(data.path, jsonContent, 'utf8', function (err) {
+        if (err) {
+          console.log("An error occured while writing JSON Object to File.");
+          // return console.log(err);
+        }
+      });
     }
   }
 }

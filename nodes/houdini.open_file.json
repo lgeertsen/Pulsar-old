@@ -2,6 +2,7 @@
     "node" : {
         "id" : "houdini.open_file",
         "name": "open_file",
+        "software": "houdini",
         "color": "orange",
         "icon": "houdini.png",
         "type": "houdini",

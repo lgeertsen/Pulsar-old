@@ -2,6 +2,7 @@
     "node" : {
         "id" : "maya.save_increment",
         "name": "save_increment",
+        "software": "maya",
         "color": "cyan",
         "icon": "maya.png",
         "type": "maya",

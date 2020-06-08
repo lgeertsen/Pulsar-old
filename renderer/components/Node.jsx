@@ -46,7 +46,10 @@ export default class Node extends React.Component {
           />
         </div>
         <div className="node-inner">
-          <div className={"node-header bg-" + this.props.color}></div>
+          <div className={"node-header bg-" + this.props.color}>
+            <div className={`attribute-pin attribute-type-main ${this.props.theme}`} attributetype="input" nodeid={this.props.nodeId} attributeid={this.props.nodeId} ref={this.props.refIn}></div>
+            <div className={`attribute-pin attribute-pin-out attribute-type-main ${this.props.theme}`} attributetype="output" nodeid={this.props.nodeId} attributeid={this.props.nodeId} ref={this.props.refOut}></div>
+          </div>
           <div className={"attribute-container " + this.props.theme}>
             <div className="inputs-container">
               {this.props.inputs.map((input, index) => (

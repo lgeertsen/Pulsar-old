@@ -1,10 +1,11 @@
 {
     "node" : {
-        "id" : "hython.publish",
+        "id" : "houdini.publish",
         "name": "publish",
         "color": "orange",
+        "software": "hython",
         "icon": "houdini.png",
-        "type": "hython",
+        "type": "houdini",
         "script": "publish.py",
         "inputs": [
           {

@@ -1,11 +1,12 @@
 {
     "node" : {
-        "id" : "hython.create_asset",
-        "name": "create_asset",
-        "color": "orange",
-        "icon": "houdini.png",
-        "type": "hython",
-        "script": "create_asset.py",
+        "id" : "maya.publish",
+        "name": "publish",
+        "software": "mayapy",
+        "color": "cyan",
+        "icon": "maya.png",
+        "type": "maya",
+        "script": "publish.py",
         "inputs": [
           {
             "name": "file",

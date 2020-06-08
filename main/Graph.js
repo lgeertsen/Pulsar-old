@@ -1,4 +1,6 @@
 import { spawn } from 'child_process';
+import fs from 'fs';
+import path from 'path';
 
 import Edge from './Edge';
 import Logger from './Logger';
@@ -63,12 +65,17 @@ export default class Graph {
   }
 
   addEdge(nodeIn, attribIn, nodeOut, attribOut) {
-    let inIndex = this._nodes[nodeIn].inputs.findIndex((item) => {return item.name == attribIn});
-    let inType = this._nodes[nodeIn].inputs[inIndex].type;
-    let outIndex = this._nodes[nodeOut].outputs.findIndex((item) => {return item.name == attribOut});
-    let outType = this._nodes[nodeOut].outputs[outIndex].type;
-
-    this._edges[`${nodeIn}#${attribIn}`] = new Edge(nodeIn, attribIn, nodeOut, attribOut);
+    if(nodeIn == attribIn && nodeOut == attribOut) {
+      this._edges[`${nodeIn}#${attribIn}`] = new Edge(nodeIn, attribIn, nodeOut, attribOut);
+    } else {
+      let inIndex = this._nodes[nodeIn].inputs.findIndex((item) => {return item.name == attribIn});
+      let inType = this._nodes[nodeIn].inputs[inIndex].type;
+      let outIndex = this._nodes[nodeOut].outputs.findIndex((item) => {return item.name == attribOut});
+      let outType = this._nodes[nodeOut].outputs[outIndex].type;
+      if(inType == outType || inType == "any") {
+        this._edges[`${nodeIn}#${attribIn}`] = new Edge(nodeIn, attribIn, nodeOut, attribOut);
+      }
+    }
 
     if(this._nodes[nodeIn].subType == "merge") {
       let count = this._nodes[nodeIn].inputs.length;
@@ -119,22 +126,28 @@ export default class Graph {
   }
 
   execute(id) {
+    this._executionPriority = {};
+    this._executionOrder = [];
     let node = this._nodes[id];
     let d = 0;
-    if(node.subType != "merge" && node.type != constants) {
-      this._executionPriority[0] = [];
-      this._executionPriority[0].push(node)
-      d += 1;
-    }
-    let walked = this.walkGraph(node, d);
-    let depth = Object.keys(this._executionPriority).length;
-    for(let i = depth-1; i >= 0; i--) {
-      for(let j in this._executionPriority[i]) {
-        this._executionOrder.push(this._executionPriority[i][j])
+    if(node.type == "tractor" && node.subType == "submit") {
+      this.submitTractor(id);
+    } else {
+      if(node.subType != "merge" && node.type != "constants") {
+        this._executionPriority[0] = [];
+        this._executionPriority[0].push(node)
+        d += 1;
       }
+      let walked = this.walkGraph(node, d);
+      let depth = Object.keys(this._executionPriority).length;
+      for(let i = depth-1; i >= 0; i--) {
+        for(let j in this._executionPriority[i]) {
+          this._executionOrder.push(this._executionPriority[i][j])
+        }
+      }
+      console.log(this._executionOrder);
+      this.executeTask();
     }
-    console.log(this._executionOrder);
-    this.executeTask();
   }
 
   executeTask() {
@@ -192,6 +205,64 @@ export default class Graph {
       });
     }
   }
+
+
+
+
+  submitTractor(id) {
+    let node = this._nodes[id];
+    this._executionPriority[0] = [];
+    this._executionPriority[0].push(node)
+    let walked = this.walkGraph(node, 1);
+    console.log(this._executionPriority);
+
+    let data = {
+      pool: node.inputs[0].value,
+      nodes: this._executionPriority
+    }
+    let jsonContent = JSON.stringify(data, null, 2);
+    console.log(jsonContent);
+
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+
+    let timestamp = `${month}-${day}-${year}_${hours}-${minutes}-${seconds}`;
+    console.log(timestamp);
+
+    let dir = path.join("\\\\marvin\\PFE_RN_2020\\_UTILITY\\05_PULSAR\\graphs", `${this.name}_${timestamp}`);
+
+    fs.mkdir(dir, (err) => {
+      if (err) {
+        return console.error(err);
+      }
+      console.log('Directory created successfully!');
+
+      fs.writeFile(path.join(dir, "input.json"), jsonContent, 'utf8', function (err) {
+        if (err) {
+          console.log("An error occured while writing JSON Object to File.");
+          // return console.log(err);
+        }
+      });
+    });
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
   formatForRender() {
     let edges = {};

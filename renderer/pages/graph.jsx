@@ -110,6 +110,8 @@ export default class Graph extends React.Component {
         for(let id in data.nodes) {
           if(!(id in nodes)) {
             nodes[id] = data.nodes[id];
+            nodes[id].refIn = React.createRef();
+            nodes[id].refOut = React.createRef();
 
             for(let i in nodes[id].inputs) {
               nodes[id].inputs[i].ref = React.createRef();
@@ -448,6 +450,8 @@ export default class Graph extends React.Component {
         name={node.name}
         icon={node.icon}
         color={node.color}
+        refIn={node.refIn}
+        refOut={node.refOut}
         editName={(nodeId, event) => this.editNodeName(nodeId, event)}
         x={node.x}
         y={node.y}
@@ -466,10 +470,21 @@ export default class Graph extends React.Component {
     let outSplit = edgeOutput.split("#");
     let outNode = outSplit[0];
     let outAttrib = outSplit[1];
-    let pinOutIndex = this.state.nodes[outNode].outputs.findIndex((item) => {return item.name == outAttrib});
-    let pinInIndex = this.state.nodes[inNode].inputs.findIndex((item) => {return item.name == inAttrib});
-    let pinOut = this.state.nodes[outNode].outputs[pinOutIndex].ref.current;
-    let pinIn = this.state.nodes[inNode].inputs[pinInIndex].ref.current;
+
+    let pinIn, pinOut;
+    let big = false;
+
+    if(inNode == inAttrib && outNode == outAttrib) {
+      pinOut = this.state.nodes[outNode].refOut.current;
+      pinIn = this.state.nodes[inNode].refIn.current;
+      big = true;
+    } else {
+      let pinOutIndex = this.state.nodes[outNode].outputs.findIndex((item) => {return item.name == outAttrib});
+      let pinInIndex = this.state.nodes[inNode].inputs.findIndex((item) => {return item.name == inAttrib});
+      pinOut = this.state.nodes[outNode].outputs[pinOutIndex].ref.current;
+      pinIn = this.state.nodes[inNode].inputs[pinInIndex].ref.current;
+    }
+
     if(pinOut != null && pinIn != null) {
       let pinOutPos = pinOut.getBoundingClientRect();
       let pinInPos = pinIn.getBoundingClientRect();
@@ -484,6 +499,7 @@ export default class Graph extends React.Component {
           y1={y1}
           x2={x2}
           y2={y2}
+          big={big}
           theme={this.state.theme}
           primaryColor={this.state.primaryColor}
         />

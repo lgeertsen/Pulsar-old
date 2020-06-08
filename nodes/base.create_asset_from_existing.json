@@ -1,11 +1,12 @@
 {
     "node" : {
-        "id" : "windows.nuke_open_file",
-        "name": "nuke_open_file",
-        "type": "windows",
+        "id" : "base.create_asset_from_existing",
+        "name": "create_asset_from_existing",
+        "software": "bat",
+        "type": "base",
         "color": "blue",
         "icon": "lab la-windows",
-        "script": "nuke_open_file.bat",
+        "script": "create_asset_from_existing.bat",
         "inputs": [
           {
             "name": "path",
