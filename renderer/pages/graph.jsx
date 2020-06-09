@@ -33,6 +33,13 @@ export default class Graph extends React.Component {
         y: 500
       },
 
+      nodeOptionsOpen: false,
+      nodeOptionsPosition: {
+        x: 0,
+        y: 0
+      },
+      nodeOptionsNode: undefined,
+
       graphPosition: {
         x: 0,
         y: 0
@@ -122,6 +129,11 @@ export default class Graph extends React.Component {
             }
           }
         }
+        for(let id in nodes) {
+          if(!(id in data.nodes)) {
+            delete nodes[id];
+          }
+        }
         this.setState({nodes: nodes, edges: data.edges});
       });
 
@@ -159,7 +171,7 @@ export default class Graph extends React.Component {
 
   dragStart(e) {
     if(e.button != 2) {
-      this.setState({nodeSearchOpen: false, nodeListType: ""});
+      this.setState({nodeSearchOpen: false, nodeListType: "", nodeOptionsOpen: false, nodeOptionsNode: undefined});
     }
     if(e.button == 0 && this.state.ghostNodeActive) {
       this.createNode(e);
@@ -168,7 +180,6 @@ export default class Graph extends React.Component {
       let active = true;
       let dragItem =  e.target.getAttribute("nodeid");
       let node = this.state.nodes[dragItem];
-      console.log(dragItem);
       let initialX = e.clientX - node.x;
       let initialY = e.clientY - node.y;
       this.setState({initialX: initialX, initialY: initialY, active: active, dragItem: dragItem, dragType: "node"});
@@ -188,7 +199,16 @@ export default class Graph extends React.Component {
         x: e.clientX,
         y: e.clientY
       };
-      this.setState({nodeSearchOpen: true, nodeSearchPosition: pos, nodeListType: "", ghostNodeActive: false});
+      this.setState({nodeSearchOpen: true, nodeSearchPosition: pos, nodeListType: "", ghostNodeActive: false, nodeOptionsOpen: false, nodeOptionsNode: undefined});
+    } else if(e.button == 2 && e.target.getAttribute("draggable") == "true") {
+      e.preventDefault();
+      let dragItem =  e.target.getAttribute("nodeid");
+      let node = this.state.nodes[dragItem];
+      let pos = {
+        x: e.clientX,
+        y: e.clientY
+      };
+      this.setState({nodeOptionsOpen: true, nodeOptionsPosition: pos, nodeOptionsNode: dragItem, ghostNodeActive: false, nodeSearchOpen: false, nodeListType: ""});
     }
   }
 
@@ -403,6 +423,11 @@ export default class Graph extends React.Component {
     this.setState({ghostNodeActive: false, ghostNodeType: undefined, ghostNodeNode: undefined, selectedNode: id});
   }
 
+  deleteNode(e) {
+    ipcRenderer.send("deleteNode", this.state.nodeOptionsNode);
+    this.setState({nodeOptionsOpen: false, nodeOptionsNode: undefined});
+  }
+
   changeInputValue(input, value) {
     let nodes = this.state.nodes;
     let inputIndex = nodes[this.state.selectedNode].inputs.findIndex((item) => {return item.name == input});
@@ -521,6 +546,13 @@ export default class Graph extends React.Component {
     var nodeSearchPosition = {
         left: `${nodesSearchX}px`,
         top: `${nodesSearchY}px`
+    };
+
+    var nodeOptionsX = this.state.nodeOptionsPosition.x;
+    var nodeOptionsY = this.state.nodeOptionsPosition.y;
+    var nodeOptionsPosition = {
+      left: `${nodeOptionsX}px`,
+      top: `${nodeOptionsY}px`
     };
 
     return (
@@ -649,6 +681,13 @@ export default class Graph extends React.Component {
               </div>
               : ""
             }
+          </div>
+          : ""
+        }
+
+        {this.state.nodeOptionsOpen ?
+          <div className="node-options-container" style={nodeOptionsPosition}>
+            <div className="node-options-option" onClick={(e) => this.deleteNode()}>Delete</div>
           </div>
           : ""
         }

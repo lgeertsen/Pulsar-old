@@ -227,33 +227,42 @@ export default class NodeManager {
       this._nodes.tractor = {}
     }
 
-    if(!this._nodes.tractor.submit) {
-      let node = {
-        id: "tractor.submit",
-        type: "tractor",
-        subType: "submit",
-        name: "submit",
-        color: "seabrook",
-        icon: "las la-tractor",
-        script: null,
-        inputs: [
-          {
-            name: "pool",
-            label: "Pool",
-            description: "Pool",
-            value: "",
-            type: "string"
-          }
-        ],
-        outputs: []
-      }
-      this._nodes.tractor[node.name] = node
-    }
+    // if(!this._nodes.tractor.submit) {
+    //   let node = {
+    //     id: "tractor.submit",
+    //     type: "tractor",
+    //     subType: "submit",
+    //     name: "submit",
+    //     color: "seabrook",
+    //     icon: "las la-tractor",
+    //     script: null,
+    //     inputs: [
+    //       {
+    //         name: "pulsar_graph",
+    //         label: "Pulsar Graph File",
+    //         description: "Pulsar Graph File",
+    //         value: "",
+    //         type: "string",
+    //         hidden: true
+    //       },
+    //       {
+    //         name: "pool",
+    //         label: "Pool",
+    //         description: "Pool",
+    //         value: "",
+    //         type: "string"
+    //       }
+    //     ],
+    //     outputs: []
+    //   }
+    //   this._nodes.tractor[node.name] = node
+    // }
 
     if(!this._nodes.tractor.render_houdini) {
       let node = {
         id: "tractor.render_houdini",
         type: "tractor",
+        subType: "render_houdini",
         name: "render_houdini",
         color: "orange",
         icon: "las la-tractor",

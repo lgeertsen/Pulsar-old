@@ -51,6 +51,11 @@ export default class Renderer {
       this._server._graph.formatForRender();
     });
 
+    ipcMain.on("deleteNode", (event, data) => {
+      this._server._graph.deleteNode(data);
+      this._server._graph.formatForRender();
+    });
+
     ipcMain.on("setNodeName", (event, data) => {
       this._server._graph.setNodeName(data.id, data.name);
     })

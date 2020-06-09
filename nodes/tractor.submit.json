@@ -1,0 +1,38 @@
+{
+    "node" : {
+        "id" : "tractor.submit",
+        "name": "submit",
+        "software": "python2",
+        "type": "tractor",
+        "subType": "submit",
+        "color": "seabrook",
+        "icon": "las la-tractor",
+        "script": "submit.py",
+        "inputs": [
+          {
+            "name": "pulsar_graph",
+            "label": "Pulsar Graph File",
+            "description": "Pulsar Graph File",
+            "value": "",
+            "type": "string",
+            "hidden": true
+          },
+          {
+            "name": "pulsar_graph_submit",
+            "label": "Pulsar Graph Submit",
+            "description": "Pulsar Graph Submit",
+            "value": "",
+            "type": "string",
+            "hidden": true
+          },
+          {
+            "name": "pool",
+            "label": "Pool",
+            "description": "Pool",
+            "value": "",
+            "type": "string"
+          }
+        ],
+        "outputs": []
+    }
+}

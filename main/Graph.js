@@ -52,15 +52,30 @@ export default class Graph {
   addNode(type, task, position) {
     let node = this._nodeManager.getNode(type, task);
 
-    let idCount = 0;
-    for(let key in this._nodes) {
-      if(key.startsWith(node.id)) {
-        idCount += 1;
+    // let idCount = 0;
+    // for(let key in this._nodes) {
+    //   if(key.startsWith(node.id)) {
+    //     idCount += 1;
+    //   }
+    // }
+    let idCount = 1;
+    let id = `${node.id}_${idCount}`;
+    while(id in this._nodes) {
+      idCount+=1;
+      id = `${node.id}_${idCount}`;
+    }
+
+    this._nodes[id] = new Node(id, `${node.name} ${idCount}`, node, position);
+    return id;
+  }
+
+  deleteNode(id) {
+    delete this._nodes[id];
+    for(let key in this._edges) {
+      if(this._edges[key].inputNode == id || this._edges[key].outputNode == id) {
+        delete this._edges[key];
       }
     }
-    idCount += 1;
-    let id = `${node.id}_${idCount}`;
-    this._nodes[id] = new Node(id, `${node.name} ${idCount}`, node, position);
     return id;
   }
 
@@ -130,8 +145,8 @@ export default class Graph {
     this._executionOrder = [];
     let node = this._nodes[id];
     let d = 0;
-    if(node.type == "tractor" && node.subType == "submit") {
-      this.submitTractor(id);
+    if(node.subType == "submit") {
+      this.customSubmitter(id);
     } else {
       if(node.subType != "merge" && node.type != "constants") {
         this._executionPriority[0] = [];
@@ -153,6 +168,8 @@ export default class Graph {
   executeTask() {
     Logger.info("Execute Task")
     let task = this._executionOrder.shift();
+
+    console.log(task);
 
     if(task.software == "bat") {
       let args = [];
@@ -203,52 +220,123 @@ export default class Graph {
           this.executeTask();
         }
       });
+    } else if(task.software == "python" || task.software == "python2") {
+      let python = this._server._config.config.softwares[task.software];
+      let args = [];
+      for(let i in task.inputs) {
+        if(task.inputs[i].type.split(".")[0] == "tuple") {
+          for(let j in task.inputs[i].value) {
+            args.push(task.inputs[i].value[j]);
+          }
+        } else if(task.inputs[i].type.split(".")[0] == "software") {
+          args.push(this._server._config.config.softwares[task.inputs[i].type.split(".")[1]]);
+        } else {
+          args.push(task.inputs[i].value);
+        }
+      }
+
+      let dirPath;
+      // if (process.env.NODE_ENV === 'production') {
+      //   dirPath = path.join(__dirname, '../../../nodes/scripts');
+      //   // result = spawn.sync(executable, [], { encoding: 'utf8' });
+      // } else {
+        dirPath = `${this._nodeManager._path}/scripts`;
+      // }
+
+      let cmd = `${python} ${dirPath}/${task.type}/${task.script}`;
+
+      for(let i in args) {
+        if(args[i].toString().includes(" ")) {
+          cmd += ` "${args[i]}"`;
+        } else {
+          cmd += ` ${args[i]}`;
+        }
+      }
+
+      console.log(cmd);
+
+      const bat = spawn(cmd, { shell: true });
+
+      bat.stdout.on('data', (data) => {
+        console.log(data.toString());
+      });
+
+      bat.stderr.on('data', (data) => {
+        console.error(data.toString());
+      });
+
+      bat.on('exit', (code) => {
+        console.log(`Child exited with code ${code}`);
+        console.log(this._executionOrder);
+        if(this._executionOrder.length > 0) {
+          this.executeTask();
+        }
+      });
     }
   }
 
 
 
 
-  submitTractor(id) {
+  customSubmitter(id) {
     let node = this._nodes[id];
-    this._executionPriority[0] = [];
-    this._executionPriority[0].push(node)
-    let walked = this.walkGraph(node, 1);
-    console.log(this._executionPriority);
 
-    let data = {
-      pool: node.inputs[0].value,
-      nodes: this._executionPriority
-    }
-    let jsonContent = JSON.stringify(data, null, 2);
-    console.log(jsonContent);
-
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let seconds = date.getSeconds();
-
-    let timestamp = `${month}-${day}-${year}_${hours}-${minutes}-${seconds}`;
-    console.log(timestamp);
-
-    let dir = path.join("\\\\marvin\\PFE_RN_2020\\_UTILITY\\05_PULSAR\\graphs", `${this.name}_${timestamp}`);
-
-    fs.mkdir(dir, (err) => {
-      if (err) {
-        return console.error(err);
-      }
-      console.log('Directory created successfully!');
-
-      fs.writeFile(path.join(dir, "input.json"), jsonContent, 'utf8', function (err) {
-        if (err) {
-          console.log("An error occured while writing JSON Object to File.");
-          // return console.log(err);
+    for(let input in this._edges) {
+      if(this._edges[input].inputNode == node.id) {
+        let outputId = this._edges[input].outputNode;
+        let outputNode = this._nodes[outputId];
+        if(outputNode.type == "constants") {
+          let inputAttribute = this._edges[input].inputAttribute;
+          let inputIndex = node.inputs.findIndex((item) => {return item.name == inputAttribute});
+          node.inputs[inputIndex].value = outputNode.inputs[0].value;
         }
-      });
-    });
+      }
+    }
+
+    node.inputs[0].value = this._path;
+    node.inputs[1].value = id;
+
+    this._executionOrder.push(node);
+    this.executeTask();
+
+    // this._executionPriority[0] = [];
+    // this._executionPriority[0].push(node)
+    // let walked = this.walkGraph(node, 1);
+    // console.log(this._executionPriority);
+    //
+    // let data = {
+    //   pool: node.inputs[0].value,
+    //   nodes: this._executionPriority
+    // }
+    // let jsonContent = JSON.stringify(data, null, 2);
+    // console.log(jsonContent);
+    //
+    // let date = new Date();
+    // let year = date.getFullYear();
+    // let month = date.getMonth() + 1;
+    // let day = date.getDate();
+    // let hours = date.getHours();
+    // let minutes = date.getMinutes();
+    // let seconds = date.getSeconds();
+    //
+    // let timestamp = `${month}-${day}-${year}_${hours}-${minutes}-${seconds}`;
+    // console.log(timestamp);
+    //
+    // let dir = path.join("\\\\marvin\\PFE_RN_2020\\_UTILITY\\05_PULSAR\\graphs", `${this.name}_${timestamp}`);
+    //
+    // fs.mkdir(dir, (err) => {
+    //   if (err) {
+    //     return console.error(err);
+    //   }
+    //   console.log('Directory created successfully!');
+    //
+    //   fs.writeFile(path.join(dir, "input.json"), jsonContent, 'utf8', function (err) {
+    //     if (err) {
+    //       console.log("An error occured while writing JSON Object to File.");
+    //       // return console.log(err);
+    //     }
+    //   });
+    // });
 
   }
 
