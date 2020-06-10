@@ -220,6 +220,73 @@ export default class NodeManager {
       }
       this._nodes.operations[node.name] = node
     }
+
+    if(!this._nodes.fake) {
+      this._nodes.fake = {}
+    }
+
+    if(!this._nodes.fake.check_frames) {
+      let node = {
+        id: "fake.check_frames",
+        type: "fake",
+        subType: "check_frames",
+        name: "check_render",
+        color: "periwinkle",
+        icon: "las la-image",
+        script: null,
+        inputs: [
+          {
+            name: "path",
+            label: "Path",
+            description: "Path",
+            value: "",
+            type: "string"
+          }
+        ],
+        outputs: [
+          {
+            name: "frames",
+            label: "Missing Frames",
+            description: "Path",
+            value: "",
+            type: "string"
+          }
+        ]
+      }
+      this._nodes.fake[node.name] = node
+    }
+
+    if(!this._nodes.fake.nuke_import) {
+      let node = {
+        id: "fake.nuke_import",
+        type: "fake",
+        subType: "nuke_import",
+        name: "nuke_import",
+        color: "yellow",
+        icon: "nuke.png",
+        script: null,
+        inputs: [
+          {
+            name: "scene",
+            label: "Scene",
+            description: "Path",
+            value: "",
+            type: "file"
+          },
+          {
+            name: "images",
+            label: "Images",
+            description: "Path",
+            value: "",
+            type: "string"
+          }
+        ],
+        outputs: [
+
+        ]
+      }
+      this._nodes.fake[node.name] = node
+    }
   }
 
   addTractorNodes() {

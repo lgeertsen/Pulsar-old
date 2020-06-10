@@ -46,6 +46,8 @@ export default class Graph extends React.Component {
       },
       initialX: 0,
       initialY: 0,
+      clientInitialX: 0,
+      clientInitialY: 0,
       xOffset: undefined,
       yOffset: undefined,
       currentX: 0,
@@ -72,7 +74,7 @@ export default class Graph extends React.Component {
       nodeList: {},
       nodeListType: "",
 
-      selectedNode: undefined,
+      selectedNode: [],
 
       ghostNodeActive: false,
       ghostNodeType: undefined,
@@ -182,7 +184,7 @@ export default class Graph extends React.Component {
       let node = this.state.nodes[dragItem];
       let initialX = e.clientX - node.x;
       let initialY = e.clientY - node.y;
-      this.setState({initialX: initialX, initialY: initialY, active: active, dragItem: dragItem, dragType: "node"});
+      this.setState({initialX: initialX, initialY: initialY, clientInitialX: e.clientX, clientInitialY: e.clientY, active: active, dragItem: dragItem, dragType: "node"});
     } else if(e.button == 1) {
       e.preventDefault();
       let active = true;
@@ -222,9 +224,9 @@ export default class Graph extends React.Component {
     let selectedNode = this.state.selectedNode;
     if(!moved) {
       if(dragType == "node") {
-        selectedNode = dragItem;
+        selectedNode = [dragItem];
       } else if(dragType == "graph") {
-        selectedNode = undefined;
+        selectedNode = [];
       }
     } else {
       if(dragType == "node") {
@@ -260,8 +262,8 @@ export default class Graph extends React.Component {
         this.setState({moved: true, currentX: currentX, currentY: currentY, xOffset: xOffset, yOffset: yOffset, graphPosition: position});
       } else if (this.state.active && this.state.dragItem != undefined) {
         e.preventDefault();
-        let currentX = e.clientX - this.state.initialX;
-        let currentY = e.clientY - this.state.initialY;
+        let currentX = e.clientX - ((e.clientX - this.state.clientInitialX) * (this.state.graphScale-1)) - this.state.initialX;
+        let currentY = e.clientY - ((e.clientY - this.state.clientInitialY) * (this.state.graphScale-1)) - this.state.initialY;
         let xOffset = currentX;
         let yOffset = currentY;
 
@@ -420,7 +422,7 @@ export default class Graph extends React.Component {
     }
     let id = `${node.id}_${idCount+1}`;
 
-    this.setState({ghostNodeActive: false, ghostNodeType: undefined, ghostNodeNode: undefined, selectedNode: id});
+    this.setState({ghostNodeActive: false, ghostNodeType: undefined, ghostNodeNode: undefined, selectedNode: [id]});
   }
 
   deleteNode(e) {
@@ -430,36 +432,36 @@ export default class Graph extends React.Component {
 
   changeInputValue(input, value) {
     let nodes = this.state.nodes;
-    let inputIndex = nodes[this.state.selectedNode].inputs.findIndex((item) => {return item.name == input});
-    nodes[this.state.selectedNode].inputs[inputIndex].value = value;
-    ipcRenderer.send("setNodeInputValue", {id: this.state.selectedNode, input: input, value: value});
+    let inputIndex = nodes[this.state.selectedNode[0]].inputs.findIndex((item) => {return item.name == input});
+    nodes[this.state.selectedNode[0]].inputs[inputIndex].value = value;
+    ipcRenderer.send("setNodeInputValue", {id: this.state.selectedNode[0], input: input, value: value});
     this.setState({nodes: nodes});
   }
 
   selectInputFile(input, extensions) {
-    ipcRenderer.send('selectInputFile', {node: this.state.selectedNode, input: input, extensions: extensions});
+    ipcRenderer.send('selectInputFile', {node: this.state.selectedNode[0], input: input, extensions: extensions});
   }
 
   setNodeProject(project) {
     let nodes = this.state.nodes;
-    let node = nodes[this.state.selectedNode];
+    let node = nodes[this.state.selectedNode[0]];
     let inputIndex = node.inputs.findIndex((item) => {return item.name == "project"});
     node.inputs[inputIndex].value = project;
-    nodes[this.state.selectedNode] = node;
+    nodes[this.state.selectedNode[0]] = node;
     this.setState({nodes: nodes});
   }
 
   setNodePathType(type) {
     let nodes = this.state.nodes;
-    let node = nodes[this.state.selectedNode];
+    let node = nodes[this.state.selectedNode[0]];
     let inputIndex = node.inputs.findIndex((item) => {return item.name == "assetshot"});
     node.inputs[inputIndex].value = type;
-    nodes[this.state.selectedNode] = node;
+    nodes[this.state.selectedNode[0]] = node;
     this.setState({nodes: nodes});
   }
 
   executeGraph() {
-    ipcRenderer.send('executeGraph', this.state.selectedNode);
+    ipcRenderer.send('executeGraph', this.state.selectedNode[0]);
   }
 
   renderNode(nodeId, index) {
@@ -469,7 +471,7 @@ export default class Graph extends React.Component {
         theme={this.state.theme}
         primaryColor={this.state.primaryColor}
         key={index}
-        selected={this.state.selectedNode == nodeId}
+        selected={this.state.selectedNode.includes(nodeId)}
         dragging={this.state.dragItem == nodeId}
         nodeId={nodeId}
         name={node.name}
@@ -514,16 +516,16 @@ export default class Graph extends React.Component {
       let pinOutPos = pinOut.getBoundingClientRect();
       let pinInPos = pinIn.getBoundingClientRect();
 
-      let x1 = 10000 + pinOutPos.x - this.state.graphPosition.x;
-      let y1 = 10000 + pinOutPos.y - this.state.graphPosition.y;
-      let x2 = 10000 + pinInPos.x - this.state.graphPosition.x;
-      let y2 = 10000 + pinInPos.y - this.state.graphPosition.y;
+      let x1 = 10000 * this.state.graphScale + pinOutPos.x - this.state.graphPosition.x;
+      let y1 = 10000 * this.state.graphScale + pinOutPos.y - this.state.graphPosition.y;
+      let x2 = 10000 * this.state.graphScale + pinInPos.x - this.state.graphPosition.x;
+      let y2 = 10000 * this.state.graphScale + pinInPos.y - this.state.graphPosition.y;
       return (
         <Edge key={index}
-          x1={x1}
-          y1={y1}
-          x2={x2}
-          y2={y2}
+          x1={x1 / this.state.graphScale}
+          y1={y1 / this.state.graphScale}
+          x2={x2 / this.state.graphScale}
+          y2={y2 / this.state.graphScale}
           big={big}
           theme={this.state.theme}
           primaryColor={this.state.primaryColor}
@@ -575,7 +577,7 @@ export default class Graph extends React.Component {
           toggleNav={(v) => this.setState({navOpen: v})}
         />
 
-        {this.state.selectedNode != undefined ?
+        {this.state.selectedNode.length == 1 ?
           <button style={{zIndex: 5000, position: "fixed", top: "50px", left: "100px"}} onClick={(e) => this.executeGraph()}>Execute</button>
           : ""
         }
@@ -585,7 +587,7 @@ export default class Graph extends React.Component {
             theme={this.state.theme}
             primaryColor={this.state.primaryColor}
             projects={this.state.projects}
-            node={this.state.nodes[this.state.selectedNode]}
+            node={this.state.selectedNode.length == 1 ? this.state.nodes[this.state.selectedNode[0]] : undefined}
             onValueChange={(input, value) => this.changeInputValue(input, value)}
             selectFile={(input, extensions) => this.selectInputFile(input, extensions)}
             setNodeProject={(project) => this.setNodeProject(project)}
