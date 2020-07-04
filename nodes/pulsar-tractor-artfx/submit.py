@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+from datetime import datetime
 
 paths = ['', 'C:\\Program Files\\Pixar\\Tractor-2.3\\lib\\python2.7\\lib\\site-packages\\setuptools-0.6c11-py2.7.egg', 'C:\\Program Files\\Pixar\\Tractor-2.3\\lib\\python2.7\\DLLs\\python27.zip', 'C:\\Program Files\\Pixar\\Tractor-2.3\\lib\\python2.7\\DLLs', 'C:\\Program Files\\Pixar\\Tractor-2.3\\lib\\python2.7\\lib',
          'C:\\Program Files\\Pixar\\Tractor-2.3\\lib\\python2.7\\lib\\plat-win', 'C:\\Program Files\\Pixar\\Tractor-2.3\\lib\\python2.7\\lib\\lib-tk', 'C:\\Program Files\\Pixar\\Tractor-2.3\\bin', 'C:\\Program Files\\Pixar\\Tractor-2.3\\lib\\python2.7', 'C:\\Program Files\\Pixar\\Tractor-2.3\\lib\\python2.7\\lib\\site-packages']
@@ -26,6 +27,14 @@ class TractorSubmitter(object):
         self.graph_file = graph_file
         self.start_id = start_id
         self.pool = pool
+
+        now = datetime.now()
+        timestamp = now.strftime("%m-%d-%Y_%H-%M-%S")
+
+        self.folder_name = '{graph}-{timestamp}'.format(graph=os.path.basename(graph_file), timestamp=timestamp)
+
+        self.folder_path = os.path.join("//marvin/PFE_RN_2020/_UTILITY/05_PULSAR/graphs", self.folder_name)
+        os.mkdir(self.folder_path)
 
         self.executionPriority = {}
 
@@ -186,7 +195,12 @@ class TractorSubmitter(object):
                 self.addTask(layer, self.nodes[id])
 
         # print(self.job.asTcl())
-        self.job.spool()
+        self.jid = self.job.spool()
+
+        txt = os.path.join(self.folder_path, "jid.txt");
+        f = open(txt, "w")
+        f.write(str(self.jid))
+        f.close()
 
 
     def addTask(self, parent, node):
@@ -216,6 +230,20 @@ class TractorSubmitter(object):
                         task_name += " {f}".format(f=f)
 
                 task = author.Task(title=task_name, argv=cmd, service=str(pool))
+                parentTask.addChild(task)
+
+        elif(node["subType"] == "arnold-check-watermark"):
+                print(self.edges['{id}#{id}'.format(id=node["id"])])
+                print(self.edges['{id}#{id}'.format(id=node["id"])]["_outputNode"].split(".")[1])
+                cmd = [
+                    "//marvin/PFE_RN_2020/_UTILITY/05_PULSAR/nodejs/node.exe",
+                    "//marvin/PFE_RN_2020/_UTILITY/05_PULSAR/nodes/pulsar-tractor-artfx/arnold-check-watermark.js",
+                    self.folder_path,
+                    node["id"].split(".")[1],
+                    self.edges['{id}#{id}'.format(id=node["id"])]["_outputNode"].split(".")[1]
+                ]
+                task_name = "check_watermark"
+                task = author.Task(title=task_name, argv=cmd, service=str("p_depths"))
                 parentTask.addChild(task)
 
 

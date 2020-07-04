@@ -145,6 +145,9 @@ export default class Graph {
     this._executionOrder = [];
     let node = this._nodes[id];
     let d = 0;
+    console.log("#############################");
+    console.log(node);
+    console.log("#############################");
     if(node.subType == "submit") {
       this.customSubmitter(id);
     } else {
@@ -190,7 +193,7 @@ export default class Graph {
       //   dirPath = path.join(__dirname, '../../../nodes/scripts');
       //   // result = spawn.sync(executable, [], { encoding: 'utf8' });
       // } else {
-        dirPath = `${this._nodeManager._path}/scripts`;
+        dirPath = `${this._nodeManager._path}`;
       // }
 
       let cmd = `${dirPath}/${task.type}/${task.script}`;
@@ -240,7 +243,7 @@ export default class Graph {
       //   dirPath = path.join(__dirname, '../../../nodes/scripts');
       //   // result = spawn.sync(executable, [], { encoding: 'utf8' });
       // } else {
-        dirPath = `${this._nodeManager._path}/scripts`;
+        dirPath = `${this._nodeManager._path}`;
       // }
 
       let cmd = `${python} ${dirPath}/${task.type}/${task.script}`;

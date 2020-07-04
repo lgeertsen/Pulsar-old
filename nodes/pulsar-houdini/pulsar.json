@@ -1,0 +1,199 @@
+{
+  "nodes" : [
+    {
+      "name": "create_asset",
+      "category": "houdini",
+      "software": "hython",
+      "icon": "houdini.png",
+      "color": "orange",
+      "script": "create_asset.py",
+      "inputs": [
+        {
+          "name": "file",
+          "type": "string"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "is_save",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "open_file_as",
+      "category": "houdini",
+      "software": "houdini",
+      "color": "orange",
+      "icon": "houdini.png",
+      "script": "open_file_as.py",
+      "inputs": [
+        {
+          "name": "file",
+          "label": "File Path",
+          "description": "Path to the Houdini project file you want to open",
+          "value": "",
+          "type": "file",
+          "extensions": [
+            "hip",
+            "hipnc"
+          ]
+        },
+        {
+          "name": "name",
+          "label": "New File Name",
+          "description": "The name you want to open the project file as",
+          "value": "test",
+          "type": "string"
+        },
+        {
+          "name": "force",
+          "label": "Force Open",
+          "description": "Open the file without saving the scene that is already open",
+          "value": false,
+          "type": "bool"
+        },
+        {
+          "name": "number",
+          "label": "Number Test",
+          "description": "Number Test",
+          "value": 2,
+          "type": "number"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "id" : "houdini.open_file_new",
+      "name": "open_file_new",
+      "type": "houdini",
+      "software": "bat",
+      "category": "houdini",
+      "color": "blue",
+      "icon": "lab la-windows",
+      "script": "open_file_new.bat",
+      "inputs": [
+        {
+          "name": "path",
+          "type": "string"
+        },
+        {
+          "name": "file",
+          "type": "string"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "id" : "houdini.open_file",
+      "name": "open_file",
+      "software": "houdini",
+      "color": "orange",
+      "category": "houdini",
+      "icon": "houdini.png",
+      "type": "houdini",
+      "script": "open_file.py",
+      "inputs": [
+        {
+          "name": "file",
+          "type": "string"
+        },
+        {
+          "name": "force",
+          "type": "bool"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "id" : "houdini.publish",
+      "name": "publish",
+      "color": "orange",
+      "software": "hython",
+      "category": "houdini",
+      "icon": "houdini.png",
+      "type": "houdini",
+      "script": "publish.py",
+      "inputs": [
+        {
+          "name": "file",
+          "type": "string"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "is_save",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "id" : "houdini.render",
+      "name": "render",
+      "type": "houdini",
+      "category": "houdini",
+      "software": "bat",
+      "color": "orange",
+      "icon": "houdini.png",
+      "script": "render.bat",
+      "inputs": [
+        {
+          "name": "hython",
+          "label": "hython",
+          "description": "hython",
+          "value": "",
+          "type": "software.hython"
+        },
+        {
+          "name": "hrender.py",
+          "label": "hrender.py",
+          "description": "hrender.py, normally located in: C:/Program Files/Side Effects Software/Houdini X.Y.ZZZ/bin/hrender.py",
+          "value": "",
+          "type": "file",
+          "extensions": [
+            "py"
+          ]
+        },
+        {
+          "name": "scene",
+          "label": "Scene",
+          "description": "The houdini scene file you'd like to render",
+          "value": "",
+          "type": "file",
+          "extensions": [
+            "hip",
+            "hipnc"
+          ]
+        },
+        {
+          "name": "render_node",
+          "label": "Render Node",
+          "description": "The path of the node you want to render your scene with",
+          "value": "/out/",
+          "type": "string"
+        },
+        {
+          "name": "frames",
+          "label": "Frame Range",
+          "description": "The frame range you want to render",
+          "value": [1, 100],
+          "type": "tuple.number"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "label": "output",
+          "description": "output",
+          "value": "",
+          "type": "bool"
+        }
+      ]
+    }
+  ]
+}

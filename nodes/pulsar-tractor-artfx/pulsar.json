@@ -1,0 +1,110 @@
+{
+  "nodes" : [
+    {
+      "name": "submit",
+      "software": "python2",
+      "category": "tractor",
+      "subType": "submit",
+      "color": "seabrook",
+      "icon": "las la-tractor",
+      "script": "submit.py",
+      "inputs": [
+        {
+          "name": "pulsar_graph",
+          "label": "Pulsar Graph File",
+          "description": "Pulsar Graph File",
+          "value": "",
+          "type": "string",
+          "hidden": true
+        },
+        {
+          "name": "pulsar_graph_submit",
+          "label": "Pulsar Graph Submit",
+          "description": "Pulsar Graph Submit",
+          "value": "",
+          "type": "string",
+          "hidden": true
+        },
+        {
+          "name": "pool",
+          "label": "Pool",
+          "description": "Pool",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "arnold-check-watermark",
+      "software": "nodejs",
+      "category": "tractor",
+      "subType": "arnold-check-watermark",
+      "color": "protoss-pylon",
+      "icon": "las la-tint",
+      "inputs": [
+
+      ],
+      "outputs": [
+        {
+          "name": "frames",
+          "label": "Frames",
+          "description": "frames",
+          "value": "",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "subType": "render_houdini",
+      "category": "tractor",
+      "name": "render_houdini",
+      "color": "orange",
+      "icon": "las la-tractor",
+      "script": null,
+      "inputs": [
+        {
+          "name": "scene",
+          "label": "Scene",
+          "description": "The houdini scene file you'd like to render",
+          "value": "",
+          "type": "file",
+          "extensions": [
+            "hip",
+            "hipnc"
+          ]
+        },
+        {
+          "name": "render_node",
+          "label": "Render Node",
+          "description": "The path of the node you want to render your scene with",
+          "value": "/out/",
+          "type": "string"
+        },
+        {
+          "name": "frames",
+          "label": "Frames",
+          "description": "The frames you want to render",
+          "value": "",
+          "type": "string"
+        },
+        {
+          "name": "pool",
+          "label": "Pool",
+          "description": "The pools you want to render on",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "label": "output",
+          "description": "output",
+          "value": "",
+          "type": "bool"
+        }
+      ]
+    }
+  ]
+}
