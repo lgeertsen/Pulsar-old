@@ -109,6 +109,7 @@ export default class Renderer {
 
     ipcMain.on("setPathType", (event, data) => {
       this._server.project.pathType = data;
+      this._server.project.getData();
       // this._server.project.formatForRender();
     });
 

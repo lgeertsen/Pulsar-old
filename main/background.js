@@ -102,7 +102,7 @@ if (isProd) {
     await mainWindow.loadURL(homeUrl);
     server.page = "welcome";
   } else {
-    const homeUrl = isProd ? 'app://./manager.html' : 'http://localhost:8888/graph';
+    const homeUrl = isProd ? 'app://./manager.html' : 'http://localhost:8888/manager';
     server.page = "graph"
     await mainWindow.loadURL(homeUrl);
   }
