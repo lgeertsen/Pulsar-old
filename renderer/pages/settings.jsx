@@ -9,6 +9,8 @@ import "../styles/settings.sass"
 
 const ipcRenderer = electron.ipcRenderer || false;
 
+const matchProjectPath = /^{project}((\/[\w]+)*(\/{[\w]+})*)*(\/{state}_{version})?\/{file}$/g;
+
 const colors = [
   "orange",
   "yellow",
@@ -41,6 +43,7 @@ export default class Settings extends React.Component {
       newProjectPath: "",
 
       needToSave: false,
+      projectPathsValid: true,
 
       tabs: [
         {
@@ -122,7 +125,33 @@ export default class Settings extends React.Component {
           this.setState({incrementShortcut: data.overlay.increment})
         }
         if(data.projects) {
-          this.setState({projects: data.projects})
+
+          let projects = {};
+          for(let proj in data.projects) {
+            let project = {}
+            project.path = data.projects[proj].path;
+            let assets = {}
+            for(let asset in data.projects[proj].asset) {
+              let type = {
+                path: data.projects[proj].asset[asset],
+                valid: true
+              }
+              assets[asset] = type;
+            }
+            project.asset = assets;
+            let shots = {};
+            for(let shot in data.projects[proj].shot) {
+              let type = {
+                path: data.projects[proj].asset[shot],
+                valid: true
+              }
+              shots[shot] = type
+            }
+            project.shot = shots;
+            projects[proj] = project
+          }
+
+          this.setState({projects: projects})
         }
         if(data.softwares) {
           var softs = this.state.softwares;
@@ -160,28 +189,67 @@ export default class Settings extends React.Component {
 
   addProject() {
     let projects = this.state.projects;
+
     let name = this.state.newProjectName;
     let path = this.state.newProjectPath;
-    if(name != "" && path != "") {
-      projects[name] = path;
-      this.setState({projects: projects, newProjectName: "", newProjectPath: ""});
-      let data = {
-        "projects": projects,
-      };
-      ipcRenderer.send('setConfig', data);
+    if(name == "" || path == "")  {
+      return
     }
+    let project = {
+      path: path,
+      asset: {
+        scene: {
+          path: "{project}/ASSET/{asset_type}/scenes/{task}/{state}_{version}/{file}",
+          valid: true
+        },
+        render: {
+          path: "{project}/ASSET/{asset_type}/render/{version}/{file}",
+          valid: true
+        },
+        cache: {
+          path: "{project}/ASSET/{asset_type}/cache/{file}",
+          valid: true
+        },
+        texture: {
+          path: "{project}/ASSET/{asset_type}/images/{version}/{file}",
+          valid: true
+        }
+      },
+      shot: {
+        scene: {
+          path: "{project}/SHOT/scenes/{sequence}/{shot}/{task}/{state}_{version}/{file}",
+          valid: true
+        },
+        render: {
+          path: "{project}/SHOT/render/{sequence}/{shot}/{version}/{file}",
+          valid: true
+        },
+        cache: {
+          path: "{project}/SHOT/caches/{sequence}/{shot}/{file}",
+          valid: true
+        },
+        texture: {
+          path: "{project}/SHOT/images/{sequence}/{shot}/{version}/{file}",
+          valid: true
+        }
+      }
+    }
+
+
+    projects[name] = project;
+    this.setState({projects: projects, newProjectName: "", newProjectPath: "", needToSave: true});
   }
 
   removeProject(project) {
     let projects = this.state.projects;
     delete projects[project];
 
-    let data = {
-      "projects": projects,
-    };
-    ipcRenderer.send('setConfig', data);
+    // let data = {
+    //   "projects": projects,
+    // };
+    // ipcRenderer.send('setConfig', data);
 
-    this.setState({projects: projects});
+    this.setState({projects: projects, needToSave: true});
   }
 
   selectSoftware(soft, selected) {
@@ -214,7 +282,44 @@ export default class Settings extends React.Component {
     this.setState({primaryColor: primaryColor});
   }
 
+  setProjectPathType(project, type, subtype, value) {
+    let res = value.match(matchProjectPath);
+    let valid = true;
+    if(res == null) {
+      valid = false;
+    }
+    let projects = this.state.projects;
+    projects[project][type][subtype].path = value;
+    projects[project][type][subtype].valid = valid;
+
+    let allValid = true;
+    if(res == null) {
+      allValid = false;
+    } else {
+      for(let p in projects) {
+        for(let path in projects[p].asset) {
+          if(projects[p].asset[path].valid == false) {
+            allValid = false;
+            break;
+          }
+        }
+        if(!valid) {
+          break;
+        }
+        for(let path in projects[p].shot) {
+          if(projects[p].shot[path].valid == false) {
+            allValid = false;
+            break;
+          }
+        }
+      }
+    }
+
+    this.setState({projects: projects, projectPathsValid: allValid, needToSave: true});
+  }
+
   saveChanges(type) {
+    let data = {}
     switch (type) {
       case "software":
         let softs = this.state.softwares;
@@ -226,8 +331,31 @@ export default class Settings extends React.Component {
             }
           }
         }
-        let data = {
+        data = {
           softwares: softwares
+        }
+        ipcRenderer.send('setConfig', data);
+        this.setState({needToSave: false});
+        break;
+      case "project":
+        let projs = this.state.projects;
+        let projects = {};
+        for(let p in projs) {
+          let proj = {
+            path: projs[p].path,
+            asset: {},
+            shot: {}
+          };
+          for(let path in projs[p].asset) {
+            proj.asset[path] = projs[p].asset[path].path;
+          }
+          for(let path in projs[p].shot) {
+            proj.shot[path] = projs[p].shot[path].path;
+          }
+          projects[p] = proj;
+        }
+        data = {
+          projects: projects
         }
         ipcRenderer.send('setConfig', data);
         this.setState({needToSave: false});
@@ -240,24 +368,83 @@ export default class Settings extends React.Component {
       <div>
         <div className={"settings-title"}>
           <h1 className="display-4">Projects</h1>
+          {this.state.needToSave == true && this.state.projectPathsValid == true ?
+            <div className={`button ${this.state.theme}`} onClick={e => this.saveChanges("project")}>SAVE CHANGES</div>
+            : ""
+          }
         </div>
         <div className="settings-option settings-projects">
-          {Object.keys(this.state.projects).map((project, index) => (
+          <h5>Setup the abstract paths for the project.</h5>
+          <h6>Every path will already be filled in with an example wich can be changed to correspond to your project structure.</h6>
+          <h6>For any directory that has a variable name, put a format tag: <samp>{"{nameOfTag}"}</samp>.<br/>The tag can be anything you want except: <samp>{"{project}"}</samp>, <samp>{"{state}"}</samp>,<samp>{"{version}"}</samp> or <samp>{"{file}"}</samp>.</h6>
+          <h6>The abstract path should always start with <samp>{"{project}"}</samp>. This corresponds with the path of the directory selected in the previous step.</h6>
+          <h6>The abstract path should end with <samp>{"/{file}"}</samp>, <samp>{"/{version}/{file}"}</samp> or <samp>{"/{state}_{version}/{file}"}</samp>.</h6>
+        </div>
+        <div className="settings-option settings-projects">
+          {/* <hr/> */}
+          {/* {Object.keys(this.state.projects).map((project, index) => (
             <div key={index} className={"settings-project box " + this.state.theme}>
               <div className="settings-project-name padding-left">{project}</div>
-              <div className="settings-project-path">{this.state.projects[project]}</div>
               <div className="settings-project-delete icon" onClick={(e) => this.removeProject(project)}>
                 <i className="las la-times"></i>
               </div>
             </div>
+          ))} */}
+          {Object.keys(this.state.projects).map((project, index) => (
+
+            <div key={index} className="settings-project-setup">
+              <div className="columns">
+                <div className="column">
+                  <h3 className="display-4 sub-display">{project}</h3>
+                </div>
+                <div className="column is-narrow">
+                  <div className="button" onClick={() => this.removeProject(project)}>Remove</div>
+                </div>
+              </div>
+              <div className="columns">
+                <div className="column is-narrow">
+                  <span>Path:</span>
+                </div>
+                <div className="column">{this.state.projects[project].path}</div>
+              </div>
+              <div className="columns">
+                <div className="column">
+                  <h4 className="display-6 sub-display">Asset:</h4>
+                  <div className={"project-path-inputs " + this.state.theme}>
+                    {Object.keys(this.state.projects[project].asset).map((type, index) => (
+                      <div key={index} className="project-path-input-box">
+                        <div className="project-path-type">{type}</div>
+                        <input type="text" className={this.state.projects[project].asset[type].valid ? "project-path-input" : "project-path-input invalid"} onChange={(e) => this.setProjectPathType(project, "asset", type, e.target.value.trim())} value={this.state.projects[project].asset[type].path}/>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="column">
+                  <h4 className="display-6 sub-display">Shot:</h4>
+                  <div className={"project-path-inputs " + this.state.theme}>
+                    {Object.keys(this.state.projects[project].shot).map((type, index) => (
+                      <div className="project-path-input-box">
+                        <div className="project-path-type">{type}</div>
+                        <input type="text" className={this.state.projects[project].shot[type].valid ? "project-path-input" : "project-path-input invalid"} onChange={(e) => this.setProjectPathType(project, "shot", type, e.target.value.trim())} value={this.state.projects[project].shot[type].path}/>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
+
+        </div>
+        <div className="settings-option settings-projects">
+          <h1 className="display-4">Add Project</h1>
+
           <div className="settings-project">
             <div className="settings-project-name">
               <input className={"border-input input " + this.state.theme} type="text" placeholder="Project Name" value={this.state.newProjectName} onChange={(e) => this.setState({newProjectName: e.target.value.trim()})}/>
             </div>
             <div className="file settings-project-path">
               <div className="file-label" onClick={(e) => this.selectDirectory()}>
-                {/* <input className="file-input" type="file" onChange={(e) => this.setState({newProjectPath: e.target.value})}/> */}
+                <input className="file-input" type="file" onChange={(e) => this.setState({newProjectPath: e.target.value})}/>
                 <div className="file-cta">
                   <span className="file-icon">
                     <i className="las la-folder-open"></i>

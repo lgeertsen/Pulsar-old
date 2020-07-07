@@ -522,7 +522,7 @@ export default class Manager extends React.Component {
             <div className="browser-container">
               {this.state.project.directoriesOrder.map((dir, index) => (
                 dir != "file" ?
-                <div className="browser">
+                <div key={index} className="browser">
                   <Browser
                     theme={this.state.theme}
                     primaryColor={this.state.primaryColor}
@@ -538,6 +538,7 @@ export default class Manager extends React.Component {
                 :
                 this.state.filters.pathType.options.render == true ?
                   <SequenceBrowser
+                    key={index}
                     theme={this.state.theme}
                     primaryColor={this.state.primaryColor}
                     title="Files"
@@ -548,6 +549,7 @@ export default class Manager extends React.Component {
                   />
                   :
                   <FileBrowser
+                    key={index}
                     theme={this.state.theme}
                     primaryColor={this.state.primaryColor}
                     title="Files"

@@ -408,7 +408,7 @@ export default class Welcome extends React.Component {
                     <h4>Asset:</h4>
                     <div className={"project-path-inputs " + this.state.theme}>
                       {Object.keys(this.state.projects[project].asset).map((type, index) => (
-                        <div className="project-path-input-box">
+                        <div key={index} className="project-path-input-box">
                           <div className="project-path-type">{type}</div>
                           <input type="text" className={this.state.projects[project].asset[type].valid ? "project-path-input" : "project-path-input invalid"} onChange={(e) => this.setProjectPathType(project, "asset", type, e.target.value.trim())} value={this.state.projects[project].asset[type].path}/>
                         </div>
