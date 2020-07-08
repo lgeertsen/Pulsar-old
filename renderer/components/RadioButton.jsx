@@ -1,26 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const RadioButton = ({ theme, primaryColor, label, checked, onCheck }) => {
-  // const [checked, setChecked] = useState(false);
-
   const RadioButton = () => {
-    onCheck();
+    onCheck()
   }
 
-    return (
-      <div className="radioButton-container" onClick={(e) => RadioButton()}>
-        <div className={checked ? `radioButton icon checked bg-${primaryColor} ${theme}` : "radioButton icon " + theme}>
-          <i></i>
-        </div>
-        <div className="radioButton-label">
-          <span>{label}</span>
-        </div>
+  return (
+    <div className="radioButton-container" onClick={(e) => RadioButton()}>
+      <div className={checked ? `radioButton icon checked bg-${primaryColor} ${theme}` : 'radioButton icon ' + theme}>
+        <i></i>
+      </div>
+      <div className="radioButton-label">
+        <span>{label}</span>
+      </div>
 
-        <style jsx>{`
+      <style jsx>{`
 
         `}</style>
-      </div>
-    );
-};
+    </div>
+  )
+}
 
-export default RadioButton;
+RadioButton.propTypes = {
+  theme: PropTypes.string.isRequired,
+  primaryColor: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  checked: PropTypes.bool.isRequired,
+  onCheck: PropTypes.func.isRequired
+}
+
+export default RadioButton

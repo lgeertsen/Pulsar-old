@@ -1,25 +1,20 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js devargs
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
 
 PATH: 
-  C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Docker\Docker\Resources\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Android;C:\Windows\System32;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin\;C:\Users\leege\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\PuTTY\;C:\Program Files\Common Files\Autodesk Shared\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Users\leege\tractor-free-slots\cli;C:\Users\leege\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\leege\AppData\Local\Programs\Python\Python37-32\;C:\Users\leege\AppData\Local\Microsoft\WindowsApps;C:\Users\leege\AppData\Local\atom\bin;C:\Users\leege\AppData\Local\hyper\app-3.0.2\resources\bin;C:\ngrok;C:\Users\leege\AppData\Local\GitHubDesktop\bin;c:\Program Files\PyCharm\bin;;C:\Users\leege\AppData\Roaming\npm;C:\Program Files\MongoDB\Server\4.2\bin;C:\Users\leege\AppData\Local\Yarn\bin;C:\Users\leege\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\leege\tractor-free-slots\cli;
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\HashiCorp\Vagrant\bin;C:\Program Files\dotnet\;C:\Program Files (x86)\BaseX\bin;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\PuTTY\;C:\Program Files\PostgreSQL\11\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Users\leege\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\leege\AppData\Local\Programs\Python\Python37\;C:\Users\leege\AppData\Local\Microsoft\WindowsApps;C:\Users\leege\AppData\Local\atom\bin;C:\Users\leege\AppData\Local\Microsoft\WindowsApps;C:\Program Files\heroku\bin;C:\Users\leege\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Program Files\Docker Toolbox;C:\src\flutter\bin;C:\Users\leege\AppData\Local\Android\Sdk\platform-tools;C:\Users\leege\AppData\Local\hyper\app-3.0.2\resources\bin;C:\Users\leege\AppData\Local\Yarn\bin;C:\ngrok;C:\Users\leege\AppData\Roaming\npm
 
 Yarn version: 
-  1.19.1
+  1.19.0
 
 Node version: 
-  10.16.3
+  12.13.0
 
 Platform: 
   win32 x64
 
 Trace: 
-  SyntaxError: C:\Users\leege\Pulsar\package.json: Unexpected token U in JSON at position 252
-      at JSON.parse (<anonymous>)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:1625:59
-      at Generator.next (<anonymous>)
-      at step (C:\Program Files (x86)\Yarn\lib\cli.js:304:30)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:315:13
+  Error: EBUSY: resource busy or locked, unlink 'C:\Users\leege\_pulsar\node_modules\electron\dist\chrome_100_percent.pak'
 
 npm manifest: 
   {
@@ -31,7 +26,6 @@ npm manifest:
     "main": "app/background.js",
     "scripts": {
       "dev": "nextron",
-      "devargs": "nextron C:\Users\leege\Documents\azer.puls",
       "postinstall": "electron-builder install-app-deps",
       "build": "nextron build",
       "build:all": "nextron build --all",
@@ -83,6 +77,13 @@ npm manifest:
       "chalk": "^3.0.0",
       "electron": "^6.0.10",
       "electron-builder": "^21.2.0",
+      "eslint": "^7.4.0",
+      "eslint-config-standard": "^14.1.1",
+      "eslint-plugin-import": "^2.22.0",
+      "eslint-plugin-node": "^11.1.0",
+      "eslint-plugin-promise": "^4.2.1",
+      "eslint-plugin-react": "^7.20.3",
+      "eslint-plugin-standard": "^4.0.1",
       "jsdoc": "^3.6.4",
       "next": "9.3.2",
       "nextron": "^5.11.1",

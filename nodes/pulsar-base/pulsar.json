@@ -1,0 +1,23 @@
+{
+  "nodes" : [
+    {
+      "name": "create_asset_from_existing",
+      "category": "base",
+      "software": "bat",
+      "icon": "lab la-windows",
+      "color": "cyan",
+      "script": "create_asset_from_existing.bat",
+      "inputs": [
+        {
+          "name": "path",
+          "type": "string"
+        },
+        {
+          "name": "file",
+          "type": "string"
+        }
+      ],
+      "outputs": []
+    }
+  ]
+}

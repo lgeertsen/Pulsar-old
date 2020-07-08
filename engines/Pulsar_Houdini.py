@@ -69,6 +69,10 @@ class Pulsar():
 
         # self.createUI()
         self.launch()
+        # pane_tab = hou.ui.curDesktop().createFloatingPaneTab(hou.paneTabType.PythonPanel, python_panel_interface=)
+        # pane_tab.setCurrentNode(node)
+        # pane_tab.setPin(True)
+        # return pane_tab
 
     def getSceneName(self):
         raw_name, extension = os.path.splitext(hou.hipFile.basename())
