@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Modal from './Modal'
 
-const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDir, createNew }) => {
+const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDir, createNew, showCreateNew }) => {
   const [showModal, setShowModal] = useState(false)
   const [newName, setNewName] = useState('')
 
@@ -13,6 +13,7 @@ const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDi
 
   const submit = () => {
     createNew(newName)
+    setShowModal(false)
     setNewName('')
   }
 
@@ -22,6 +23,13 @@ const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDi
         <p className={'card-header-title ' + theme}>{title}</p>
       </header>
       <div className="card-content browser-inner">
+        {showCreateNew
+          ? <div className={`directory ${theme}`} onClick={() => setShowModal(true)}>
+            <i className="las la-plus-circle"></i>
+            <span>Create New</span>
+          </div>
+          : ''
+        }
         {directories.sort((a, b) => {
           if (a < b) { return -1 }
           if (a > b) { return 1 }
@@ -32,19 +40,12 @@ const Browser = ({ theme, primaryColor, title, directories, onChange, selectedDi
             <span>{dir}</span>
           </div>
         ))}
-        {directories.length
-          ? <div className={`directory ${theme}`} onClick={() => setShowModal(true)}>
-            <i className="las la-plus-circle"></i>
-            <span>Create New</span>
-          </div>
-          : ''
-        }
       </div>
 
       <Modal
         theme={theme}
         primaryColor={primaryColor}
-        title={`Create New ${title}`}
+        title={`Create new ${title}`}
         show={showModal}
         handleClose={() => setShowModal(false)}
       >
@@ -70,7 +71,8 @@ Browser.propTypes = {
   directories: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   selectedDir: PropTypes.string.isRequired,
-  createNew: PropTypes.func.isRequired
+  createNew: PropTypes.func.isRequired,
+  showCreateNew: PropTypes.bool.isRequired
 }
 
 export default Browser

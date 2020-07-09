@@ -1,7 +1,7 @@
 echo off
 set template=%1
-set file=%2
-set comment=%3
+set filepath=%2
+rem set dirpath=%3
 
-echo F | xcopy "%template%" "%file%"
-echo Created from %template% >> %comment%comment.txt
+echo F | xcopy "%template%" "%filepath%"
+rem echo Created from %template% >> %dirpath%comment.txt

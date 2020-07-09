@@ -87,6 +87,17 @@ class Project {
   }
 
   /**
+   * createNewGroupValue - Create now directory of name 'value' in the specified group
+   *
+   * @param {string} group name of the group
+   * @param {string} value name for the new directory
+   */
+  createNewGroupValue (group, value) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.createNewGroupValue(group, value)
+  }
+
+  /**
    * setGroupValue - Set the value of a group in the current selected AssetId
    *
    * @param  {string} group name of the group
@@ -95,6 +106,18 @@ class Project {
   setGroupValue (group, value) {
     const assetId = this._pathTypes[this._pathType][this._pathSubType]
     assetId.setGroupValue(group, value)
+  }
+
+  /**
+   * createNewFile - Create new scene file
+   *
+   * @param {string} name     Name of the new file
+   * @param {string} template Path of the template, undefined if no template is used
+   * @param {string} type     The name of the software, undefined if a template is used
+   */
+  createNewFile (name, template, type) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.createNewFile(name, template, type)
   }
 
   /**

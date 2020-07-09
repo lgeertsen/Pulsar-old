@@ -18,7 +18,7 @@ const SwitchBox = ({ theme, primaryColor, value, onChange }) => {
 SwitchBox.propTypes = {
   theme: PropTypes.string.isRequired,
   primaryColor: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired
 }
 

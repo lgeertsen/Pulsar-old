@@ -1,10 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { ipcRenderer } from 'electron'
 
-const FileBrowser = ({ theme, primaryColor, title, files, onChange, groups }) => {
+import SwitchBox from './SwitchBox'
+import Modal from './Modal'
+
+const availableSoftwares = [
+  'houdinifx',
+  'maya',
+  'nuke'
+]
+
+const FileBrowser = ({ theme, primaryColor, title, files, onChange, groups, showCreateNew, createNew, softwares }) => {
   const [selectedFile, setSelectedFile] = useState(-1)
   const [sortType, setSortType] = useState('version')
   const [sortDirection, setSortDirection] = useState(true)
+  const [showModal, setShowModal] = useState(false)
+  const [newName, setNewName] = useState('')
+  const [newFileType, setNewFileType] = useState('')
+  const [useTemplate, setUseTemplate] = useState(false)
+  const [templateFilePath, setTemplateFilePath] = useState('')
+
+  useEffect(() => {
+    ipcRenderer.on('selectedTemplate', (event, data) => {
+      setTemplateFilePath(data)
+    })
+  })
 
   const handleChange = (index, path) => {
     onChange(path)
@@ -19,6 +40,21 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange, groups }) =>
       setSortType(type)
       setSortDirection(true)
     }
+  }
+
+  const selectTemplate = () => {
+    ipcRenderer.send('selectFile', { response: 'selectedTemplate' })
+  }
+
+  const submit = () => {
+    const data = {
+      name: newName,
+      template: useTemplate ? templateFilePath : undefined,
+      type: useTemplate ? undefined : newFileType
+    }
+    createNew(data)
+    setShowModal(false)
+    setNewName('')
   }
 
   const getSize = bytes => {
@@ -38,6 +74,13 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange, groups }) =>
         <p className={'card-header-title ' + theme}>{title}</p>
       </header>
       <div className="card-content file-browser-inner">
+        {showCreateNew
+          ? <div className={`pulsar-new-file ${theme}`} onClick={() => setShowModal(true)}>
+            <i className="las la-plus-circle"></i>
+            <span>Create New</span>
+          </div>
+          : ''
+        }
         <div className="file-header pulsar-file">
           <div className="pulsar-file-name name-header">
             <span>Name</span>
@@ -167,6 +210,70 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange, groups }) =>
           </div>
         ))}
       </div>
+      <Modal
+        theme={theme}
+        primaryColor={primaryColor}
+        title={'Create new file'}
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+      >
+        <div className="columns is-centered">
+          <div className="column is-two-thirds">
+            <label>Name:</label>
+            <input className={'input browser-new-input bis ' + theme} type="text" value={newName} onChange={e => setNewName(e.target.value)}/>
+          </div>
+        </div>
+        <div className="columns is-centered is-multiline">
+          <div className="column is-narrow">Use Template:</div>
+          <div className="column is-half">
+            <SwitchBox
+              theme={theme}
+              primaryColor={primaryColor}
+              value={useTemplate}
+              onChange={value => setUseTemplate(value)}
+            />
+          </div>
+          {useTemplate
+            ? <div className="column is-two-thirds">
+              <div className="new-asset-dropdown new-asset-option-autocomplete">
+                <div className="file-label" onClick={(e) => selectTemplate()}>
+                  <div className={`file-cta ${theme}`}>
+                    <span className="file-icon">
+                      <i className="las la-file"></i>
+                    </span>
+                    <span className="file-label">
+                      {templateFilePath === '' ? 'Select Project File' : templateFilePath}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            : ''
+          }
+        </div>
+        {!useTemplate
+          ? <div className="columns">
+            <div className="column">
+              <div className="new-asset-softwares">
+                {Object.keys(softwares).map((soft, index) => (
+                  availableSoftwares.includes(soft)
+                    ? <div key={index} className={newFileType === soft ? 'new-asset-file-type selected' : 'new-asset-file-type'} onClick={() => setNewFileType(soft)}>
+                      <div className="new-asset-type-file-type-img">
+                        <img src={`softwareLogos/${soft}.png`}/>
+                      </div>
+                    </div>
+                    : ''
+                ))}
+              </div>
+            </div>
+          </div>
+          : ''
+        }
+        {(newName && !useTemplate && newFileType) || (newName && useTemplate && templateFilePath)
+          ? <div className={'button ' + theme} onClick={() => submit()}>Create</div>
+          : ''
+        }
+      </Modal>
     </div>
   )
 }
@@ -177,7 +284,10 @@ FileBrowser.propTypes = {
   title: PropTypes.string.isRequired,
   files: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
-  groups: PropTypes.array.isRequired
+  groups: PropTypes.object.isRequired,
+  showCreateNew: PropTypes.bool.isRequired,
+  createNew: PropTypes.func.isRequired,
+  softwares: PropTypes.object.isRequired
 }
 
 export default FileBrowser

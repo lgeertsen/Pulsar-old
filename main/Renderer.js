@@ -120,8 +120,16 @@ export default class Renderer {
       this._server.project.setDimension(data)
     })
 
+    ipcMain.on('createNewGroupValue', (event, data) => {
+      this._server.project.createNewGroupValue(data.group, data.value)
+    })
+
     ipcMain.on('setGroupValue', (event, data) => {
       this._server.project.setGroupValue(data.group, data.value)
+    })
+
+    ipcMain.on('createNewFile', (event, data) => {
+      this._server.project.createNewFile(data.name, data.template, data.type)
     })
 
     ipcMain.on('setAssetId', (event, data) => {
@@ -146,7 +154,7 @@ export default class Renderer {
     })
 
     ipcMain.on('selectFile', (event, data) => {
-      dialog.showOpenDialog(this._mainWindow, { properties: ['openFile'], filters: data.extensions }, (files) => {
+      dialog.showOpenDialog(this._mainWindow, { properties: ['openFile'] }, (files) => {
         if (files.length > 0) {
           event.sender.send(data.response, files[0])
         }

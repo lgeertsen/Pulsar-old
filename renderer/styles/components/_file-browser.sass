@@ -13,6 +13,17 @@
   flex-direction: column
   overflow: auto
 
+.pulsar-new-file
+  height: auto
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: center
+  padding: 5px 0
+  font-size: 18px
+  border-bottom: 1px solid $grey-lighter
+  cursor: pointer
+
 .pulsar-file
   display: flex
   flex-direction: row
@@ -28,6 +39,9 @@
     border-right: 1px solid $grey-lighter
     margin-left: 5px
     font-size: 16px
+
+    &:last-child
+      border-right: none
 
   &:hover
     @include themify($themes)
@@ -98,3 +112,8 @@
     @include themify($themes)
       color: themed('bg')
       background-color: themed('text')
+
+.new-asset-softwares
+  display: flex
+  flex-direction: row
+  justify-content: space-between

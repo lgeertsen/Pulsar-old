@@ -100,7 +100,7 @@ export default class Server {
       console.log(path.join(__dirname, '../../../nodes'))
       // result = spawn.sync(executable, [], { encoding: 'utf8' });
     } else {
-      this._nodeManager.path = 'C:/Users/leege/Pulsar/nodes'
+      this._nodeManager.path = 'C:/Users/leege/_pulsar/nodes'
     }
     this._nodeManager.importNodes(() => {
       // let output = this._graph.addNode("base", "OUTPUT", {x: 11000, y: 10500});

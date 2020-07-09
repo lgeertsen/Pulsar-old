@@ -6,11 +6,19 @@ import Logger from './Logger'
 
 export default class NodeManager {
   constructor () {
+    if (!!this.constructor.instance) {
+      return this.constructor.instance
+    }
+
+    this.constructor.instance = this
+
     this._path = ''
     this._nodes = {}
 
     this.addBaseNodes()
     this.addTractorNodes()
+
+    return this
   }
 
   get path () { return this._path }
@@ -398,7 +406,6 @@ export default class NodeManager {
               const file = JSON.parse(data)
               const nodes = file.nodes
               for (const j in nodes) {
-                console.log(nodes[j])
                 nodes[j].type = dirname
                 nodes[j].id = `${dirname}.${nodes[j].name}`
                 if (nodes[j].category in this._nodes) {
@@ -441,3 +448,8 @@ export default class NodeManager {
     return this._nodes[type][task]
   }
 }
+
+// const instance = new NodeManager()
+// Object.freeze(instance)
+//
+// export default instance

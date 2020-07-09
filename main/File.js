@@ -15,6 +15,8 @@ export default class File {
 
   get fullName () { return `${this._name}.${this._extension}` }
 
+  getVersionAsInt () { return parseInt(this.version) }
+
   saveComment (comment) {
     this._comment = comment
     const splitPath = this._path.split('/')

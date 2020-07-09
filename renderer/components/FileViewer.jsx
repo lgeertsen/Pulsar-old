@@ -254,13 +254,13 @@ FileViewer.propTypes = {
   onSaveComment: PropTypes.func.isRequired,
   softwares: PropTypes.array.isRequired,
   selectSoftware: PropTypes.func.isRequired,
-  selectedSoftware: PropTypes.any.isRequired,
-  selectedSoft: PropTypes.any.isRequired,
+  selectedSoftware: PropTypes.any,
+  selectedSoft: PropTypes.any,
   checkSotfwareSaved: PropTypes.any.isRequired,
   getWipName: PropTypes.any.isRequired,
   refresh: PropTypes.any.isRequired,
-  saveTag: PropTypes.any.isRequired,
-  deleteTag: PropTypes.any.isRequired
+  saveTag: PropTypes.any,
+  deleteTag: PropTypes.any
 }
 
 export default FileViewer

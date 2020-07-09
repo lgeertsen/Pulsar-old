@@ -35,8 +35,8 @@ const CommentContainer = ({ theme, comment, onChange, saveComment }) => {
 CommentContainer.propTypes = {
   theme: PropTypes.string.isRequired,
   primaryColor: PropTypes.string,
-  comment: PropTypes.string.isRequired,
-  directories: PropTypes.array.isRequired,
+  comment: PropTypes.string,
+  directories: PropTypes.array,
   onChange: PropTypes.func.isRequired,
   saveComment: PropTypes.func.isRequired
 }

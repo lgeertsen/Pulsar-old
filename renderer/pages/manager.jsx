@@ -49,6 +49,7 @@ export default class Manager extends React.Component {
       selectedSoftware: undefined,
       selectedSoftwareType: undefined,
       softwares: {},
+      connectedSoftwares: {},
       overlaySoftware: undefined,
 
       newFileName: undefined,
@@ -142,6 +143,9 @@ export default class Manager extends React.Component {
         if (data.overlay.increment) {
           this.setState({ incrementShortcut: data.overlay.increment })
         }
+        if (data.softwares) {
+          this.setState({ softwares: data.softwares })
+        }
       })
 
       ipcRenderer.on('projects', (event, data) => {
@@ -165,21 +169,21 @@ export default class Manager extends React.Component {
       })
 
       ipcRenderer.on('softwares', (event, data) => {
-        console.log('----- receive software list -----')
-        console.log(data)
-        this.setState({ softwares: data })
-        const keys = Object.keys(data)
-        if (this.state.overlaySoftware === undefined) {
-          if (keys.length > 0) {
-            this.setState({ overlaySoftware: keys[0] })
-            ipcRenderer.send('overlaySoftware', data[keys[0]])
-          } else {
-            this.setState({ overlaySoftware: undefined })
-            ipcRenderer.send('overlaySoftware', undefined)
-          }
-        } else {
-          ipcRenderer.send('overlaySoftware', this.state.softwares[this.state.overlaySoftware])
-        }
+        // console.log('----- receive software list -----')
+        // console.log(data)
+        // this.setState({ softwares: data })
+        // const keys = Object.keys(data)
+        // if (this.state.overlaySoftware === undefined) {
+        //   if (keys.length > 0) {
+        //     this.setState({ overlaySoftware: keys[0] })
+        //     ipcRenderer.send('overlaySoftware', data[keys[0]])
+        //   } else {
+        //     this.setState({ overlaySoftware: undefined })
+        //     ipcRenderer.send('overlaySoftware', undefined)
+        //   }
+        // } else {
+        //   ipcRenderer.send('overlaySoftware', this.state.softwares[this.state.overlaySoftware])
+        // }
       })
     }
   }
@@ -201,10 +205,16 @@ export default class Manager extends React.Component {
     ipcRenderer.send('dimension', dimension)
   }
 
+  createNewGroupValue (group, value) {
+    ipcRenderer.send('createNewGroupValue', { group: group, value: value })
+  }
+
   setGroupValue (group, value) {
-    console.log(group)
-    console.log(value)
     ipcRenderer.send('setGroupValue', { group: group, value: value })
+  }
+
+  createNewFile (data) {
+    ipcRenderer.send('createNewFile', data)
   }
 
   setAssetIdValue (sid, type, data) {
@@ -450,27 +460,27 @@ export default class Manager extends React.Component {
             <div className='software-title'>
               <h3>Open software</h3>
             </div>
-            {Object.keys(this.state.softwares).map((softwareId, index) => (
+            {Object.keys(this.state.connectedSoftwares).map((softwareId, index) => (
               <div key={index} className={this.state.overlaySoftware === softwareId ? 'software selected' : 'software'}>
                 <div className='overlaySelector' onClick={(e) => this.setOverlaySoftware(softwareId)}>
                   <i className='far fa-window-restore'></i>
                 </div>
                 <div className='softwareHeader'>
-                  <img className='softwareImg' src={'softwareLogos/' + this.state.softwares[softwareId].software + '.png'}></img>
-                  <h4 className='softwareName'>{this.state.softwares[softwareId].software.charAt(0).toUpperCase() + this.state.softwares[softwareId].software.slice(1)}</h4>
+                  <img className='softwareImg' src={'softwareLogos/' + this.state.connectedSoftwares[softwareId].software + '.png'}></img>
+                  <h4 className='softwareName'>{this.state.connectedSoftwares[softwareId].software.charAt(0).toUpperCase() + this.state.connectedSoftwares[softwareId].software.slice(1)}</h4>
                 </div>
-                <span className='softwareSceneName'><i className='las la-sync' onClick={(e) => this.reloadSceneName(softwareId)}></i>{this.state.softwares[softwareId].saved === 1 ? this.state.softwares[softwareId].scene : this.state.softwares[softwareId].scene + '*'}</span>
+                <span className='softwareSceneName'><i className='las la-sync' onClick={(e) => this.reloadSceneName(softwareId)}></i>{this.state.connectedSoftwares[softwareId].saved === 1 ? this.state.connectedSoftwares[softwareId].scene : this.state.connectedSoftwares[softwareId].scene + '*'}</span>
               </div>
             ))}
           </div>
 
           <div className='manager-container'>
             <div className='search-container'>
-              <div className='create-asset'>
+              {/* <div className='create-asset'>
                 <div className={'create-asset-btn button ' + this.state.theme} onClick={(e) => this.setState({ newAssetModal: true })}>
                   <h5>Create Asset</h5>
                 </div>
-              </div>
+              </div> */}
               <div className='project-select'>
                 <Dropdown
                   theme={this.state.theme}
@@ -522,6 +532,8 @@ export default class Manager extends React.Component {
                       directories={this.state.project.directories[dir]}
                       onChange={(value) => this.setGroupValue(dir, value)}
                       selectedDir={this.state.project.groups[dir]}
+                      showCreateNew={index > 0 ? this.state.project.groups[this.state.project.directoriesOrder[index - 1]] !== '<>' : true}
+                      createNew={(value) => this.createNewGroupValue(dir, value)}
                     />
                     <div className='chevron-container'>
                       <i className='las la-angle-right'></i>
@@ -547,6 +559,9 @@ export default class Manager extends React.Component {
                       onChange={(file) => this.setGroupValue('file', file)}
                       selectedFile={this.state.project.groups.file}
                       groups={this.state.project.groups}
+                      softwares={this.state.softwares}
+                      showCreateNew={index > 0 ? this.state.project.groups[this.state.project.directoriesOrder[index - 1]] !== '<>' : true}
+                      createNew={data => this.createNewFile(data)}
                     />
               ))}
               {/* <div className='browser sequenceBrowser'>

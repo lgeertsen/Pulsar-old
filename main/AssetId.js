@@ -1,4 +1,8 @@
+import path from 'path'
+
 import FileManager from './FileManager'
+import Node from './Node'
+import NodeManager from './NodeManager'
 
 /**
  * Class representing an AssetId.
@@ -106,11 +110,80 @@ class AssetId {
     }
   }
 
+  createNewGroupValue (group, value) {
+    const index = this._groupOrder.indexOf(group)
+    const data = {
+      path: this._path,
+      groups: {}
+    }
+    for (const i in this._groupOrder) {
+      const g = this._groupOrder[i]
+      if (i < index) {
+        data.groups[g] = this._groups[g]
+      } else {
+        data.groups[g] = '<>'
+      }
+    }
+
+    this._directories[group].push(value)
+
+    const formattedPath = FileManager.formatPath(data)
+    const dirPath = FileManager.slicePath(formattedPath)
+    FileManager.createDirectory(dirPath, value, () => this._formatForRender())
+  }
+
   setGroupValue (group, value) {
     this.clearValues(group)
     this.groups[group] = value
     this.setSearchDir(group)
     this.searchNext()
+  }
+
+  /**
+   * createNewFile - Create new scene file
+   *
+   * @param {string} name     Name of the new file
+   * @param {string} template Path of the template, undefined if no template is used
+   * @param {string} type     The name of the software, undefined if a template is used
+   */
+  createNewFile (name, template, type) {
+    const nm = new NodeManager()
+    if (template) {
+      const formatPath = FileManager.formatPath(this)
+      const slicePath = FileManager.slicePath(formatPath)
+      const extension = path.extname(template)
+      const fileName = name + extension
+      let filePath
+      if ('version' in this._groups) {
+        const version = this.getMaxVersion() + 1
+        const versionString = 'v' + new Array(3).join('0').slice((3) * -1) + version
+        if ('state' in this._groups) {
+          const stateVersion = `work_${versionString}`
+          filePath = path.join(slicePath, stateVersion, fileName)
+        } else {
+          filePath = path.join(slicePath, versionString, fileName)
+        }
+      } else {
+        filePath = path.join(slicePath, fileName)
+      }
+      const nodeTemplate = nm.getNode('base', 'create_asset_from_existing')
+      const node = new Node('temp', 'temp', nodeTemplate, { x: 0, y: 0 })
+      node.execute([template, filePath], () => FileManager.getFiles(this, (files) => this.setFiles(files)))
+    }
+  }
+
+  getMaxVersion () {
+    const files = this._directories.file
+    if (!files.length) return 0
+    let max = 0
+    for (const i in files) {
+      const file = files[i]
+      const version = file.getVersionAsInt()
+      if (version > max) {
+        max = version
+      }
+    }
+    return max
   }
 
   /**

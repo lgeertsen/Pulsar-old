@@ -1,5 +1,5 @@
-import { basename } from 'path'
-import { readFileSync, statSync } from 'fs'
+import { basename, join } from 'path'
+import { mkdir, readFileSync, statSync } from 'fs'
 import format from 'string-format'
 import glob from 'glob'
 
@@ -22,6 +22,14 @@ export default class FileManager {
     })
   }
 
+  static createDirectory (path, name, cb) {
+    const dirPath = join(path, name)
+    mkdir(dirPath, (err) => {
+      if (err) throw err
+      cb()
+    })
+  }
+
   static getFiles (asset, cb) {
     if ('version' in asset.groups) {
       FileManager.getDirectories(asset, dirs => {
@@ -34,7 +42,7 @@ export default class FileManager {
           if ('state' in asset.groups) {
             const dirSplit = formattedDirs[i].split('_')
             state = dirSplit[0]
-            version = state === 'wip' || state === 'render' ? '_' : dirSplit[1].substr(1)
+            version = state === 'wip' || state === 'render' ? '_' : dirSplit[1] === 'valid' ? dirSplit[1] : dirSplit[1].substr(1)
           } else {
             // version = parseInt(formattedDirs[i].substr(1));
             version = formattedDirs[i]

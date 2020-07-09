@@ -56,7 +56,7 @@ FiltersContainer.propTypes = {
   primaryColor: PropTypes.string.isRequired,
   filters: PropTypes.any.isRequired,
   setFilter: PropTypes.func.isRequired,
-  groups: PropTypes.array.isRequired
+  groups: PropTypes.object.isRequired
 }
 
 export default FiltersContainer
