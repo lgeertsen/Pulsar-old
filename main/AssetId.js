@@ -148,27 +148,36 @@ class AssetId {
    */
   createNewFile (name, template, type) {
     const nm = new NodeManager()
+    let fileName = name.replace(' ', '_')
     if (template) {
-      const formatPath = FileManager.formatPath(this)
-      const slicePath = FileManager.slicePath(formatPath)
       const extension = path.extname(template)
-      const fileName = name + extension
-      let filePath
-      if ('version' in this._groups) {
-        const version = this.getMaxVersion() + 1
-        const versionString = 'v' + new Array(3).join('0').slice((3) * -1) + version
-        if ('state' in this._groups) {
-          const stateVersion = `work_${versionString}`
-          filePath = path.join(slicePath, stateVersion, fileName)
-        } else {
-          filePath = path.join(slicePath, versionString, fileName)
-        }
+      fileName = name + extension
+    }
+
+    const formatPath = FileManager.formatPath(this)
+    const slicePath = FileManager.slicePath(formatPath)
+    let filePath
+    if ('version' in this._groups) {
+      const version = this.getMaxVersion() + 1
+      const versionString = 'v' + new Array(3).join('0').slice((3) * -1) + version
+      if ('state' in this._groups) {
+        const stateVersion = `work_${versionString}`
+        filePath = path.join(slicePath, stateVersion, fileName)
       } else {
-        filePath = path.join(slicePath, fileName)
+        filePath = path.join(slicePath, versionString, fileName)
       }
+    } else {
+      filePath = path.join(slicePath, fileName)
+    }
+
+    if (template) {
       const nodeTemplate = nm.getNode('base', 'create_asset_from_existing')
       const node = new Node('temp', 'temp', nodeTemplate, { x: 0, y: 0 })
       node.execute([template, filePath], () => FileManager.getFiles(this, (files) => this.setFiles(files)))
+    } else {
+      const nodeTemplate = nm.getNode('houdini', 'create_asset')
+      const node = new Node('temp', 'temp', nodeTemplate, { x: 0, y: 0 })
+      node.execute([filePath], () => FileManager.getFiles(this, (files) => this.setFiles(files)))
     }
   }
 

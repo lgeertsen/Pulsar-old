@@ -4,6 +4,12 @@ import fs from 'fs'
 
 export default class Config {
   constructor () {
+    if (!!this.constructor.instance) {
+      return this.constructor.instance
+    }
+
+    this.constructor.instance = this
+
     this._config = {}
     this._file = '.pulsar.json'
     this._path = homedir()

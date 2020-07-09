@@ -1,5 +1,6 @@
 import { spawn } from 'child_process'
 
+import Config from './Config'
 import NodeManager from './NodeManager'
 
 export default class Node {
@@ -60,7 +61,38 @@ export default class Node {
   }
 
   execute (args, cb) {
-    if (this.software === 'bat') {
+    const config = new Config()
+    const softs = config.config.softwares
+
+    if (this.software in softs) {
+      const nm = new NodeManager()
+      const dirPath = nm.path
+
+      let cmd = `"${softs[this.software]}" ${dirPath}/${this.type}/${this.script}`
+
+      for (const i in args) {
+        if (args[i].toString().includes(' ')) {
+          cmd += ` "${args[i]}"`
+        } else {
+          cmd += ` ${args[i]}`
+        }
+      }
+
+      const bat = spawn(cmd, { shell: true })
+
+      bat.stdout.on('data', (data) => {
+        console.log(data.toString())
+      })
+
+      bat.stderr.on('data', (data) => {
+        console.error(data.toString())
+      })
+
+      bat.on('exit', (code) => {
+        console.log(`Child exited with code ${code}`)
+        cb()
+      })
+    } else if (this.software === 'bat') {
       const nm = new NodeManager()
       const dirPath = nm.path
 

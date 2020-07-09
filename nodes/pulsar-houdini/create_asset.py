@@ -7,7 +7,8 @@ def main(file_path):
 
     dir_path = '/'.join(path_split[:-1])
 
-    print(dir_path)
+    if((not file.endswith(".hip")) or (not file.endswith(".hipnc"))):
+        file += ".hipnc"
 
     if not os.path.exists(dir_path):
         os.mkdir(dir_path)
