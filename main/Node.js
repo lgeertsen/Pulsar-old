@@ -1,24 +1,22 @@
-import Logger from './Logger';
-
 export default class Node {
-  constructor(id, name, node, position) {
-    this.id = id;
+  constructor (id, name, node, position) {
+    this.id = id
 
-    this.type = node.type;
-    this.subType = node.subType;
-    this.software = node.software;
-    this.script = node.script;
-    this.name = name;
-    this.label = node.label;
-    this.description = node.description;
-    this.color = node.color;
-    this.icon = node.icon;
-    this.x = position.x;
-    this.y = position.y;
-    this.inputs = [];
+    this.type = node.type
+    this.subType = node.subType
+    this.software = node.software
+    this.script = node.script
+    this.name = name
+    this.label = node.label
+    this.description = node.description
+    this.color = node.color
+    this.icon = node.icon
+    this.x = position.x
+    this.y = position.y
+    this.inputs = []
     this.outputs = []
 
-    for(let i in node.inputs) {
+    for (const i in node.inputs) {
       this.inputs[i] = {
         name: node.inputs[i].name,
         label: node.inputs[i].label,
@@ -30,7 +28,7 @@ export default class Node {
       }
     }
 
-    for(let i in node.outputs) {
+    for (const i in node.outputs) {
       this.outputs[i] = {
         name: node.outputs[i].name,
         label: node.outputs[i].label,
@@ -43,15 +41,17 @@ export default class Node {
     }
   }
 
-  set newName(name) { this.name = name }
+  get newName () { return this.name }
+  set newName (name) { this.name = name }
 
-  set position(position) {
-    this.x = position.x;
-    this.y = position.y;
+  get position () { return { x: this.x, y: this.y } }
+  set position (position) {
+    this.x = position.x
+    this.y = position.y
   }
 
-  setInputValue(input, value) {
-    let inputIndex = this.inputs.findIndex((item) => {return item.name == input});
-    this.inputs[inputIndex].value = value;
+  setInputValue (input, value) {
+    const inputIndex = this.inputs.findIndex((item) => { return item.name === input })
+    this.inputs[inputIndex].value = value
   }
 }

@@ -1,273 +1,270 @@
-import { ipcRenderer } from 'electron';
-import React from 'react';
-import Head from 'next/head';
+import { ipcRenderer } from 'electron'
+import React from 'react'
+import Head from 'next/head'
 import Router from 'next/router'
 
-import Nav from '../components/Nav';
-
-import "../styles/welcome.sass"
+import '../styles/welcome.sass'
 
 const colors = [
-  "orange",
-  "yellow",
-  "green",
-  "turquoise",
-  "cyan",
-  "blue",
-  "purple",
-  "red"
-];
+  'orange',
+  'yellow',
+  'green',
+  'turquoise',
+  'cyan',
+  'blue',
+  'purple',
+  'red'
+]
 
-const matchProjectPath = /^{project}((\/[\w]+)*(\/{[\w]+})*)*(\/{state}_{version})?\/{file}$/g;
+const matchProjectPath = /^{project}((\/[\w]+)*(\/{[\w]+})*)*(\/{state}_{version})?\/{file}$/g
 
 export default class Welcome extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
       config: {},
-      theme: "theme-light",
-      primaryColor: "blue",
-      saveShortcut: "",
-      incrementShortcut: "",
+      theme: 'theme-light',
+      primaryColor: 'blue',
+      saveShortcut: '',
+      incrementShortcut: '',
       projects: {},
       projectPathsValid: true,
       softwares: {
         houdini: {
           selected: false,
           exe: {
-            "houdinifx": {
-              path: "",
-              default: "C:/Program Files/Side Effects Software/Houdini X.Y.ZZZ/bin/houdinifx.exe"
+            houdinifx: {
+              path: '',
+              default: 'C:/Program Files/Side Effects Software/Houdini X.Y.ZZZ/bin/houdinifx.exe'
             },
-            "hython": {
-              path: "",
-              default: "C:/Program Files/Side Effects Software/Houdini X.Y.ZZZ/bin/hython.exe"
+            hython: {
+              path: '',
+              default: 'C:/Program Files/Side Effects Software/Houdini X.Y.ZZZ/bin/hython.exe'
             }
           }
         },
-        "maya": {
+        maya: {
           selected: false,
           exe: {
-            "maya": {
-              path: "",
-              default: "C:/Program Files/Autodesk/MayaXXXX/bin/maya.exe"
+            maya: {
+              path: '',
+              default: 'C:/Program Files/Autodesk/MayaXXXX/bin/maya.exe'
             },
-            "mayapy": {
-              path: "",
-              default: "C:/Program Files/Autodesk/Maya2018/bin/mayapy.exe"
+            mayapy: {
+              path: '',
+              default: 'C:/Program Files/Autodesk/Maya2018/bin/mayapy.exe'
             }
           }
         },
-        "nuke": {
+        nuke: {
           selected: false,
           exe: {
-            "nuke": {
-              path: "",
-              default: "C:/Program Files/NukeXX.YvZ/bin/NukeXX.Y.exe"
+            nuke: {
+              path: '',
+              default: 'C:/Program Files/NukeXX.YvZ/bin/NukeXX.Y.exe'
             }
           }
         }
       },
 
-      newProjectName: "",
-      newProjectPath: "",
+      newProjectName: '',
+      newProjectPath: '',
 
       navOpen: false,
 
       step: 0,
       finished: false
-    };
-  }
-
-  componentDidMount() {
-    console.log("----- Component mounted -----");
-    if(ipcRenderer) {
-      ipcRenderer.send("getConfig");
-
-      ipcRenderer.on('config', (event, data) => {
-        console.log("----- receive config file -----", data);
-        this.setState({config: data})
-        if(data.theme) {
-          console.log(data.theme);
-          this.setState({theme: data.theme});
-        }
-        if(data.color) {
-          this.setState({primaryColor: data.color});
-        }
-        if(data.overlay.save) {
-          this.setState({saveShortcut: data.overlay.save})
-        }
-        if(data.overlay.increment) {
-          this.setState({incrementShortcut: data.overlay.increment})
-        }
-      });
-
-      ipcRenderer.on('selectedDirectory', (event, data) => {
-        this.setState({newProjectPath: data});
-      });
-
-      ipcRenderer.on('selectedSoftwarePath', (event, data) => {
-        let softs = this.state.softwares;
-        softs[data.software].exe[data.exe].path = data.path;
-        this.setState({softwares: softs});
-      });
-
-      ipcRenderer.on('configSet', (event, data) => {
-        Router.push('/manager')
-      });
     }
   }
 
-  selectDirectory() {
-    ipcRenderer.send('selectDirectory');
+  componentDidMount () {
+    console.log('----- Component mounted -----')
+    if (ipcRenderer) {
+      ipcRenderer.send('getConfig')
+
+      ipcRenderer.on('config', (event, data) => {
+        console.log('----- receive config file -----', data)
+        this.setState({ config: data })
+        if (data.theme) {
+          console.log(data.theme)
+          this.setState({ theme: data.theme })
+        }
+        if (data.color) {
+          this.setState({ primaryColor: data.color })
+        }
+        if (data.overlay.save) {
+          this.setState({ saveShortcut: data.overlay.save })
+        }
+        if (data.overlay.increment) {
+          this.setState({ incrementShortcut: data.overlay.increment })
+        }
+      })
+
+      ipcRenderer.on('selectedDirectory', (event, data) => {
+        this.setState({ newProjectPath: data })
+      })
+
+      ipcRenderer.on('selectedSoftwarePath', (event, data) => {
+        const softs = this.state.softwares
+        softs[data.software].exe[data.exe].path = data.path
+        this.setState({ softwares: softs })
+      })
+
+      ipcRenderer.on('configSet', (event, data) => {
+        Router.push('/manager')
+      })
+    }
   }
 
-  selectSoftwarePath(software, exe) {
-    ipcRenderer.send('selectSoftwarePath', {software: software, exe: exe});
+  selectDirectory () {
+    ipcRenderer.send('selectDirectory')
   }
 
-  addProject() {
-    let projects = this.state.projects;
-    let name = this.state.newProjectName;
-    let path = this.state.newProjectPath;
-    if(name != "" && path != "") {
-      let data = {
+  selectSoftwarePath (software, exe) {
+    ipcRenderer.send('selectSoftwarePath', { software: software, exe: exe })
+  }
+
+  addProject () {
+    const projects = this.state.projects
+    const name = this.state.newProjectName
+    const path = this.state.newProjectPath
+    if (name !== '' && path !== '') {
+      const data = {
         path: path,
         asset: {
           scene: {
-            path: "{project}/ASSET/{asset_type}/scenes/{task}/{state}_{version}/{file}",
+            path: '{project}/ASSET/{asset_type}/scenes/{task}/{state}_{version}/{file}',
             valid: true
           },
           render: {
-            path: "{project}/ASSET/{asset_type}/render/{version}/{file}",
+            path: '{project}/ASSET/{asset_type}/render/{version}/{file}',
             valid: true
           },
           cache: {
-            path: "{project}/ASSET/{asset_type}/cache/{file}",
+            path: '{project}/ASSET/{asset_type}/cache/{file}',
             valid: true
           },
           texture: {
-            path: "{project}/ASSET/{asset_type}/images/{version}/{file}",
+            path: '{project}/ASSET/{asset_type}/images/{version}/{file}',
             valid: true
           }
         },
         shot: {
           scene: {
-            path: "{project}/SHOT/scenes/{sequence}/{shot}/{task}/{state}_{version}/{file}",
+            path: '{project}/SHOT/scenes/{sequence}/{shot}/{task}/{state}_{version}/{file}',
             valid: true
           },
           render: {
-            path: "{project}/SHOT/render/{sequence}/{shot}/{version}/{file}",
+            path: '{project}/SHOT/render/{sequence}/{shot}/{version}/{file}',
             valid: true
           },
           cache: {
-            path: "{project}/SHOT/caches/{sequence}/{shot}/{file}",
+            path: '{project}/SHOT/caches/{sequence}/{shot}/{file}',
             valid: true
           },
           texture: {
-            path: "{project}/SHOT/images/{sequence}/{shot}/{version}/{file}",
+            path: '{project}/SHOT/images/{sequence}/{shot}/{version}/{file}',
             valid: true
           }
         }
       }
-      projects[name] = data;
-      this.setState({projects: projects, newProjectName: "", newProjectPath: ""});
+      projects[name] = data
+      this.setState({ projects: projects, newProjectName: '', newProjectPath: '' })
     }
   }
 
-  setProjectPathType(project, type, subtype, value) {
-    let res = value.match(matchProjectPath);
-    let valid = true;
-    if(res == null) {
-      valid = false;
+  setProjectPathType (project, type, subtype, value) {
+    const res = value.match(matchProjectPath)
+    let valid = true
+    if (res == null) {
+      valid = false
     }
-    let projects = this.state.projects;
-    projects[project][type][subtype].path = value;
-    projects[project][type][subtype].valid = valid;
+    const projects = this.state.projects
+    projects[project][type][subtype].path = value
+    projects[project][type][subtype].valid = valid
 
-    let allValid = true;
-    if(res == null) {
-      allValid = false;
+    let allValid = true
+    if (res == null) {
+      allValid = false
     } else {
-      for(let p in projects) {
-        for(let path in projects[p].asset) {
-          if(projects[p].asset[path].valid == false) {
-            allValid = false;
-            break;
+      for (const p in projects) {
+        for (const path in projects[p].asset) {
+          if (projects[p].asset[path].valid === false) {
+            allValid = false
+            break
           }
         }
-        if(!valid) {
-          break;
+        if (!valid) {
+          break
         }
-        for(let path in projects[p].shot) {
-          if(projects[p].shot[path].valid == false) {
-            allValid = false;
-            break;
+        for (const path in projects[p].shot) {
+          if (projects[p].shot[path].valid === false) {
+            allValid = false
+            break
           }
         }
       }
     }
 
-    this.setState({projects: projects, projectPathsValid: allValid});
+    this.setState({ projects: projects, projectPathsValid: allValid })
   }
 
-  removeProject(project) {
-    let projects = this.state.projects;
-    delete projects[project];
-    this.setState({projects: projects});
+  removeProject (project) {
+    const projects = this.state.projects
+    delete projects[project]
+    this.setState({ projects: projects })
   }
 
-  selectSoft(soft) {
-    let softs = this.state.softwares;
-    softs[soft].selected = !softs[soft].selected;
-    this.setState({softwares: softs});
+  selectSoft (soft) {
+    const softs = this.state.softwares
+    softs[soft].selected = !softs[soft].selected
+    this.setState({ softwares: softs })
   }
 
-  finishSetup() {
-    let theme = this.state.theme;
-    let color = this.state.primaryColor;
-    let projs = this.state.projects;
+  finishSetup () {
+    const theme = this.state.theme
+    const color = this.state.primaryColor
+    const projs = this.state.projects
 
-    let projects = {};
-    for(let p in projs) {
-      let proj = {
+    const projects = {}
+    for (const p in projs) {
+      const proj = {
         path: projs[p].path,
         asset: {},
         shot: {}
-      };
-      for(let path in projs[p].asset) {
-        proj.asset[path] = projs[p].asset[path].path;
       }
-      for(let path in projs[p].shot) {
-        proj.shot[path] = projs[p].shot[path].path;
+      for (const path in projs[p].asset) {
+        proj.asset[path] = projs[p].asset[path].path
       }
-      projects[p] = proj;
+      for (const path in projs[p].shot) {
+        proj.shot[path] = projs[p].shot[path].path
+      }
+      projects[p] = proj
     }
 
-    let softs = this.state.softwares;
-    let softwares = {};
-    for(let soft in softs) {
-      if(softs[soft].selected) {
-        for(let exe in softs[soft].exe) {
+    const softs = this.state.softwares
+    const softwares = {}
+    for (const soft in softs) {
+      if (softs[soft].selected) {
+        for (const exe in softs[soft].exe) {
           softwares[exe] = softs[soft].exe[exe].path
         }
       }
     }
-    let data = {
-      "color": color,
-      "firstUsage": false,
-      "projects": projects,
-      "theme": theme,
-      "softwares": softwares
-    };
-    console.log(data);
-    ipcRenderer.send('setConfig', data);
-    this.setState({finished: true})
+    const data = {
+      color: color,
+      firstUsage: false,
+      projects: projects,
+      theme: theme,
+      softwares: softwares
+    }
+    console.log(data)
+    ipcRenderer.send('setConfig', data)
+    this.setState({ finished: true })
   }
 
-  render() {
-
+  render () {
     return (
       <React.Fragment>
         <Head>
@@ -281,33 +278,33 @@ export default class Welcome extends React.Component {
         </Head>
 
         <div className={this.state.navOpen ? `main main-start ${this.state.theme} main-${this.state.primaryColor}` : `main main-start full ${this.state.theme} main-${this.state.primaryColor}`}>
-          <div className={"box welcome-box " + this.state.theme}>
-            <div className={this.state.step == 0 ? "welcome-step welcome-step-0" : "welcome-step welcome-step-0 slide-out-left"}>
+          <div className={'box welcome-box ' + this.state.theme}>
+            <div className={this.state.step === 0 ? 'welcome-step welcome-step-0' : 'welcome-step welcome-step-0 slide-out-left'}>
               <div className="welcome-title-container">
                 <h1 className="welcome-top-title display-4 sub-display">WELCOME TO</h1>
                 <h1 className="welcome-title display-1">Pulsar</h1>
               </div>
-              <div className="get-started" onClick={(e) => this.setState({step: 1})}>
+              <div className="get-started" onClick={(e) => this.setState({ step: 1 })}>
                 <span>Get Started!</span>
                 <i className="las la-arrow-circle-right"></i>
               </div>
             </div>
 
-            <div className={this.state.step == 1 ? "welcome-step welcome-step-1 slide-in-right" : this.state.step < 1 ? "welcome-step welcome-step-1 hidden" : "welcome-step welcome-step-1 slide-out-left"}>
+            <div className={this.state.step === 1 ? 'welcome-step welcome-step-1 slide-in-right' : this.state.step < 1 ? 'welcome-step welcome-step-1 hidden' : 'welcome-step welcome-step-1 slide-out-left'}>
               <div className="step-title">
                 <h1 className="display-2">Theme</h1>
-                <div className={"step-divider border-" + this.state.primaryColor}></div>
+                <div className={'step-divider border-' + this.state.primaryColor}></div>
                 <span>Select the theme you would like to use for Pulsar</span>
               </div>
               <div className="step-themes">
-                <div className={"step-theme " + this.state.theme} onClick={(e) => this.setState({theme: "theme-light"})}>
+                <div className={'step-theme ' + this.state.theme} onClick={(e) => this.setState({ theme: 'theme-light' })}>
                   <div className="theme-light bg-main">
                     <div className="step-theme-box box theme-light">
                       <h1 className="display-4 sub-display">LIGHT</h1>
                     </div>
                   </div>
                 </div>
-                <div className={"step-theme " + this.state.theme} onClick={(e) => this.setState({theme: "theme-dark"})}>
+                <div className={'step-theme ' + this.state.theme} onClick={(e) => this.setState({ theme: 'theme-dark' })}>
                   <div className="theme-dark bg-main">
                     <div className="step-theme-box box theme-dark">
                       <h1 className="display-4 sub-display">DARK</h1>
@@ -317,37 +314,37 @@ export default class Welcome extends React.Component {
               </div>
               <div className="step-footer">
                 <div className="flex-fill"></div>
-                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 2})}>Next</div>
+                <div className={'step-next button ' + this.state.theme} onClick={(e) => this.setState({ step: 2 })}>Next</div>
               </div>
             </div>
 
-            <div className={this.state.step == 2 ? "welcome-step welcome-step-2 slide-in-right" : this.state.step < 2 ? "welcome-step welcome-step-2 hidden" : "welcome-step welcome-step-2 slide-out-left"}>
+            <div className={this.state.step === 2 ? 'welcome-step welcome-step-2 slide-in-right' : this.state.step < 2 ? 'welcome-step welcome-step-2 hidden' : 'welcome-step welcome-step-2 slide-out-left'}>
               <div className="step-title">
                 <h1 className="display-2">Color</h1>
-                <div className={"step-divider border-" + this.state.primaryColor}></div>
+                <div className={'step-divider border-' + this.state.primaryColor}></div>
                 <span>Pick your favorite color</span>
               </div>
               <div className="step-colors">
                 {colors.map((color, index) => (
-                  <div key={index} className={this.state.primaryColor == color ? "step-color-bullet bg-" + color : "step-color-bullet bg-" + color + " border-" + color} onClick={(e) => this.setState({primaryColor: color})}></div>
+                  <div key={index} className={this.state.primaryColor === color ? 'step-color-bullet bg-' + color : 'step-color-bullet bg-' + color + ' border-' + color} onClick={(e) => this.setState({ primaryColor: color })}></div>
                 ))}
               </div>
               <div className="step-footer">
-                <div className={"step-previous button " + this.state.theme} onClick={(e) => this.setState({step: 1})}>Back</div>
+                <div className={'step-previous button ' + this.state.theme} onClick={(e) => this.setState({ step: 1 })}>Back</div>
                 <div className="flex-fill"></div>
-                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 3})}>Next</div>
+                <div className={'step-next button ' + this.state.theme} onClick={(e) => this.setState({ step: 3 })}>Next</div>
               </div>
             </div>
 
-            <div className={this.state.step == 3 ? "welcome-step welcome-step-3 slide-in-right" : this.state.step < 3 ? "welcome-step welcome-step-3 hidden" : "welcome-step welcome-step-3 slide-out-left"}>
+            <div className={this.state.step === 3 ? 'welcome-step welcome-step-3 slide-in-right' : this.state.step < 3 ? 'welcome-step welcome-step-3 hidden' : 'welcome-step welcome-step-3 slide-out-left'}>
               <div className="step-title">
                 <h1 className="display-2">Projects PART I</h1>
-                <div className={"step-divider border-" + this.state.primaryColor}></div>
+                <div className={'step-divider border-' + this.state.primaryColor}></div>
                 <h5>Projects:</h5>
               </div>
               <div className="step-projects">
                 {Object.keys(this.state.projects).length > 0 ? Object.keys(this.state.projects).map((project, index) => (
-                  <div key={index} className={"step-project box " + this.state.theme}>
+                  <div key={index} className={'step-project box ' + this.state.theme}>
                     <div className="step-project-name padding-left">{project}</div>
                     <div className="step-project-path">{this.state.projects[project].path}</div>
                     <div className="step-project-delete icon" onClick={(e) => this.removeProject(project)}>
@@ -358,68 +355,68 @@ export default class Welcome extends React.Component {
                 <span>Add project</span>
                 <div className="step-project">
                   <div className="step-project-name">
-                    <input className={"border-input input " + this.state.theme} type="text" placeholder="Project Name" value={this.state.newProjectName} onChange={(e) => this.setState({newProjectName: e.target.value.trim()})}/>
+                    <input className={'border-input input ' + this.state.theme} type="text" placeholder="Project Name" value={this.state.newProjectName} onChange={(e) => this.setState({ newProjectName: e.target.value.trim() })}/>
                   </div>
                   <div className="file step-project-path">
                     <div className="file-label" onClick={(e) => this.selectDirectory()}>
                       {/* <input className="file-input" type="file" onChange={(e) => this.setState({newProjectPath: e.target.value})}/> */}
-                      <div className={"file-cta " + this.state.theme}>
+                      <div className={'file-cta ' + this.state.theme}>
                         <span className="file-icon">
                           <i className="las la-folder-open"></i>
                         </span>
-                        <div className={this.state.newProjectPath == "" ? "file-label-inner empty" : "file-label-inner"}>
-                          {this.state.newProjectPath == "" ? "Select Project Directory" : this.state.newProjectPath}
+                        <div className={this.state.newProjectPath === '' ? 'file-label-inner empty' : 'file-label-inner'}>
+                          {this.state.newProjectPath === '' ? 'Select Project Directory' : this.state.newProjectPath}
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="step-project-delete" onClick={(e) => this.addProject()}>
-                    <div className={"button bg-" + this.state.primaryColor}>
+                    <div className={'button bg-' + this.state.primaryColor}>
                       <i className="las la-plus"></i>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="step-footer step-projects-footer">
-                <div className={"step-previous button " + this.state.theme} onClick={(e) => this.setState({step: 2})}>Back</div>
+                <div className={'step-previous button ' + this.state.theme} onClick={(e) => this.setState({ step: 2 })}>Back</div>
                 <div className="flex-fill"></div>
-                {Object.keys(this.state.projects).length > 0 ?
-                  <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 4})}>Next</div>
-                  : ""
+                {Object.keys(this.state.projects).length > 0
+                  ? <div className={'step-next button ' + this.state.theme} onClick={(e) => this.setState({ step: 4 })}>Next</div>
+                  : ''
                 }
               </div>
             </div>
 
-            <div className={this.state.step == 4 ? "welcome-step welcome-step-4 slide-in-right" : this.state.step < 4 ? "welcome-step welcome-step-4 hidden" : "welcome-step welcome-step-4 slide-out-left"}>
+            <div className={this.state.step === 4 ? 'welcome-step welcome-step-4 slide-in-right' : this.state.step < 4 ? 'welcome-step welcome-step-4 hidden' : 'welcome-step welcome-step-4 slide-out-left'}>
               <div className="step-title">
                 <h1 className="display-2">Projects PART II</h1>
-                <div className={"step-divider border-" + this.state.primaryColor}></div>
+                <div className={'step-divider border-' + this.state.primaryColor}></div>
               </div>
               <div className="step-projects">
                 <h5>Setup the abstract paths for the project.</h5>
                 <h6>Every path will already be filled in with an example wich can be changed to correspond to your project structure.</h6>
-                <h6>For any directory that has a variable name, put a format tag: <samp>{"{nameOfTag}"}</samp>.<br/>The tag can be anything you want except: <samp>{"{project}"}</samp>, <samp>{"{state}"}</samp>,<samp>{"{version}"}</samp> or <samp>{"{file}"}</samp>.</h6>
-                <h6>The abstract path should always start with <samp>{"{project}"}</samp>. This corresponds with the path of the directory selected in the previous step.</h6>
-                <h6>The abstract path should end with <samp>{"/{file}"}</samp>, <samp>{"/{version}/{file}"}</samp> or <samp>{"/{state}_{version}/{file}"}</samp>.</h6>
+                <h6>For any directory that has a variable name, put a format tag: <samp>{'{nameOfTag}'}</samp>.<br/>The tag can be anything you want except: <samp>{'{project}'}</samp>, <samp>{'{state}'}</samp>,<samp>{'{version}'}</samp> or <samp>{'{file}'}</samp>.</h6>
+                <h6>The abstract path should always start with <samp>{'{project}'}</samp>. This corresponds with the path of the directory selected in the previous step.</h6>
+                <h6>The abstract path should end with <samp>{'/{file}'}</samp>, <samp>{'/{version}/{file}'}</samp> or <samp>{'/{state}_{version}/{file}'}</samp>.</h6>
                 <hr/>
                 {Object.keys(this.state.projects).map((project, index) => (
                   <div key={index} className="step-project-setup">
                     <h3 className="display-4 sub-display">{project}</h3>
                     <h4>Asset:</h4>
-                    <div className={"project-path-inputs " + this.state.theme}>
+                    <div className={'project-path-inputs ' + this.state.theme}>
                       {Object.keys(this.state.projects[project].asset).map((type, index) => (
                         <div key={index} className="project-path-input-box">
                           <div className="project-path-type">{type}</div>
-                          <input type="text" className={this.state.projects[project].asset[type].valid ? "project-path-input" : "project-path-input invalid"} onChange={(e) => this.setProjectPathType(project, "asset", type, e.target.value.trim())} value={this.state.projects[project].asset[type].path}/>
+                          <input type="text" className={this.state.projects[project].asset[type].valid ? 'project-path-input' : 'project-path-input invalid'} onChange={(e) => this.setProjectPathType(project, 'asset', type, e.target.value.trim())} value={this.state.projects[project].asset[type].path}/>
                         </div>
                       ))}
                     </div>
                     <h4>Shot:</h4>
-                    <div className={"project-path-inputs " + this.state.theme}>
+                    <div className={'project-path-inputs ' + this.state.theme}>
                       {Object.keys(this.state.projects[project].shot).map((type, index) => (
-                        <div className="project-path-input-box">
+                        <div key={index} className="project-path-input-box">
                           <div className="project-path-type">{type}</div>
-                          <input type="text" className={this.state.projects[project].shot[type].valid ? "project-path-input" : "project-path-input invalid"} onChange={(e) => this.setProjectPathType(project, "shot", type, e.target.value.trim())} value={this.state.projects[project].shot[type].path}/>
+                          <input type="text" className={this.state.projects[project].shot[type].valid ? 'project-path-input' : 'project-path-input invalid'} onChange={(e) => this.setProjectPathType(project, 'shot', type, e.target.value.trim())} value={this.state.projects[project].shot[type].path}/>
                         </div>
                       ))}
                     </div>
@@ -427,51 +424,51 @@ export default class Welcome extends React.Component {
                 ))}
               </div>
               <div className="step-footer step-projects-footer">
-                <div className={"step-previous button " + this.state.theme} onClick={(e) => this.setState({step: 3})}>Back</div>
+                <div className={'step-previous button ' + this.state.theme} onClick={(e) => this.setState({ step: 3 })}>Back</div>
                 <div className="flex-fill"></div>
-                {this.state.projectPathsValid ?
-                  <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 5})}>Next</div>
-                  : ""
+                {this.state.projectPathsValid
+                  ? <div className={'step-next button ' + this.state.theme} onClick={(e) => this.setState({ step: 5 })}>Next</div>
+                  : ''
                 }
               </div>
             </div>
 
-            <div className={this.state.step == 5 ? "welcome-step welcome-step-5 slide-in-right" : this.state.step < 5 ? "welcome-step welcome-step-5 hidden" : "welcome-step welcome-step-5 slide-out-left"}>
+            <div className={this.state.step === 5 ? 'welcome-step welcome-step-5 slide-in-right' : this.state.step < 5 ? 'welcome-step welcome-step-5 hidden' : 'welcome-step welcome-step-5 slide-out-left'}>
               <div className="step-title">
                 <h1 className="display-2">Software configuration PART I</h1>
-                <div className={"step-divider border-" + this.state.primaryColor}></div>
+                <div className={'step-divider border-' + this.state.primaryColor}></div>
                 <span>Select the softwares you use</span>
               </div>
               <div className="step-software-select">
                 {Object.keys(this.state.softwares).map((soft, index) => (
-                  <div key={index} className={"software-square " + this.state.theme} onClick={e => this.selectSoft(soft)}>
+                  <div key={index} className={'software-square ' + this.state.theme} onClick={e => this.selectSoft(soft)}>
                     <img src={`softwareLogos/${soft}.png`}></img>
-                    <div className={this.state.softwares[soft].selected ? "software-overlay selected" : "software-overlay"}>{soft}</div>
-                    <div className={this.state.softwares[soft].selected ? `selected-overlay ${this.state.primaryColor}` : "selected-overlay hidden"}>
+                    <div className={this.state.softwares[soft].selected ? 'software-overlay selected' : 'software-overlay'}>{soft}</div>
+                    <div className={this.state.softwares[soft].selected ? `selected-overlay ${this.state.primaryColor}` : 'selected-overlay hidden'}>
                       <i className="las la-check"></i>
                     </div>
                   </div>
                 ))}
               </div>
               <div className="step-footer">
-                <div className={"step-previous button " + this.state.theme} onClick={(e) => this.setState({step: 4})}>Back</div>
+                <div className={'step-previous button ' + this.state.theme} onClick={(e) => this.setState({ step: 4 })}>Back</div>
                 <div className="flex-fill"></div>
-                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 6})}>Next</div>
+                <div className={'step-next button ' + this.state.theme} onClick={(e) => this.setState({ step: 6 })}>Next</div>
               </div>
             </div>
 
-            <div className={this.state.step == 6 ? "welcome-step welcome-step-6 slide-in-right" : this.state.step < 6 ? "welcome-step welcome-step-6 hidden" : "welcome-step welcome-step-6 slide-out-left"}>
+            <div className={this.state.step === 6 ? 'welcome-step welcome-step-6 slide-in-right' : this.state.step < 6 ? 'welcome-step welcome-step-6 hidden' : 'welcome-step welcome-step-6 slide-out-left'}>
               <div className="step-title">
                 <h1 className="display-2">Software configuration PART II</h1>
-                <div className={"step-divider border-" + this.state.primaryColor}></div>
+                <div className={'step-divider border-' + this.state.primaryColor}></div>
                 <span>Select the paths to the software executables</span>
               </div>
               <div className="step-software">
                 {Object.keys(this.state.softwares).map((soft, index) => (
-                  <div key={index} className={this.state.softwares[soft].selected == true ? "software-setup" : "hidden"}>
+                  <div key={index} className={this.state.softwares[soft].selected === true ? 'software-setup' : 'hidden'}>
                     <hr/>
-                    {this.state.softwares[soft].selected ?
-                      <div className="software-setup-main">
+                    {this.state.softwares[soft].selected
+                      ? <div className="software-setup-main">
                         <div className="software-setup-header">
                           <img src={`softwareLogos/${soft}.png`}></img>
                           <h3 className="display-3 sub-display">{soft}</h3>
@@ -481,17 +478,17 @@ export default class Welcome extends React.Component {
                             <div key={ind}>
                               <div className="step-project">
                                 <div className="step-project-name">
-                                  <div className={"border-input input " + this.state.theme}>{exe}.exe</div>
+                                  <div className={'border-input input ' + this.state.theme}>{exe}.exe</div>
                                 </div>
                                 <div className="file step-project-path">
                                   <div className="file-label" onClick={(e) => this.selectSoftwarePath(soft, exe)}>
                                     {/* <input className="file-input" type="file" onChange={(e) => this.setState({newProjectPath: e.target.value})}/> */}
-                                    <div className={"file-cta " + this.state.theme}>
+                                    <div className={'file-cta ' + this.state.theme}>
                                       <span className="file-icon">
                                         <i className="las la-folder-open"></i>
                                       </span>
-                                      <div className={this.state.softwares[soft].exe[exe].path == "" ? "file-label-inner empty" : "file-label-inner"}>
-                                        {this.state.softwares[soft].exe[exe].path == "" ? "Select Software Path" : this.state.softwares[soft].exe[exe].path}
+                                      <div className={this.state.softwares[soft].exe[exe].path === '' ? 'file-label-inner empty' : 'file-label-inner'}>
+                                        {this.state.softwares[soft].exe[exe].path === '' ? 'Select Software Path' : this.state.softwares[soft].exe[exe].path}
                                       </div>
                                     </div>
                                   </div>
@@ -502,34 +499,32 @@ export default class Welcome extends React.Component {
                           ))}
                         </div>
                       </div>
-                      : ""
+                      : ''
                     }
                   </div>
                 ))}
 
               </div>
               <div className="step-footer">
-                <div className={"step-previous button " + this.state.theme} onClick={(e) => this.setState({step: 5})}>Back</div>
+                <div className={'step-previous button ' + this.state.theme} onClick={(e) => this.setState({ step: 5 })}>Back</div>
                 <div className="flex-fill"></div>
-                <div className={"step-next button " + this.state.theme} onClick={(e) => this.setState({step: 7})}>Next</div>
+                <div className={'step-next button ' + this.state.theme} onClick={(e) => this.setState({ step: 7 })}>Next</div>
               </div>
             </div>
 
-            <div className={this.state.step == 7 ? "welcome-step welcome-step-7 slide-in-right" : this.state.step < 7 ? "welcome-step welcome-step-7 hidden" : "welcome-step welcome-step-7 slide-out-left"}>
+            <div className={this.state.step === 7 ? 'welcome-step welcome-step-7 slide-in-right' : this.state.step < 7 ? 'welcome-step welcome-step-7 hidden' : 'welcome-step welcome-step-7 slide-out-left'}>
               <div className="steps-finish">
                 <div>
-                  <h1 className={this.state.step == 7 ? "display-1 finish-animate" : "display-1"}>All set up!!!</h1>
+                  <h1 className={this.state.step === 7 ? 'display-1 finish-animate' : 'display-1'}>All set up!!!</h1>
                 </div>
                 <div>
-                  <i className={this.state.step == 7 ? "las la-check-circle finish-animate " + this.state.primaryColor : "las la-check-circle " + this.state.primaryColor}></i>
+                  <i className={this.state.step === 7 ? 'las la-check-circle finish-animate ' + this.state.primaryColor : 'las la-check-circle ' + this.state.primaryColor}></i>
                 </div>
-                <div className={this.state.step == 7 ? "button finish-animate " + this.state.theme : "button " + this.state.theme} onClick={(e) => this.finishSetup()}>Finish</div>
+                <div className={this.state.step === 7 ? 'button finish-animate ' + this.state.theme : 'button ' + this.state.theme} onClick={(e) => this.finishSetup()}>Finish</div>
               </div>
             </div>
           </div>
         </div>
-
-
 
         <style jsx global>{`
           @font-face {
@@ -554,6 +549,6 @@ export default class Welcome extends React.Component {
 
         `}</style>
       </React.Fragment>
-    );
+    )
   };
 };

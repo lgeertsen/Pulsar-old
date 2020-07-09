@@ -1,25 +1,21 @@
-import { FileSequence } from 'fileseq';
-
-import Logger from './Logger';
-import File from './File';
+import { FileSequence } from 'fileseq'
 
 class Sequence extends FileSequence {
+  constructor (sequence, comment, tags) {
+    super(undefined)
 
-  constructor(sequence, comment, tags) {
-    super(undefined);
+    this.frameSet = sequence.frameSet
+    this.dirname = sequence.dirname
+    this.basename = sequence.basename
+    this.extension = sequence.extension
+    this.padding = sequence.padding
 
-    this.frameSet = sequence.frameSet;
-    this.dirname = sequence.dirname;
-    this.basename = sequence.basename;
-    this.extension = sequence.extension;
-    this.padding = sequence.padding;
+    this.frames = sequence.frameSet._frange
 
-    this.frames = sequence.frameSet._frange;
-
-    this.comment = comment;
-    this.tags = tags;
-    this.state;
-    this.version;
+    this.comment = comment
+    this.tags = tags
+    this.state = undefined
+    this.version = undefined
     // this._frames = [];
   }
 

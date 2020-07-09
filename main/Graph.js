@@ -1,56 +1,62 @@
-import { spawn } from 'child_process';
-import fs from 'fs';
-import path from 'path';
+import { spawn } from 'child_process'
 
-import Edge from './Edge';
-import Logger from './Logger';
-import Node from './Node';
+import Edge from './Edge'
+import Logger from './Logger'
+import Node from './Node'
 
 export default class Graph {
-  constructor(nodeManager, server, sendToRenderer) {
-    this._nodeManager = nodeManager;
-    this._server = server;
-    this._sendToRenderer = sendToRenderer;
+  constructor (nodeManager, server, sendToRenderer) {
+    this._nodeManager = nodeManager
+    this._server = server
+    this._sendToRenderer = sendToRenderer
 
-    this._name = undefined;
-    this._path = undefined;
+    this._name = undefined
+    this._path = undefined
 
-    this._nodes = {};
+    this._nodes = {}
     // for(let id in nodes) {
     //   this._nodes[id] = new Node(nodes[id]);
     // }
 
-    this._edges = {};
+    this._edges = {}
     // for(let input in edges) {
     //   this._edges[input] = new Edge(input, edges[input]);
     // }
 
-    this._executionPriority = {};
-    this._executionOrder = [];
+    this._executionPriority = {}
+    this._executionOrder = []
   }
 
-  get name() {return this._name}
+  get name () { return this._name }
 
-  set graph(data) {
-    this._name = data.name;
-    this._path = data.path;
-    this._nodes = {};
-    for(let id in data.nodes) {
-      let pos = {
+  get graph () {
+    return {
+      name: this._name,
+      nodes: this._nodes,
+      edges: this._edges
+    }
+  }
+
+  set graph (data) {
+    this._name = data.name
+    this._path = data.path
+    this._nodes = {}
+    for (const id in data.nodes) {
+      const pos = {
         x: data.nodes[id].x,
         y: data.nodes[id].y
       }
-      this._nodes[id] = new Node(data.nodes[id].id, data.nodes[id].name, data.nodes[id], pos);
+      this._nodes[id] = new Node(data.nodes[id].id, data.nodes[id].name, data.nodes[id], pos)
     }
-    this._edges = {};
-    for(let id in data.edges) {
-      this._edges[id] = new Edge(data.edges[id]._inputNode, data.edges[id]._inputAttribute, data.edges[id]._outputNode, data.edges[id]._outputAttribute);
+    this._edges = {}
+    for (const id in data.edges) {
+      this._edges[id] = new Edge(data.edges[id]._inputNode, data.edges[id]._inputAttribute, data.edges[id]._outputNode, data.edges[id]._outputAttribute)
     }
-    this.formatForRender();
+    this.formatForRender()
   }
 
-  addNode(type, task, position) {
-    let node = this._nodeManager.getNode(type, task);
+  addNode (type, task, position) {
+    const node = this._nodeManager.getNode(type, task)
 
     // let idCount = 0;
     // for(let key in this._nodes) {
@@ -58,249 +64,246 @@ export default class Graph {
     //     idCount += 1;
     //   }
     // }
-    let idCount = 1;
-    let id = `${node.id}_${idCount}`;
-    while(id in this._nodes) {
-      idCount+=1;
-      id = `${node.id}_${idCount}`;
+    let idCount = 1
+    let id = `${node.id}_${idCount}`
+    while (id in this._nodes) {
+      idCount += 1
+      id = `${node.id}_${idCount}`
     }
 
-    this._nodes[id] = new Node(id, `${node.name} ${idCount}`, node, position);
-    return id;
+    this._nodes[id] = new Node(id, `${node.name} ${idCount}`, node, position)
+    return id
   }
 
-  deleteNode(id) {
-    delete this._nodes[id];
-    for(let key in this._edges) {
-      if(this._edges[key].inputNode == id || this._edges[key].outputNode == id) {
-        delete this._edges[key];
+  deleteNode (id) {
+    delete this._nodes[id]
+    for (const key in this._edges) {
+      if (this._edges[key].inputNode === id || this._edges[key].outputNode === id) {
+        delete this._edges[key]
       }
     }
-    return id;
+    return id
   }
 
-  addEdge(nodeIn, attribIn, nodeOut, attribOut) {
-    if(nodeIn == attribIn && nodeOut == attribOut) {
-      this._edges[`${nodeIn}#${attribIn}`] = new Edge(nodeIn, attribIn, nodeOut, attribOut);
+  addEdge (nodeIn, attribIn, nodeOut, attribOut) {
+    if (nodeIn === attribIn && nodeOut === attribOut) {
+      this._edges[`${nodeIn}#${attribIn}`] = new Edge(nodeIn, attribIn, nodeOut, attribOut)
     } else {
-      let inIndex = this._nodes[nodeIn].inputs.findIndex((item) => {return item.name == attribIn});
-      let inType = this._nodes[nodeIn].inputs[inIndex].type;
-      let outIndex = this._nodes[nodeOut].outputs.findIndex((item) => {return item.name == attribOut});
-      let outType = this._nodes[nodeOut].outputs[outIndex].type;
-      if(inType == outType || inType == "any") {
-        this._edges[`${nodeIn}#${attribIn}`] = new Edge(nodeIn, attribIn, nodeOut, attribOut);
+      const inIndex = this._nodes[nodeIn].inputs.findIndex((item) => { return item.name === attribIn })
+      const inType = this._nodes[nodeIn].inputs[inIndex].type
+      const outIndex = this._nodes[nodeOut].outputs.findIndex((item) => { return item.name === attribOut })
+      const outType = this._nodes[nodeOut].outputs[outIndex].type
+      if (inType === outType || inType === 'any') {
+        this._edges[`${nodeIn}#${attribIn}`] = new Edge(nodeIn, attribIn, nodeOut, attribOut)
       }
     }
 
-    if(this._nodes[nodeIn].subType == "merge") {
-      let count = this._nodes[nodeIn].inputs.length;
-      let newInput = {
-        name: `input${count+1}`,
-        label: `Input ${count+1}`,
-        description: "Input",
-        value: "",
-        type: "any"
+    if (this._nodes[nodeIn].subType === 'merge') {
+      const count = this._nodes[nodeIn].inputs.length
+      const newInput = {
+        name: `input${count + 1}`,
+        label: `Input ${count + 1}`,
+        description: 'Input',
+        value: '',
+        type: 'any'
       }
-      this._nodes[nodeIn].inputs.push(newInput);
+      this._nodes[nodeIn].inputs.push(newInput)
     }
   }
 
-  setNodeName(id, name) {
-    this._nodes[id].newName = name;
+  setNodeName (id, name) {
+    this._nodes[id].newName = name
   }
 
-  setNodePosition(id, position) {
-    this._nodes[id].position = position;
+  setNodePosition (id, position) {
+    this._nodes[id].position = position
   }
 
-  setNodeInputValue(id, input, value) {
-    this._nodes[id].setInputValue(input, value);
+  setNodeInputValue (id, input, value) {
+    this._nodes[id].setInputValue(input, value)
   }
 
-  walkGraph(node, depth) {
-    for(let input in this._edges) {
-      if(this._edges[input].inputNode == node.id) {
-        let outputId = this._edges[input].outputNode;
-        let outputNode = this._nodes[outputId];
-        if(outputNode.subType == "merge") {
-          this.walkGraph(outputNode, depth);
-        } else if(outputNode.type == "constants") {
-          let inputAttribute = this._edges[input].inputAttribute;
-          let inputIndex = node.inputs.findIndex((item) => {return item.name == inputAttribute});
-          node.inputs[inputIndex].value = outputNode.inputs[0].value;
+  walkGraph (node, depth) {
+    for (const input in this._edges) {
+      if (this._edges[input].inputNode === node.id) {
+        const outputId = this._edges[input].outputNode
+        const outputNode = this._nodes[outputId]
+        if (outputNode.subType === 'merge') {
+          this.walkGraph(outputNode, depth)
+        } else if (outputNode.type === 'constants') {
+          const inputAttribute = this._edges[input].inputAttribute
+          const inputIndex = node.inputs.findIndex((item) => { return item.name === inputAttribute })
+          node.inputs[inputIndex].value = outputNode.inputs[0].value
         } else {
-          if(this._executionPriority[depth] == undefined) {
-            this._executionPriority[depth] = [];
+          if (this._executionPriority[depth] === undefined) {
+            this._executionPriority[depth] = []
           }
-          this._executionPriority[depth].push(outputNode);
-          this.walkGraph(outputNode, depth+1);
+          this._executionPriority[depth].push(outputNode)
+          this.walkGraph(outputNode, depth + 1)
         }
       }
     }
-    return true;
+    return true
   }
 
-  execute(id) {
-    this._executionPriority = {};
-    this._executionOrder = [];
-    let node = this._nodes[id];
-    let d = 0;
-    console.log("#############################");
-    console.log(node);
-    console.log("#############################");
-    if(node.subType == "submit") {
-      this.customSubmitter(id);
+  execute (id) {
+    this._executionPriority = {}
+    this._executionOrder = []
+    const node = this._nodes[id]
+    let d = 0
+    console.log('#############################')
+    console.log(node)
+    console.log('#############################')
+    if (node.subType === 'submit') {
+      this.customSubmitter(id)
     } else {
-      if(node.subType != "merge" && node.type != "constants") {
-        this._executionPriority[0] = [];
+      if (node.subType !== 'merge' && node.type !== 'constants') {
+        this._executionPriority[0] = []
         this._executionPriority[0].push(node)
-        d += 1;
+        d += 1
       }
-      let walked = this.walkGraph(node, d);
-      let depth = Object.keys(this._executionPriority).length;
-      for(let i = depth-1; i >= 0; i--) {
-        for(let j in this._executionPriority[i]) {
+      this.walkGraph(node, d)
+      const depth = Object.keys(this._executionPriority).length
+      for (let i = depth - 1; i >= 0; i--) {
+        for (const j in this._executionPriority[i]) {
           this._executionOrder.push(this._executionPriority[i][j])
         }
       }
-      console.log(this._executionOrder);
-      this.executeTask();
+      console.log(this._executionOrder)
+      this.executeTask()
     }
   }
 
-  executeTask() {
-    Logger.info("Execute Task")
-    let task = this._executionOrder.shift();
+  executeTask () {
+    Logger.info('Execute Task')
+    const task = this._executionOrder.shift()
 
-    console.log(task);
+    console.log(task)
 
-    if(task.software == "bat") {
-      let args = [];
-      for(let i in task.inputs) {
-        if(task.inputs[i].type.split(".")[0] == "tuple") {
-          for(let j in task.inputs[i].value) {
-            args.push(task.inputs[i].value[j]);
+    if (task.software === 'bat') {
+      const args = []
+      for (const i in task.inputs) {
+        if (task.inputs[i].type.split('.')[0] === 'tuple') {
+          for (const j in task.inputs[i].value) {
+            args.push(task.inputs[i].value[j])
           }
-        } else if(task.inputs[i].type.split(".")[0] == "software") {
-          args.push(this._server._config.config.softwares[task.inputs[i].type.split(".")[1]]);
+        } else if (task.inputs[i].type.split('.')[0] === 'software') {
+          args.push(this._server._config.config.softwares[task.inputs[i].type.split('.')[1]])
         } else {
-          args.push(task.inputs[i].value);
+          args.push(task.inputs[i].value)
         }
       }
 
-      let dirPath;
+      // let dirPath
       // if (process.env.NODE_ENV === 'production') {
       //   dirPath = path.join(__dirname, '../../../nodes/scripts');
       //   // result = spawn.sync(executable, [], { encoding: 'utf8' });
       // } else {
-        dirPath = `${this._nodeManager._path}`;
+      const dirPath = `${this._nodeManager._path}`
       // }
 
-      let cmd = `${dirPath}/${task.type}/${task.script}`;
+      let cmd = `${dirPath}/${task.type}/${task.script}`
 
-      for(let i in args) {
-        if(args[i].toString().includes(" ")) {
-          cmd += ` "${args[i]}"`;
+      for (const i in args) {
+        if (args[i].toString().includes(' ')) {
+          cmd += ` "${args[i]}"`
         } else {
-          cmd += ` ${args[i]}`;
+          cmd += ` ${args[i]}`
         }
       }
 
-      const bat = spawn(cmd, { shell: true });
+      const bat = spawn(cmd, { shell: true })
 
       bat.stdout.on('data', (data) => {
-        console.log(data.toString());
-      });
+        console.log(data.toString())
+      })
 
       bat.stderr.on('data', (data) => {
-        console.error(data.toString());
-      });
+        console.error(data.toString())
+      })
 
       bat.on('exit', (code) => {
-        console.log(`Child exited with code ${code}`);
-        console.log(this._executionOrder);
-        if(this._executionOrder.length > 0) {
-          this.executeTask();
+        console.log(`Child exited with code ${code}`)
+        console.log(this._executionOrder)
+        if (this._executionOrder.length > 0) {
+          this.executeTask()
         }
-      });
-    } else if(task.software == "python" || task.software == "python2") {
-      let python = this._server._config.config.softwares[task.software];
-      let args = [];
-      for(let i in task.inputs) {
-        if(task.inputs[i].type.split(".")[0] == "tuple") {
-          for(let j in task.inputs[i].value) {
-            args.push(task.inputs[i].value[j]);
+      })
+    } else if (task.software === 'python' || task.software === 'python2') {
+      const python = this._server._config.config.softwares[task.software]
+      const args = []
+      for (const i in task.inputs) {
+        if (task.inputs[i].type.split('.')[0] === 'tuple') {
+          for (const j in task.inputs[i].value) {
+            args.push(task.inputs[i].value[j])
           }
-        } else if(task.inputs[i].type.split(".")[0] == "software") {
-          args.push(this._server._config.config.softwares[task.inputs[i].type.split(".")[1]]);
+        } else if (task.inputs[i].type.split('.')[0] === 'software') {
+          args.push(this._server._config.config.softwares[task.inputs[i].type.split('.')[1]])
         } else {
-          args.push(task.inputs[i].value);
+          args.push(task.inputs[i].value)
         }
       }
 
-      let dirPath;
+      // let dirPath
       // if (process.env.NODE_ENV === 'production') {
       //   dirPath = path.join(__dirname, '../../../nodes/scripts');
       //   // result = spawn.sync(executable, [], { encoding: 'utf8' });
       // } else {
-        dirPath = `${this._nodeManager._path}`;
+      const dirPath = `${this._nodeManager._path}`
       // }
 
-      let cmd = `${python} ${dirPath}/${task.type}/${task.script}`;
+      let cmd = `${python} ${dirPath}/${task.type}/${task.script}`
 
-      for(let i in args) {
-        if(args[i].toString().includes(" ")) {
-          cmd += ` "${args[i]}"`;
+      for (const i in args) {
+        if (args[i].toString().includes(' ')) {
+          cmd += ` "${args[i]}"`
         } else {
-          cmd += ` ${args[i]}`;
+          cmd += ` ${args[i]}`
         }
       }
 
-      console.log(cmd);
+      console.log(cmd)
 
-      const bat = spawn(cmd, { shell: true });
+      const bat = spawn(cmd, { shell: true })
 
       bat.stdout.on('data', (data) => {
-        console.log(data.toString());
-      });
+        console.log(data.toString())
+      })
 
       bat.stderr.on('data', (data) => {
-        console.error(data.toString());
-      });
+        console.error(data.toString())
+      })
 
       bat.on('exit', (code) => {
-        console.log(`Child exited with code ${code}`);
-        console.log(this._executionOrder);
-        if(this._executionOrder.length > 0) {
-          this.executeTask();
+        console.log(`Child exited with code ${code}`)
+        console.log(this._executionOrder)
+        if (this._executionOrder.length > 0) {
+          this.executeTask()
         }
-      });
+      })
     }
   }
 
+  customSubmitter (id) {
+    const node = this._nodes[id]
 
-
-
-  customSubmitter(id) {
-    let node = this._nodes[id];
-
-    for(let input in this._edges) {
-      if(this._edges[input].inputNode == node.id) {
-        let outputId = this._edges[input].outputNode;
-        let outputNode = this._nodes[outputId];
-        if(outputNode.type == "constants") {
-          let inputAttribute = this._edges[input].inputAttribute;
-          let inputIndex = node.inputs.findIndex((item) => {return item.name == inputAttribute});
-          node.inputs[inputIndex].value = outputNode.inputs[0].value;
+    for (const input in this._edges) {
+      if (this._edges[input].inputNode === node.id) {
+        const outputId = this._edges[input].outputNode
+        const outputNode = this._nodes[outputId]
+        if (outputNode.type === 'constants') {
+          const inputAttribute = this._edges[input].inputAttribute
+          const inputIndex = node.inputs.findIndex((item) => { return item.name === inputAttribute })
+          node.inputs[inputIndex].value = outputNode.inputs[0].value
         }
       }
     }
 
-    node.inputs[0].value = this._path;
-    node.inputs[1].value = id;
+    node.inputs[0].value = this._path
+    node.inputs[1].value = id
 
-    this._executionOrder.push(node);
-    this.executeTask();
+    this._executionOrder.push(node)
+    this.executeTask()
 
     // this._executionPriority[0] = [];
     // this._executionPriority[0].push(node)
@@ -340,36 +343,23 @@ export default class Graph {
     //     }
     //   });
     // });
-
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-  formatForRender() {
-    let edges = {};
-    for(let id in this._edges) {
-      edges[id] = this._edges[id].formatForRender();
+  formatForRender () {
+    const edges = {}
+    for (const id in this._edges) {
+      edges[id] = this._edges[id].formatForRender()
     }
-    this._sendToRenderer({nodes: this._nodes, edges: edges});
+    this._sendToRenderer({ nodes: this._nodes, edges: edges })
   }
 
-  formatForSave() {
-    let data = {
+  formatForSave () {
+    const data = {
       name: this._name,
       path: this._path,
       nodes: this._nodes,
       edges: this._edges
     }
-    return data;
+    return data
   }
 }

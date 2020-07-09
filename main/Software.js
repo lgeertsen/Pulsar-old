@@ -1,9 +1,9 @@
-class Software {
-  constructor(socket) {
-    this._id = socket.id;
-    this._socket = socket;
-    this._software = undefined;
-    this._scene = undefined;
+export default class Software {
+  constructor (socket) {
+    this._id = socket.id
+    this._socket = socket
+    this._software = undefined
+    this._scene = undefined
   }
 
   get id () { return this._id }
