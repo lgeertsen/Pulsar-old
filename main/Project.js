@@ -121,6 +121,26 @@ class Project {
   }
 
   /**
+   * saveComment - Save the comment of a file
+   *
+   * @param {string} comment A comment
+   */
+  saveComment (comment) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.saveComment(comment)
+  }
+
+  /**
+   * saveTag - Add a tag to a file
+   *
+   * @param {string} tag Name of the tag
+   */
+  saveTag (tag) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.saveTag(tag)
+  }
+
+  /**
    * formatForRender - Format the data of the project into an Object to send to the Render Screen
    *
    */

@@ -284,8 +284,32 @@ class AssetId {
    */
   setFiles (files) {
     this._directories.file = files
-
     this._formatForRender()
+  }
+
+  /**
+   * saveComment - Save the comment of a file
+   *
+   * @param {string} comment A comment
+   */
+  saveComment (comment) {
+    const file = this._groups.file
+    const dirPath = path.dirname(file.path)
+    const commentPath = path.join(dirPath, 'comment.txt')
+    FileManager.writeFile(commentPath, comment)
+  }
+
+  /**
+   * saveTag - Add a tag to a file
+   *
+   * @param {string} tag Name of the tag
+   */
+  saveTag (tag) {
+    const file = this._groups.file
+    const dirPath = path.dirname(file.path)
+    const tagFile = `${tag}.tag`
+    const tagPath = path.join(dirPath, tagFile)
+    FileManager.writeFile(tagPath, '')
   }
 }
 

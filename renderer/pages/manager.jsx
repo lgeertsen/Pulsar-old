@@ -295,23 +295,25 @@ export default class Manager extends React.Component {
   }
 
   editComment (e) {
-    const assetId = this.state.fileManagerAssetId
-    assetId.file.comment = e.target.value
-    this.setState({ fileManagerAssetId: assetId })
+    const project = this.state.project
+    project.file.comment = e.target.value
+    this.setState({ project: project })
   }
 
   saveComment () {
-    const sid = this.state.fileManagerAssetId.sid
-    const comment = this.state.fileManagerAssetId.file.comment
-    ipcRenderer.send('saveComment', { sid: sid, comment: comment })
+    const project = this.state.project
+    const comment = project.file.comment
+    ipcRenderer.send('saveComment', { comment: comment })
   }
 
   saveTag (tag) {
-    const sid = this.state.fileManagerAssetId.sid
-    const assetId = this.state.fileManagerAssetId
-    assetId.file.tags.push(tag)
-    this.setState({ fileManagerAssetId: assetId })
-    ipcRenderer.send('saveTag', { sid: sid, tag: tag })
+    const project = this.state.project
+    project.file.tags.push(tag)
+    // const sid = this.state.fileManagerAssetId.sid
+    // const assetId = this.state.fileManagerAssetId
+    // assetId.file.tags.push(tag)
+    this.setState({ project: project })
+    ipcRenderer.send('saveTag', tag)
   }
 
   deleteTag (tag) {
@@ -672,6 +674,7 @@ export default class Manager extends React.Component {
                     checkSotfwareSaved={() => this.checkSotfwareSaved()}
                     getWipName={() => this.getWipName()}
                     refresh={() => this.refreshBrowser()}
+                    saveTag={tag => this.saveTag(tag)}
                   />
                 : ''
               }

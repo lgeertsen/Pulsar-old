@@ -179,11 +179,11 @@ export default class Renderer {
 
     ipcMain.on('saveComment', (event, data) => {
       console.log('----- save comment -----', data)
-      this._server._assetIds[data.sid].saveComment(data.comment)
+      this._server.project.saveComment(data.comment)
     })
 
     ipcMain.on('saveTag', (event, data) => {
-      this._server._assetIds[data.sid].saveTag(data.tag)
+      this._server.project.saveTag(data)
     })
 
     ipcMain.on('deleteTag', (event, data) => {

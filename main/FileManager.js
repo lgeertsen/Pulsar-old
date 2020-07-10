@@ -1,5 +1,5 @@
 import { basename, join } from 'path'
-import { mkdir, readFileSync, statSync } from 'fs'
+import { mkdir, readFileSync, statSync, writeFile } from 'fs'
 import format from 'string-format'
 import glob from 'glob'
 
@@ -338,5 +338,12 @@ export default class FileManager {
       }
     }
     return dirs
+  }
+
+  static writeFile (path, data) {
+    writeFile(path, data, 'utf8', (err) => {
+      if (err) throw err
+      console.log('The file has been saved!')
+    })
   }
 }
