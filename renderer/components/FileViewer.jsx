@@ -224,9 +224,9 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
           </div>
           {command === 'open_file_as'
             ? <div className="new-name-container">
-              <div className="label"><h4>Open As:</h4></div>
+              <div className=""><h4>Open As:</h4></div>
               <div className="name-input-container">
-                <input className="name-input input" value={newFileName} onChange={(e) => onFileNameChange(e.target.value)}/>
+                <input className={`name-input input bis ${theme}`} value={newFileName} onChange={(e) => onFileNameChange(e.target.value)}/>
               </div>
             </div>
             : ''
@@ -235,10 +235,12 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
             <h4>Open in:</h4>
             <div className="software-selection">
               {softwares.map((soft, index) => (
-                <div key={index} className={soft.id === selectedSoftware ? 'software selected ' + theme : 'software ' + theme} onClick={(e) => onClickSoft(soft.id, soft.software)}>
-                  <img className="software-img" src={'softwareLogos/' + soft.software + '.png'}></img>
-                  <span>{soft.saved === 1 ? soft.scene : soft.scene + '*'}</span>
-                </div>
+                command === 'open_file' || soft.id !== 'new'
+                  ? <div key={index} className={soft.id === selectedSoftware ? 'software selected ' + theme : 'software ' + theme} onClick={(e) => onClickSoft(soft.id, soft.software)}>
+                    <img className="software-img" src={'softwareLogos/' + soft.software + '.png'}></img>
+                    <span>{soft.saved === 1 ? soft.scene : soft.scene + '*'}</span>
+                  </div>
+                  : ''
               ))}
             </div>
           </div>

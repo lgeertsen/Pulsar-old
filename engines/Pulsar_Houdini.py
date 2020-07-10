@@ -61,6 +61,7 @@ class PulsarSocket(socketio.ClientNamespace):
 
 class Pulsar():
     def __init__(self):
+        print("--- Starting up Pulsar ---")
         self._sio = socketio.Client(logger=logger, engineio_logger=logger)
         #self._sio = socketio.Client()
         self._sio.register_namespace(PulsarSocket('/software', self))

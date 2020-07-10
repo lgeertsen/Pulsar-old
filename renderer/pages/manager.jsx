@@ -382,7 +382,7 @@ export default class Manager extends React.Component {
   }
 
   getWipName () {
-    const assetId = this.state.fileManagerAssetId
+    const project = this.state.project
 
     const now = new Date(Date.now())
     const year = now.getFullYear()
@@ -393,7 +393,7 @@ export default class Manager extends React.Component {
     const seconds = now.getSeconds()
 
     const timestamp = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`
-    const wipName = `WIP_${assetId.file.name}_${assetId.task}_${assetId.subtask}_${assetId.file.version}_${timestamp}`
+    const wipName = `WIP_${project.file.name}_${timestamp}`
     return wipName
   }
 

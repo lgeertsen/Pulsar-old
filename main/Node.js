@@ -102,15 +102,12 @@ export default class Node {
       let cmd = `${dirPath}/${this.type}/${this.script}`
 
       for (const i in this.inputs) {
-        console.log(this.inputs[i]);
         if (this.inputs[i].value.toString().includes(' ')) {
           cmd += ` "${this.inputs[i].value}"`
         } else {
           cmd += ` ${this.inputs[i].value}`
         }
       }
-
-      console.log(cmd);
 
       const bat = spawn(cmd, { shell: true })
 

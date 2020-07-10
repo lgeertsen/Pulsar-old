@@ -285,9 +285,9 @@ export default class Server {
 
   startServer () {
     try {
-      // this._http.listen(7846, function(){
-      //   console.log('----- listening on *:7846 -----')
-      // });
+      this._http.listen(7846, () => {
+        console.log('----- listening on *:7846 -----')
+      })
     } catch (e) {
 
     }
