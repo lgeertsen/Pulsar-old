@@ -1,5 +1,5 @@
 import { basename, join } from 'path'
-import { mkdir, readFileSync, statSync, writeFile } from 'fs'
+import { mkdir, readFileSync, statSync, writeFile, unlink } from 'fs'
 import format from 'string-format'
 import glob from 'glob'
 
@@ -344,6 +344,13 @@ export default class FileManager {
     writeFile(path, data, 'utf8', (err) => {
       if (err) throw err
       console.log('The file has been saved!')
+    })
+  }
+
+  static deleteFile (path) {
+    unlink(path, (err) => {
+      if (err) throw err
+      console.log(`${path} was deleted`)
     })
   }
 }

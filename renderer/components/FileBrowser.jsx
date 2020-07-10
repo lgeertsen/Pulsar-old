@@ -6,7 +6,7 @@ import SwitchBox from './SwitchBox'
 import Modal from './Modal'
 
 const availableSoftwares = [
-  'houdinifx',
+  'houdini',
   'maya',
   'nuke'
 ]
@@ -55,6 +55,19 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange, groups, show
     createNew(data)
     setShowModal(false)
     setNewName('')
+  }
+
+  const toReadableDate = (date) => {
+    const now = new Date(date)
+    const year = now.getFullYear()
+    const month = now.getMonth() + 1
+    const day = now.getDate()
+    const hours = now.getHours()
+    const minutes = now.getMinutes()
+    const seconds = now.getSeconds()
+
+    const timestamp = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
+    return timestamp
   }
 
   const getSize = bytes => {
@@ -202,7 +215,7 @@ const FileBrowser = ({ theme, primaryColor, title, files, onChange, groups, show
               ))}
             </div>
             <div className="file-modified">
-              <span>{file.modified}</span>
+              <span>{toReadableDate(file.modified)}</span>
             </div>
             <div className="file-size">
               <span>{getSize(file.size)}</span>

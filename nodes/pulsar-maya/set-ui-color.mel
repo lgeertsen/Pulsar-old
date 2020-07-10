@@ -1,0 +1,1 @@
+window -e -bgc 0.1 0.1 0.1 $gMainWindow;

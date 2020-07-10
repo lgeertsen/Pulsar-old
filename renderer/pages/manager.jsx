@@ -317,20 +317,19 @@ export default class Manager extends React.Component {
   }
 
   deleteTag (tag) {
-    const sid = this.state.fileManagerAssetId.sid
-    const assetId = this.state.fileManagerAssetId
-    for (const i in assetId.file.tags) {
-      if (assetId.file.tags[i] === tag) {
-        assetId.file.tags.splice(i, 1)
+    const project = this.state.project
+    for (const i in project.file.tags) {
+      if (project.file.tags[i] === tag) {
+        project.file.tags.splice(i, 1)
       }
     }
-    this.setState({ fileManagerAssetId: assetId })
-    ipcRenderer.send('deleteTag', { sid: sid, tag: tag })
+    this.setState({ project: project })
+    ipcRenderer.send('deleteTag', tag)
   }
 
   getCompatibleSoftware () {
-    const file = this.state.fileManagerAssetId.file
-    var softwares = this.state.softwares
+    const file = this.state.project.file
+    var softwares = this.state.connectedSoftwares
     var softs = []
     if (['ma', 'mb'].includes(file.extension)) {
       for (const id in softwares) {
@@ -659,6 +658,8 @@ export default class Manager extends React.Component {
                     checkSotfwareSaved={() => this.checkSotfwareSaved()}
                     getWipName={() => this.getWipName()}
                     refresh={() => this.refreshBrowser()}
+                    saveTag={tag => this.saveTag(tag)}
+                    deleteTag={tag => this.deleteTag(tag)}
                   />
                   : <FileViewer
                     theme={this.state.theme}
@@ -675,6 +676,7 @@ export default class Manager extends React.Component {
                     getWipName={() => this.getWipName()}
                     refresh={() => this.refreshBrowser()}
                     saveTag={tag => this.saveTag(tag)}
+                    deleteTag={tag => this.deleteTag(tag)}
                   />
                 : ''
               }
@@ -683,14 +685,14 @@ export default class Manager extends React.Component {
           </div>
         </div>
 
-        <NewAssetContainer
+        {/* <NewAssetContainer
           theme={this.state.theme}
           primaryColor={this.state.primaryColor}
           show={this.state.newAssetModal}
           handleClose={() => this.setState({ newAssetModal: false })}
           assetId={this.state.newAssetId}
           setAssetIdValue={(type, element) => this.setAssetIdValue('newAsset', type, element)}
-        />
+        /> */}
 
         <style jsx global>{`
           @font-face {

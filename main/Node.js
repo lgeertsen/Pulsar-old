@@ -57,10 +57,13 @@ export default class Node {
 
   setInputValue (input, value) {
     const inputIndex = this.inputs.findIndex((item) => { return item.name === input })
-    this.inputs[inputIndex].value = value
+    console.log(input, inputIndex, value);
+    if (inputIndex !== -1) {
+      this.inputs[inputIndex].value = value
+    }
   }
 
-  execute (args, cb) {
+  execute (cb) {
     const config = new Config()
     const softs = config.config.softwares
 
@@ -70,11 +73,11 @@ export default class Node {
 
       let cmd = `"${softs[this.software]}" ${dirPath}/${this.type}/${this.script}`
 
-      for (const i in args) {
-        if (args[i].toString().includes(' ')) {
-          cmd += ` "${args[i]}"`
+      for (const i in this.inputs) {
+        if (this.inputs[i].value.toString().includes(' ')) {
+          cmd += ` "${this.inputs[i].value}"`
         } else {
-          cmd += ` ${args[i]}`
+          cmd += ` ${this.inputs[i].value}`
         }
       }
 
@@ -98,13 +101,16 @@ export default class Node {
 
       let cmd = `${dirPath}/${this.type}/${this.script}`
 
-      for (const i in args) {
-        if (args[i].toString().includes(' ')) {
-          cmd += ` "${args[i]}"`
+      for (const i in this.inputs) {
+        console.log(this.inputs[i]);
+        if (this.inputs[i].value.toString().includes(' ')) {
+          cmd += ` "${this.inputs[i].value}"`
         } else {
-          cmd += ` ${args[i]}`
+          cmd += ` ${this.inputs[i].value}`
         }
       }
+
+      console.log(cmd);
 
       const bat = spawn(cmd, { shell: true })
 

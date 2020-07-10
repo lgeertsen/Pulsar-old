@@ -1,5 +1,6 @@
 import path from 'path'
 
+import Config from './Config'
 import FileManager from './FileManager'
 import Node from './Node'
 import NodeManager from './NodeManager'
@@ -173,11 +174,40 @@ class AssetId {
     if (template) {
       const nodeTemplate = nm.getNode('base', 'create_asset_from_existing')
       const node = new Node('temp', 'temp', nodeTemplate, { x: 0, y: 0 })
-      node.execute([template, filePath], () => FileManager.getFiles(this, (files) => this.setFiles(files)))
+      node.setInputValue('path', template)
+      node.setInputValue('file', filePath)
+      node.execute(() => FileManager.getFiles(this, (files) => this.setFiles(files)))
     } else {
-      const nodeTemplate = nm.getNode('houdini', 'create_asset')
+      const nodeTemplate = nm.getNode(type, 'create_asset')
       const node = new Node('temp', 'temp', nodeTemplate, { x: 0, y: 0 })
-      node.execute([filePath], () => FileManager.getFiles(this, (files) => this.setFiles(files)))
+      node.setInputValue('file', filePath)
+      node.execute(() => FileManager.getFiles(this, (files) => this.setFiles(files)))
+    }
+  }
+
+  /**
+   * execTask - Exevute a task with a scene file
+   *
+   * @param {string} softwareId   Id of the connected software, 'new' if you want to launch a new instance
+   * @param {string} softwareType Type of software the task needs to be executed in
+   * @param {string} command      The script to be executed in the software
+   * @param {array} args         THe arguments to pass to the command
+   */
+  execTask (softwareId, softwareType, command, args) {
+    const nm = new NodeManager()
+    if (softwareId === 'new') {
+      const config = new Config()
+      const softs = config.config.softwares
+
+      const nodeCategory = softwareType
+      const nodeName = `${command}_new`
+      const nodeTemplate = nm.getNode(nodeCategory, nodeName)
+      const node = new Node('temp', 'temp', nodeTemplate, { x: 0, y: 0 })
+      node.setInputValue('path', softs[softwareType])
+      for (const arg in args) {
+        node.setInputValue(arg, args[arg])
+      }
+      node.execute(() => FileManager.getFiles(this, (files) => this.setFiles(files)))
     }
   }
 
@@ -310,6 +340,19 @@ class AssetId {
     const tagFile = `${tag}.tag`
     const tagPath = path.join(dirPath, tagFile)
     FileManager.writeFile(tagPath, '')
+  }
+
+  /**
+   * deleteTag - Remove a tog from a file
+   *
+   * @param {string} tag Name of the tag
+   */
+  deleteTag (tag) {
+    const file = this._groups.file
+    const dirPath = path.dirname(file.path)
+    const tagFile = `${tag}.tag`
+    const tagPath = path.join(dirPath, tagFile)
+    FileManager.deleteFile(tagPath)
   }
 }
 

@@ -34,7 +34,7 @@ export default class Welcome extends React.Component {
         houdini: {
           selected: false,
           exe: {
-            houdinifx: {
+            houdini: {
               path: '',
               default: 'C:/Program Files/Side Effects Software/Houdini X.Y.ZZZ/bin/houdinifx.exe'
             },

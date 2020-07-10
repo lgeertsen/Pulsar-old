@@ -167,9 +167,7 @@ export default class Renderer {
     })
 
     ipcMain.on('execTask', (event, data) => {
-      console.log('----- exec task -----', data)
-      // socket.emit("execTask", data);
-      this._server.execTask(data)
+      this._server.project.execTask(data.id, data.type, data.command, data.arguments)
     })
 
     ipcMain.on('checkSotfwareSaved', (event) => {
@@ -187,7 +185,7 @@ export default class Renderer {
     })
 
     ipcMain.on('deleteTag', (event, data) => {
-      this._server._assetIds[data.sid].deleteTag(data.tag)
+      this._server.project.deleteTag(data)
     })
 
     ipcMain.on('refresh', (event) => {

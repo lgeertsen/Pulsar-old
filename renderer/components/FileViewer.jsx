@@ -105,6 +105,19 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
     setNewTag('')
   }
 
+  const toReadableDate = (date) => {
+    const now = new Date(date)
+    const year = now.getFullYear()
+    const month = now.getMonth() + 1
+    const day = now.getDate()
+    const hours = now.getHours()
+    const minutes = now.getMinutes()
+    const seconds = now.getSeconds()
+
+    const timestamp = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
+    return timestamp
+  }
+
   const getSize = bytes => {
     const suffixes = ['B', 'KB', 'MB', 'GB', 'TB']
     let counter = 0
@@ -158,7 +171,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
             </div>
 
             <h3>{assetId.file.name}</h3>
-            <h4>Last modified: {assetId.file.modified}</h4>
+            <h4>Last modified: {toReadableDate(assetId.file.modified)}</h4>
             <h4>File size: {getSize(assetId.file.size)}</h4>
             {/* <h4>AssetId: {`${assetId.project}/${assetId.dimension}/${assetId.group}/${assetId.name}/${assetId.task}/${assetId.subtask}/${assetId.file.state}/${assetId.file.version}/${assetId.file.name}.${assetId.file.extension}`}</h4> */}
             <h4>Path: {assetId.file.path}</h4>
@@ -173,16 +186,16 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
                 <div className={'button ' + theme} onClick={(e) => onBtnClick('open_file_as', true)}>
                   <span>Open As</span>
                 </div>
-                {assetId.file.state === 'work'
+                {/* {assetId.file.state === 'work'
                   ? <div className={'button ' + theme} onClick={() => onPublish()}>
                     <span>Publish</span>
                   </div>
                   : ''
-                }
+                } */}
               </div>
               : ''
             }
-            {assetId.file.state === 'publish' && assetId.file.version !== 'valid'
+            {/* {assetId.file.state === 'publish' && assetId.file.version !== 'valid'
               ? <div className={'button ' + theme}>
                 <span>Release</span>
               </div>
@@ -193,7 +206,7 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
                 <span>Publish & Release</span>
               </div>
               : ''
-            }
+            } */}
           </div>
         </div>
         <div className="file-viewer-comment-container">

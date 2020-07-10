@@ -121,6 +121,19 @@ class Project {
   }
 
   /**
+   * execTask - Exevute a task with a scene file
+   *
+   * @param {string} softwareId   Id of the connected software, 'new' if you want to launch a new instance
+   * @param {string} softwareType Type of software the task needs to be executed in
+   * @param {string} command      The script to be executed in the software
+   * @param {array} args         THe arguments to pass to the command
+   */
+  execTask (softwareId, softwareType, command, args) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.execTask(softwareId, softwareType, command, args)
+  }
+
+  /**
    * saveComment - Save the comment of a file
    *
    * @param {string} comment A comment
@@ -138,6 +151,16 @@ class Project {
   saveTag (tag) {
     const assetId = this._pathTypes[this._pathType][this._pathSubType]
     assetId.saveTag(tag)
+  }
+
+  /**
+   * deleteTag - Remove a tog from a file
+   *
+   * @param {string} tag Name of the tag
+   */
+  deleteTag (tag) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.deleteTag(tag)
   }
 
   /**
