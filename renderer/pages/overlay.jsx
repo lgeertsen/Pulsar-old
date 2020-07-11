@@ -1,79 +1,78 @@
-import electron from 'electron';
-import React from 'react';
-import Head from 'next/head';
+import electron from 'electron'
+import React from 'react'
+import Head from 'next/head'
 
-import darkTheme from '../themes/dark';
-import lightTheme from '../themes/light';
+import darkTheme from '../themes/dark'
+import lightTheme from '../themes/light'
 
 const themes = {
   dark: darkTheme,
   light: lightTheme
-};
+}
 
-const ipcRenderer = electron.ipcRenderer || false;
-const remote = electron.remote || false;
+const ipcRenderer = electron.ipcRenderer || false
+const remote = electron.remote || false
 
 export default class Overlay extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       open: true,
-      theme: "light",
-      primaryColor: "green",
-      software: undefined,
+      theme: 'light',
+      primaryColor: 'green',
+      software: undefined
     }
   }
 
-  componentDidMount() {
-    if(ipcRenderer) {
-      ipcRenderer.send("getConfig")
+  componentDidMount () {
+    if (ipcRenderer) {
+      ipcRenderer.send('getConfig')
 
-      console.log("----- ipcRenderer exists -----");
+      console.log('----- ipcRenderer exists -----')
 
       ipcRenderer.on('config', (event, data) => {
-        console.log("----- receive config file -----", data);
-        if(data.theme) {
-          console.log("set theme");
-          this.setState({theme: data.theme});
+        console.log('----- receive config file -----', data)
+        if (data.theme) {
+          console.log('set theme')
+          this.setState({ theme: data.theme })
         }
-        if(data.color) {
-          console.log("set color");
-          this.setState({primaryColor: data.color});
+        if (data.color) {
+          console.log('set color')
+          this.setState({ primaryColor: data.color })
         }
       })
 
       ipcRenderer.on('software', (event, data) => {
-        console.log("set software", data);
-        this.setState({software: data})
+        console.log('set software', data)
+        this.setState({ software: data })
       })
     }
   }
 
-  toggle() {
-    const win = remote.getCurrentWindow();
-    let open = this.state.open;
-    if(open) {
+  toggle () {
+    const win = remote.getCurrentWindow()
+    const open = this.state.open
+    if (open) {
       setTimeout((win) => {
-        win.setBounds({width: 30});
+        win.setBounds({ width: 30 })
       }, 500, win)
     } else {
-      win.setBounds({width: 250});
+      win.setBounds({ width: 250 })
     }
-    this.setState({open: !open});
+    this.setState({ open: !open })
   }
 
-  execTask(command) {
-    let task = {
+  execTask (command) {
+    const task = {
       id: this.state.software.id,
       command: command,
       arguments: {},
       type: this.state.software.software
-    };
-    ipcRenderer.send("execTask", task)
+    }
+    ipcRenderer.send('execTask', task)
   }
 
-  render() {
-
+  render () {
     return (
       <React.Fragment>
         <Head>
@@ -87,30 +86,29 @@ export default class Overlay extends React.Component {
           <div className="dragbar">
             <i className="fas fa-ellipsis-v"></i>
           </div>
-          <div className={this.state.open ? "container open" : "container"}>
-            {this.state.software != undefined ?
-              <div className="containerInner">
+          <div className={this.state.open ? 'container open' : 'container'}>
+            {this.state.software !== undefined
+              ? <div className="containerInner">
                 <div className="sceneName">
-                  <img className="softwareImg" src={"./static/" + this.state.software.software + ".png"}></img>
-                  <h4>{this.state.software.saved == 1 ? this.state.software.scene : this.state.software.scene+"*"}</h4>
+                  <img className="softwareImg" src={'./static/' + this.state.software.software + '.png'}></img>
+                  <h4>{this.state.software.saved === 1 ? this.state.software.scene : this.state.software.scene + '*'}</h4>
                 </div>
                 <div className="commands">
-                  <div className="btn" onClick={(e) => this.execTask("save_file")}>
+                  <div className="btn" onClick={(e) => this.execTask('save_file')}>
                     <h5>Save</h5>
                   </div>
-                  <div className="btn" onClick={(e) => this.execTask("save_increment")}>
+                  <div className="btn" onClick={(e) => this.execTask('save_increment')}>
                     <h5>Increment & Save</h5>
                   </div>
                 </div>
               </div>
-              : ""
+              : ''
             }
           </div>
           <div className="resize" onClick={(e) => this.toggle()}>
-            <i className={this.state.open ? "fas fa-caret-left" : "fas fa-caret-right"}></i>
+            <i className={this.state.open ? 'fas fa-caret-left' : 'fas fa-caret-right'}></i>
           </div>
         </div>
-
 
         <style jsx global>{`
           html, body {
@@ -224,6 +222,6 @@ export default class Overlay extends React.Component {
           }
         `}</style>
       </React.Fragment>
-    );
+    )
   };
 };

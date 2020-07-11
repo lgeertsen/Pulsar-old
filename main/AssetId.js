@@ -1,223 +1,366 @@
-import File from './File';
-import FileManager from './FileManager';
-import Logger from './Logger';
-import Renderer from './Renderer';
+import path from 'path'
 
-const typeToDirMap = {
-  project:  "groups",
-  pathType: "groups",
-  dimension: "groups",
-  group:    "names",
-  name:     "tasks",
-  task:     "subtasks",
-  subtask:  "files"
-}
+import Config from './Config'
+import FileManager from './FileManager'
+import Node from './Node'
+import NodeManager from './NodeManager'
 
-const typeToClearMap = {
-  project:  ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
-  pathType: ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
-  dimension: ["group", "groups", "name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
-  group:    ["name", "names", "task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
-  name:     ["task", "tasks", "subtask", "subtasks", "state", "version", "file", "files"],
-  task:     ["subtask", "subtasks", "state", "version", "file", "files"],
-  subtask:  ["state", "version", "file", "files"]
-}
+/**
+ * Class representing an AssetId.
+ */
+class AssetId {
+  /**
+   * constructor - Construcor for an AssetId
+   *
+   * @param  {string} type            The type of the path
+   * @param  {string} path            Unformatted path used to descripe the path to find files
+   * @param  {string} project         The name of the project where the AssetId belongs to
+   * @param  {type} formatForRender   Function to send the assetId to the Render Screen
+   * @returns {AssetId}               AssetId Object
+   */
+  constructor (type, path, project, formatForRender) {
+    const reg = /({[\w|\d]*})+/
+    // console.log(reg[Symbol.split](path);
 
-export default class AssetId {
-  constructor(sid, paths, projects, sendToRenderer) {
-    this._sid = sid;
-    this._paths = paths;
-    this._pathType = "asset";
+    this._type = type
+    this._path = path
 
-    this._sendToRenderer = sendToRenderer;
+    // let pathsSetup = {}
+    //
+    // for(let path in paths) {
+    //   pathsSetup[path] = {}
+    //
+    //   for(let pathType in paths[path]) {
+    const groups = reg[Symbol.split](path)
 
-    this._projects = projects
+    const finalGroups = {}
+    const groupOrder = []
+    const dirs = {}
+    const dirOrder = []
 
-    this._project = "<>";
-    this._dimension = "3d";
-    this._group = "<>";
-    this._name = "<>";
-    this._task = "<>";
-    this._subtask = "<>";
-    this._state = "<>";
-    this._subtask = "<>";
-    this._state = "<>";
-    this._verstion = "<>";
-    this._file = "<>";
-
-    // Directories
-    this._groups = [];
-    this._names = [];
-    this._tasks = [];
-    this._subtasks = [];
-    this._files = [];
-
-    this._searchDir = null;
-  }
-
-  get sid () { return this._sid }
-
-  get paths () { return this._paths }
-
-  get pathType () { return this._pathType }
-  set pathType (pathType) { this._pathType = pathType }
-
-  get path () { return this._paths[this.pathType] }
-
-  get project () { return this._projects[this._project] }
-  set project (project) { this._project = project }
-  get projectName () { return this._project }
-  get projects () { return Object.keys(this._projects) }
-  set projects (projects) { this._projects = projects }
-
-  get dimension () { return this._dimension }
-  set dimension (dimension) { this._dimension = dimension }
-
-  get group () { return this._group }
-  set group (group) { this._group = group }
-
-  get name () { return this._name }
-  set name (name) { this._name = name }
-
-  get task () { return this._task }
-  set task (task) { this._task = task }
-
-  get subtask () { return this._subtask }
-  set subtask (subtask) { this._subtask = subtask }
-
-  get state () { return this._state }
-  set state (state) { this._state = state }
-
-  get version () { return this._version }
-  set version (version) { this._version = version }
-
-  get file () { return this._file.fullName }
-  set file (file) { this._file = file }
-  get formatFile () { return this._file == "<>" ? "<>" : this._file.format() }
-
-
-  // Directories get & set
-  get groups () { return this._groups }
-  set groups (groups) { this._groups = groups }
-
-  get names () { return this._names }
-  set names (names) { this._names = names }
-
-  get tasks () { return this._tasks }
-  set tasks (tasks) { this._tasks = tasks }
-
-  get subtasks () { return this._subtasks }
-  set subtasks (subtasks) { this._subtasks = subtasks }
-
-  get files () { return this._files }
-  set files (files) { this._files = files }
-
-  get searchDir () { return this._searchDir }
-
-  setValue(type, value) {
-    this.clearValues(type);
-    this.setSearchDir(type);
-    if(this.searchDir != undefined) {
-      this[type] = value;
-      if(this.searchDir == "files") {
-        FileManager.getProjectFiles(this, (files) => this.setFiles(files));
-      } else {
-        FileManager.getDirectories(this, (dirs) => this.setDirs(dirs));
-      }
-    } else {
-      let file = this._files.filter(f => {
-        return f.path == value;
-      })[0];
-      this._file = file;
-      this._state = file.state;
-      this._version = file.version;
-      this.formatForRender();
-    }
-  }
-
-  clearValues(type) {
-    let values = typeToClearMap[type];
-    if(values) {
-      for(let i = 0; i < values.length; i++) {
-        if(typeof(this[values[i]]) == "object") {
-          this[values[i]] = [];
-        } else {
-          this[values[i]] = "<>";
+    for (let i = 0; i < groups.length; i++) {
+      const g = groups[i]
+      if (g[0] === '{' && g[g.length - 1] === '}') {
+        const group = g.slice(1, -1)
+        finalGroups[group] = '<>'
+        groupOrder.push(group)
+        // this[group] = "<>";
+        if (group === 'dimension') {
+          finalGroups[group] = '3d'
+        }
+        if (!['dimension', 'state', 'version', 'project'].includes(group)) {
+          // let groupList = `${group}List`;
+          // this[groupList] = [];
+          // if(group != "file") {
+          dirs[group] = []
+          dirOrder.push(group)
+          // }
         }
       }
     }
+
+    this._groups = finalGroups
+    this._groups.project = project
+    this._groupOrder = groupOrder
+
+    this._directories = dirs
+    this._directoriesOrder = dirOrder
+
+    this._formatForRender = formatForRender
   }
 
-  setSearchDir(type) {
-    this._searchDir = typeToDirMap[type];
+  /**
+   * get path - Getter for the path
+   *
+   * @returns {string} the unformatted asset path
+   */
+  get path () { return this._path }
+
+  /**
+   * get directories - Getter for the file/directory lists found for the assetId
+   *
+   * @returns {Object}  Object of arrays of files/directories(strings)
+   */
+  get directories () { return this._directories }
+
+  /**
+   * get directoriesOrder - Getter of the order the directories appear in the path
+   *
+   * @returns {Array}  Array of strings
+   */
+  get directoriesOrder () { return this._directoriesOrder }
+
+  /**
+   * get groups - Getter of the value of all groups used for formatting the path
+   *
+   * @returns {Object}  Object of all groups with their values, "<>" for empty values
+   */
+  get groups () { return this._groups }
+
+  /**
+   * setDimension - Setter for the "dimension" group if it exists
+   *
+   * @param  {string} dimension "3d" or "2d"
+   */
+  setDimension (dimension) {
+    if (Object.keys(this._groups).includes('dimension')) {
+      this.clearValues('dimension')
+      this.setSearchDir('project')
+      this._groups.dimension = dimension
+      this.searchNext()
+    }
   }
 
-  setFiles(files) {
-    this._files = files;
-    this.formatForRender();
-  }
-
-  setDirs(dirs) {
-    let formattedDirs = FileManager.formatDirs(dirs);
-    let arrangedDirs = FileManager.removeDoubles(formattedDirs)
-    this[this._searchDir] = arrangedDirs;
-    this.formatForRender();
-  }
-
-  formatForRender() {
-    let asset = {
-      sid:         this.sid,
-
-      path:        this.path,
-
-      projects:    this.projects,
-      project:     this.projectName,
-      projectPath: this.project,
-      pathType:    this.pathType,
-      dimension:   this.dimension,
-      group:       this.group == "<>" ? "" : this.group,
-      name:        this.name == "<>" ? "" : this.name,
-      task:        this.task == "<>" ? "" : this.task,
-      subtask:     this.subtask == "<>" ? "" : this.subtask,
-      file:        this.formatFile == "<>" ? "" : this.formatFile,
-
-      groups:      this.groups,
-      names:       this.names,
-      tasks:       this.tasks,
-      subtasks:    this.subtasks,
-      files:       this.formatFiles(),
+  createNewGroupValue (group, value) {
+    const index = this._groupOrder.indexOf(group)
+    const data = {
+      path: this._path,
+      groups: {}
+    }
+    for (const i in this._groupOrder) {
+      const g = this._groupOrder[i]
+      if (i < index) {
+        data.groups[g] = this._groups[g]
+      } else {
+        data.groups[g] = '<>'
+      }
     }
 
-    this._sendToRenderer(asset);
+    this._directories[group].push(value)
+
+    const formattedPath = FileManager.formatPath(data)
+    const dirPath = FileManager.slicePath(formattedPath)
+    FileManager.createDirectory(dirPath, value, () => this._formatForRender())
   }
 
-  formatFiles() {
-    let files = [];
-    for(let i = 0; i < this._files.length; i++) {
-      let file = this._files[i].formatForRender();
-      files.push(file);
-    }
-    return files;
+  setGroupValue (group, value) {
+    this.clearValues(group)
+    this.groups[group] = value
+    this.setSearchDir(group)
+    this.searchNext()
   }
 
-  saveComment(comment) {
-    if(this._file == "<>") {
-      return;
+  /**
+   * createNewFile - Create new scene file
+   *
+   * @param {string} name     Name of the new file
+   * @param {string} template Path of the template, undefined if no template is used
+   * @param {string} type     The name of the software, undefined if a template is used
+   */
+  createNewFile (name, template, type) {
+    const nm = new NodeManager()
+    let fileName = name.replace(' ', '_')
+    if (template) {
+      const extension = path.extname(template)
+      fileName = name + extension
     }
-    this._file.saveComment(comment);
+
+    const formatPath = FileManager.formatPath(this)
+    const slicePath = FileManager.slicePath(formatPath)
+    let filePath
+    if ('version' in this._groups) {
+      const version = this.getMaxVersion() + 1
+      const versionString = 'v' + new Array(3).join('0').slice((3) * -1) + version
+      if ('state' in this._groups) {
+        const stateVersion = `work_${versionString}`
+        filePath = path.join(slicePath, stateVersion, fileName)
+      } else {
+        filePath = path.join(slicePath, versionString, fileName)
+      }
+    } else {
+      filePath = path.join(slicePath, fileName)
+    }
+
+    if (template) {
+      const nodeTemplate = nm.getNode('base', 'create_asset_from_existing')
+      const node = new Node('temp', 'temp', nodeTemplate, { x: 0, y: 0 })
+      node.setInputValue('path', path.normalize(template))
+      node.setInputValue('file', path.normalize(filePath))
+      node.execute(() => FileManager.getFiles(this, (files) => this.setFiles(files)))
+    } else {
+      const nodeTemplate = nm.getNode(type, 'create_asset')
+      const node = new Node('temp', 'temp', nodeTemplate, { x: 0, y: 0 })
+      node.setInputValue('file', filePath)
+      node.execute(() => FileManager.getFiles(this, (files) => this.setFiles(files)))
+    }
   }
 
-  saveTag(tag) {
-    if(this._file == "<>") {
-      return;
+  /**
+   * execTask - Exevute a task with a scene file
+   *
+   * @param {string} softwareId   Id of the connected software, 'new' if you want to launch a new instance
+   * @param {string} softwareType Type of software the task needs to be executed in
+   * @param {string} command      The script to be executed in the software
+   * @param {array} args         THe arguments to pass to the command
+   */
+  execTask (softwareId, softwareType, command, args) {
+    const nm = new NodeManager()
+    if (softwareId === 'new') {
+      const config = new Config()
+      const softs = config.config.softwares
+
+      const nodeCategory = softwareType
+      const nodeName = `${command}_new`
+      const nodeTemplate = nm.getNode(nodeCategory, nodeName)
+      const node = new Node('temp', 'temp', nodeTemplate, { x: 0, y: 0 })
+      node.setInputValue('path', softs[softwareType])
+      for (const arg in args) {
+        node.setInputValue(arg, args[arg])
+      }
+      node.execute(() => FileManager.getFiles(this, (files) => this.setFiles(files)))
+    } else {
+      const nodeTemplate = nm.getNode(softwareType, command)
+      const node = new Node('temp', 'temp', nodeTemplate, { x: 0, y: 0 })
+      for (const arg in args) {
+        node.setInputValue(arg, args[arg])
+      }
+      node.executeSocket(softwareId, () => FileManager.getFiles(this, (files) => this.setFiles(files)))
     }
-    this._file.saveTag(tag);
   }
 
-  deleteTag(tag) {
-    if(this._file == "<>") {
-      return;
+  getMaxVersion () {
+    const files = this._directories.file
+    if (!files.length) return 0
+    let max = 0
+    for (const i in files) {
+      const file = files[i]
+      const version = file.getVersionAsInt()
+      if (version > max) {
+        max = version
+      }
     }
-    this._file.deleteTag(tag);
+    return max
+  }
+
+  /**
+   * clearValues - function to clear all groups and directories that come after the given group in the groupOrder Array
+   *
+   * @param  {string} group   the name of the group for wich all groups that come after in the groupOrder list should be cleared
+   */
+  clearValues (group) {
+    const index = this._groupOrder.indexOf(group)
+    if (index === -1) {
+      return
+    }
+
+    for (let i = index + 1; i < this._groupOrder.length; i++) {
+      const item = this._groupOrder[i]
+      if (item === 'dimension') {
+        continue
+      }
+      this._groups[item] = '<>'
+      if (item in this._directories) {
+        this._directories[item] = []
+      }
+    }
+  }
+
+  /**
+   * setSearchDir - Find the next name of the next group for wich directories or files should be searched for on disk
+   *
+   * @param  {string} group the name of the last set group variable
+   */
+  setSearchDir (group) {
+    let index = this._groupOrder.indexOf(group)
+    if (index === -1) {
+      return
+    }
+
+    index += 1
+    let searchGroup = this._groupOrder[index]
+    while (!(searchGroup in this._directories) && index <= this._groupOrder.length) {
+      index += 1
+      searchGroup = this._groupOrder[index]
+    }
+
+    this._searchGroup = searchGroup
+  }
+
+  /**
+   * searchNext - Search disk for the files/directories based on the value of _searchGroup
+   *
+   */
+  searchNext () {
+    if (this._searchGroup !== undefined) {
+      if (this._searchGroup === 'file') {
+        if (this._type === 'render') {
+          FileManager.getSequenceFiles(this, (files) => this.setFiles(files))
+        } else {
+          FileManager.getFiles(this, (files) => this.setFiles(files))
+        }
+      } else {
+        FileManager.getDirectories(this, (dirs) => this.setDirs(dirs))
+      }
+    } else {
+      this._formatForRender()
+    }
+  }
+  //
+  // setFiles(files) {
+  //   this._files = files;
+  //   this.formatForRender();
+  // }
+
+  /**
+   * setDirs - Set the found directories and send the AssetId to the Screen Renderer
+   *
+   * @param  {Array} dirs Array of directories
+   */
+  setDirs (dirs) {
+    const formattedDirs = FileManager.formatDirs(dirs)
+    // let arrangedDirs = FileManager.removeDoubles(formattedDirs)
+    this._directories[this._searchGroup] = formattedDirs
+
+    this._formatForRender()
+  }
+
+  /**
+   * setFiles - Set the found files and send the AssetId to the Screen Renderer
+   *
+   * @param  {Array} files Array of files
+   */
+  setFiles (files) {
+    this._directories.file = files
+    this._formatForRender()
+  }
+
+  /**
+   * saveComment - Save the comment of a file
+   *
+   * @param {string} comment A comment
+   */
+  saveComment (comment) {
+    const file = this._groups.file
+    const dirPath = path.dirname(file.path)
+    const commentPath = path.join(dirPath, 'comment.txt')
+    FileManager.writeFile(commentPath, comment)
+  }
+
+  /**
+   * saveTag - Add a tag to a file
+   *
+   * @param {string} tag Name of the tag
+   */
+  saveTag (tag) {
+    const file = this._groups.file
+    const dirPath = path.dirname(file.path)
+    const tagFile = `${tag}.tag`
+    const tagPath = path.join(dirPath, tagFile)
+    FileManager.writeFile(tagPath, '')
+  }
+
+  /**
+   * deleteTag - Remove a tog from a file
+   *
+   * @param {string} tag Name of the tag
+   */
+  deleteTag (tag) {
+    const file = this._groups.file
+    const dirPath = path.dirname(file.path)
+    const tagFile = `${tag}.tag`
+    const tagPath = path.join(dirPath, tagFile)
+    FileManager.deleteFile(tagPath)
   }
 }
+
+export default AssetId

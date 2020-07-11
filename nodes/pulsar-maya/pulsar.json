@@ -1,0 +1,80 @@
+{
+  "nodes" : [
+    {
+      "name": "open_file_new",
+      "category": "maya",
+      "software": "bat",
+      "icon": "maya.png",
+      "color": "blue",
+      "script": "open_file_new.bat",
+      "inputs": [
+        {
+          "name": "path",
+          "type": "string"
+        },
+        {
+          "name": "file",
+          "type": "string"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "create_asset",
+      "category": "maya",
+      "software": "mayapy",
+      "icon": "maya.png",
+      "color": "blue",
+      "script": "create_asset.py",
+      "inputs": [
+        {
+          "name": "file",
+          "type": "string"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "open_file",
+      "category": "maya",
+      "software": "maya",
+      "icon": "maya.png",
+      "color": "blue",
+      "script": "open_file.py",
+      "inputs": [
+        {
+          "name": "file",
+          "type": "string"
+        },
+        {
+          "name": "force",
+          "type": "number"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "open_file_as",
+      "category": "maya",
+      "software": "maya",
+      "icon": "maya.png",
+      "color": "blue",
+      "script": "open_file_as.py",
+      "inputs": [
+        {
+          "name": "file",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "force",
+          "type": "number"
+        }
+      ],
+      "outputs": []
+    }
+  ]
+}

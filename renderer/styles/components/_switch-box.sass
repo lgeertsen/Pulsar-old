@@ -1,0 +1,54 @@
+.switch-box
+  position: relative
+  width: 50px
+  height: 30px
+  border-radius: 100px
+  background-color: #ddd
+  overflow: hidden
+  box-shadow: inset 0 0 2px 1px rgba(0,0,0,.05)
+
+
+.switch-box-check
+  position: absolute
+  display: block
+  cursor: pointer
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  opacity: 0
+  z-index: 6
+
+.switch-box-b
+  display: block
+
+.switch-box-switch
+  position: absolute
+  left: 2px
+  top: 2px
+  bottom: 2px
+  right: 22px
+  background-color: #fff
+  border-radius: 36px
+  z-index: 1
+  transition: .35s cubic-bezier(0.785, 0.135, 0.150, 0.860)
+  transition-property: left, right
+  transition-delay: 0s, .05s
+  box-shadow: 0 1px 2px rgba(0,0,0,.2)
+
+  &.checked
+    right: 2px
+    left: 22px
+    transition: .35s cubic-bezier(0.785, 0.135, 0.150, 0.860)
+    transition-property: left, right
+    transition-delay: .05s, 0s
+
+.switch-box-track
+  position: absolute
+  left: 0
+  top: 0
+  right: 0
+  bottom: 0
+  transition: .35s cubic-bezier(0.785, 0.135, 0.150, 0.860)
+  background-color: #ddd
+  border-radius: 40px

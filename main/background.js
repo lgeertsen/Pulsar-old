@@ -1,68 +1,71 @@
-import path from 'path';
-import { app, ipcMain, globalShortcut } from 'electron';
-import serve from 'electron-serve';
-const {autoUpdater} = require("electron-updater");
+import path from 'path'
+import { app, globalShortcut } from 'electron'
+import serve from 'electron-serve'
 import {
   createWindow,
-  exitOnChange,
-} from './helpers';
+  exitOnChange
+} from './helpers'
 
 // import io from 'socket.io-client';
 
-import Server from "./Server";
-const server = new Server();
+import Server from './Server'
+const { autoUpdater } = require('electron-updater')
+const server = new Server()
+
+console.log('#######################################################')
+console.log(process.argv)
+console.log('#######################################################')
 
 setInterval(() => {
   try {
     autoUpdater.checkForUpdates()
   } catch (e) {
-    console.error("Cannont update");
-    console.error(e);
+    console.error('Cannont update')
+    console.error(e)
   }
-}, 1000 * 60);
+}, 1000 * 60)
 
 autoUpdater.on('update-available', () => {
-  console.log("----- update available -----");
-});
+  console.log('----- update available -----')
+})
 
 autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-  console.log("update-downloaded");
-  autoUpdater.quitAndInstall();
-});
+  console.log('update-downloaded')
+  autoUpdater.quitAndInstall()
+})
 // import {PythonShell} from 'python-shell';
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === 'production'
 
-var overlaySoftware = undefined;
+var overlaySoftware = undefined
 
-var softwares = {};
-var config = {};
-var directories = {
-  type: [],
-  name: [],
-  task: [],
-  subtask: [],
-  file: []
-};
-var assetDirectories = {
-  type: [],
-  name: [],
-  task: [],
-  subtask: [],
-  file: []
-};
+// var softwares = {};
+// var config = {};
+// var directories = {
+//   type: [],
+//   name: [],
+//   task: [],
+//   subtask: [],
+//   file: []
+// };
+// var assetDirectories = {
+//   type: [],
+//   name: [],
+//   task: [],
+//   subtask: [],
+//   file: []
+// };
 
 if (isProd) {
-  serve({ directory: 'app' });
+  serve({ directory: 'app' })
 } else {
-  exitOnChange();
-  app.setPath('userData', `${app.getPath('userData')} (development)`);
+  exitOnChange()
+  app.setPath('userData', `${app.getPath('userData')} (development)`)
 }
 
 (async () => {
-  await app.whenReady();
-  let config = await server.whenReady();
-
+  await app.whenReady()
+  const config = await server.whenReady()
 
   var mainWindow = createWindow('main', {
     width: 1200,
@@ -70,13 +73,11 @@ if (isProd) {
     minWidth: 1200,
     minHeight: 800,
     frame: true,
-    title: "Pulsar",
+    title: 'Pulsar',
     icon: path.join(__dirname, '../main/pulsar.png')
-  });
+  })
 
-  console.log(path.join(__dirname, '../main/pulsar.png'));
-
-  mainWindow.maximize();
+  mainWindow.maximize()
 
   // var overlay = createWindow('overlay', {
   //   width: 250,
@@ -91,23 +92,24 @@ if (isProd) {
   // overlay.minimize();
 
   server.setWindows(mainWindow, 'overlay')
-  server.startServer();
+  server.startServer()
 
-  // let config = server.config.config
-  console.log("-----config-----", config);
-  if(config.firstUsage) {
-    const homeUrl = isProd ? 'app://./welcome.html' : 'http://localhost:8888/welcome';
-    await mainWindow.loadURL(homeUrl);
+  // console.log("-----config-----", config);
+  if (config.firstUsage) {
+    const homeUrl = isProd ? 'app://./welcome.html' : 'http://localhost:8888/welcome'
+    await mainWindow.loadURL(homeUrl)
+    server.page = 'welcome'
   } else {
-    const homeUrl = isProd ? 'app://./manager.html' : 'http://localhost:8888/manager';
-    await mainWindow.loadURL(homeUrl);
+    const homeUrl = isProd ? 'app://./manager.html' : 'http://localhost:8888/manager'
+    server.page = 'graph'
+    await mainWindow.loadURL(homeUrl)
   }
 
   // const overlayUrl = isProd ? 'app://./overlay.html' : 'http://localhost:8888/overlay';
   // await overlay.loadURL(overlayUrl);
 
   if (!isProd) {
-    mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools()
     // overlay.webContents.openDevTools();
   }
 
@@ -119,16 +121,13 @@ if (isProd) {
   //   overlay.restore();
   // });
 
-
   // const ret = globalShortcut.register('CommandOrControl+S', () => {
   //   console.log('CommandOrControl+S is pressed')
   // });
 
-
   // var socket = io('http://localhost:7846/frontend', {
   //   transports: ['websocket'],
   // });
-
 
   // ipcMain.on("getSoftwares", (event) => {
   //   event.sender.send('softwares', softwares);
@@ -220,7 +219,6 @@ if (isProd) {
   //   socket.emit("getSceneName", data);
   // });
 
-
   // socket.on("connection", (data) => {
   //   console.log("----- connected to the python server -----");
   // });
@@ -296,7 +294,7 @@ if (isProd) {
   //     }
   //   });
 
-    mainWindow.on('closed', function () {
+  mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -308,15 +306,15 @@ if (isProd) {
     // }
   })
   // }
-})();
+})()
 
 var removeShortcuts = () => {
   globalShortcut.unregisterAll()
 }
 
 app.on('window-all-closed', () => {
-  app.quit();
-});
+  app.quit()
+})
 
 app.on('will-quit', () => {
   // Unregister all shortcuts.

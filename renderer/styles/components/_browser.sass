@@ -1,10 +1,15 @@
 .browser
   display: flex
-  flex-direction: column
+  flex-direction: row
+
+  .card-browser
+    display: flex
+    flex-direction: column
 
   .card-header-title
     padding: 0.25rem 1rem
     font-weight: 400
+    text-transform: capitalize
 
 .browser-inner
   padding: 0
@@ -31,3 +36,6 @@
     &:hover
       @include themify($themes)
         background: themed('bg-bis')
+
+.browser-new-input
+  margin-bottom: 15px

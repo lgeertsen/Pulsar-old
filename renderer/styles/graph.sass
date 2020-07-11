@@ -13,12 +13,13 @@
 .scene-view
   position: relative
   z-index: 50
-  flex: 1
+  height: 100%
   background: $grey
 
 .graph-container
-  flex: 1
-  position: relative
+  position: fixed
+  top: 0
+  left: 0
   z-index: 2
 
 .graph-editor
@@ -32,6 +33,9 @@
   border: 5px solid #444
   overflow: hidden
   touch-action: none
+
+  &.move-graph
+    cursor: move
 
 .node-container
   position: absolute
@@ -48,5 +52,79 @@
 
   svg
     position: absolute
+    top: 0
+    left: 0
     width: 100%
     height: 100%
+
+.node-search-container
+  position: fixed
+  top: 100px
+  left: 500px
+  width: 100px
+  height: auto
+  z-index: 100
+  background: $black-bis
+  box-shadow: $box-shadow
+
+  .node-type
+    display: flex
+    flex-direction: row
+    align-items: center
+    height: auto
+    padding-left: 5px
+    color: $grey-lighter
+    border-bottom: 1px solid $grey
+    cursor: pointer
+
+    &:last-child
+      border: none
+
+    &:hover
+      background: $grey-darker
+
+    h4
+      flex: 1
+
+  .node-list
+    position: absolute
+    left: 100px
+    top: 0
+    height: auto
+    background: $black-bis
+    box-shadow: $box-shadow
+
+    .node-select
+      display: flex
+      flex-direction: row
+      align-items: center
+      width: auto
+      height: auto
+      padding-left: 5px
+      color: $grey-lighter
+      border-bottom: 1px solid $grey
+      cursor: pointer
+
+      &:last-child
+        border: none
+
+      &:hover
+        background: $grey-darker
+
+.node-options-container
+  position: fixed
+  top: 100px
+  left: 500px
+  width: 100px
+  height: auto
+  z-index: 100
+  display: flex
+  flex-direction: column
+  background: $black-bis
+  box-shadow: $box-shadow
+
+.node-options-option
+  padding-left: 5px
+  height: 20px
+  color: #fff
+  cursor: pointer

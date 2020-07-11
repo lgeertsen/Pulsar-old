@@ -42,3 +42,20 @@ An example config file can be found in `nodes/.node.json`
     }
 }
 ```
+
+
+# Softwares to add
+* Blender
+* C4D
+* Toonboom
+* Substance painter
+* Substance designer
+* ZBrush
+* Clarisse
+* Unity
+* UE
+* Mari
+* davinci resolve
+* natron
+* after effects
+* premier pro

@@ -15,9 +15,15 @@ if vendor_dir not in sys.path:
 
 import socketio
 
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.WARNING)
+
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
 
 class PulsarSocket(socketio.ClientNamespace):
     def __init__(self, namespace, pulsar):
@@ -25,7 +31,7 @@ class PulsarSocket(socketio.ClientNamespace):
         self._pulsar = pulsar
 
     def on_connect(self):
-        print("----- connected to pulsar socket -----")
+        print("----- Connected to Pulsar -----")
         self._pulsar._connected = True
         saved = self._pulsar.execute(self._pulsar.check_state)
         self.emit("software", {"software": "houdini", "scene": self._pulsar._scene, "saved": saved})
@@ -35,6 +41,7 @@ class PulsarSocket(socketio.ClientNamespace):
         self.emit("saved", saved)
 
     def on_execTask(self, data):
+        print(data)
         path = data["path"]
         file = data["file"]
         arguments = data["arguments"]
@@ -44,6 +51,7 @@ class PulsarSocket(socketio.ClientNamespace):
         if path not in sys.path:
             sys.path.append(path)
         print(sys.path)
+        print(file)
         task = __import__(file)
         reload(task)
         self._pulsar.execute(task.main, arguments)
@@ -60,15 +68,19 @@ class PulsarSocket(socketio.ClientNamespace):
         self._pulsar._sio.disconnect()
 
 class Pulsar():
+    __metaclass__ = Singleton
     def __init__(self):
+        print("---- Starting up Pulsar plugin ----")
         self._sio = socketio.Client(logger=logger, engineio_logger=logger)
-        #self._sio = socketio.Client()
         self._sio.register_namespace(PulsarSocket('/software', self))
         self._connected = False
         self._scene = self.getSceneName()
 
-        # self.createUI()
         self.launch()
+        # pane_tab = hou.ui.curDesktop().createFloatingPaneTab(hou.paneTabType.PythonPanel, python_panel_interface=)
+        # pane_tab.setCurrentNode(node)
+        # pane_tab.setPin(True)
+        # return pane_tab
 
     def getSceneName(self):
         raw_name, extension = os.path.splitext(hou.hipFile.basename())
@@ -76,32 +88,18 @@ class Pulsar():
             raw_name = "untitled"
         return raw_name
 
-    # def createUI(self):
-    #     self._window = cmds.window( title="Pulsar", iconName='Short Name', widthHeight=(300, 400), sizeable=False )
-    #     cmds.columnLayout( adjustableColumn=True )
-    #
-    #     cmds.button( label='Launch Pulsar', command=self.launch )
-    #     cmds.button( label='Stop Pulsar', command=self.stop )
-    #     cmds.button( label='Close', command=self.closeUI )
-    #
-    #     cmds.setParent( '..' )
-    #
-    #     cmds.showWindow( self._window )
-
 
     def launch(self, *args):
         if not self._connected:
-            print("----- connecting to server... -----")
-            self._sio.connect('http://localhost:7846', namespaces=['/software'])
+            print("----- Connecting to Pulsar... -----")
+            try:
+                self._sio.connect('http://localhost:7846', namespaces=['/software'])
+            except Exception as e:
+                pass
 
     def stop(self, *args):
         if self._connected:
             self._sio.emit("close", namespace="/software")
-
-    # def closeUI(self, *args):
-    #     if self._connected:
-    #         self._sio.emit("close", namespace="/software")
-    #     cmds.deleteUI( self._window, window=True)
 
     def check_state(self):
         changed = hou.hipFile.hasUnsavedChanges()
@@ -111,6 +109,3 @@ class Pulsar():
 
     def execute(self, func, *args):
         return hdefereval.executeInMainThreadWithResult(func, *args)
-
-
-# Pulsar()

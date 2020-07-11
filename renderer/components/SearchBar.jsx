@@ -1,17 +1,18 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 export default class SearchBar extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.props = {
 
     }
   }
 
-  render() {
+  render () {
     return (
-      <div className={"search-bar " + this.props.theme}>
-        <div className={"search-bar-type " + this.props.theme}>
+      <div className={'search-bar ' + this.props.theme}>
+        <div className={'search-bar-type ' + this.props.theme}>
           <div className="search-bar-type-text">
             <span>ID:</span>
           </div>
@@ -23,57 +24,63 @@ export default class SearchBar extends React.Component {
           <div className="search-bar-input">
             <span>{this.props.assetId.project}</span>
           </div>
-          <div className={"search-bar-slash " + this.props.theme}>
+          <div className={'search-bar-slash ' + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.pathType}</span>
           </div>
-          <div className={"search-bar-slash " + this.props.theme}>
+          <div className={'search-bar-slash ' + this.props.theme}>
+            <span>/</span>
+          </div>
+          <div className="search-bar-input">
+            <span>{this.props.assetId.pathSubType}</span>
+          </div>
+          <div className={'search-bar-slash ' + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.group}</span>
           </div>
-          <div className={"search-bar-slash " + this.props.theme}>
+          <div className={'search-bar-slash ' + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.name}</span>
           </div>
-          <div className={"search-bar-slash " + this.props.theme}>
+          <div className={'search-bar-slash ' + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.task}</span>
           </div>
-          <div className={"search-bar-slash " + this.props.theme}>
+          <div className={'search-bar-slash ' + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.subtask}</span>
           </div>
-          <div className={"search-bar-slash " + this.props.theme}>
+          <div className={'search-bar-slash ' + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.file.state}</span>
           </div>
-          <div className={"search-bar-slash " + this.props.theme}>
+          <div className={'search-bar-slash ' + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
             <span>{this.props.assetId.file.version}</span>
           </div>
-          <div className={"search-bar-slash " + this.props.theme}>
+          <div className={'search-bar-slash ' + this.props.theme}>
             <span>/</span>
           </div>
           <div className="search-bar-input">
-            <span>{this.props.assetId.file ? `${this.props.assetId.file.name}.${this.props.assetId.file.extension}` : ""}</span>
+            <span>{this.props.assetId.file ? `${this.props.assetId.file.name}.${this.props.assetId.file.extension}` : ''}</span>
           </div>
         </div>
 
-        <div className={"search-bar-copy icon " + this.props.theme}>
+        <div className={'search-bar-copy icon ' + this.props.theme}>
           <i className="las la-copy"></i>
         </div>
 
@@ -81,6 +88,12 @@ export default class SearchBar extends React.Component {
 
         `}</style>
       </div>
-    );
+    )
   };
 };
+
+SearchBar.propTypes = {
+  theme: PropTypes.string.isRequired,
+  primaryColor: PropTypes.string.isRequired,
+  assetId: PropTypes.object.isRequired
+}
