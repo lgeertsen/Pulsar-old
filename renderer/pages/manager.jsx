@@ -49,7 +49,7 @@ export default class Manager extends React.Component {
       selectedSoftware: undefined,
       selectedSoftwareType: undefined,
       softwares: {},
-      connectedSoftwares: {},
+      connectedSoftwares: [],
       overlaySoftware: undefined,
 
       newFileName: undefined,
@@ -169,9 +169,9 @@ export default class Manager extends React.Component {
       })
 
       ipcRenderer.on('softwares', (event, data) => {
-        // console.log('----- receive software list -----')
-        // console.log(data)
-        // this.setState({ softwares: data })
+        console.log('----- receive software list -----')
+        console.log(data)
+        this.setState({ connectedSoftwares: data })
         // const keys = Object.keys(data)
         // if (this.state.overlaySoftware === undefined) {
         //   if (keys.length > 0) {
@@ -454,26 +454,29 @@ export default class Manager extends React.Component {
           theme={this.state.theme}
           primaryColor={this.state.primaryColor}
           toggleNav={(v) => this.setState({ navOpen: v })}
+          connectedSoftwares={this.state.connectedSoftwares}
         />
 
         <div className={this.state.navOpen ? `main ${this.state.theme} main-${this.state.primaryColor}` : `main full ${this.state.theme} main-${this.state.primaryColor}`}>
-          <div className={Object.keys(this.state.softwares).length > 0 ? 'software-container open' : 'software-container'}>
+          {/* <div className={this.state.connectedSoftwares.length > 0 ? 'software-container open' : 'software-container'}>
             <div className='software-title'>
-              <h3>Open software</h3>
+              <h3>Connected software</h3>
             </div>
-            {Object.keys(this.state.connectedSoftwares).map((softwareId, index) => (
-              <div key={index} className={this.state.overlaySoftware === softwareId ? 'software selected' : 'software'}>
-                <div className='overlaySelector' onClick={(e) => this.setOverlaySoftware(softwareId)}>
+            {this.state.connectedSoftwares.map((soft, index) => (
+              // <div key={index} className={this.state.overlaySoftware === softwareId ? 'software selected' : 'software'}>
+              <div key={index} className='software'>
+                <div className='overlaySelector' onClick={(e) => this.setOverlaySoftware(soft.id)}>
                   <i className='far fa-window-restore'></i>
                 </div>
                 <div className='softwareHeader'>
-                  <img className='softwareImg' src={'softwareLogos/' + this.state.connectedSoftwares[softwareId].software + '.png'}></img>
-                  <h4 className='softwareName'>{this.state.connectedSoftwares[softwareId].software.charAt(0).toUpperCase() + this.state.connectedSoftwares[softwareId].software.slice(1)}</h4>
+                  <img className='softwareImg' src={'softwareLogos/' + soft.software + '.png'}></img>
+                  <h4 className='softwareName'>{soft.software.charAt(0).toUpperCase() + soft.software.slice(1)}</h4>
                 </div>
-                <span className='softwareSceneName'><i className='las la-sync' onClick={(e) => this.reloadSceneName(softwareId)}></i>{this.state.connectedSoftwares[softwareId].saved === 1 ? this.state.connectedSoftwares[softwareId].scene : this.state.connectedSoftwares[softwareId].scene + '*'}</span>
+                {/* <span className='softwareSceneName'><i className='las la-sync' onClick={(e) => this.reloadSceneName(soft.id)}></i>{soft.saved === 1 ? soft.scene : soft.scene + '*'}</span>
+                <span className='softwareSceneName'>{soft.scene}</span>
               </div>
             ))}
-          </div>
+          </div> */}
 
           <div className='manager-container'>
             <div className='search-container'>
@@ -671,7 +674,7 @@ export default class Manager extends React.Component {
                     softwares={this.getCompatibleSoftware()}
                     selectSoftware={(id, software) => this.setState({ selectedSoftware: id, selectedSoftwareType: software })}
                     selectedSoftware={this.state.selectedSoftware}
-                    selectedSoft={this.state.softwares[this.state.selectedSoftware]}
+                    selectedSoft={this.state.connectedSoftwares[this.state.selectedSoftware]}
                     checkSotfwareSaved={() => this.checkSotfwareSaved()}
                     getWipName={() => this.getWipName()}
                     refresh={() => this.refreshBrowser()}

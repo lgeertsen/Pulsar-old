@@ -34,14 +34,19 @@ export default class Nav extends React.Component {
               <i className="las la-project-diagram"></i>
             </div>
             {/* <div className={this.props.page === "farm" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
-              <i className="las la-tractor"></i>
-            </div> */}
+            <i className="las la-tractor"></i>
+          </div> */}
             {/* <div className={this.props.page === "vyewer" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
-              <i className="las la-photo-video"></i>
-            </div> */}
+            <i className="las la-photo-video"></i>
+          </div> */}
             <div className={this.props.page === 'settings' ? 'nav-item icon active ' + this.props.primaryColor : 'nav-item icon hover-' + this.props.primaryColor} onClick={() => Router.push('/settings')}>
               <i className="las la-cog"></i>
             </div>
+            {Object.keys(this.props.connectedSoftwares).map((softId, index) => (
+              <div key={index} className="nav-item nav-software">
+                <img className="nav-software-logo" src={'softwareLogos/' + this.props.connectedSoftwares[softId].software + '.png'}/>
+              </div>
+            ))}
           </div>
         </div>
         <div className={this.props.open ? 'nav-sidebar open ' + this.props.theme : 'nav-sidebar ' + this.props.theme}>
@@ -78,6 +83,12 @@ export default class Nav extends React.Component {
               <i className="las la-cog"></i>
               <div className="nav-item-title">SETTINGS</div>
             </div>
+            {Object.keys(this.props.connectedSoftwares).map((softId, index) => (
+              <div key={index} className="nav-item nav-software">
+                <img className="nav-software-logo" src={'softwareLogos/' + this.props.connectedSoftwares[softId].software + '.png'}/>
+                <div className="nav-item-title">{this.props.connectedSoftwares[softId].scene}</div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -94,5 +105,6 @@ Nav.propTypes = {
   primaryColor: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   page: PropTypes.string.isRequired,
-  toggleNav: PropTypes.func.isRequired
+  toggleNav: PropTypes.func.isRequired,
+  connectedSoftwares: PropTypes.array
 }

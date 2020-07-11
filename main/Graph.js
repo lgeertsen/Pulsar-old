@@ -3,12 +3,12 @@ import { spawn } from 'child_process'
 import Edge from './Edge'
 import Logger from './Logger'
 import Node from './Node'
+import Renderer from './Renderer'
 
 export default class Graph {
-  constructor (nodeManager, server, sendToRenderer) {
+  constructor (nodeManager, server) {
     this._nodeManager = nodeManager
     this._server = server
-    this._sendToRenderer = sendToRenderer
 
     this._name = undefined
     this._path = undefined
@@ -350,7 +350,7 @@ export default class Graph {
     for (const id in this._edges) {
       edges[id] = this._edges[id].formatForRender()
     }
-    this._sendToRenderer({ nodes: this._nodes, edges: edges })
+    this.sendToRenderer({ nodes: this._nodes, edges: edges })
   }
 
   formatForSave () {
@@ -361,5 +361,10 @@ export default class Graph {
       edges: this._edges
     }
     return data
+  }
+
+  sendToRenderer (data) {
+    const renderer = new Renderer()
+    renderer.sendMessageMainData('graph', data)
   }
 }

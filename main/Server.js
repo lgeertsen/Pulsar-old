@@ -29,7 +29,7 @@ export default class Server {
 
     this._config = new Config()
 
-    this._softwares = {}
+    // this._softwares = {}
 
     this._page = undefined
 
@@ -43,9 +43,9 @@ export default class Server {
 
   get project () { return this._projects[this._project] }
   set project (project) { this._project = project }
-  get software () { return this._softwares }
-  set software (software) { this._softwares[software.id] = software }
-  get softwares () { return this._softwares }
+  // get software () { return this._softwares }
+  // set software (software) { this._softwares[software.id] = software }
+  // get softwares () { return this._softwares }
   get config () { return this._config }
   get nodes () { return this._nodeManager.nodes }
 

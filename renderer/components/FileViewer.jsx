@@ -220,7 +220,8 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
       <Modal theme={theme} primaryColor={primaryColor} title="Open file" show={showModal} handleClose={(value) => handleModal(value)}>
         <div className="open-soft-modal">
           <div className="modal-title">
-            <h3>{assetId.file.name + '_' + assetId.file.state + '_' + assetId.file.version + '.' + assetId.file.extension}</h3>
+            <h3>{assetId.file.name + '.' + assetId.file.extension}</h3>
+            <h3>{assetId.file.state ? `${assetId.file.state}_v${assetId.file.version}` : assetId.file.version ? assetId.file.version : ''}</h3>
           </div>
           {command === 'open_file_as'
             ? <div className="new-name-container">

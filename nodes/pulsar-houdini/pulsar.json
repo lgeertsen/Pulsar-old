@@ -52,13 +52,6 @@
           "description": "Open the file without saving the scene that is already open",
           "value": false,
           "type": "bool"
-        },
-        {
-          "name": "number",
-          "label": "Number Test",
-          "description": "Number Test",
-          "value": 2,
-          "type": "number"
         }
       ],
       "outputs": [

@@ -2,12 +2,9 @@ import hou
 
 import os
 
-def main(argv):
-    print("#############")
-    print(argv)
-    print("#############")
-    file = argv[1].replace(os.sep, '/')
-    new_name = argv[2]
+def main(arguments):
+    file = arguments["file"].replace(os.sep, '/')
+    new_name = arguments["name"]
     path_split = file.split("/")
 
     wip_path = '/'.join(path_split[:-2]) + '/wip'
@@ -29,7 +26,7 @@ def main(argv):
     #
     # mel.eval('setProject \"' + workspace_path + '\"')
 
-    if(argv[3] == 0):
+    if(arguments["force"] == 0):
         hou.hipFile.load(file, suppress_save_prompt=True)
     else:
         hou.hipFile.save(file_name=None)

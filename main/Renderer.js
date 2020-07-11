@@ -2,6 +2,12 @@ import { ipcMain, dialog } from 'electron'
 
 export default class Renderer {
   constructor (server, mainWindow, overlay) {
+    if (!!this.constructor.instance) {
+      return this.constructor.instance
+    }
+
+    this.constructor.instance = this
+
     this._server = server
     this._mainWindow = mainWindow
     this._overlay = overlay
@@ -23,7 +29,8 @@ export default class Renderer {
 
   listenForMessages () {
     ipcMain.on('getSoftwares', (event) => {
-      event.sender.send('softwares', this._server.softwares)
+      // event.sender.send('softwares', this._server.softwares)
+      this._server._softwareSocket.sendSoftwares()
     })
 
     ipcMain.on('getConfig', (event) => {

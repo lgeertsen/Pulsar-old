@@ -1,7 +1,9 @@
 import { spawn } from 'child_process'
+import { basename } from 'path'
 
 import Config from './Config'
 import NodeManager from './NodeManager'
+import SoftwareSocket from './SoftwareSocket'
 
 export default class Node {
   constructor (id, name, node, position) {
@@ -176,5 +178,26 @@ export default class Node {
         }
       })
     }
+  }
+
+  executeSocket (softwareId, cb) {
+    const nm = new NodeManager()
+    const dirPath = nm.path
+
+    const path = `${dirPath}/${this.type}`
+    const file = basename(this.script, 'py')
+    const args = {}
+    for (const i in this.inputs) {
+      args[this.inputs[i].name] = this.inputs[i].value
+    }
+
+    const data = {
+      path: path,
+      file: file,
+      arguments: args
+    }
+
+    const softsSocket = new SoftwareSocket()
+    softsSocket.softwares[softwareId].execTask(data)
   }
 }

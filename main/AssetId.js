@@ -208,6 +208,13 @@ class AssetId {
         node.setInputValue(arg, args[arg])
       }
       node.execute(() => FileManager.getFiles(this, (files) => this.setFiles(files)))
+    } else {
+      const nodeTemplate = nm.getNode(softwareType, command)
+      const node = new Node('temp', 'temp', nodeTemplate, { x: 0, y: 0 })
+      for (const arg in args) {
+        node.setInputValue(arg, args[arg])
+      }
+      node.executeSocket(softwareId, () => FileManager.getFiles(this, (files) => this.setFiles(files)))
     }
   }
 
