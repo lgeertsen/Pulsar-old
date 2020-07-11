@@ -64,6 +64,7 @@ export default class Config {
               return console.error(err)
             }
             console.log('---- Copied engines ----')
+            resolve()
           })
         } else {
           resolve()
@@ -91,9 +92,11 @@ export default class Config {
         if (!fs.existsSync(this._nodesPath)) {
           ncp(join(__dirname, '../../../nodes'), this._nodesPath, function (err) {
             if (err) {
-              return console.error(err)
+              console.error(err)
+              reject(err)
             }
-            console.log('---- Copied engines ----')
+            console.log('---- Copied nodes ----')
+            resolve()
           })
         } else {
           resolve()
@@ -102,6 +105,7 @@ export default class Config {
         if (!fs.existsSync(this._nodesPath)) {
           ncp('C:/Users/leege/_pulsar/nodes', this._nodesPath, function (err) {
             if (err) {
+              console.error(err);
               reject(err)
               // return console.error(err)
             }
