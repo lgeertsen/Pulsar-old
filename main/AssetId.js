@@ -160,7 +160,12 @@ class AssetId {
     let filePath
     if ('version' in this._groups) {
       const version = this.getMaxVersion() + 1
-      const versionString = 'v' + new Array(3).join('0').slice((3) * -1) + version
+      let versionStr = '' + version.toString()
+      while (versionStr.length < 3) {
+        versionStr = '0' + versionStr
+      }
+
+      const versionString = 'v' + versionStr
       if ('state' in this._groups) {
         const stateVersion = `work_${versionString}`
         filePath = path.join(slicePath, stateVersion, fileName)

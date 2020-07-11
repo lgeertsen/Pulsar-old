@@ -111,10 +111,6 @@ export default class Node {
         }
       }
 
-      console.log("################");
-      console.log(cmd);
-      console.log("################");
-
       const bat = spawn(cmd, { shell: true })
 
       bat.stdout.on('data', (data) => {
