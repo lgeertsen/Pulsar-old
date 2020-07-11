@@ -33,6 +33,48 @@
         }
       ],
       "outputs": []
+    },
+    {
+      "name": "open_file",
+      "category": "maya",
+      "software": "maya",
+      "icon": "maya.png",
+      "color": "blue",
+      "script": "open_file.py",
+      "inputs": [
+        {
+          "name": "file",
+          "type": "string"
+        },
+        {
+          "name": "force",
+          "type": "number"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "open_file_as",
+      "category": "maya",
+      "software": "maya",
+      "icon": "maya.png",
+      "color": "blue",
+      "script": "open_file_as.py",
+      "inputs": [
+        {
+          "name": "file",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "force",
+          "type": "number"
+        }
+      ],
+      "outputs": []
     }
   ]
 }

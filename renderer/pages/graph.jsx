@@ -21,6 +21,7 @@ export default class Graph extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      connectedSoftwares: {},
       theme: 'theme-light',
       primaryColor: 'green',
 
@@ -96,6 +97,7 @@ export default class Graph extends React.Component {
       ipcRenderer.send('getConfig')
       ipcRenderer.send('getNodes')
       ipcRenderer.send('getGraph')
+      ipcRenderer.send('getSoftwares')
 
       console.log('----- ipcRenderer exists -----')
       ipcRenderer.on('config', (event, data) => {
@@ -154,6 +156,12 @@ export default class Graph extends React.Component {
         const inputIndex = nodes[data.node].inputs.findIndex((item) => { return item.name === data.input })
         nodes[data.node].inputs[inputIndex].value = data.file
         this.setState({ nodes: nodes })
+      })
+
+      ipcRenderer.on('softwares', (event, data) => {
+        console.log('----- receive software list -----')
+        console.log(data)
+        this.setState({ connectedSoftwares: data })
       })
     }
 
@@ -575,6 +583,7 @@ export default class Graph extends React.Component {
           theme={this.state.theme}
           primaryColor={this.state.primaryColor}
           toggleNav={(v) => this.setState({ navOpen: v })}
+          connectedSoftwares={this.state.connectedSoftwares}
         />
 
         {this.state.selectedNode.length === 1

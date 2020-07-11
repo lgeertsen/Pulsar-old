@@ -49,7 +49,7 @@ export default class Manager extends React.Component {
       selectedSoftware: undefined,
       selectedSoftwareType: undefined,
       softwares: {},
-      connectedSoftwares: [],
+      connectedSoftwares: {},
       overlaySoftware: undefined,
 
       newFileName: undefined,

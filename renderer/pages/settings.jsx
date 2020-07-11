@@ -27,6 +27,7 @@ export default class Settings extends React.Component {
     super(props)
 
     this.state = {
+      connectedSoftwares: {},
       config: {},
       theme: 'light-theme',
       primaryColor: 'green',
@@ -108,6 +109,7 @@ export default class Settings extends React.Component {
     console.log('----- Component mounted -----')
     if (ipcRenderer) {
       ipcRenderer.send('getConfig')
+      ipcRenderer.send('getSoftwares')
 
       ipcRenderer.on('config', (event, data) => {
         console.log('----- receive config file -----', data)
@@ -164,6 +166,12 @@ export default class Settings extends React.Component {
           }
           this.setState({ softwares: softs })
         }
+      })
+
+      ipcRenderer.on('softwares', (event, data) => {
+        console.log('----- receive software list -----')
+        console.log(data)
+        this.setState({ connectedSoftwares: data })
       })
 
       ipcRenderer.on('selectedDirectory', (event, data) => {
@@ -588,6 +596,7 @@ export default class Settings extends React.Component {
           open={this.state.navOpen}
           page="settings"
           toggleNav={(v) => this.setState({ navOpen: v })}
+          connectedSoftwares={this.state.connectedSoftwares}
         />
 
         <div className={this.state.navOpen ? 'main ' + this.state.theme : 'main full ' + this.state.theme}>
