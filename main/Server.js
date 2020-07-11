@@ -6,7 +6,7 @@ import fs from 'fs'
 import { createServer } from 'http'
 import SocketIO from 'socket.io'
 
-import { execFile } from 'child_process'
+// import { execFile } from 'child_process'
 
 import Config from './Config'
 import Graph from './Graph'
@@ -57,6 +57,8 @@ export default class Server {
 
   async whenReady () {
     const config = await this._config.readConfig()
+    await this._config.checkEngines()
+    await this._config.checkNodes()
     // Logger.list(config);
     this.onConfig('config', config)
     return config
@@ -95,13 +97,14 @@ export default class Server {
   }
 
   onConfig (message, config) {
-    if (process.env.NODE_ENV === 'production') {
-      this._nodeManager.path = path.join(__dirname, '../../../nodes')
-      console.log(path.join(__dirname, '../../../nodes'))
-      // result = spawn.sync(executable, [], { encoding: 'utf8' });
-    } else {
-      this._nodeManager.path = 'C:/Users/leege/_pulsar/nodes'
-    }
+    this._nodeManager.path = this._config._nodesPath
+    // if (process.env.NODE_ENV === 'production') {
+    //   // this._nodeManager.path = path.join(__dirname, '../../../nodes')
+    //   // console.log(path.join(__dirname, '../../../nodes'))
+    //   // result = spawn.sync(executable, [], { encoding: 'utf8' });
+    // } else {
+    //   this._nodeManager.path = 'C:/Users/leege/_pulsar/nodes'
+    // }
     this._nodeManager.importNodes(() => {
       // let output = this._graph.addNode("base", "OUTPUT", {x: 11000, y: 10500});
       // let merge = this._graph.addNode("operations", "merge", {x: 11000, y: 10600});
@@ -197,91 +200,91 @@ export default class Server {
     this._renderer.sendMessageMainData(message, data)
   }
 
-  execTask (data) {
-    const type = data.type
-    const task = data.command
-
-    if (['maya', 'houdini', 'nuke'].includes(type)) {
-      const args = data.arguments
-      if (data.id === 'new') {
-        let winTask = `${type}_${task}`
-        if (data.customArgs) {
-          winTask = task
-        }
-        const node = this._nodeManager.getNode('windows', winTask)
-        let dirPath
-        if (process.env.NODE_ENV === 'production') {
-          dirPath = path.join(__dirname, '../../../nodes/scripts/windows')
-          // result = spawn.sync(executable, [], { encoding: 'utf8' });
-        } else {
-          dirPath = `${this.config.config.nodes}/scripts/windows`
-        }
-        const file = node.script
-        const filePath = path.join(dirPath, file)
-        const softPath = this.config.config.softwares[type]
-        Logger.warning(filePath)
-        // let command = `start ${filePath} ${softPath} ${args.file}`
-        // Logger.success(command);
-        if (data.customArgs) {
-          execFile(filePath, args, (error, stdout, stderr) => {
-            if (error) {
-              console.log(`error: ${error.message}`)
-              return
-            }
-            if (stderr) {
-              console.log(`stderr: ${stderr}`)
-              return
-            }
-            console.log(`stdout: ${stdout}`)
-          })
-        } else {
-          execFile(filePath, [softPath, args.file], (error, stdout, stderr) => {
-            if (error) {
-              console.log(`error: ${error.message}`)
-              return
-            }
-            if (stderr) {
-              console.log(`stderr: ${stderr}`)
-              return
-            }
-            console.log(`stdout: ${stdout}`)
-          })
-        }
-      } else {
-
-      }
-    } else if (['mayapy', 'hython'].includes(data.id)) {
-      const node = this._nodeManager.getNode(type, task)
-      // let dirPath = `${this.config.config.nodes}/scripts/${type}`;
-      let dirPath
-      if (process.env.NODE_ENV === 'production') {
-        dirPath = path.join(__dirname, `../../../nodes/scripts/${type}`)
-        // result = spawn.sync(executable, [], { encoding: 'utf8' });
-      } else {
-        dirPath = `${this.config.config.nodes}/scripts/${type}`
-      }
-      const file = node.script
-      const filePath = path.join(dirPath, file)
-
-      const args = data.arguments
-      args.unshift(filePath)
-
-      const softPath = this.config.config.softwares[type]
-      // let command = `${softPath} ${filePath} ${data.arguments.file}`;
-      // Logger.info(command);
-      execFile(softPath, args, (error, stdout, stderr) => {
-        if (error) {
-          console.log(`error: ${error.message}`)
-          return
-        }
-        if (stderr) {
-          console.log(`stderr: ${stderr}`)
-          return
-        }
-        console.log(`stdout: ${stdout}`)
-      })
-    }
-  }
+  // execTask (data) {
+  //   const type = data.type
+  //   const task = data.command
+  //
+  //   if (['maya', 'houdini', 'nuke'].includes(type)) {
+  //     const args = data.arguments
+  //     if (data.id === 'new') {
+  //       let winTask = `${type}_${task}`
+  //       if (data.customArgs) {
+  //         winTask = task
+  //       }
+  //       const node = this._nodeManager.getNode('windows', winTask)
+  //       let dirPath
+  //       if (process.env.NODE_ENV === 'production') {
+  //         dirPath = path.join(__dirname, '../../../nodes/scripts/windows')
+  //         // result = spawn.sync(executable, [], { encoding: 'utf8' });
+  //       } else {
+  //         dirPath = `${this.config.config.nodes}/scripts/windows`
+  //       }
+  //       const file = node.script
+  //       const filePath = path.join(dirPath, file)
+  //       const softPath = this.config.config.softwares[type]
+  //       Logger.warning(filePath)
+  //       // let command = `start ${filePath} ${softPath} ${args.file}`
+  //       // Logger.success(command);
+  //       if (data.customArgs) {
+  //         execFile(filePath, args, (error, stdout, stderr) => {
+  //           if (error) {
+  //             console.log(`error: ${error.message}`)
+  //             return
+  //           }
+  //           if (stderr) {
+  //             console.log(`stderr: ${stderr}`)
+  //             return
+  //           }
+  //           console.log(`stdout: ${stdout}`)
+  //         })
+  //       } else {
+  //         execFile(filePath, [softPath, args.file], (error, stdout, stderr) => {
+  //           if (error) {
+  //             console.log(`error: ${error.message}`)
+  //             return
+  //           }
+  //           if (stderr) {
+  //             console.log(`stderr: ${stderr}`)
+  //             return
+  //           }
+  //           console.log(`stdout: ${stdout}`)
+  //         })
+  //       }
+  //     } else {
+  //
+  //     }
+  //   } else if (['mayapy', 'hython'].includes(data.id)) {
+  //     const node = this._nodeManager.getNode(type, task)
+  //     // let dirPath = `${this.config.config.nodes}/scripts/${type}`;
+  //     let dirPath
+  //     if (process.env.NODE_ENV === 'production') {
+  //       dirPath = path.join(__dirname, `../../../nodes/scripts/${type}`)
+  //       // result = spawn.sync(executable, [], { encoding: 'utf8' });
+  //     } else {
+  //       dirPath = `${this.config.config.nodes}/scripts/${type}`
+  //     }
+  //     const file = node.script
+  //     const filePath = path.join(dirPath, file)
+  //
+  //     const args = data.arguments
+  //     args.unshift(filePath)
+  //
+  //     const softPath = this.config.config.softwares[type]
+  //     // let command = `${softPath} ${filePath} ${data.arguments.file}`;
+  //     // Logger.info(command);
+  //     execFile(softPath, args, (error, stdout, stderr) => {
+  //       if (error) {
+  //         console.log(`error: ${error.message}`)
+  //         return
+  //       }
+  //       if (stderr) {
+  //         console.log(`stderr: ${stderr}`)
+  //         return
+  //       }
+  //       console.log(`stdout: ${stdout}`)
+  //     })
+  //   }
+  // }
 
   startServer () {
     try {

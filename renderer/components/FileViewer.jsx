@@ -15,7 +15,7 @@ const tags = [
   'WIP'
 ]
 
-const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName, refresh, saveTag, deleteTag }) => {
+const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, onSaveComment, softwares, selectSoftware, selectedSoftware, selectedSoft, checkSotfwareSaved, getWipName, refresh, saveTag, deleteTag, createNew }) => {
   const [showModal, setShowModal] = useState(false)
   const [checked, setChecked] = useState(false)
   const [command, setCommand] = useState(undefined)
@@ -105,6 +105,15 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
     setNewTag('')
   }
 
+  const increment = () => {
+    const data = {
+      name: assetId.file.name,
+      template: assetId.file.path,
+      type: undefined
+    }
+    createNew(data)
+  }
+
   const toReadableDate = (date) => {
     const now = new Date(date)
     const year = now.getFullYear()
@@ -186,6 +195,12 @@ const FileViewer = ({ theme, primaryColor, assetId, execTask, onChangeComment, o
                 <div className={'button ' + theme} onClick={(e) => onBtnClick('open_file_as', true)}>
                   <span>Open As</span>
                 </div>
+                {assetId.file.version
+                  ? <div className={'button ' + theme} onClick={(e) => increment()}>
+                    <span>Increment</span>
+                  </div>
+                  : ''
+                }
                 {/* {assetId.file.state === 'work'
                   ? <div className={'button ' + theme} onClick={() => onPublish()}>
                     <span>Publish</span>
@@ -276,7 +291,8 @@ FileViewer.propTypes = {
   getWipName: PropTypes.any.isRequired,
   refresh: PropTypes.any.isRequired,
   saveTag: PropTypes.any,
-  deleteTag: PropTypes.any
+  deleteTag: PropTypes.any,
+  createNew: PropTypes.func
 }
 
 export default FileViewer

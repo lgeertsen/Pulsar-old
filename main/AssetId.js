@@ -174,8 +174,8 @@ class AssetId {
     if (template) {
       const nodeTemplate = nm.getNode('base', 'create_asset_from_existing')
       const node = new Node('temp', 'temp', nodeTemplate, { x: 0, y: 0 })
-      node.setInputValue('path', template)
-      node.setInputValue('file', filePath)
+      node.setInputValue('path', path.normalize(template))
+      node.setInputValue('file', path.normalize(filePath))
       node.execute(() => FileManager.getFiles(this, (files) => this.setFiles(files)))
     } else {
       const nodeTemplate = nm.getNode(type, 'create_asset')

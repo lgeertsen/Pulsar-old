@@ -507,11 +507,11 @@ export default class Manager extends React.Component {
                 />
               </div>
               <div className='search-bar-container'>
-                <SearchBar
+                {/* <SearchBar
                   theme={this.state.theme}
                   primaryColor={this.state.primaryColor}
                   assetId={this.state.fileManagerAssetId}
-                />
+                /> */}
               </div>
             </div>
 
@@ -680,6 +680,7 @@ export default class Manager extends React.Component {
                     refresh={() => this.refreshBrowser()}
                     saveTag={tag => this.saveTag(tag)}
                     deleteTag={tag => this.deleteTag(tag)}
+                    createNew={data => this.createNewFile(data)}
                   />
                 : ''
               }

@@ -23,7 +23,8 @@
     },
     "extraFiles": [
       ".pulsar.json",
-      "nodes"
+      "nodes",
+      "engines"
     ],
     "publish": [
       {
@@ -45,6 +46,7 @@
     "glob": "^7.1.6",
     "kind-of": "^6.0.3",
     "match-sorter": "^4.0.2",
+    "ncp": "^2.0.0",
     "node-sass": "^4.13.0",
     "python-shell": "^1.0.8",
     "react-spring": "^8.0.27",

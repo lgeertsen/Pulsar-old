@@ -1,6 +1,7 @@
 import { homedir } from 'os'
 import { join, sep } from 'path'
 import fs from 'fs'
+import ncp from 'ncp'
 
 export default class Config {
   constructor () {
@@ -12,7 +13,40 @@ export default class Config {
 
     this._config = {}
     this._file = '.pulsar.json'
-    this._path = homedir()
+    this._path = join(homedir(), 'Pulsar')
+
+    if (!fs.existsSync(this._path)) {
+      fs.mkdirSync(this._path)
+    }
+
+    this._enginePath = join(this._path, 'engines')
+    this._nodesPath = join(this._path, 'nodes')
+
+    // if (process.env.NODE_ENV === 'production') {
+    //   this._enginePath = join(this._path, 'engines')
+    //   if (!fs.existsSync(this._enginePath)) {
+    //     ncp(join(__dirname, '../../../engines'), this._enginePath, function (err) {
+    //       if (err) {
+    //         return console.error(err)
+    //       }
+    //       console.log('---- Copied engines ----')
+    //     })
+    //   }
+    //   this._nodesPath = join(this._path, 'nodes')
+    //   if (!fs.existsSync(this._enginePath)) {
+    //     ncp(join(__dirname, '../../../nodes'), this._nodesPath, function (err) {
+    //       if (err) {
+    //         return console.error(err)
+    //       }
+    //       console.log('---- Copied nodes ----')
+    //     })
+    //   }
+    // } else {
+    //   this._enginePath = join(this._path, 'engines')
+    //   this._nodesPath = join(this._path, 'nodes')
+    //
+    // }
+
     const pathSplit = this._path.split(sep)
     pathSplit.push(this._file)
     this._filePath = join(...pathSplit)
@@ -20,6 +54,66 @@ export default class Config {
 
   get config () { return this._config }
   set config (config) { this._config = config }
+
+  checkEngines () {
+    return new Promise((resolve, reject) => {
+      if (process.env.NODE_ENV === 'production') {
+        if (!fs.existsSync(this._enginePath)) {
+          ncp(join(__dirname, '../../../engines'), this._enginePath, function (err) {
+            if (err) {
+              return console.error(err)
+            }
+            console.log('---- Copied engines ----')
+          })
+        } else {
+          resolve()
+        }
+      } else {
+        if (!fs.existsSync(this._enginePath)) {
+          ncp('C:/Users/leege/_pulsar/engines', this._enginePath, function (err) {
+            if (err) {
+              reject(err)
+              // return console.error(err)
+            }
+            console.log('---- Copied engines ----')
+            resolve()
+          })
+        } else {
+          resolve()
+        }
+      }
+    })
+  }
+
+  checkNodes () {
+    return new Promise((resolve, reject) => {
+      if (process.env.NODE_ENV === 'production') {
+        if (!fs.existsSync(this._nodesPath)) {
+          ncp(join(__dirname, '../../../nodes'), this._nodesPath, function (err) {
+            if (err) {
+              return console.error(err)
+            }
+            console.log('---- Copied engines ----')
+          })
+        } else {
+          resolve()
+        }
+      } else {
+        if (!fs.existsSync(this._nodesPath)) {
+          ncp('C:/Users/leege/_pulsar/nodes', this._nodesPath, function (err) {
+            if (err) {
+              reject(err)
+              // return console.error(err)
+            }
+            console.log('---- Copied nodes ----')
+            resolve()
+          })
+        } else {
+          resolve()
+        }
+      }
+    })
+  }
 
   initConfig (cb) {
     fs.copyFile('.pulsar.json', this._filePath, (err) => {
