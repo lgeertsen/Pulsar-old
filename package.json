@@ -2,7 +2,7 @@
   "private": true,
   "name": "pulsar",
   "description": "Pulsar | A Pipeline Tool",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Lee Geertsen <lgeertsen@artfx.fr>",
   "main": "app/background.js",
   "scripts": {
