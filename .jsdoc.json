@@ -1,0 +1,53 @@
+{
+  "opts": {
+    "encoding": "utf8",
+    "readme": "./README.md",
+    "destination": "./documentation/",
+    "recurse": true,
+    "tutorials": "./tutorials/",
+    "verbose": true,
+    "template": "./node_modules/clean-jsdoc-theme",
+    "theme_opts": {
+      "title": "Pulsar",
+      "menu": [
+        {
+          "title": "pulsarvfx.com",
+          "link": "https://pulsarvfx.com/",
+          "target": "_blank"
+        },
+        {
+          "title": "Github",
+          "link": "https://github.com/lgeertsen/Pulsar",
+          "target": "_blank"
+        },
+        {
+          "title": "Frontend Doc",
+          "link": "https://doc.pulsarvfx.com/renderer",
+          "target": "_blank"
+        },
+        {
+          "title": "Backend Doc",
+          "link": "https://doc.pulsarvfx.com/main",
+          "target": "_blank"
+        }
+      ],
+      "create_style": "img{width: 90%}"
+    }
+  },
+  "plugins": [],
+  "recurseDepth": 10,
+  "source": {
+    "exclude": ["./node_modules/", "./tutorials/", "./documentation/", "./main/", "./renderer"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc","closure"]
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}

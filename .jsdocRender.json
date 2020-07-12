@@ -1,0 +1,40 @@
+{
+  "opts": {
+    "encoding": "utf8",
+    "readme": "./README.md",
+    "destination": "./documentation/renderer",
+    "recurse": true,
+    "verbose": true,
+    "template": "./node_modules/clean-jsdoc-theme",
+    "theme_opts": {
+      "title": "Pulsar",
+      "menu": [
+        {
+          "title": "pulsarvfx.com",
+          "link": "https://pulsarvfx.com/",
+          "target": "_blank"
+        },
+        {
+          "title": "Github",
+          "link": "https://github.com/lgeertsen/Pulsar",
+          "target": "_blank"
+        }
+      ]
+    }
+  },
+  "plugins": [],
+  "recurseDepth": 10,
+  "source": {
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc","closure"]
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}

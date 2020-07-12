@@ -2460,6 +2460,13 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
+clean-jsdoc-theme@^2.2.11:
+  version "2.2.11"
+  resolved "https://registry.yarnpkg.com/clean-jsdoc-theme/-/clean-jsdoc-theme-2.2.11.tgz#73b6b7136bcfa0af258abb2a893a91895581730f"
+  integrity sha512-sB9l8A8I4JAIiR11/m9UPQByz0ZniVJlhn72AnftXRDN0aIuEwPzw5GM1M1lXHx8WgiV6h4SXyESZV9WLMXMyw==
+  dependencies:
+    jsdoc "^3.6.3"
+
 cli-boxes@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/cli-boxes/-/cli-boxes-2.2.0.tgz#538ecae8f9c6ca508e3c3c95b453fe93cb4c168d"
@@ -5219,7 +5226,7 @@ jsbn@~0.1.0:
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
   integrity sha1-peZUwuWi3rXyAdls77yoDA7y9RM=
 
-jsdoc@^3.6.4:
+jsdoc@^3.6.3, jsdoc@^3.6.4:
   version "3.6.4"
   resolved "https://registry.yarnpkg.com/jsdoc/-/jsdoc-3.6.4.tgz#246b2832a0ea8b37a441b61745509cfe29e174b6"
   integrity sha512-3G9d37VHv7MFdheviDCjUfQoIjdv4TC5zTTf5G9VODLtOnVS6La1eoYBDlbWfsRT3/Xo+j2MIqki2EV12BZfwA==

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Project.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/search.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.5/fuse.min.js"></script> -->
+    <script src="scripts/fuse.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme.css">
+    
+    
+    
+<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"/>
+                <path d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z"/>
+            </g>
+        </symbol>
+    </defs>
+</svg>
+
+</head>
+<body>
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html"><div class="text">Pulsar</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://pulsarvfx.com/' class='' id='' target='_blank'>pulsarvfx.com</a></li><li><a href='https://github.com/lgeertsen/Pulsar' class='' id='' target='_blank'>Github</a></li></ul><h3>Classes</h3><ul><li><a href="AssetId.html">AssetId</a><ul class='methods'><li data-type='method'><a href="AssetId.html#clearValues">clearValues</a></li><li data-type='method'><a href="AssetId.html#createNewFile">createNewFile</a></li><li data-type='method'><a href="AssetId.html#deleteTag">deleteTag</a></li><li data-type='method'><a href="AssetId.html#execTask">execTask</a></li><li data-type='method'><a href="AssetId.html#saveComment">saveComment</a></li><li data-type='method'><a href="AssetId.html#saveTag">saveTag</a></li><li data-type='method'><a href="AssetId.html#searchNext">searchNext</a></li><li data-type='method'><a href="AssetId.html#setDimension">setDimension</a></li><li data-type='method'><a href="AssetId.html#setDirs">setDirs</a></li><li data-type='method'><a href="AssetId.html#setFiles">setFiles</a></li><li data-type='method'><a href="AssetId.html#setSearchDir">setSearchDir</a></li></ul></li><li><a href="Project.html">Project</a><ul class='methods'><li data-type='method'><a href="Project.html#createNewFile">createNewFile</a></li><li data-type='method'><a href="Project.html#createNewGroupValue">createNewGroupValue</a></li><li data-type='method'><a href="Project.html#deleteTag">deleteTag</a></li><li data-type='method'><a href="Project.html#execTask">execTask</a></li><li data-type='method'><a href="Project.html#formatForRender">formatForRender</a></li><li data-type='method'><a href="Project.html#getData">getData</a></li><li data-type='method'><a href="Project.html#saveComment">saveComment</a></li><li data-type='method'><a href="Project.html#saveTag">saveTag</a></li><li data-type='method'><a href="Project.html#setDimension">setDimension</a></li><li data-type='method'><a href="Project.html#setGroupValue">setGroupValue</a></li></ul></li></ul></div>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Project.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import AssetId from './AssetId'
+
+/**
+ * Class representing a Project.
+ */
+class Project {
+  /**
+   * constructor - Project Object constructor
+   *
+   * @param  {string} name              Name of the project
+   * @param  {Object} paths             File Paths
+   * @param  {function} sendToRenderer  Function to send project to the Render Screen
+   * @returns {Project}                 Project Object
+   */
+  constructor (name, paths, sendToRenderer) {
+    this._name = name
+    this._path = paths.path
+    this._pathTypes = {
+      asset: {
+        scene: new AssetId('scene', paths.asset.scene, this._path, () => this.formatForRender()),
+        render: new AssetId('render', paths.asset.render, this._path, () => this.formatForRender()),
+        cache: new AssetId('cache', paths.asset.cache, this._path, () => this.formatForRender()),
+        texture: new AssetId('texture', paths.asset.texture, this._path, () => this.formatForRender())
+      },
+      shot: {
+        scene: new AssetId('scene', paths.shot.scene, this._path, () => this.formatForRender()),
+        render: new AssetId('render', paths.shot.render, this._path, () => this.formatForRender()),
+        cache: new AssetId('cache', paths.shot.cache, this._path, () => this.formatForRender()),
+        texture: new AssetId('texture', paths.shot.texture, this._path, () => this.formatForRender())
+      }
+    }
+
+    this._pathType = 'asset'
+    this._pathSubType = 'scene'
+
+    this._sendToRenderer = sendToRenderer
+  }
+
+  get pathType () { return this._pathType }
+
+  /**
+   * set pathType - pathType setter
+   *
+   * @param  {string} pathType "asset" or "shot"
+   */
+  set pathType (pathType) {
+    this._pathType = pathType
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.clearValues('project')
+    assetId.setSearchDir('project')
+    assetId.searchNext()
+  }
+
+  get pathSubType () { return this._pathSubType }
+
+  /**
+   * set pathSubType - pathSubType setter
+   *
+   * @param  {string} pathSubType "scene", "render", "texture" or "cache"
+   */
+  set pathSubType (pathSubType) {
+    this._pathSubType = pathSubType
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.clearValues('project')
+    assetId.setSearchDir('project')
+    assetId.searchNext()
+  }
+
+  /**
+   * setDimension - set the dimension of the current used AssetId of the project
+   *
+   * @param  {string} dimension "3d" or "2d"
+   */
+  setDimension (dimension) {
+    this._pathTypes[this._pathType][this._pathSubType].setDimension(dimension)
+  }
+
+  /**
+   * getData - Get the files/directories found for the current selected AssetId of the project
+   *
+   */
+  getData () {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.clearValues('project')
+    assetId.setSearchDir('project')
+    assetId.searchNext()
+  }
+
+  /**
+   * createNewGroupValue - Create now directory of name 'value' in the specified group
+   *
+   * @param {string} group name of the group
+   * @param {string} value name for the new directory
+   */
+  createNewGroupValue (group, value) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.createNewGroupValue(group, value)
+  }
+
+  /**
+   * setGroupValue - Set the value of a group in the current selected AssetId
+   *
+   * @param  {string} group name of the group
+   * @param  {string} value     the value the set for the group
+   */
+  setGroupValue (group, value) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.setGroupValue(group, value)
+  }
+
+  /**
+   * createNewFile - Create new scene file
+   *
+   * @param {string} name     Name of the new file
+   * @param {string} template Path of the template, undefined if no template is used
+   * @param {string} type     The name of the software, undefined if a template is used
+   */
+  createNewFile (name, template, type) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.createNewFile(name, template, type)
+  }
+
+  /**
+   * execTask - Exevute a task with a scene file
+   *
+   * @param {string} softwareId   Id of the connected software, 'new' if you want to launch a new instance
+   * @param {string} softwareType Type of software the task needs to be executed in
+   * @param {string} command      The script to be executed in the software
+   * @param {array} args         THe arguments to pass to the command
+   */
+  execTask (softwareId, softwareType, command, args) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.execTask(softwareId, softwareType, command, args)
+  }
+
+  /**
+   * saveComment - Save the comment of a file
+   *
+   * @param {string} comment A comment
+   */
+  saveComment (comment) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.saveComment(comment)
+  }
+
+  /**
+   * saveTag - Add a tag to a file
+   *
+   * @param {string} tag Name of the tag
+   */
+  saveTag (tag) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.saveTag(tag)
+  }
+
+  /**
+   * deleteTag - Remove a tog from a file
+   *
+   * @param {string} tag Name of the tag
+   */
+  deleteTag (tag) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    assetId.deleteTag(tag)
+  }
+
+  /**
+   * formatForRender - Format the data of the project into an Object to send to the Render Screen
+   *
+   */
+  formatForRender () {
+    let directories = {}
+    let dirOrder = []
+    let groups = {}
+
+    const assetId = this._pathTypes[this._pathType][this._pathSubType]
+    directories = assetId.directories
+    dirOrder = assetId.directoriesOrder
+    groups = assetId.groups
+    const file = groups.file === '&lt;>' ? {} : groups.file
+
+    const asset = {
+      project: this._name,
+      pathType: this._pathType,
+      pathSubType: this._pathSubType,
+      groups: groups,
+      directories: directories,
+      directoriesOrder: dirOrder,
+      file: file
+    }
+    //   let asset = {
+    //     sid:         this.sid,
+    //
+    //     path:        this.path,
+    //     pathSubType: this._pathSubType,
+    //
+    //     projects:    this.projects,
+    //     project:     this.projectName,
+    //     projectPath: this.project,
+    //     pathType:    this.pathType,
+    //     dimension:   this.dimension,
+    //     group:       this.group == "&lt;>" ? "" : this.group,
+    //     name:        this.name == "&lt;>" ? "" : this.name,
+    //     task:        this.task == "&lt;>" ? "" : this.task,
+    //     subtask:     this.subtask == "&lt;>" ? "" : this.subtask,
+    //     file:        this.formatFile == "&lt;>" ? "" : this.formatFile,
+    //
+    //     groups:      this.groups,
+    //     names:       this.names,
+    //     tasks:       this.tasks,
+    //     subtasks:    this.subtasks,
+    //     files:       this.formatFiles(),
+    //   }
+    //
+    this._sendToRenderer(asset)
+    // }
+  }
+}
+
+export default Project
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+  
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+var list = [{"title":"AssetId","link":"<a href=\"AssetId.html\">AssetId</a>"},{"title":"AssetId#clearValues","link":"<a href=\"AssetId.html#clearValues\">AssetId &rtrif; clearValues</a>"},{"title":"AssetId#createNewFile","link":"<a href=\"AssetId.html#createNewFile\">AssetId &rtrif; createNewFile</a>"},{"title":"AssetId#deleteTag","link":"<a href=\"AssetId.html#deleteTag\">AssetId &rtrif; deleteTag</a>"},{"title":"AssetId#execTask","link":"<a href=\"AssetId.html#execTask\">AssetId &rtrif; execTask</a>"},{"title":"AssetId#saveComment","link":"<a href=\"AssetId.html#saveComment\">AssetId &rtrif; saveComment</a>"},{"title":"AssetId#saveTag","link":"<a href=\"AssetId.html#saveTag\">AssetId &rtrif; saveTag</a>"},{"title":"AssetId#searchNext","link":"<a href=\"AssetId.html#searchNext\">AssetId &rtrif; searchNext</a>"},{"title":"AssetId#setDimension","link":"<a href=\"AssetId.html#setDimension\">AssetId &rtrif; setDimension</a>"},{"title":"AssetId#setDirs","link":"<a href=\"AssetId.html#setDirs\">AssetId &rtrif; setDirs</a>"},{"title":"AssetId#setFiles","link":"<a href=\"AssetId.html#setFiles\">AssetId &rtrif; setFiles</a>"},{"title":"AssetId#setSearchDir","link":"<a href=\"AssetId.html#setSearchDir\">AssetId &rtrif; setSearchDir</a>"},{"title":"Project","link":"<a href=\"Project.html\">Project</a>"},{"title":"Project#createNewFile","link":"<a href=\"Project.html#createNewFile\">Project &rtrif; createNewFile</a>"},{"title":"Project#createNewGroupValue","link":"<a href=\"Project.html#createNewGroupValue\">Project &rtrif; createNewGroupValue</a>"},{"title":"Project#deleteTag","link":"<a href=\"Project.html#deleteTag\">Project &rtrif; deleteTag</a>"},{"title":"Project#execTask","link":"<a href=\"Project.html#execTask\">Project &rtrif; execTask</a>"},{"title":"Project#formatForRender","link":"<a href=\"Project.html#formatForRender\">Project &rtrif; formatForRender</a>"},{"title":"Project#getData","link":"<a href=\"Project.html#getData\">Project &rtrif; getData</a>"},{"title":"Project#saveComment","link":"<a href=\"Project.html#saveComment\">Project &rtrif; saveComment</a>"},{"title":"Project#saveTag","link":"<a href=\"Project.html#saveTag\">Project &rtrif; saveTag</a>"},{"title":"Project#setDimension","link":"<a href=\"Project.html#setDimension\">Project &rtrif; setDimension</a>"},{"title":"Project#setGroupValue","link":"<a href=\"Project.html#setGroupValue\">Project &rtrif; setGroupValue</a>"}];
+setupSearch(list)
+</script>
+
+ 
+<script type="text/javascript" src="scripts/misc.js"></script>
+</body>
+</html>
