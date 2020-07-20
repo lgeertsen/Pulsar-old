@@ -1,7 +1,7 @@
 {
   "opts": {
     "encoding": "utf8",
-    "readme": "./README.md",
+    "readme": "./tutorials/getting-started.md",
     "destination": "./documentation/",
     "recurse": true,
     "tutorials": "./tutorials/",
@@ -22,19 +22,19 @@
         },
         {
           "title": "Frontend Doc",
-          "link": "https://doc.pulsarvfx.com/renderer",
-          "target": "_blank"
+          "link": "https://doc.pulsarvfx.com/frontend"
         },
         {
           "title": "Backend Doc",
-          "link": "https://doc.pulsarvfx.com/main",
-          "target": "_blank"
+          "link": "https://doc.pulsarvfx.com/backend"
         }
       ],
-      "create_style": "img{width: 90%}"
+      "create_style": "img{width: 70%; margin-left: 15%}"
     }
   },
-  "plugins": [],
+  "plugins": [
+    "plugins/markdown"
+  ],
   "recurseDepth": 10,
   "source": {
     "exclude": ["./node_modules/", "./tutorials/", "./documentation/", "./main/", "./renderer"],
