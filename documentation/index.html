@@ -46,7 +46,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html"><div class="text">Pulsar</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://pulsarvfx.com/' class='' id='' target='_blank'>pulsarvfx.com</a></li><li><a href='https://github.com/lgeertsen/Pulsar' class='' id='' target='_blank'>Github</a></li><li><a href='https://doc.pulsarvfx.com/frontend' class='' id='' target=''>Frontend Doc</a></li><li><a href='https://doc.pulsarvfx.com/backend' class='' id='' target=''>Backend Doc</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-getting-started.html">Getting Started</a></li></ul></div>
+    <h2><a href="index.html"><div class="text">Pulsar</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://pulsarvfx.com/' class='' id='' target='_blank'>pulsarvfx.com</a></li><li><a href='https://github.com/lgeertsen/Pulsar' class='' id='' target='_blank'>Github</a></li><li><a href='https://doc.pulsarvfx.com/frontend' class='' id='' target=''>Frontend Doc</a></li><li><a href='https://doc.pulsarvfx.com/backend' class='' id='' target=''>Backend Doc</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-getting-started.html">Getting Started | ArtFx Promo 2021</a></li></ul></div>
 </nav>
 
 <div id="main">
@@ -73,106 +73,9 @@
         <article><h1>Pulsar</h1>
 <p>Pulsar is an open source VFX pipeline tool</p>
 <h2>Installation tutorial</h2>
+<p><a href="tutorial-getting-started.html">Getting Started | ArtFx Promo 2021</a></p>
 <h3>This tutorial is for ArtFx promo 2021</h3>
-<p>This version of the pipeline allows you to work on your assets and in September everything can easily be transferred to the computers at school without breaking any projects</p>
-<h4>I - Project Preparation for 5RN students</h4>
-<p>Make sure that on you local computer you have the same directory arborescence as at school:</p>
-<ul>
-<li>For <strong>assets</strong>: <code>{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/scenes/{task}/{subtask}/{state}_{version}/{file}</code></li>
-<li>For <strong>shots</strong>: <code>{project}/03_WORK_PIPE/02_SHOT/{dimension}/scenes/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}</code></li>
-</ul>
-<p>To be able to open scenes from school you should have a drive called <code>I:</code>. If you don't have this you can easily fake one with a simple command.</p>
-<p>First you should create a directory called <code>SynologyDrive</code> wherever you want. And inside that directory you put your project arborescence.</p>
-<p>So you have the following:
-<code>{path-to-synology}/SynologyDrive/{project}/...</code></p>
-<p><em>An example</em>:
-<code>C:/Users/JeanJacques/Documents/SynologyDrive/ARAL/...</code></p>
-<p>When this is done you need to execute the following command in a terminal. (You can open a terminal by pressing the <code>windows key</code> &amp; typing <code>cmd</code>)</p>
-<p>For this command make sure you put the path until the <code>SynologyDrive</code> directory, do not include the <code>SynologyDrive</code> directory in the command.</p>
-<pre class="prettyprint source lang-bat"><code>subst I: {path-to-synology}
-
-# example for the path example from above
-subst I: C:/Users/JeanJacques/Documents
-</code></pre>
-<p><em>The only inconvenience is that the virtual drive is destroyed when your computer reboots.</em></p>
-<p>If you want the mount the <code>I:</code> drive on start-up you have to put the command <code>subst I: {path-to-synology}</code> in a <code>.bat</code> file.</p>
-<p>Then copy this bat file to the following directory:</p>
-<pre class="prettyprint source"><code>C:\Users\{your-user}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
-</code></pre>
-<p>Great! When all that is done we can finally go and install Pulsar!</p>
-<h4>II - Download the latest version of Pulsar</h4>
-<p>You can find the latest version of Pulsar on the pulsar website:
-<a href="https://pulsarvfx.com/">pulsarvfx.com</a></p>
-<!-- ![Github Release](https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/github-release.png) -->
-<p>For the moment Pulsar is only available for Windows. OSX &amp; Linux support will come later.</p>
-<p>After executing the <code>.exe</code> Pulsar will launch automatically and you are ready to move on to step 3.</p>
-<h4>III - First Usage</h4>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/first-usage-1.png" alt="Welcome"></p>
-<p>You'll get this screen when you launch Pulsar for the first time. The application will lead you through the setup.</p>
-<p>First you will have the choice to select a <code>light</code> of <code>dark</code> theme for Pulsar. After choosing your theme press the next button.</p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/first-usage-2.png" alt="Theme"></p>
-<p>Next you can choose your primary color for your interface. Pick a color and click next.</p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/first-usage-3.png" alt="Color"></p>
-<p><strong>And now a very important step: Adding your project.</strong></p>
-<p>Fill in the project name on the left. <strong>Don't use spaces in the name!!!</strong>.</p>
-<p>If your project is called 'My Project' you can fill in <code>MyProject</code> or <code>My_Project</code></p>
-<p>The click on <code>Select Project Directory</code> on select your project folder.
-If your project path is <code>I:/SynologyDrive/ARAL/</code> you select the <code>ARAL</code> folder.</p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/first-usage-4.png" alt="Select Project"></p>
-<p><strong>!!!!!!!!!!!!!!!! Very important: Don't forget to click on the plus button to add it to the project list before clicking next. Your project should be added like in the image below</strong></p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/first-usage-5.png" alt="Add Project"></p>
-<p>Once the project is added you will have to configure your project paths</p>
-<ul>
-<li>In the Asset : scene input you paste the following:
-<code>{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/scenes/{task}/{subtask}/{state}_{version}/{file}</code></li>
-<li>And in shot : scene input you paste:
-<code>{project}/03_WORK_PIPE/02_SHOT/{dimension}/scenes/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}</code></li>
-</ul>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/first-usage-5-1.png" alt="Configure Project"></p>
-<p>Next you will have let the Pulsar know where you have installed your software.
-Select the software you want to use with the pipeline by clicking on the software icon.
-You can unselect the software by clicking on the icon again.</p>
-<p><strong>For the moment only Houdini &amp; Maya are supported, other software will be added later this year</strong></p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/first-usage-5-2.png" alt="Setup Software 1"></p>
-<p>On the next screen you will have to select the executables for every selected software.
-Underneath every asked executables you will find the path of the default install location of the executable.
-When this is done click next.</p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/first-usage-5-3.png" alt="Setup Software 2"></p>
-<p>Awesome. Everything is set up and you can now dive into Pulsar</p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/first-usage-6.png" alt="All set up"></p>
-<h4>IV - Using Pulsar</h4>
-<p>The usage of the Pulsar file manager is pretty easy.</p>
-<p>On the top you can select the project you want to browse. Next to the project selection you can to choose to browse <code>Assets</code> of <code>Shots</code></p>
-<p>Underneath that you have the filters. With this you can decide to only show work or published scenes.</p>
-<p>On the bottom you have a classic file manager where you can browse the directories of your assets &amp; shots.</p>
-<p>In the most right browser window, the file browser you can sort the files by version, size, state, tags,...</p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/pulsar-1.png" alt="Pulsar"></p>
-<p>When you click on a file, a file view opens on the bottom. Here you have more details on the project file. You can edit the comment, or add/remove tags.</p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/pulsar-2.png" alt="Pulsar"></p>
-<p>When you click open button on the bottom left of the file detail window, you can choose to open file in the supported software or increment the version.</p>
-<p><strong>For the moment only Maya, Houdini files can be opened with Pulsar</strong></p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/pulsar-3.png" alt="Pulsar"></p>
-<h4>V - Adding assets</h4>
-<p>You can add directories when you click on <code>Create New</code> in the browser columns.</p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/pulsar-4.png" alt="Pulsar"></p>
-<p>You can also add new assets or shots to your project by clicking on the <code>Create New</code> in the file browser.</p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/pulsar-5.png" alt="Pulsar"></p>
-<p>For the moment you can only create an asset from an existing scene file (Maya or Houdini).</p>
-<h4>VI - Connect your softwares to Pulsar</h4>
-<p>You can also open you scene files directly in an instance of your software that is already open.</p>
-<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/pulsar-6.png" alt="Pulsar"></p>
-<p><strong>Connect Houdini to Pulsar</strong>
-Add the following to your <code>houdini.env</code>
-You can find the <code>houdini.env</code> in <code>C:\Users\*YourUser*\Documents\houdiniXX.Y</code></p>
-<pre class="prettyprint source"><code>HOUDINI_PATH = &quot;C:\Users\*YourUser*\Pulsar\engines;&;&quot;
-HOUDINI_PULSAR = &quot;C:\Users\*YourUser*\Pulsar\engines&quot;
-</code></pre>
-<p><strong>Connect Maya to Pulsar</strong>
-Add the following to your <code>Maya.env</code>
-You can find the <code>Maya.env</code> in <code>C:\Users\leege\Documents\maya\20XX</code></p>
-<pre class="prettyprint source"><code>PYTHONPATH = $PYTHONPATH;C:/Users/*YourUser*/Pulsar/engines
-MAYA_PULSAR = $MAYA_SCRIPT_PATH;C:/Users/*YourUser*/Pulsar/engines
-</code></pre></article>
+<p>This version of the pipeline allows you to work on your assets and in September everything can easily be transferred to the computers at school without breaking any projects</p></article>
     </section>
 
 

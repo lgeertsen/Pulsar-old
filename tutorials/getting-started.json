@@ -1,4 +1,14 @@
 {
-    "title": "Getting Started",
-    "children": []
+    "title": "Getting Started | ArtFx Promo 2021",
+    "children": {
+        "projectStructure": {
+            "title": "Setting up the project"
+        },
+        "firstUsage": {
+            "title": "First Usage"
+        },
+        "sockets": {
+            "title": "Installing the Pulsar plugin for Maya & Houdini"
+        }
+    }
 }

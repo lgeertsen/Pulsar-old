@@ -1,7 +1,7 @@
 {
   "opts": {
     "encoding": "utf8",
-    "readme": "./tutorials/getting-started.md",
+    "readme": "./doc.md",
     "destination": "./documentation/",
     "recurse": true,
     "tutorials": "./tutorials/",

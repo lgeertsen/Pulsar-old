@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Tutorial: Getting Started | ArtFx Promo 2021</title>
+    <title>Tutorial: Installing the Pulsar plugin for Maya & Houdini</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -51,29 +51,34 @@
 
 <div id="main">
     
-    <h1 class="page-title">Tutorial: Getting Started | ArtFx Promo 2021</h1>
+    <h1 class="page-title">Tutorial: Installing the Pulsar plugin for Maya & Houdini</h1>
     
 
     <section>
 
 <header>
     
-    <ul>
-        <li><a href="tutorial-projectStructure.html">Setting up the project</a></li>
-    
-        <li><a href="tutorial-firstUsage.html">First Usage</a></li>
-    
-        <li><a href="tutorial-sockets.html">Installing the Pulsar plugin for Maya & Houdini</a></li>
-    </ul>
-    
 
-    <h2>Getting Started | ArtFx Promo 2021</h2>
+    <h2>Installing the Pulsar plugin for Maya & Houdini</h2>
 </header>
 
 <article>
-    <h3>Setting up the project</h3>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/6_lStR4RBP4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-y5r7ATqI94" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <p>Back: <a href="tutorial-getting-started.html">Getting Started | ArtFx Promo 2021</a></p>
+<h4>I - Connect your softwares to Pulsar</h4>
+<p>You can also open you scene files directly in an instance of your software that is already open.</p>
+<p><img src="https://github.com/ArtFXDev/Pulsar/raw/master/tutorials/img/pulsar-6.png" alt="Pulsar"></p>
+<p><strong>Connect Houdini to Pulsar</strong>
+Add the following to your <code>houdini.env</code>
+You can find the <code>houdini.env</code> in <code>C:\Users\*YourUser*\Documents\houdiniXX.Y</code></p>
+<pre class="prettyprint source lang-houdini.env"><code>HOUDINI_PATH = &quot;C:\Users\*YourUser*\Pulsar\engines;&;&quot;
+HOUDINI_PULSAR = &quot;C:\Users\*YourUser*\Pulsar\engines&quot;
+</code></pre>
+<p><strong>Connect Maya to Pulsar</strong>
+Add the following to your <code>Maya.env</code>
+You can find the <code>Maya.env</code> in <code>C:\Users\leege\Documents\maya\20XX</code></p>
+<pre class="prettyprint source lang-Maya.env"><code>PYTHONPATH = $PYTHONPATH;C:/Users/*YourUser*/Pulsar/engines
+MAYA_PULSAR = $MAYA_SCRIPT_PATH;C:/Users/*YourUser*/Pulsar/engines
+</code></pre>
 </article>
 
 </section>

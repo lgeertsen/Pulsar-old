@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Tutorial: Getting Started | ArtFx Promo 2021</title>
+    <title>Tutorial: Setting up the project</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -51,29 +51,64 @@
 
 <div id="main">
     
-    <h1 class="page-title">Tutorial: Getting Started | ArtFx Promo 2021</h1>
+    <h1 class="page-title">Tutorial: Setting up the project</h1>
     
 
     <section>
 
 <header>
     
-    <ul>
-        <li><a href="tutorial-projectStructure.html">Setting up the project</a></li>
-    
-        <li><a href="tutorial-firstUsage.html">First Usage</a></li>
-    
-        <li><a href="tutorial-sockets.html">Installing the Pulsar plugin for Maya & Houdini</a></li>
-    </ul>
-    
 
-    <h2>Getting Started | ArtFx Promo 2021</h2>
+    <h2>Setting up the project</h2>
 </header>
 
 <article>
-    <h3>Setting up the project</h3>
+    <p>Back: <a href="tutorial-getting-started.html">Getting Started | ArtFx Promo 2021</a></p>
+<h4>I - Project Preparation for 5RN students</h4>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6_lStR4RBP4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-y5r7ATqI94" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>Make sure that on you local computer you have the same directory arborescence as at school:</p>
+<ul>
+<li>For <strong>assets</strong>: <code>{project}/03_WORK/01_ASSET_3D/{asset_type}/{asset_name}/{dimension}/scenes/{task}/{subtask}/{state}_{version}/{file}</code></li>
+<li>For <strong>shots</strong>: <code>{project}/03_WORK/02_SHOT/{dimension}/scenes/{sequence}/{shot}/{task}/{subtask}/{state}_{version}/{file}</code></li>
+</ul>
+<p><strong>You can download an empty folder structure for you project <a href="https://mega.nz/file/FBwwyCSY#JhinQLMatsVs-wghJ2c9hV0LJp4Py0qTVUFxJBJw2Do">here</a></strong></p>
+<p>Once downloaded extract the <code>.zip</code> and rename the folder <code>FILM_NAME</code> with the name of your project. This should be the same name as it will be on the server on school.</p>
+<p>Here is the list of the project names for the folder:</p>
+<ul>
+<li>BACKSTAGE</li>
+<li>BARNEY</li>
+<li>COCORICA</li>
+<li>DIVE</li>
+<li>DREAMBLOWER</li>
+<li>FROM_ABOVE</li>
+<li>GOOD_MORNING_KITTY</li>
+<li>GREEN</li>
+<li>HAKAM</li>
+<li>HOSTILE</li>
+<li>PACIFIC_DUMBASS</li>
+<li>PIR_HEARTH</li>
+<li>RELATIVITY</li>
+</ul>
+<p>To be able to open scenes from school you should have a drive called <code>I:</code>. If you don't have this you can easily fake one with a simple command.</p>
+<p>First you should create a directory called <code>SynologyDrive</code> wherever you want. And inside that directory you put your project arborescence.</p>
+<p>So you have the following:
+<code>{path-to-synology}/SynologyDrive/{project}/...</code></p>
+<p><em>An example</em>:
+<code>C:/Users/JeanJacques/Documents/SynologyDrive/BACKSTAGE/...</code></p>
+<p>When this is done you need to execute the following command in a terminal. (You can open a terminal by pressing the <code>windows key</code> &amp; typing <code>cmd</code>)</p>
+<p>For this command make sure you put the path until the <code>SynologyDrive</code> directory, do not include the <code>SynologyDrive</code> directory in the command.</p>
+<pre class="prettyprint source lang-bat"><code>subst I: {path-to-synology}
+
+# example for the path example from above
+subst I: C:/Users/JeanJacques/Documents
+</code></pre>
+<p><em>The only inconvenience is that the virtual drive is destroyed when your computer reboots.</em></p>
+<p>If you want the mount the <code>I:</code> drive on start-up you have to put the command <code>subst I: {path-to-synology}</code> in a <code>.bat</code> file.</p>
+<p>Then copy this bat file to the following directory:</p>
+<pre class="prettyprint source"><code>C:\Users\{your-user}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+</code></pre>
+<p>Great! When all that is done we can finally go and install Pulsar!</p>
+<p>Next: <a href="tutorial-firstUsage.html">First Usage</a></p>
 </article>
 
 </section>
