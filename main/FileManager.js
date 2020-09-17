@@ -9,7 +9,16 @@ import File from './File'
 import Sequence from './Sequence'
 import Logger from './Logger'
 
-export default class FileManager {
+/**
+ * A class that reads files and directories on the local system
+ */
+class FileManager {
+  /**
+   * @static getDirectories - Get the directories from a path that is created from the assetId
+   *
+   * @param {Object}   asset  The AssetId used to reconstruct the path
+   * @param {function} cb     A callback function, the found directories are passed to this function as argument
+   */
   static getDirectories (asset, cb) {
     const formattedPath = FileManager.formatPath(asset)
     const slicedPath = FileManager.slicePath(formattedPath)
@@ -22,6 +31,15 @@ export default class FileManager {
     })
   }
 
+  /**
+   * @static createDirectory - Create a new directory
+   *
+   * @param {string}    path The path where the directory has to be created
+   * @param {string}    name The name of the new directory
+   * @param {functions} cb   A callback function
+   *
+   * @returns {type} Description
+   */
   static createDirectory (path, name, cb) {
     const dirPath = join(path, name)
     mkdir(dirPath, (err) => {
@@ -30,6 +48,12 @@ export default class FileManager {
     })
   }
 
+  /**
+   * @static getFiles - Get the files from a path that is created from the assetId
+   *
+   * @param {Object}   asset The AssetId used to reconstruct the path
+   * @param {function} cb    A callback function, the found files are passed to this function as argument
+   */
   static getFiles (asset, cb) {
     if ('version' in asset.groups) {
       FileManager.getDirectories(asset, dirs => {
@@ -129,6 +153,12 @@ export default class FileManager {
     }
   }
 
+  /**
+   * @static getSequenceFiles - Get the sequences from a path that is created from the assetId
+   *
+   * @param {Object}   asset The AssetId used to reconstruct the path
+   * @param {function} cb    A callback function, the found sequences are passed to this function as argument
+   */
   static getSequenceFiles (asset, cb) {
     if ('version' in asset.groups) {
       FileManager.getDirectories(asset, dirs => {
@@ -306,17 +336,38 @@ export default class FileManager {
     // });
   }
 
+  /**
+   * @static formatPath - Get a path from an AssetId
+   *
+   * @param {Object} asset The AssetId used to create the path
+   *
+   * @returns {string} The path made from the AssetId
+   */
   static formatPath (asset) {
     const formattedPath = format(asset.path, asset.groups)
     return formattedPath
   }
 
+  /**
+   * @static slicePath - Remove undefined parths of a path
+   *
+   * @param {string} path The path with undefined values
+   *
+   * @returns {string} The sliced path
+   */
   static slicePath (path) {
     const index = path.indexOf('<>')
     const slicedPath = path.slice(0, index)
     return slicedPath
   }
 
+  /**
+   * @static formatDirs - Change an array of directories with full paths to an array with only the base names of the directories
+   *
+   * @param {string[]} dirs An array of directories with complete paths
+   *
+   * @returns {string[]} An array of directories with only their base names
+   */
   static formatDirs (dirs) {
     const formattedDirs = []
     for (let i = 0; i < dirs.length; i++) {
@@ -330,6 +381,13 @@ export default class FileManager {
     return formattedDirs
   }
 
+  /**
+   * @static removeDoubles - Remove doubles from a list of directories
+   *
+   * @param {string[]} allDirs An array of directories
+   *
+   * @returns {string[]} An array of directories without doubles
+   */
   static removeDoubles (allDirs) {
     const dirs = []
     for (let i = 0; i < allDirs.length; i++) {
@@ -340,6 +398,12 @@ export default class FileManager {
     return dirs
   }
 
+  /**
+   * @static writeFile - Write to a file
+   *
+   * @param {string} path The path to the file to write
+   * @param {string} data The data that should be written to the file
+   */
   static writeFile (path, data) {
     writeFile(path, data, 'utf8', (err) => {
       if (err) throw err
@@ -347,6 +411,11 @@ export default class FileManager {
     })
   }
 
+  /**
+   * @static deleteFile - Delete a file
+   *
+   * @param {string} path The path to the file to delete
+   */
   static deleteFile (path) {
     unlink(path, (err) => {
       if (err) throw err
@@ -354,3 +423,5 @@ export default class FileManager {
     })
   }
 }
+
+export default FileManager

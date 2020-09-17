@@ -1,0 +1,6258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>background.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/search.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.5/fuse.min.js"></script> -->
+    <script src="scripts/fuse.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme.css">
+    
+      <style>
+        img{width: 70%; margin-left: 15%}
+      </style>
+    
+    
+    
+<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"/>
+                <path d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z"/>
+            </g>
+        </symbol>
+    </defs>
+</svg>
+
+</head>
+<body>
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html"><div class="text">Pulsar</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://pulsarvfx.com/' class='' id='' target='_blank'>pulsarvfx.com</a></li><li><a href='https://github.com/lgeertsen/Pulsar' class='' id='' target='_blank'>Github</a></li><li><a href='https://doc.pulsarvfx.com/frontend' class='' id='' target=''>Frontend Doc</a></li><li><a href='https://doc.pulsarvfx.com/backend' class='' id='' target=''>Backend Doc</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-getting-started.html">Getting Started | ArtFx Promo 2021</a></li></ul><h3>Classes</h3><ul><li><a href="AssetId.html">AssetId</a><ul class='methods'><li data-type='method'><a href="AssetId.html#clearValues">clearValues</a></li><li data-type='method'><a href="AssetId.html#createNewFile">createNewFile</a></li><li data-type='method'><a href="AssetId.html#deleteTag">deleteTag</a></li><li data-type='method'><a href="AssetId.html#execTask">execTask</a></li><li data-type='method'><a href="AssetId.html#saveComment">saveComment</a></li><li data-type='method'><a href="AssetId.html#saveTag">saveTag</a></li><li data-type='method'><a href="AssetId.html#searchNext">searchNext</a></li><li data-type='method'><a href="AssetId.html#setDimension">setDimension</a></li><li data-type='method'><a href="AssetId.html#setDirs">setDirs</a></li><li data-type='method'><a href="AssetId.html#setFiles">setFiles</a></li><li data-type='method'><a href="AssetId.html#setSearchDir">setSearchDir</a></li></ul></li><li><a href="Project.html">Project</a><ul class='methods'><li data-type='method'><a href="Project.html#createNewFile">createNewFile</a></li><li data-type='method'><a href="Project.html#createNewGroupValue">createNewGroupValue</a></li><li data-type='method'><a href="Project.html#deleteTag">deleteTag</a></li><li data-type='method'><a href="Project.html#execTask">execTask</a></li><li data-type='method'><a href="Project.html#formatForRender">formatForRender</a></li><li data-type='method'><a href="Project.html#getData">getData</a></li><li data-type='method'><a href="Project.html#saveComment">saveComment</a></li><li data-type='method'><a href="Project.html#saveTag">saveTag</a></li><li data-type='method'><a href="Project.html#setDimension">setDimension</a></li><li data-type='method'><a href="Project.html#setGroupValue">setGroupValue</a></li></ul></li></ul></div>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">background.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' &amp;&amp; Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode &amp; 1: value is a module id, require it
+/******/ 	// mode &amp; 2: merge all properties of value into the ns
+/******/ 	// mode &amp; 4: return value when already ns object
+/******/ 	// mode &amp; 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode &amp; 1) value = __webpack_require__(value);
+/******/ 		if(mode &amp; 8) return value;
+/******/ 		if((mode &amp; 4) &amp;&amp; typeof value === 'object' &amp;&amp; value &amp;&amp; value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode &amp; 2 &amp;&amp; typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module &amp;&amp; module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./main/background.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./main/AssetId.js":
+/*!*************************!*\
+  !*** ./main/AssetId.js ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Config */ "./main/Config.js");
+/* harmony import */ var _FileManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FileManager */ "./main/FileManager.js");
+/* harmony import */ var _Node__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Node */ "./main/Node.js");
+/* harmony import */ var _NodeManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NodeManager */ "./main/NodeManager.js");
+
+
+
+
+
+/**
+ * Class representing an AssetId.
+ */
+
+class AssetId {
+  /**
+   * constructor - Construcor for an AssetId
+   *
+   * @param  {string} type            The type of the path
+   * @param  {string} path            Unformatted path used to descripe the path to find files
+   * @param  {string} project         The name of the project where the AssetId belongs to
+   * @param  {type} formatForRender   Function to send the assetId to the Render Screen
+   * @returns {AssetId}               AssetId Object
+   */
+  constructor(type, path, project, formatForRender) {
+    const reg = /({[\w|\d]*})+/; // console.log(reg[Symbol.split](path);
+
+    this._type = type;
+    this._path = path; // let pathsSetup = {}
+    //
+    // for(let path in paths) {
+    //   pathsSetup[path] = {}
+    //
+    //   for(let pathType in paths[path]) {
+
+    const groups = reg[Symbol.split](path);
+    const finalGroups = {};
+    const groupOrder = [];
+    const dirs = {};
+    const dirOrder = [];
+
+    for (let i = 0; i &lt; groups.length; i++) {
+      const g = groups[i];
+
+      if (g[0] === '{' &amp;&amp; g[g.length - 1] === '}') {
+        const group = g.slice(1, -1);
+        finalGroups[group] = '&lt;>';
+        groupOrder.push(group); // this[group] = "&lt;>";
+
+        if (group === 'dimension') {
+          finalGroups[group] = '3d';
+        }
+
+        if (!['dimension', 'state', 'version', 'project'].includes(group)) {
+          // let groupList = `${group}List`;
+          // this[groupList] = [];
+          // if(group != "file") {
+          dirs[group] = [];
+          dirOrder.push(group); // }
+        }
+      }
+    }
+
+    this._groups = finalGroups;
+    this._groups.project = project;
+    this._groupOrder = groupOrder;
+    this._directories = dirs;
+    this._directoriesOrder = dirOrder;
+    this._formatForRender = formatForRender;
+  }
+  /**
+   * get path - Getter for the path
+   *
+   * @returns {string} the unformatted asset path
+   */
+
+
+  get path() {
+    return this._path;
+  }
+  /**
+   * get directories - Getter for the file/directory lists found for the assetId
+   *
+   * @returns {Object}  Object of arrays of files/directories(strings)
+   */
+
+
+  get directories() {
+    return this._directories;
+  }
+  /**
+   * get directoriesOrder - Getter of the order the directories appear in the path
+   *
+   * @returns {Array}  Array of strings
+   */
+
+
+  get directoriesOrder() {
+    return this._directoriesOrder;
+  }
+  /**
+   * get groups - Getter of the value of all groups used for formatting the path
+   *
+   * @returns {Object}  Object of all groups with their values, "&lt;>" for empty values
+   */
+
+
+  get groups() {
+    return this._groups;
+  }
+  /**
+   * setDimension - Setter for the "dimension" group if it exists
+   *
+   * @param  {string} dimension "3d" or "2d"
+   */
+
+
+  setDimension(dimension) {
+    if (Object.keys(this._groups).includes('dimension')) {
+      this.clearValues('dimension');
+      this.setSearchDir('project');
+      this._groups.dimension = dimension;
+      this.searchNext();
+    }
+  }
+
+  createNewGroupValue(group, value) {
+    const index = this._groupOrder.indexOf(group);
+
+    const data = {
+      path: this._path,
+      groups: {}
+    };
+
+    for (const i in this._groupOrder) {
+      const g = this._groupOrder[i];
+
+      if (i &lt; index) {
+        data.groups[g] = this._groups[g];
+      } else {
+        data.groups[g] = '&lt;>';
+      }
+    }
+
+    this._directories[group].push(value);
+
+    const formattedPath = _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].formatPath(data);
+    const dirPath = _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].slicePath(formattedPath);
+    _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].createDirectory(dirPath, value, () => this._formatForRender());
+  }
+
+  setGroupValue(group, value) {
+    this.clearValues(group);
+    this.groups[group] = value;
+    this.setSearchDir(group);
+    this.searchNext();
+  }
+  /**
+   * createNewFile - Create new scene file
+   *
+   * @param {string} name     Name of the new file
+   * @param {string} template Path of the template, undefined if no template is used
+   * @param {string} type     The name of the software, undefined if a template is used
+   */
+
+
+  createNewFile(name, template, type) {
+    const nm = new _NodeManager__WEBPACK_IMPORTED_MODULE_4__["default"]();
+    let fileName = name.replace(' ', '_');
+
+    if (template) {
+      const extension = path__WEBPACK_IMPORTED_MODULE_0___default.a.extname(template);
+      fileName = name + extension;
+    }
+
+    const formatPath = _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].formatPath(this);
+    const slicePath = _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].slicePath(formatPath);
+    let filePath;
+
+    if ('version' in this._groups) {
+      const version = this.getMaxVersion() + 1;
+      let versionStr = '' + version.toString();
+
+      while (versionStr.length &lt; 3) {
+        versionStr = '0' + versionStr;
+      }
+
+      const versionString = 'v' + versionStr;
+
+      if ('state' in this._groups) {
+        const stateVersion = `work_${versionString}`;
+        filePath = path__WEBPACK_IMPORTED_MODULE_0___default.a.join(slicePath, stateVersion, fileName);
+      } else {
+        filePath = path__WEBPACK_IMPORTED_MODULE_0___default.a.join(slicePath, versionString, fileName);
+      }
+    } else {
+      filePath = path__WEBPACK_IMPORTED_MODULE_0___default.a.join(slicePath, fileName);
+    }
+
+    if (template) {
+      const nodeTemplate = nm.getNode('base', 'create_asset_from_existing');
+      const node = new _Node__WEBPACK_IMPORTED_MODULE_3__["default"]('temp', 'temp', nodeTemplate, {
+        x: 0,
+        y: 0
+      });
+      node.setInputValue('path', path__WEBPACK_IMPORTED_MODULE_0___default.a.normalize(template));
+      node.setInputValue('file', path__WEBPACK_IMPORTED_MODULE_0___default.a.normalize(filePath));
+      node.execute(() => _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].getFiles(this, files => this.setFiles(files)));
+    } else {
+      const nodeTemplate = nm.getNode(type, 'create_asset');
+      const node = new _Node__WEBPACK_IMPORTED_MODULE_3__["default"]('temp', 'temp', nodeTemplate, {
+        x: 0,
+        y: 0
+      });
+      node.setInputValue('file', filePath);
+      node.execute(() => _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].getFiles(this, files => this.setFiles(files)));
+    }
+  }
+  /**
+   * execTask - Exevute a task with a scene file
+   *
+   * @param {string} softwareId   Id of the connected software, 'new' if you want to launch a new instance
+   * @param {string} softwareType Type of software the task needs to be executed in
+   * @param {string} command      The script to be executed in the software
+   * @param {array} args         THe arguments to pass to the command
+   */
+
+
+  execTask(softwareId, softwareType, command, args) {
+    const nm = new _NodeManager__WEBPACK_IMPORTED_MODULE_4__["default"]();
+
+    if (softwareId === 'new') {
+      const config = new _Config__WEBPACK_IMPORTED_MODULE_1__["default"]();
+      const softs = config.config.softwares;
+      const nodeCategory = softwareType;
+      const nodeName = `${command}_new`;
+      const nodeTemplate = nm.getNode(nodeCategory, nodeName);
+      const node = new _Node__WEBPACK_IMPORTED_MODULE_3__["default"]('temp', 'temp', nodeTemplate, {
+        x: 0,
+        y: 0
+      });
+      node.setInputValue('path', softs[softwareType]);
+
+      for (const arg in args) {
+        node.setInputValue(arg, args[arg]);
+      }
+
+      node.execute(() => _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].getFiles(this, files => this.setFiles(files)));
+    } else {
+      const nodeTemplate = nm.getNode(softwareType, command);
+      const node = new _Node__WEBPACK_IMPORTED_MODULE_3__["default"]('temp', 'temp', nodeTemplate, {
+        x: 0,
+        y: 0
+      });
+
+      for (const arg in args) {
+        node.setInputValue(arg, args[arg]);
+      }
+
+      node.executeSocket(softwareId, () => _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].getFiles(this, files => this.setFiles(files)));
+    }
+  }
+
+  getMaxVersion() {
+    const files = this._directories.file;
+    if (!files.length) return 0;
+    let max = 0;
+
+    for (const i in files) {
+      const file = files[i];
+      const version = file.getVersionAsInt();
+
+      if (version > max) {
+        max = version;
+      }
+    }
+
+    return max;
+  }
+  /**
+   * clearValues - function to clear all groups and directories that come after the given group in the groupOrder Array
+   *
+   * @param  {string} group   the name of the group for wich all groups that come after in the groupOrder list should be cleared
+   */
+
+
+  clearValues(group) {
+    const index = this._groupOrder.indexOf(group);
+
+    if (index === -1) {
+      return;
+    }
+
+    for (let i = index + 1; i &lt; this._groupOrder.length; i++) {
+      const item = this._groupOrder[i];
+
+      if (item === 'dimension') {
+        continue;
+      }
+
+      this._groups[item] = '&lt;>';
+
+      if (item in this._directories) {
+        this._directories[item] = [];
+      }
+    }
+  }
+  /**
+   * setSearchDir - Find the next name of the next group for wich directories or files should be searched for on disk
+   *
+   * @param  {string} group the name of the last set group variable
+   */
+
+
+  setSearchDir(group) {
+    let index = this._groupOrder.indexOf(group);
+
+    if (index === -1) {
+      return;
+    }
+
+    index += 1;
+    let searchGroup = this._groupOrder[index];
+
+    while (!(searchGroup in this._directories) &amp;&amp; index &lt;= this._groupOrder.length) {
+      index += 1;
+      searchGroup = this._groupOrder[index];
+    }
+
+    this._searchGroup = searchGroup;
+  }
+  /**
+   * searchNext - Search disk for the files/directories based on the value of _searchGroup
+   *
+   */
+
+
+  searchNext() {
+    if (this._searchGroup !== undefined) {
+      if (this._searchGroup === 'file') {
+        if (this._type === 'render') {
+          _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].getSequenceFiles(this, files => this.setFiles(files));
+        } else {
+          _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].getFiles(this, files => this.setFiles(files));
+        }
+      } else {
+        _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].getDirectories(this, dirs => this.setDirs(dirs));
+      }
+    } else {
+      this._formatForRender();
+    }
+  } //
+  // setFiles(files) {
+  //   this._files = files;
+  //   this.formatForRender();
+  // }
+
+  /**
+   * setDirs - Set the found directories and send the AssetId to the Screen Renderer
+   *
+   * @param  {Array} dirs Array of directories
+   */
+
+
+  setDirs(dirs) {
+    const formattedDirs = _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].formatDirs(dirs); // let arrangedDirs = FileManager.removeDoubles(formattedDirs)
+
+    this._directories[this._searchGroup] = formattedDirs;
+
+    this._formatForRender();
+  }
+  /**
+   * setFiles - Set the found files and send the AssetId to the Screen Renderer
+   *
+   * @param  {Array} files Array of files
+   */
+
+
+  setFiles(files) {
+    this._directories.file = files;
+
+    this._formatForRender();
+  }
+  /**
+   * saveComment - Save the comment of a file
+   *
+   * @param {string} comment A comment
+   */
+
+
+  saveComment(comment) {
+    const file = this._groups.file;
+    const dirPath = path__WEBPACK_IMPORTED_MODULE_0___default.a.dirname(file.path);
+    const commentPath = path__WEBPACK_IMPORTED_MODULE_0___default.a.join(dirPath, 'comment.txt');
+    _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].writeFile(commentPath, comment);
+  }
+  /**
+   * saveTag - Add a tag to a file
+   *
+   * @param {string} tag Name of the tag
+   */
+
+
+  saveTag(tag) {
+    const file = this._groups.file;
+    const dirPath = path__WEBPACK_IMPORTED_MODULE_0___default.a.dirname(file.path);
+    const tagFile = `${tag}.tag`;
+    const tagPath = path__WEBPACK_IMPORTED_MODULE_0___default.a.join(dirPath, tagFile);
+    _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].writeFile(tagPath, '');
+  }
+  /**
+   * deleteTag - Remove a tog from a file
+   *
+   * @param {string} tag Name of the tag
+   */
+
+
+  deleteTag(tag) {
+    const file = this._groups.file;
+    const dirPath = path__WEBPACK_IMPORTED_MODULE_0___default.a.dirname(file.path);
+    const tagFile = `${tag}.tag`;
+    const tagPath = path__WEBPACK_IMPORTED_MODULE_0___default.a.join(dirPath, tagFile);
+    _FileManager__WEBPACK_IMPORTED_MODULE_2__["default"].deleteFile(tagPath);
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (AssetId);
+
+/***/ }),
+
+/***/ "./main/Config.js":
+/*!************************!*\
+  !*** ./main/Config.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Config; });
+/* harmony import */ var os__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! os */ "os");
+/* harmony import */ var os__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(os__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! fs */ "fs");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var ncp__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ncp */ "ncp");
+/* harmony import */ var ncp__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ncp__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+class Config {
+  constructor() {
+    if (!!this.constructor.instance) {
+      return this.constructor.instance;
+    }
+
+    this.constructor.instance = this;
+    this._config = {};
+    this._file = '.pulsar.json';
+    this._path = Object(path__WEBPACK_IMPORTED_MODULE_1__["join"])(Object(os__WEBPACK_IMPORTED_MODULE_0__["homedir"])(), 'Pulsar');
+
+    if (!fs__WEBPACK_IMPORTED_MODULE_2___default.a.existsSync(this._path)) {
+      fs__WEBPACK_IMPORTED_MODULE_2___default.a.mkdirSync(this._path);
+    }
+
+    this._enginePath = Object(path__WEBPACK_IMPORTED_MODULE_1__["join"])(this._path, 'engines');
+    this._nodesPath = Object(path__WEBPACK_IMPORTED_MODULE_1__["join"])(this._path, 'nodes'); // if (process.env.NODE_ENV === 'production') {
+    //   this._enginePath = join(this._path, 'engines')
+    //   if (!fs.existsSync(this._enginePath)) {
+    //     ncp(join(__dirname, '../../../engines'), this._enginePath, function (err) {
+    //       if (err) {
+    //         return console.error(err)
+    //       }
+    //       console.log('---- Copied engines ----')
+    //     })
+    //   }
+    //   this._nodesPath = join(this._path, 'nodes')
+    //   if (!fs.existsSync(this._enginePath)) {
+    //     ncp(join(__dirname, '../../../nodes'), this._nodesPath, function (err) {
+    //       if (err) {
+    //         return console.error(err)
+    //       }
+    //       console.log('---- Copied nodes ----')
+    //     })
+    //   }
+    // } else {
+    //   this._enginePath = join(this._path, 'engines')
+    //   this._nodesPath = join(this._path, 'nodes')
+    //
+    // }
+
+    const pathSplit = this._path.split(path__WEBPACK_IMPORTED_MODULE_1__["sep"]);
+
+    pathSplit.push(this._file);
+    this._filePath = Object(path__WEBPACK_IMPORTED_MODULE_1__["join"])(...pathSplit);
+  }
+
+  get config() {
+    return this._config;
+  }
+
+  set config(config) {
+    this._config = config;
+  }
+
+  checkEngines() {
+    return new Promise((resolve, reject) => {
+      if (false) {} else {
+        if (!fs__WEBPACK_IMPORTED_MODULE_2___default.a.existsSync(this._enginePath)) {
+          ncp__WEBPACK_IMPORTED_MODULE_3___default()('C:/Users/leege/_pulsar/engines', this._enginePath, function (err) {
+            if (err) {
+              reject(err); // return console.error(err)
+            }
+
+            console.log('---- Copied engines ----');
+            resolve();
+          });
+        } else {
+          resolve();
+        }
+      }
+    });
+  }
+
+  checkNodes() {
+    return new Promise((resolve, reject) => {
+      if (false) {} else {
+        if (!fs__WEBPACK_IMPORTED_MODULE_2___default.a.existsSync(this._nodesPath)) {
+          ncp__WEBPACK_IMPORTED_MODULE_3___default()('C:/Users/leege/_pulsar/nodes', this._nodesPath, function (err) {
+            if (err) {
+              console.error(err);
+              reject(err); // return console.error(err)
+            }
+
+            console.log('---- Copied nodes ----');
+            resolve();
+          });
+        } else {
+          resolve();
+        }
+      }
+    });
+  }
+
+  initConfig(cb) {
+    fs__WEBPACK_IMPORTED_MODULE_2___default.a.copyFile('.pulsar.json', this._filePath, err => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log('----- config copied successfully');
+        this.readConfig(cb);
+      }
+    });
+  }
+
+  readConfig() {
+    return new Promise((resolve, reject) => {
+      fs__WEBPACK_IMPORTED_MODULE_2___default.a.readFile(this._filePath, (err, data) => {
+        if (err) {
+          console.error(err);
+
+          if (err.code === 'ENOENT') {
+            console.log('----- Config does not exist');
+            fs__WEBPACK_IMPORTED_MODULE_2___default.a.copyFile('.pulsar.json', this._filePath, err => {
+              if (err) {
+                console.error(err);
+              } else {
+                console.log('----- config copied successfully');
+                fs__WEBPACK_IMPORTED_MODULE_2___default.a.readFile(this._filePath, (err, data) => {
+                  if (err) {} else {
+                    try {
+                      const config = JSON.parse(data);
+                      this._config = config;
+                      resolve(this._config);
+                    } catch (e) {
+                      console.error(e);
+                      reject(e);
+                    }
+                  }
+                });
+              }
+            });
+          }
+        } else {
+          try {
+            const config = JSON.parse(data);
+            this._config = config;
+            resolve(this._config);
+          } catch (e) {
+            console.error(e);
+            reject(e);
+          }
+        }
+      });
+    });
+  }
+
+  setConfig(data, cb) {
+    const keys = Object.keys(data);
+
+    for (let i = 0; i &lt; keys.length; i++) {
+      this._config[keys[i]] = data[keys[i]];
+    }
+
+    const jsonContent = JSON.stringify(this._config, null, 2);
+    fs__WEBPACK_IMPORTED_MODULE_2___default.a.writeFile(this._filePath, jsonContent, 'utf8', function (err) {
+      if (err) {
+        console.log('An error occured while writing JSON Object to File.'); // return console.log(err);
+      }
+
+      cb();
+    });
+  }
+
+}
+
+/***/ }),
+
+/***/ "./main/Edge.js":
+/*!**********************!*\
+  !*** ./main/Edge.js ***!
+  \**********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Edge; });
+class Edge {
+  constructor(nodeIn, attribIn, nodeOut, attribOut) {
+    this._inputNode = nodeIn;
+    this._inputAttribute = attribIn;
+    this._outputNode = nodeOut;
+    this._outputAttribute = attribOut;
+  }
+
+  get inputNode() {
+    return this._inputNode;
+  }
+
+  get inputAttribute() {
+    return this._inputAttribute;
+  }
+
+  get outputNode() {
+    return this._outputNode;
+  }
+
+  get outputAttribute() {
+    return this._outputAttribute;
+  }
+
+  formatForRender() {
+    return `${this._outputNode}#${this._outputAttribute}`;
+  }
+
+}
+
+/***/ }),
+
+/***/ "./main/File.js":
+/*!**********************!*\
+  !*** ./main/File.js ***!
+  \**********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return File; });
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! fs */ "fs");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_0__);
+
+class File {
+  constructor(name, extension, size, modified, comment, tags, path) {
+    this.name = name;
+    this.state = undefined;
+    this.version = undefined;
+    this.extension = extension;
+    this.size = size;
+    this.modified = modified;
+    this.comment = comment;
+    this.tags = tags;
+    this.path = path;
+  }
+
+  get fullName() {
+    return `${this._name}.${this._extension}`;
+  }
+
+  getVersionAsInt() {
+    return parseInt(this.version);
+  }
+
+  saveComment(comment) {
+    this._comment = comment;
+
+    const splitPath = this._path.split('/');
+
+    const i = splitPath.length - 1;
+    splitPath[i] = 'comment.txt';
+    const path = splitPath.join('/');
+    Object(fs__WEBPACK_IMPORTED_MODULE_0__["writeFile"])(path, comment, err => {
+      if (err) return console.log(err);
+      console.log('comment saved');
+    });
+  }
+
+  saveTag(tag) {
+    this._tags.push(tag);
+
+    const splitPath = this._path.split('/');
+
+    const i = splitPath.length - 1;
+    splitPath[i] = `${tag}.tag`;
+    const path = splitPath.join('/');
+    Object(fs__WEBPACK_IMPORTED_MODULE_0__["writeFile"])(path, '', err => {
+      if (err) return console.log(err);
+      console.log('tag saved');
+    });
+  }
+
+  deleteTag(tag) {
+    this._tags.push(tag);
+
+    const splitPath = this._path.split('/');
+
+    const i = splitPath.length - 1;
+    splitPath[i] = `${tag}.tag`;
+    const path = splitPath.join('/');
+    Object(fs__WEBPACK_IMPORTED_MODULE_0__["unlink"])(path, err => {
+      if (err) {
+        console.error(err);
+      } // file removed
+
+    });
+  }
+
+  formatDate() {
+    const year = this._modified.getFullYear();
+
+    const month = this._modified.getMonth() + 1;
+
+    const day = this._modified.getDate();
+
+    const hours = this._modified.getHours();
+
+    const minutes = this._modified.getMinutes(); // let seconds = this._modified.getSeconds();
+
+
+    return `${month}/${day}/${year} ${hours}:${minutes}`;
+  }
+
+  formatForRender() {
+    const file = {
+      class: 'file',
+      name: this._name,
+      state: this._state,
+      version: this._version,
+      extension: this._extension,
+      size: this._size,
+      modified: this.formatDate(),
+      tags: this._tags,
+      path: this._path
+    };
+    return file;
+  }
+
+  format() {
+    const file = {
+      name: this._name,
+      state: this._state,
+      version: this._version,
+      extension: this._extension,
+      size: this._size,
+      modified: this.formatDate(),
+      comment: this._comment,
+      tags: this._tags,
+      path: this._path
+    };
+    return file;
+  }
+
+}
+
+/***/ }),
+
+/***/ "./main/FileManager.js":
+/*!*****************************!*\
+  !*** ./main/FileManager.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FileManager; });
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fs */ "fs");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var string_format__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! string-format */ "string-format");
+/* harmony import */ var string_format__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(string_format__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var glob__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! glob */ "glob");
+/* harmony import */ var glob__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(glob__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var fileseq__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! fileseq */ "fileseq");
+/* harmony import */ var fileseq__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(fileseq__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _File__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./File */ "./main/File.js");
+/* harmony import */ var _Sequence__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Sequence */ "./main/Sequence.js");
+/* harmony import */ var _Logger__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Logger */ "./main/Logger.js");
+
+
+
+
+
+
+
+
+class FileManager {
+  static getDirectories(asset, cb) {
+    const formattedPath = FileManager.formatPath(asset);
+    const slicedPath = FileManager.slicePath(formattedPath);
+    glob__WEBPACK_IMPORTED_MODULE_3___default()(`${slicedPath}*/`, {}, (err, dirs) => {
+      if (err) {
+        _Logger__WEBPACK_IMPORTED_MODULE_7__["default"].error(err);
+      } else {
+        cb(dirs);
+      }
+    });
+  }
+
+  static createDirectory(path, name, cb) {
+    const dirPath = Object(path__WEBPACK_IMPORTED_MODULE_0__["join"])(path, name);
+    Object(fs__WEBPACK_IMPORTED_MODULE_1__["mkdir"])(dirPath, err => {
+      if (err) throw err;
+      cb();
+    });
+  }
+
+  static getFiles(asset, cb) {
+    if ('version' in asset.groups) {
+      FileManager.getDirectories(asset, dirs => {
+        const allFiles = [];
+        const formattedDirs = FileManager.formatDirs(dirs);
+
+        for (let i = 0; i &lt; dirs.length; i++) {
+          const files = glob__WEBPACK_IMPORTED_MODULE_3___default.a.sync(`${dirs[i]}*`, {
+            nodir: true
+          });
+          const formattedFiles = FileManager.formatDirs(files);
+          let state, version;
+
+          if ('state' in asset.groups) {
+            const dirSplit = formattedDirs[i].split('_');
+            state = dirSplit[0];
+            version = state === 'wip' || state === 'render' ? '_' : dirSplit[1] === 'valid' ? dirSplit[1] : dirSplit[1].substr(1);
+          } else {
+            // version = parseInt(formattedDirs[i].substr(1));
+            version = formattedDirs[i];
+          }
+
+          let comment = '';
+          const tags = [];
+
+          for (let j = 0; j &lt; files.length; j++) {
+            const f = formattedFiles[j];
+            const fileSplit = f.split('.');
+            const ext = fileSplit[fileSplit.length - 1];
+
+            if (formattedFiles[j] === 'comment.txt') {
+              comment = Object(fs__WEBPACK_IMPORTED_MODULE_1__["readFileSync"])(files[j], 'utf8');
+            } else if (ext === 'tag') {
+              tags.push(fileSplit[0]);
+            }
+          }
+
+          for (let j = 0; j &lt; files.length; j++) {
+            const f = formattedFiles[j];
+            const fileSplit = f.split('.');
+            const ext = fileSplit[fileSplit.length - 1];
+
+            if (formattedFiles[j] !== 'comment.txt' &amp;&amp; ext !== 'tag') {
+              const stats = Object(fs__WEBPACK_IMPORTED_MODULE_1__["statSync"])(files[j]);
+              const file = new _File__WEBPACK_IMPORTED_MODULE_5__["default"](fileSplit[0], ext, stats.size, stats.mtime, comment, tags, files[j]);
+
+              if ('state' in asset.groups) {
+                file.state = state;
+              }
+
+              file.version = version;
+              allFiles.push(file);
+            }
+          }
+        }
+
+        cb(allFiles);
+      });
+    } else {
+      const formattedPath = FileManager.formatPath(asset);
+      const slicedPath = FileManager.slicePath(formattedPath);
+      const allFiles = [];
+      const files = glob__WEBPACK_IMPORTED_MODULE_3___default.a.sync(`${slicedPath}*`, {
+        nodir: true
+      });
+      const formattedFiles = FileManager.formatDirs(files);
+      let comment = '';
+      const tags = [];
+
+      for (let j = 0; j &lt; files.length; j++) {
+        const f = formattedFiles[j];
+        const fileSplit = f.split('.');
+        const ext = fileSplit[fileSplit.length - 1];
+
+        if (formattedFiles[j] === 'comment.txt') {
+          comment = Object(fs__WEBPACK_IMPORTED_MODULE_1__["readFileSync"])(files[j], 'utf8');
+        } else if (ext === 'tag') {
+          tags.push(fileSplit[0]);
+        }
+      }
+
+      for (let j = 0; j &lt; files.length; j++) {
+        const f = formattedFiles[j];
+        const fileSplit = f.split('.');
+        const ext = fileSplit[fileSplit.length - 1];
+
+        if (formattedFiles[j] !== 'comment.txt' &amp;&amp; ext !== 'tag') {
+          const stats = Object(fs__WEBPACK_IMPORTED_MODULE_1__["statSync"])(files[j]);
+          const file = new _File__WEBPACK_IMPORTED_MODULE_5__["default"](fileSplit[0], ext, stats.size, stats.mtime, comment, tags, files[j]);
+          allFiles.push(file);
+        }
+      }
+
+      cb(allFiles);
+    }
+  }
+
+  static getSequenceFiles(asset, cb) {
+    if ('version' in asset.groups) {
+      FileManager.getDirectories(asset, dirs => {
+        const allFiles = [];
+        const formattedDirs = FileManager.formatDirs(dirs);
+
+        for (let i = 0; i &lt; dirs.length; i++) {
+          // let files = glob.sync(`${dirs[i]}*`, {nodir: true});
+          const fileSequences = Object(fileseq__WEBPACK_IMPORTED_MODULE_4__["findSequencesOnDisk"])(dirs[i]); // let formattedFiles = FileManager.formatDirs(files);
+
+          let state, version;
+
+          if ('state' in asset.groups) {
+            const dirSplit = formattedDirs[i].split('_');
+            state = dirSplit[0];
+            version = state === 'wip' || state === 'render' ? '_' : dirSplit[1].substr(1);
+          } else {
+            // version = parseInt(formattedDirs[i].substr(1));
+            version = formattedDirs[i];
+          }
+
+          let comment = '';
+          const tags = [];
+
+          for (let j = 0; j &lt; fileSequences.length; j++) {
+            //     let f = formattedFiles[j];
+            const s = fileSequences[j];
+            const fileSplit = s.split('.'); //     let ext = fileSplit[fileSplit.length-1];
+
+            if (s.basename + s.extension === 'comment.txt') {
+              comment = Object(fs__WEBPACK_IMPORTED_MODULE_1__["readFileSync"])(s.dirname + s.basename + s.extension, 'utf8');
+            } else if (s.extension === 'tag') {
+              tags.push(fileSplit[0]);
+            }
+          }
+
+          for (let j = 0; j &lt; fileSequences.length; j++) {
+            const s = fileSequences[j]; // let f = formattedFiles[j];
+            // let fileSplit = f.split(".");
+            // let ext = fileSplit[fileSplit.length-1];
+
+            const ext = s.extension.substr(1);
+
+            if (s.basename + s.extension !== 'comment.txt' &amp;&amp; ext !== 'tag' &amp;&amp; s._frameSet !== undefined) {
+              // let stats = statSync(files[j]);
+              //
+              const sequence = new _Sequence__WEBPACK_IMPORTED_MODULE_6__["default"](s, comment, tags);
+
+              if ('state' in asset.groups) {
+                sequence.state = state;
+              }
+
+              sequence.version = version;
+              allFiles.push(sequence);
+            }
+          }
+        }
+
+        cb(allFiles);
+      });
+    } else {
+      const formattedPath = FileManager.formatPath(asset);
+      const slicedPath = FileManager.slicePath(formattedPath);
+      const allFiles = [];
+      const files = glob__WEBPACK_IMPORTED_MODULE_3___default.a.sync(`${slicedPath}*`, {
+        nodir: true
+      });
+      const formattedFiles = FileManager.formatDirs(files);
+      let comment = '';
+      const tags = [];
+
+      for (let j = 0; j &lt; files.length; j++) {
+        const f = formattedFiles[j];
+        const fileSplit = f.split('.');
+        const ext = fileSplit[fileSplit.length - 1];
+
+        if (formattedFiles[j] === 'comment.txt') {
+          comment = Object(fs__WEBPACK_IMPORTED_MODULE_1__["readFileSync"])(files[j], 'utf8');
+        } else if (ext === 'tag') {
+          tags.push(fileSplit[0]);
+        }
+      }
+
+      for (let j = 0; j &lt; files.length; j++) {
+        const f = formattedFiles[j];
+        const fileSplit = f.split('.');
+        const ext = fileSplit[fileSplit.length - 1];
+
+        if (formattedFiles[j] !== 'comment.txt' &amp;&amp; ext !== 'tag') {
+          const stats = Object(fs__WEBPACK_IMPORTED_MODULE_1__["statSync"])(files[j]);
+          const file = new _File__WEBPACK_IMPORTED_MODULE_5__["default"](fileSplit[0], ext, stats.size, stats.mtime, comment, tags, files[j]);
+          allFiles.push(file);
+        }
+      }
+
+      cb(allFiles);
+    } // FileManager.getDirectories(asset, dirs => {
+    //   let allFiles = [];
+    //   let formattedDirs = FileManager.formatDirs(dirs);
+    //   for(let i = 0; i &lt; dirs.length; i++) {
+    //     let files = glob.sync(`${dirs[i]}*`, {nodir: true});
+    //     let formattedFiles = FileManager.formatDirs(files);
+    //     let dirSplit = formattedDirs[i].split("_");
+    //     let state = dirSplit[0];
+    //     let version = state == "wip" ? "_" : dirSplit[1];
+    //
+    //     let comment = "";
+    //     let tags = [];
+    //     let sequences = [];
+    //
+    //     for(let j = 0; j &lt; files.length; j++) {
+    //       let f = formattedFiles[j];
+    //       let fileSplit = f.split(".");
+    //       let ext = fileSplit[fileSplit.length-1];
+    //       if(fileSplit.length === 3 &amp;&amp; !Number.isNaN(fileSplit[1]) &amp;&amp; !sequences.includes(fileSplit[0])){
+    //         sequences.push(fileSplit[0]);
+    //       }
+    //       if(formattedFiles[j] == "comment.txt") {
+    //         comment = readFileSync(files[j], "utf8");
+    //       } else if(ext == "tag") {
+    //         tags.push(fileSplit[0]);
+    //       }
+    //     }
+    //     sequences.forEach((sequence, i) => {
+    //       sequences[i] = new Sequence(sequence);
+    //     });
+    //
+    //     for(let j = 0; j &lt; files.length; j++) {
+    //       let f = formattedFiles[j];
+    //       let fileSplit = f.split(".");
+    //       let ext = fileSplit[fileSplit.length-1];
+    //       let stats = statSync(files[j]);
+    //
+    //       if(fileSplit.length === 3 &amp;&amp; !Number.isNaN(fileSplit[1])){
+    //         var k = 0;
+    //         sequences.forEach((sequence, i) => {
+    //           if(sequence.name === fileSplit[0]){
+    //             sequence.addFile(
+    //               fileSplit[0],
+    //               state,
+    //               version,
+    //               ext,
+    //               stats.size,
+    //               stats.mtime,
+    //               comment,
+    //               tags,
+    //               files[j],
+    //               fileSplit[1]
+    //             )
+    //           }
+    //         });
+    //       }
+    //       else{
+    //         if(formattedFiles[j] != "comment.txt" &amp;&amp; ext != "tag") {
+    //
+    //           let file = new File(
+    //             fileSplit[0],
+    //             state,
+    //             version,
+    //             ext,
+    //             stats.size,
+    //             stats.mtime,
+    //             comment,
+    //             tags,
+    //             files[j]
+    //           );
+    //           allFiles.push(file);
+    //         }
+    //       }
+    //     }
+    //     var k = 0;
+    //     console.log(sequences);
+    //     sequences.forEach((sequence, i) => {
+    //       allFiles.push(sequence);
+    //     });
+    //   }
+    //   cb(allFiles);
+    // });
+
+  }
+
+  static formatPath(asset) {
+    const formattedPath = string_format__WEBPACK_IMPORTED_MODULE_2___default()(asset.path, asset.groups);
+    return formattedPath;
+  }
+
+  static slicePath(path) {
+    const index = path.indexOf('&lt;>');
+    const slicedPath = path.slice(0, index);
+    return slicedPath;
+  }
+
+  static formatDirs(dirs) {
+    const formattedDirs = [];
+
+    for (let i = 0; i &lt; dirs.length; i++) {
+      // let dirPath = dirs[i].slice(0, -1);
+      // let index = dirPath.lastIndexOf("/");
+      // let dir = dirPath.slice(index+1);
+      const dir = Object(path__WEBPACK_IMPORTED_MODULE_0__["basename"])(dirs[i]);
+      formattedDirs.push(dir);
+    }
+
+    return formattedDirs;
+  }
+
+  static removeDoubles(allDirs) {
+    const dirs = [];
+
+    for (let i = 0; i &lt; allDirs.length; i++) {
+      if (!dirs.includes(allDirs[i])) {
+        dirs.push(allDirs[i]);
+      }
+    }
+
+    return dirs;
+  }
+
+  static writeFile(path, data) {
+    Object(fs__WEBPACK_IMPORTED_MODULE_1__["writeFile"])(path, data, 'utf8', err => {
+      if (err) throw err;
+      console.log('The file has been saved!');
+    });
+  }
+
+  static deleteFile(path) {
+    Object(fs__WEBPACK_IMPORTED_MODULE_1__["unlink"])(path, err => {
+      if (err) throw err;
+      console.log(`${path} was deleted`);
+    });
+  }
+
+}
+
+/***/ }),
+
+/***/ "./main/Graph.js":
+/*!***********************!*\
+  !*** ./main/Graph.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Graph; });
+/* harmony import */ var child_process__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! child_process */ "child_process");
+/* harmony import */ var child_process__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(child_process__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Edge__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Edge */ "./main/Edge.js");
+/* harmony import */ var _Logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Logger */ "./main/Logger.js");
+/* harmony import */ var _Node__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Node */ "./main/Node.js");
+/* harmony import */ var _Renderer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Renderer */ "./main/Renderer.js");
+
+
+
+
+
+class Graph {
+  constructor(nodeManager, server) {
+    this._nodeManager = nodeManager;
+    this._server = server;
+    this._name = undefined;
+    this._path = undefined;
+    this._nodes = {}; // for(let id in nodes) {
+    //   this._nodes[id] = new Node(nodes[id]);
+    // }
+
+    this._edges = {}; // for(let input in edges) {
+    //   this._edges[input] = new Edge(input, edges[input]);
+    // }
+
+    this._executionPriority = {};
+    this._executionOrder = [];
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  get graph() {
+    return {
+      name: this._name,
+      nodes: this._nodes,
+      edges: this._edges
+    };
+  }
+
+  set graph(data) {
+    this._name = data.name;
+    this._path = data.path;
+    this._nodes = {};
+
+    for (const id in data.nodes) {
+      const pos = {
+        x: data.nodes[id].x,
+        y: data.nodes[id].y
+      };
+      this._nodes[id] = new _Node__WEBPACK_IMPORTED_MODULE_3__["default"](data.nodes[id].id, data.nodes[id].name, data.nodes[id], pos);
+    }
+
+    this._edges = {};
+
+    for (const id in data.edges) {
+      this._edges[id] = new _Edge__WEBPACK_IMPORTED_MODULE_1__["default"](data.edges[id]._inputNode, data.edges[id]._inputAttribute, data.edges[id]._outputNode, data.edges[id]._outputAttribute);
+    }
+
+    this.formatForRender();
+  }
+
+  addNode(type, task, position) {
+    const node = this._nodeManager.getNode(type, task); // let idCount = 0;
+    // for(let key in this._nodes) {
+    //   if(key.startsWith(node.id)) {
+    //     idCount += 1;
+    //   }
+    // }
+
+
+    let idCount = 1;
+    let id = `${node.id}_${idCount}`;
+
+    while (id in this._nodes) {
+      idCount += 1;
+      id = `${node.id}_${idCount}`;
+    }
+
+    this._nodes[id] = new _Node__WEBPACK_IMPORTED_MODULE_3__["default"](id, `${node.name} ${idCount}`, node, position);
+    return id;
+  }
+
+  deleteNode(id) {
+    delete this._nodes[id];
+
+    for (const key in this._edges) {
+      if (this._edges[key].inputNode === id || this._edges[key].outputNode === id) {
+        delete this._edges[key];
+      }
+    }
+
+    return id;
+  }
+
+  addEdge(nodeIn, attribIn, nodeOut, attribOut) {
+    if (nodeIn === attribIn &amp;&amp; nodeOut === attribOut) {
+      this._edges[`${nodeIn}#${attribIn}`] = new _Edge__WEBPACK_IMPORTED_MODULE_1__["default"](nodeIn, attribIn, nodeOut, attribOut);
+    } else {
+      const inIndex = this._nodes[nodeIn].inputs.findIndex(item => {
+        return item.name === attribIn;
+      });
+
+      const inType = this._nodes[nodeIn].inputs[inIndex].type;
+
+      const outIndex = this._nodes[nodeOut].outputs.findIndex(item => {
+        return item.name === attribOut;
+      });
+
+      const outType = this._nodes[nodeOut].outputs[outIndex].type;
+
+      if (inType === outType || inType === 'any') {
+        this._edges[`${nodeIn}#${attribIn}`] = new _Edge__WEBPACK_IMPORTED_MODULE_1__["default"](nodeIn, attribIn, nodeOut, attribOut);
+      }
+    }
+
+    if (this._nodes[nodeIn].subType === 'merge') {
+      const count = this._nodes[nodeIn].inputs.length;
+      const newInput = {
+        name: `input${count + 1}`,
+        label: `Input ${count + 1}`,
+        description: 'Input',
+        value: '',
+        type: 'any'
+      };
+
+      this._nodes[nodeIn].inputs.push(newInput);
+    }
+  }
+
+  setNodeName(id, name) {
+    this._nodes[id].newName = name;
+  }
+
+  setNodePosition(id, position) {
+    this._nodes[id].position = position;
+  }
+
+  setNodeInputValue(id, input, value) {
+    this._nodes[id].setInputValue(input, value);
+  }
+
+  walkGraph(node, depth) {
+    for (const input in this._edges) {
+      if (this._edges[input].inputNode === node.id) {
+        const outputId = this._edges[input].outputNode;
+        const outputNode = this._nodes[outputId];
+
+        if (outputNode.subType === 'merge') {
+          this.walkGraph(outputNode, depth);
+        } else if (outputNode.type === 'constants') {
+          const inputAttribute = this._edges[input].inputAttribute;
+          const inputIndex = node.inputs.findIndex(item => {
+            return item.name === inputAttribute;
+          });
+          node.inputs[inputIndex].value = outputNode.inputs[0].value;
+        } else {
+          if (this._executionPriority[depth] === undefined) {
+            this._executionPriority[depth] = [];
+          }
+
+          this._executionPriority[depth].push(outputNode);
+
+          this.walkGraph(outputNode, depth + 1);
+        }
+      }
+    }
+
+    return true;
+  }
+
+  execute(id) {
+    this._executionPriority = {};
+    this._executionOrder = [];
+    const node = this._nodes[id];
+    let d = 0;
+    console.log('#############################');
+    console.log(node);
+    console.log('#############################');
+
+    if (node.subType === 'submit') {
+      this.customSubmitter(id);
+    } else {
+      if (node.subType !== 'merge' &amp;&amp; node.type !== 'constants') {
+        this._executionPriority[0] = [];
+
+        this._executionPriority[0].push(node);
+
+        d += 1;
+      }
+
+      this.walkGraph(node, d);
+      const depth = Object.keys(this._executionPriority).length;
+
+      for (let i = depth - 1; i >= 0; i--) {
+        for (const j in this._executionPriority[i]) {
+          this._executionOrder.push(this._executionPriority[i][j]);
+        }
+      }
+
+      console.log(this._executionOrder);
+      this.executeTask();
+    }
+  }
+
+  executeTask() {
+    _Logger__WEBPACK_IMPORTED_MODULE_2__["default"].info('Execute Task');
+
+    const task = this._executionOrder.shift();
+
+    console.log(task);
+
+    if (task.software === 'bat') {
+      const args = [];
+
+      for (const i in task.inputs) {
+        if (task.inputs[i].type.split('.')[0] === 'tuple') {
+          for (const j in task.inputs[i].value) {
+            args.push(task.inputs[i].value[j]);
+          }
+        } else if (task.inputs[i].type.split('.')[0] === 'software') {
+          args.push(this._server._config.config.softwares[task.inputs[i].type.split('.')[1]]);
+        } else {
+          args.push(task.inputs[i].value);
+        }
+      } // let dirPath
+      // if (process.env.NODE_ENV === 'production') {
+      //   dirPath = path.join(__dirname, '../../../nodes/scripts');
+      //   // result = spawn.sync(executable, [], { encoding: 'utf8' });
+      // } else {
+
+
+      const dirPath = `${this._nodeManager._path}`; // }
+
+      let cmd = `${dirPath}/${task.type}/${task.script}`;
+
+      for (const i in args) {
+        if (args[i].toString().includes(' ')) {
+          cmd += ` "${args[i]}"`;
+        } else {
+          cmd += ` ${args[i]}`;
+        }
+      }
+
+      const bat = Object(child_process__WEBPACK_IMPORTED_MODULE_0__["spawn"])(cmd, {
+        shell: true
+      });
+      bat.stdout.on('data', data => {
+        console.log(data.toString());
+      });
+      bat.stderr.on('data', data => {
+        console.error(data.toString());
+      });
+      bat.on('exit', code => {
+        console.log(`Child exited with code ${code}`);
+        console.log(this._executionOrder);
+
+        if (this._executionOrder.length > 0) {
+          this.executeTask();
+        }
+      });
+    } else if (task.software === 'python' || task.software === 'python2') {
+      const python = this._server._config.config.softwares[task.software];
+      const args = [];
+
+      for (const i in task.inputs) {
+        if (task.inputs[i].type.split('.')[0] === 'tuple') {
+          for (const j in task.inputs[i].value) {
+            args.push(task.inputs[i].value[j]);
+          }
+        } else if (task.inputs[i].type.split('.')[0] === 'software') {
+          args.push(this._server._config.config.softwares[task.inputs[i].type.split('.')[1]]);
+        } else {
+          args.push(task.inputs[i].value);
+        }
+      } // let dirPath
+      // if (process.env.NODE_ENV === 'production') {
+      //   dirPath = path.join(__dirname, '../../../nodes/scripts');
+      //   // result = spawn.sync(executable, [], { encoding: 'utf8' });
+      // } else {
+
+
+      const dirPath = `${this._nodeManager._path}`; // }
+
+      let cmd = `${python} ${dirPath}/${task.type}/${task.script}`;
+
+      for (const i in args) {
+        if (args[i].toString().includes(' ')) {
+          cmd += ` "${args[i]}"`;
+        } else {
+          cmd += ` ${args[i]}`;
+        }
+      }
+
+      console.log(cmd);
+      const bat = Object(child_process__WEBPACK_IMPORTED_MODULE_0__["spawn"])(cmd, {
+        shell: true
+      });
+      bat.stdout.on('data', data => {
+        console.log(data.toString());
+      });
+      bat.stderr.on('data', data => {
+        console.error(data.toString());
+      });
+      bat.on('exit', code => {
+        console.log(`Child exited with code ${code}`);
+        console.log(this._executionOrder);
+
+        if (this._executionOrder.length > 0) {
+          this.executeTask();
+        }
+      });
+    }
+  }
+
+  customSubmitter(id) {
+    const node = this._nodes[id];
+
+    for (const input in this._edges) {
+      if (this._edges[input].inputNode === node.id) {
+        const outputId = this._edges[input].outputNode;
+        const outputNode = this._nodes[outputId];
+
+        if (outputNode.type === 'constants') {
+          const inputAttribute = this._edges[input].inputAttribute;
+          const inputIndex = node.inputs.findIndex(item => {
+            return item.name === inputAttribute;
+          });
+          node.inputs[inputIndex].value = outputNode.inputs[0].value;
+        }
+      }
+    }
+
+    node.inputs[0].value = this._path;
+    node.inputs[1].value = id;
+
+    this._executionOrder.push(node);
+
+    this.executeTask(); // this._executionPriority[0] = [];
+    // this._executionPriority[0].push(node)
+    // let walked = this.walkGraph(node, 1);
+    // console.log(this._executionPriority);
+    //
+    // let data = {
+    //   pool: node.inputs[0].value,
+    //   nodes: this._executionPriority
+    // }
+    // let jsonContent = JSON.stringify(data, null, 2);
+    // console.log(jsonContent);
+    //
+    // let date = new Date();
+    // let year = date.getFullYear();
+    // let month = date.getMonth() + 1;
+    // let day = date.getDate();
+    // let hours = date.getHours();
+    // let minutes = date.getMinutes();
+    // let seconds = date.getSeconds();
+    //
+    // let timestamp = `${month}-${day}-${year}_${hours}-${minutes}-${seconds}`;
+    // console.log(timestamp);
+    //
+    // let dir = path.join("\\\\marvin\\PFE_RN_2020\\_UTILITY\\05_PULSAR\\graphs", `${this.name}_${timestamp}`);
+    //
+    // fs.mkdir(dir, (err) => {
+    //   if (err) {
+    //     return console.error(err);
+    //   }
+    //   console.log('Directory created successfully!');
+    //
+    //   fs.writeFile(path.join(dir, "input.json"), jsonContent, 'utf8', function (err) {
+    //     if (err) {
+    //       console.log("An error occured while writing JSON Object to File.");
+    //       // return console.log(err);
+    //     }
+    //   });
+    // });
+  }
+
+  formatForRender() {
+    const edges = {};
+
+    for (const id in this._edges) {
+      edges[id] = this._edges[id].formatForRender();
+    }
+
+    this.sendToRenderer({
+      nodes: this._nodes,
+      edges: edges
+    });
+  }
+
+  formatForSave() {
+    const data = {
+      name: this._name,
+      path: this._path,
+      nodes: this._nodes,
+      edges: this._edges
+    };
+    return data;
+  }
+
+  sendToRenderer(data) {
+    const renderer = new _Renderer__WEBPACK_IMPORTED_MODULE_4__["default"]();
+    renderer.sendMessageMainData('graph', data);
+  }
+
+}
+
+/***/ }),
+
+/***/ "./main/Logger.js":
+/*!************************!*\
+  !*** ./main/Logger.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Logger; });
+/* harmony import */ var chalk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! chalk */ "./node_modules/chalk/source/index.js");
+/* harmony import */ var chalk__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(chalk__WEBPACK_IMPORTED_MODULE_0__);
+
+const ctx = new chalk__WEBPACK_IMPORTED_MODULE_0___default.a.Instance({
+  level: 2
+});
+class Logger {
+  static log(message) {
+    console.log(`[ LOG ] --- ${message}`);
+  }
+
+  static info(message) {
+    console.log(ctx.cyan(`[ INFO ] --- ${message}`));
+  }
+
+  static success(message) {
+    console.log(ctx.green(`[ SUCCESS ] --- ${message}`));
+  }
+
+  static warning(message) {
+    console.log(ctx.yellow(`[ WARNING ] --- ${message}`));
+  }
+
+  static error(message) {
+    console.log(ctx.red(`[ ERROR ] --- ${message}`));
+  }
+
+  static list(list) {
+    console.log(ctx.inverse('['));
+
+    for (let i = 0; i &lt; list.length; i++) {
+      console.log(`${ctx.bgMagenta(i)}    ${list[i]}`);
+    }
+
+    console.log(ctx.inverse(']'));
+  }
+
+}
+
+/***/ }),
+
+/***/ "./main/Node.js":
+/*!**********************!*\
+  !*** ./main/Node.js ***!
+  \**********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Node; });
+/* harmony import */ var child_process__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! child_process */ "child_process");
+/* harmony import */ var child_process__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(child_process__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Config */ "./main/Config.js");
+/* harmony import */ var _NodeManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NodeManager */ "./main/NodeManager.js");
+/* harmony import */ var _SoftwareSocket__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SoftwareSocket */ "./main/SoftwareSocket.js");
+
+
+
+
+
+class Node {
+  constructor(id, name, node, position) {
+    this.id = id;
+    this.type = node.type;
+    this.subType = node.subType;
+    this.software = node.software;
+    this.script = node.script;
+    this.name = name;
+    this.label = node.label;
+    this.description = node.description;
+    this.color = node.color;
+    this.icon = node.icon;
+    this.x = position.x;
+    this.y = position.y;
+    this.inputs = [];
+    this.outputs = [];
+
+    for (const i in node.inputs) {
+      this.inputs[i] = {
+        name: node.inputs[i].name,
+        label: node.inputs[i].label,
+        description: node.inputs[i].description,
+        value: node.inputs[i].value,
+        type: node.inputs[i].type,
+        extensions: node.inputs[i].extensions,
+        hidden: node.inputs[i].hidden
+      };
+    }
+
+    for (const i in node.outputs) {
+      this.outputs[i] = {
+        name: node.outputs[i].name,
+        label: node.outputs[i].label,
+        description: node.outputs[i].description,
+        value: node.outputs[i].value,
+        type: node.outputs[i].type,
+        extensions: node.outputs[i].extensions,
+        hidden: node.outputs[i].hidden
+      };
+    }
+  }
+
+  get newName() {
+    return this.name;
+  }
+
+  set newName(name) {
+    this.name = name;
+  }
+
+  get position() {
+    return {
+      x: this.x,
+      y: this.y
+    };
+  }
+
+  set position(position) {
+    this.x = position.x;
+    this.y = position.y;
+  }
+
+  setInputValue(input, value) {
+    const inputIndex = this.inputs.findIndex(item => {
+      return item.name === input;
+    });
+    console.log(input, inputIndex, value);
+
+    if (inputIndex !== -1) {
+      this.inputs[inputIndex].value = value;
+    }
+  }
+
+  execute(cb) {
+    const config = new _Config__WEBPACK_IMPORTED_MODULE_2__["default"]();
+    const softs = config.config.softwares;
+
+    if (this.software in softs) {
+      const nm = new _NodeManager__WEBPACK_IMPORTED_MODULE_3__["default"]();
+      const dirPath = nm.path;
+      let cmd = `"${softs[this.software]}" ${dirPath}/${this.type}/${this.script}`;
+
+      for (const i in this.inputs) {
+        if (this.inputs[i].value.toString().includes(' ')) {
+          cmd += ` "${this.inputs[i].value}"`;
+        } else {
+          cmd += ` ${this.inputs[i].value}`;
+        }
+      }
+
+      const bat = Object(child_process__WEBPACK_IMPORTED_MODULE_0__["spawn"])(cmd, {
+        shell: true
+      });
+      bat.stdout.on('data', data => {
+        console.log(data.toString());
+      });
+      bat.stderr.on('data', data => {
+        console.error(data.toString());
+      });
+      bat.on('exit', code => {
+        console.log(`Child exited with code ${code}`);
+        cb();
+      });
+    } else if (this.software === 'bat') {
+      const nm = new _NodeManager__WEBPACK_IMPORTED_MODULE_3__["default"]();
+      const dirPath = nm.path;
+      let cmd = `${dirPath}/${this.type}/${this.script}`;
+
+      for (const i in this.inputs) {
+        if (this.inputs[i].value.toString().includes(' ')) {
+          cmd += ` "${this.inputs[i].value}"`;
+        } else {
+          cmd += ` ${this.inputs[i].value}`;
+        }
+      }
+
+      const bat = Object(child_process__WEBPACK_IMPORTED_MODULE_0__["spawn"])(cmd, {
+        shell: true
+      });
+      bat.stdout.on('data', data => {
+        console.log(data.toString());
+      });
+      bat.stderr.on('data', data => {
+        console.error(data.toString());
+      });
+      bat.on('exit', code => {
+        console.log(`Child exited with code ${code}`);
+        cb();
+      });
+    } else if (this.software === 'python' || this.software === 'python2') {
+      const python = this._server._config.config.softwares[this.software];
+      const args = [];
+
+      for (const i in this.inputs) {
+        if (this.inputs[i].type.split('.')[0] === 'tuple') {
+          for (const j in this.inputs[i].value) {
+            args.push(this.inputs[i].value[j]);
+          }
+        } else if (this.inputs[i].type.split('.')[0] === 'software') {
+          args.push(this._server._config.config.softwares[this.inputs[i].type.split('.')[1]]);
+        } else {
+          args.push(this.inputs[i].value);
+        }
+      } // let dirPath
+      // if (process.env.NODE_ENV === 'production') {
+      //   dirPath = path.join(__dirname, '../../../nodes/scripts');
+      //   // result = spawn.sync(executable, [], { encoding: 'utf8' });
+      // } else {
+
+
+      const dirPath = `${this._nodeManager._path}`; // }
+
+      let cmd = `${python} ${dirPath}/${this.type}/${this.script}`;
+
+      for (const i in args) {
+        if (args[i].toString().includes(' ')) {
+          cmd += ` "${args[i]}"`;
+        } else {
+          cmd += ` ${args[i]}`;
+        }
+      }
+
+      console.log(cmd);
+      const bat = Object(child_process__WEBPACK_IMPORTED_MODULE_0__["spawn"])(cmd, {
+        shell: true
+      });
+      bat.stdout.on('data', data => {
+        console.log(data.toString());
+      });
+      bat.stderr.on('data', data => {
+        console.error(data.toString());
+      });
+      bat.on('exit', code => {
+        console.log(`Child exited with code ${code}`);
+        console.log(this._executionOrder);
+
+        if (this._executionOrder.length > 0) {
+          this.executeTask();
+        }
+      });
+    }
+  }
+
+  executeSocket(softwareId, cb) {
+    const nm = new _NodeManager__WEBPACK_IMPORTED_MODULE_3__["default"]();
+    const dirPath = nm.path;
+    const path = `${dirPath}/${this.type}`;
+    const file = Object(path__WEBPACK_IMPORTED_MODULE_1__["basename"])(this.script, 'py');
+    const args = {};
+
+    for (const i in this.inputs) {
+      args[this.inputs[i].name] = this.inputs[i].value;
+    }
+
+    const data = {
+      path: path,
+      file: file,
+      arguments: args
+    };
+    const softsSocket = new _SoftwareSocket__WEBPACK_IMPORTED_MODULE_4__["default"]();
+    softsSocket.softwares[softwareId].execTask(data);
+  }
+
+}
+
+/***/ }),
+
+/***/ "./main/NodeManager.js":
+/*!*****************************!*\
+  !*** ./main/NodeManager.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return NodeManager; });
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fs */ "fs");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var glob__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! glob */ "glob");
+/* harmony import */ var glob__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(glob__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Logger */ "./main/Logger.js");
+
+
+
+
+class NodeManager {
+  constructor() {
+    if (!!this.constructor.instance) {
+      return this.constructor.instance;
+    }
+
+    this.constructor.instance = this;
+    this._path = '';
+    this._nodes = {};
+    this.addBaseNodes();
+    this.addTractorNodes();
+    return this;
+  }
+
+  get path() {
+    return this._path;
+  }
+
+  set path(path) {
+    this._path = path;
+  }
+
+  get nodes() {
+    return this._nodes;
+  }
+
+  addBaseNodes() {
+    if (!this._nodes.constants) {
+      this._nodes.constants = {};
+    }
+
+    if (!this._nodes.constants.string) {
+      const node = {
+        id: 'constants.string',
+        type: 'constants',
+        name: 'string',
+        color: 'green',
+        icon: 'las la-ad',
+        script: null,
+        inputs: [{
+          name: 'string',
+          label: 'String',
+          description: 'String',
+          value: '',
+          type: 'string',
+          hidden: true
+        }],
+        outputs: [{
+          name: 'output',
+          type: 'string'
+        }]
+      };
+      this._nodes.constants[node.name] = node;
+    }
+
+    if (!this._nodes.constants.number) {
+      const node = {
+        id: 'constants.number',
+        type: 'constants',
+        name: 'number',
+        color: 'cyan',
+        icon: '0',
+        script: null,
+        inputs: [{
+          name: 'number',
+          label: 'Number',
+          description: 'Number',
+          value: 0,
+          type: 'number',
+          hidden: true
+        }],
+        outputs: [{
+          name: 'output',
+          type: 'number'
+        }]
+      };
+      this._nodes.constants[node.name] = node;
+    }
+
+    if (!this._nodes.constants.bool) {
+      const node = {
+        id: 'constants.bool',
+        type: 'constants',
+        name: 'bool',
+        color: 'purple',
+        icon: 'las la-check-square',
+        script: null,
+        inputs: [{
+          name: 'bool',
+          label: 'Bool',
+          description: 'Boolean',
+          value: true,
+          type: 'bool',
+          hidden: true
+        }],
+        outputs: [{
+          name: 'output',
+          type: 'bool'
+        }]
+      };
+      this._nodes.constants[node.name] = node;
+    }
+
+    if (!this._nodes.constants.file) {
+      const node = {
+        id: 'constants.file',
+        type: 'constants',
+        name: 'file',
+        color: 'red',
+        icon: 'las la-file',
+        script: null,
+        inputs: [{
+          name: 'file',
+          label: 'File',
+          description: 'File',
+          value: '',
+          type: 'file',
+          extensions: [],
+          hidden: true
+        }],
+        outputs: [{
+          name: 'output',
+          type: 'file'
+        }]
+      };
+      this._nodes.constants[node.name] = node;
+    }
+
+    if (!this._nodes.base) {
+      this._nodes.base = {};
+    }
+
+    if (!this._nodes.base.OUTPUT) {
+      const node = {
+        id: 'base.OUTPUT',
+        type: 'base',
+        name: 'OUTPUT',
+        color: 'black',
+        icon: 'las la-flag-checkered',
+        script: null,
+        inputs: [{
+          name: 'output',
+          type: 'any'
+        }],
+        outputs: []
+      };
+      this._nodes.base[node.name] = node;
+    }
+
+    if (!this._nodes.base.project_file) {
+      const node = {
+        id: 'base.project_file',
+        type: 'base',
+        name: 'project_file',
+        color: 'red',
+        icon: 'las la-folder',
+        script: null,
+        inputs: [{
+          name: 'project',
+          label: 'Project',
+          description: 'Name of the project',
+          value: '',
+          type: 'dropdown.project',
+          hidden: true
+        }, {
+          name: 'assetshot',
+          label: 'Asset or Shot',
+          description: 'Asset or Shot',
+          value: 'asset',
+          type: 'switch.assetshot',
+          hidden: true
+        }],
+        outputs: [{
+          name: 'file',
+          label: 'file',
+          type: 'file'
+        }]
+      };
+      this._nodes.base[node.name] = node;
+    }
+
+    if (!this._nodes.operations) {
+      this._nodes.operations = {};
+    }
+
+    if (!this._nodes.operations.merge) {
+      const node = {
+        id: 'operations.merge',
+        type: 'operations',
+        subType: 'merge',
+        name: 'merge',
+        color: 'turquoise',
+        icon: 'las la-compress-arrows-alt',
+        script: null,
+        inputs: [{
+          name: 'input1',
+          label: 'Input 1',
+          description: 'Input',
+          value: '',
+          type: 'any'
+        }],
+        outputs: []
+      };
+      this._nodes.operations[node.name] = node;
+    }
+
+    if (!this._nodes.fake) {
+      this._nodes.fake = {};
+    }
+
+    if (!this._nodes.fake.check_frames) {
+      const node = {
+        id: 'fake.check_frames',
+        type: 'fake',
+        subType: 'check_frames',
+        name: 'check_render',
+        color: 'periwinkle',
+        icon: 'las la-image',
+        script: null,
+        inputs: [{
+          name: 'path',
+          label: 'Path',
+          description: 'Path',
+          value: '',
+          type: 'string'
+        }],
+        outputs: [{
+          name: 'frames',
+          label: 'Missing Frames',
+          description: 'Path',
+          value: '',
+          type: 'string'
+        }]
+      };
+      this._nodes.fake[node.name] = node;
+    }
+
+    if (!this._nodes.fake.nuke_import) {
+      const node = {
+        id: 'fake.nuke_import',
+        type: 'fake',
+        subType: 'nuke_import',
+        name: 'nuke_import',
+        color: 'yellow',
+        icon: 'nuke.png',
+        script: null,
+        inputs: [{
+          name: 'scene',
+          label: 'Scene',
+          description: 'Path',
+          value: '',
+          type: 'file'
+        }, {
+          name: 'images',
+          label: 'Images',
+          description: 'Path',
+          value: '',
+          type: 'string'
+        }],
+        outputs: []
+      };
+      this._nodes.fake[node.name] = node;
+    }
+  }
+
+  addTractorNodes() {
+    if (!this._nodes.tractor) {
+      this._nodes.tractor = {};
+    } // if(!this._nodes.tractor.submit) {
+    //   let node = {
+    //     id: "tractor.submit",
+    //     type: "tractor",
+    //     subType: "submit",
+    //     name: "submit",
+    //     color: "seabrook",
+    //     icon: "las la-tractor",
+    //     script: null,
+    //     inputs: [
+    //       {
+    //         name: "pulsar_graph",
+    //         label: "Pulsar Graph File",
+    //         description: "Pulsar Graph File",
+    //         value: "",
+    //         type: "string",
+    //         hidden: true
+    //       },
+    //       {
+    //         name: "pool",
+    //         label: "Pool",
+    //         description: "Pool",
+    //         value: "",
+    //         type: "string"
+    //       }
+    //     ],
+    //     outputs: []
+    //   }
+    //   this._nodes.tractor[node.name] = node
+    // }
+    // if(!this._nodes.tractor.render_houdini) {
+    //   let node = {
+    //     id: "tractor.render_houdini",
+    //     type: "tractor",
+    //     subType: "render_houdini",
+    //     name: "render_houdini",
+    //     color: "orange",
+    //     icon: "las la-tractor",
+    //     script: null,
+    //     inputs: [
+    //       {
+    //         "name": "scene",
+    //         "label": "Scene",
+    //         "description": "The houdini scene file you'd like to render",
+    //         "value": "",
+    //         "type": "file",
+    //         "extensions": [
+    //           "hip",
+    //           "hipnc"
+    //         ]
+    //       },
+    //       {
+    //         "name": "render_node",
+    //         "label": "Render Node",
+    //         "description": "The path of the node you want to render your scene with",
+    //         "value": "/out/",
+    //         "type": "string"
+    //       },
+    //       {
+    //         "name": "frames",
+    //         "label": "Frames",
+    //         "description": "The frames you want to render",
+    //         "value": "",
+    //         "type": "string"
+    //       },
+    //       {
+    //         "name": "pool",
+    //         "label": "Pool",
+    //         "description": "The pools you want to render on",
+    //         "value": "",
+    //         "type": "string"
+    //       }
+    //     ],
+    //     outputs: [
+    //       {
+    //         "name": "output",
+    //         "label": "output",
+    //         "description": "output",
+    //         "value": "",
+    //         "type": "bool"
+    //       }
+    //     ]
+    //   }
+    //   this._nodes.tractor[node.name] = node
+    // }
+
+  }
+
+  importNodes(cb) {
+    glob__WEBPACK_IMPORTED_MODULE_2___default()(`${this._path}/*/`, (err, dirs) => {
+      if (err) {
+        _Logger__WEBPACK_IMPORTED_MODULE_3__["default"].error(err);
+      } else {
+        // console.log(dirs);
+        for (const i in dirs) {
+          const dirname = Object(path__WEBPACK_IMPORTED_MODULE_0__["basename"])(dirs[i]);
+          const path = Object(path__WEBPACK_IMPORTED_MODULE_0__["join"])(dirs[i], 'pulsar.json');
+
+          if (Object(fs__WEBPACK_IMPORTED_MODULE_1__["existsSync"])(path)) {
+            const data = Object(fs__WEBPACK_IMPORTED_MODULE_1__["readFileSync"])(path);
+
+            try {
+              const file = JSON.parse(data);
+              const nodes = file.nodes;
+
+              for (const j in nodes) {
+                nodes[j].type = dirname;
+                nodes[j].id = `${dirname}.${nodes[j].name}`;
+
+                if (nodes[j].category in this._nodes) {
+                  this._nodes[nodes[j].category][nodes[j].name] = nodes[j];
+                } else {
+                  this._nodes[nodes[j].category] = {};
+                  this._nodes[nodes[j].category][nodes[j].name] = nodes[j];
+                }
+              }
+            } catch (e) {
+              _Logger__WEBPACK_IMPORTED_MODULE_3__["default"].error(e);
+            }
+          }
+        }
+
+        cb(); // for(let i = 0; i &lt; files.length; i++) {
+        //   let data = readFileSync(files[i]); //, (err, data) => {
+        //
+        //     try {
+        //       let file = JSON.parse(data)
+        //       let node = file.node
+        //       if(node.type in this._nodes) {
+        //         this._nodes[node.type][node.name] = node
+        //       } else {
+        //         this._nodes[node.type] = {}
+        //         this._nodes[node.type][node.name] = node
+        //       }
+        //     } catch (e) {
+        //       Logger.error(e);
+        //     }
+        //   // } );
+        // }
+        // cb();
+      }
+    });
+  }
+
+  getNode(type, task) {
+    return this._nodes[type][task];
+  }
+
+} // const instance = new NodeManager()
+// Object.freeze(instance)
+//
+// export default instance
+
+/***/ }),
+
+/***/ "./main/Project.js":
+/*!*************************!*\
+  !*** ./main/Project.js ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AssetId__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AssetId */ "./main/AssetId.js");
+
+/**
+ * Class representing a Project.
+ */
+
+class Project {
+  /**
+   * constructor - Project Object constructor
+   *
+   * @param  {string} name              Name of the project
+   * @param  {Object} paths             File Paths
+   * @param  {function} sendToRenderer  Function to send project to the Render Screen
+   * @returns {Project}                 Project Object
+   */
+  constructor(name, paths, sendToRenderer) {
+    this._name = name;
+    this._path = paths.path;
+    this._pathTypes = {
+      asset: {
+        scene: new _AssetId__WEBPACK_IMPORTED_MODULE_0__["default"]('scene', paths.asset.scene, this._path, () => this.formatForRender()),
+        render: new _AssetId__WEBPACK_IMPORTED_MODULE_0__["default"]('render', paths.asset.render, this._path, () => this.formatForRender()),
+        cache: new _AssetId__WEBPACK_IMPORTED_MODULE_0__["default"]('cache', paths.asset.cache, this._path, () => this.formatForRender()),
+        texture: new _AssetId__WEBPACK_IMPORTED_MODULE_0__["default"]('texture', paths.asset.texture, this._path, () => this.formatForRender())
+      },
+      shot: {
+        scene: new _AssetId__WEBPACK_IMPORTED_MODULE_0__["default"]('scene', paths.shot.scene, this._path, () => this.formatForRender()),
+        render: new _AssetId__WEBPACK_IMPORTED_MODULE_0__["default"]('render', paths.shot.render, this._path, () => this.formatForRender()),
+        cache: new _AssetId__WEBPACK_IMPORTED_MODULE_0__["default"]('cache', paths.shot.cache, this._path, () => this.formatForRender()),
+        texture: new _AssetId__WEBPACK_IMPORTED_MODULE_0__["default"]('texture', paths.shot.texture, this._path, () => this.formatForRender())
+      }
+    };
+    this._pathType = 'asset';
+    this._pathSubType = 'scene';
+    this._sendToRenderer = sendToRenderer;
+  }
+
+  get pathType() {
+    return this._pathType;
+  }
+  /**
+   * set pathType - pathType setter
+   *
+   * @param  {string} pathType "asset" or "shot"
+   */
+
+
+  set pathType(pathType) {
+    this._pathType = pathType;
+    const assetId = this._pathTypes[this._pathType][this._pathSubType];
+    assetId.clearValues('project');
+    assetId.setSearchDir('project');
+    assetId.searchNext();
+  }
+
+  get pathSubType() {
+    return this._pathSubType;
+  }
+  /**
+   * set pathSubType - pathSubType setter
+   *
+   * @param  {string} pathSubType "scene", "render", "texture" or "cache"
+   */
+
+
+  set pathSubType(pathSubType) {
+    this._pathSubType = pathSubType;
+    const assetId = this._pathTypes[this._pathType][this._pathSubType];
+    assetId.clearValues('project');
+    assetId.setSearchDir('project');
+    assetId.searchNext();
+  }
+  /**
+   * setDimension - set the dimension of the current used AssetId of the project
+   *
+   * @param  {string} dimension "3d" or "2d"
+   */
+
+
+  setDimension(dimension) {
+    this._pathTypes[this._pathType][this._pathSubType].setDimension(dimension);
+  }
+  /**
+   * getData - Get the files/directories found for the current selected AssetId of the project
+   *
+   */
+
+
+  getData() {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType];
+    assetId.clearValues('project');
+    assetId.setSearchDir('project');
+    assetId.searchNext();
+  }
+  /**
+   * createNewGroupValue - Create now directory of name 'value' in the specified group
+   *
+   * @param {string} group name of the group
+   * @param {string} value name for the new directory
+   */
+
+
+  createNewGroupValue(group, value) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType];
+    assetId.createNewGroupValue(group, value);
+  }
+  /**
+   * setGroupValue - Set the value of a group in the current selected AssetId
+   *
+   * @param  {string} group name of the group
+   * @param  {string} value     the value the set for the group
+   */
+
+
+  setGroupValue(group, value) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType];
+    assetId.setGroupValue(group, value);
+  }
+  /**
+   * createNewFile - Create new scene file
+   *
+   * @param {string} name     Name of the new file
+   * @param {string} template Path of the template, undefined if no template is used
+   * @param {string} type     The name of the software, undefined if a template is used
+   */
+
+
+  createNewFile(name, template, type) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType];
+    assetId.createNewFile(name, template, type);
+  }
+  /**
+   * execTask - Exevute a task with a scene file
+   *
+   * @param {string} softwareId   Id of the connected software, 'new' if you want to launch a new instance
+   * @param {string} softwareType Type of software the task needs to be executed in
+   * @param {string} command      The script to be executed in the software
+   * @param {array} args         THe arguments to pass to the command
+   */
+
+
+  execTask(softwareId, softwareType, command, args) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType];
+    assetId.execTask(softwareId, softwareType, command, args);
+  }
+  /**
+   * saveComment - Save the comment of a file
+   *
+   * @param {string} comment A comment
+   */
+
+
+  saveComment(comment) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType];
+    assetId.saveComment(comment);
+  }
+  /**
+   * saveTag - Add a tag to a file
+   *
+   * @param {string} tag Name of the tag
+   */
+
+
+  saveTag(tag) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType];
+    assetId.saveTag(tag);
+  }
+  /**
+   * deleteTag - Remove a tog from a file
+   *
+   * @param {string} tag Name of the tag
+   */
+
+
+  deleteTag(tag) {
+    const assetId = this._pathTypes[this._pathType][this._pathSubType];
+    assetId.deleteTag(tag);
+  }
+  /**
+   * formatForRender - Format the data of the project into an Object to send to the Render Screen
+   *
+   */
+
+
+  formatForRender() {
+    let directories = {};
+    let dirOrder = [];
+    let groups = {};
+    const assetId = this._pathTypes[this._pathType][this._pathSubType];
+    directories = assetId.directories;
+    dirOrder = assetId.directoriesOrder;
+    groups = assetId.groups;
+    const file = groups.file === '&lt;>' ? {} : groups.file;
+    const asset = {
+      project: this._name,
+      pathType: this._pathType,
+      pathSubType: this._pathSubType,
+      groups: groups,
+      directories: directories,
+      directoriesOrder: dirOrder,
+      file: file
+    }; //   let asset = {
+    //     sid:         this.sid,
+    //
+    //     path:        this.path,
+    //     pathSubType: this._pathSubType,
+    //
+    //     projects:    this.projects,
+    //     project:     this.projectName,
+    //     projectPath: this.project,
+    //     pathType:    this.pathType,
+    //     dimension:   this.dimension,
+    //     group:       this.group == "&lt;>" ? "" : this.group,
+    //     name:        this.name == "&lt;>" ? "" : this.name,
+    //     task:        this.task == "&lt;>" ? "" : this.task,
+    //     subtask:     this.subtask == "&lt;>" ? "" : this.subtask,
+    //     file:        this.formatFile == "&lt;>" ? "" : this.formatFile,
+    //
+    //     groups:      this.groups,
+    //     names:       this.names,
+    //     tasks:       this.tasks,
+    //     subtasks:    this.subtasks,
+    //     files:       this.formatFiles(),
+    //   }
+    //
+
+    this._sendToRenderer(asset); // }
+
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Project);
+
+/***/ }),
+
+/***/ "./main/Renderer.js":
+/*!**************************!*\
+  !*** ./main/Renderer.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Renderer; });
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! electron */ "electron");
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(electron__WEBPACK_IMPORTED_MODULE_0__);
+
+class Renderer {
+  constructor(server, mainWindow, overlay) {
+    if (!!this.constructor.instance) {
+      return this.constructor.instance;
+    }
+
+    this.constructor.instance = this;
+    this._server = server;
+    this._mainWindow = mainWindow;
+    this._overlay = overlay;
+    this.listenForMessages();
+  }
+
+  sendMessageMain(message) {
+    this._mainWindow.webContents.send(message);
+  }
+
+  sendMessageMainData(message, data) {
+    this._mainWindow.webContents.send(message, data);
+  }
+
+  sendMessageOverlay(message, data) {
+    this._overlay.webContents.send(message, data);
+  }
+
+  listenForMessages() {
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('getSoftwares', event => {
+      // event.sender.send('softwares', this._server.softwares)
+      this._server._softwareSocket.sendSoftwares();
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('getConfig', event => {
+      if (this._server.config.config === {}) {
+        console.log('----- Config not ready yet -----');
+
+        this._server.config.readConfig((message, config) => this._server.onConfig(message, config));
+      } else {
+        event.sender.send('config', this._server.config.config);
+      }
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('getNodes', event => {
+      event.sender.send('nodes', this._server.nodes);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('getGraph', event => {
+      // event.sender.send('nodes', this._server.nodes);
+      this._server._graph.formatForRender();
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('addNode', (event, data) => {
+      this._server._graph.addNode(data.type, data.task, data.position);
+
+      this._server._graph.formatForRender();
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('deleteNode', (event, data) => {
+      this._server._graph.deleteNode(data);
+
+      this._server._graph.formatForRender();
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('setNodeName', (event, data) => {
+      this._server._graph.setNodeName(data.id, data.name);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('setNodePosition', (event, data) => {
+      this._server._graph.setNodePosition(data.id, data.position);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('setNodeInputValue', (event, data) => {
+      this._server._graph.setNodeInputValue(data.id, data.input, data.value);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('selectInputFile', (event, data) => {
+      electron__WEBPACK_IMPORTED_MODULE_0__["dialog"].showOpenDialog(this._mainWindow, {
+        properties: ['openFile'],
+        filters: data.extensions
+      }, files => {
+        if (files.length > 0) {
+          data.file = files[0];
+
+          this._server._graph.setNodeInputValue(data.node, data.input, files[0]);
+
+          event.sender.send('selectedInputFile', data);
+        }
+      });
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('addEdge', (event, data) => {
+      this._server._graph.addEdge(data.nodeIn, data.attribIn, data.nodeOut, data.attribOut);
+
+      this._server._graph.formatForRender();
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('executeGraph', (event, data) => {
+      this._server._graph.execute(data);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('getProjects', event => {
+      const projects = this._server._projects;
+      const projList = [];
+
+      for (const p in projects) {
+        projList.push(p);
+      }
+
+      const project = this._server._project;
+      event.sender.send('projects', {
+        projects: projList,
+        project: project
+      });
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('getProject', event => {
+      this._server.project.getData();
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('setProject', (event, data) => {
+      this._server._project = data;
+
+      this._server.project.getData(); // this._server.project.formatForRender();
+
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('setPathType', (event, data) => {
+      this._server.project.pathType = data;
+
+      this._server.project.getData(); // this._server.project.formatForRender();
+
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('setPathSubType', (event, data) => {
+      this._server.project.pathSubType = data; // this._server.project.formatForRender();
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('dimension', (event, data) => {
+      this._server.project.setDimension(data);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('createNewGroupValue', (event, data) => {
+      this._server.project.createNewGroupValue(data.group, data.value);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('setGroupValue', (event, data) => {
+      this._server.project.setGroupValue(data.group, data.value);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('createNewFile', (event, data) => {
+      this._server.project.createNewFile(data.name, data.template, data.type);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('setAssetId', (event, data) => {
+      this._server.setAssetIdValue(data.sid, data.type, data.value);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('selectDirectory', (event, data) => {
+      electron__WEBPACK_IMPORTED_MODULE_0__["dialog"].showOpenDialog(this._mainWindow, {
+        properties: ['openDirectory']
+      }, dir => {
+        if (dir.length > 0) {
+          event.sender.send('selectedDirectory', dir[0]);
+        }
+      });
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('selectSoftwarePath', (event, data) => {
+      electron__WEBPACK_IMPORTED_MODULE_0__["dialog"].showOpenDialog(this._mainWindow, {
+        properties: ['openFile'],
+        filters: [{
+          name: 'Executables',
+          extensions: ['exe']
+        }]
+      }, files => {
+        if (files.length > 0) {
+          data.path = files[0];
+          event.sender.send('selectedSoftwarePath', data);
+        }
+      });
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('selectFile', (event, data) => {
+      electron__WEBPACK_IMPORTED_MODULE_0__["dialog"].showOpenDialog(this._mainWindow, {
+        properties: ['openFile']
+      }, files => {
+        if (files.length > 0) {
+          event.sender.send(data.response, files[0]);
+        }
+      });
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('setConfig', (event, data) => {
+      console.log('----- set config -----', data);
+
+      this._server.setConfig(data);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('execTask', (event, data) => {
+      this._server.project.execTask(data.id, data.type, data.command, data.arguments);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('checkSotfwareSaved', event => {
+      console.log('----- check is software is saved -----'); // socket.emit("checkSotfwareSaved");
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('saveComment', (event, data) => {
+      console.log('----- save comment -----', data);
+
+      this._server.project.saveComment(data.comment);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('saveTag', (event, data) => {
+      this._server.project.saveTag(data);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('deleteTag', (event, data) => {
+      this._server.project.deleteTag(data);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('refresh', event => {
+      console.log('----- refresh browser -----'); // socket.emit("refresh");
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('overlaySoftware', (event, data) => {// overlaySoftware = data;
+      // overlay.webContents.send('software', data);
+    });
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('getSceneName', (event, data) => {// socket.emit("getSceneName", data);
+    });
+  }
+
+}
+
+/***/ }),
+
+/***/ "./main/Sequence.js":
+/*!**************************!*\
+  !*** ./main/Sequence.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var fileseq__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! fileseq */ "fileseq");
+/* harmony import */ var fileseq__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fileseq__WEBPACK_IMPORTED_MODULE_0__);
+
+
+class Sequence extends fileseq__WEBPACK_IMPORTED_MODULE_0__["FileSequence"] {
+  constructor(sequence, comment, tags) {
+    super(undefined);
+    this.frameSet = sequence.frameSet;
+    this.dirname = sequence.dirname;
+    this.basename = sequence.basename;
+    this.extension = sequence.extension;
+    this.padding = sequence.padding;
+    this.frames = sequence.frameSet._frange;
+    this.comment = comment;
+    this.tags = tags;
+    this.state = undefined;
+    this.version = undefined; // this._frames = [];
+  } // get frames() { return this._frames; }
+  // get affichageFrames() { return this._frames[0] + "-" + this._frames[this._frames.length - 1]; }
+  // get name() { return this._name; }
+  //
+  // addFile(name, state, version, extension, size, modified, comment, tags, path, frame){
+  //   this._name = name;
+  //   this._state = state;
+  //   this._version = version;
+  //   this._extension = extension;
+  //   this._size += size;
+  //   this._modified = modified;
+  //   this._comment = comment;
+  //   this._tags = tags;
+  //   this._path = path;
+  //
+  //   this._frames.push(frame);
+  //   this._frames.sort();
+  // }
+  //
+  // formatForRender() {
+  //   let file = {
+  //     class: "sequence",
+  //     name: this._name,
+  //     frames: this._frames[0] + "-" + this._frames[this._frames.length - 1],
+  //     state: this._state,
+  //     version: this._version,
+  //     extension: this._extension,
+  //     size: this._size,
+  //     modified: this.formatDate(),
+  //     tags: this._tags,
+  //     path: this._path
+  //   }
+  //   return file;
+  // }
+  //
+  // format() {
+  //   let file = {
+  //     name: this._name,
+  //     frames: this._frames,
+  //     state: this._state,
+  //     version: this._version,
+  //     extension: this._extension,
+  //     size: this._size,
+  //     modified: this.formatDate(),
+  //     comment: this._comment,
+  //     tags: this._tags,
+  //     path: this._path
+  //   }
+  //   return file;
+  // }
+
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Sequence);
+
+/***/ }),
+
+/***/ "./main/Server.js":
+/*!************************!*\
+  !*** ./main/Server.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Server; });
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! electron */ "electron");
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(electron__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! fs */ "fs");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! http */ "http");
+/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(http__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! socket.io */ "socket.io");
+/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(socket_io__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Config */ "./main/Config.js");
+/* harmony import */ var _Graph__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Graph */ "./main/Graph.js");
+/* harmony import */ var _Logger__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Logger */ "./main/Logger.js");
+/* harmony import */ var _NodeManager__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./NodeManager */ "./main/NodeManager.js");
+/* harmony import */ var _Project__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Project */ "./main/Project.js");
+/* harmony import */ var _Renderer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Renderer */ "./main/Renderer.js");
+/* harmony import */ var _SoftwareSocket__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./SoftwareSocket */ "./main/SoftwareSocket.js");
+
+
+
+ // import { homedir } from 'os'
+
+
+ // import { execFile } from 'child_process'
+
+
+
+
+
+
+
+ // import router from './Router'
+
+class Server {
+  constructor() {
+    this._app = express__WEBPACK_IMPORTED_MODULE_1___default()(); // this._app.use('/', router)
+
+    this._http = Object(http__WEBPACK_IMPORTED_MODULE_4__["createServer"])(this._app);
+    this._io = new socket_io__WEBPACK_IMPORTED_MODULE_5___default.a(this._http);
+    this._softwareSocket = new _SoftwareSocket__WEBPACK_IMPORTED_MODULE_12__["default"](this._io);
+    this._nodeManager = new _NodeManager__WEBPACK_IMPORTED_MODULE_9__["default"]();
+    this._config = new _Config__WEBPACK_IMPORTED_MODULE_6__["default"](); // this._softwares = {}
+
+    this._page = undefined; // this._assetIds = {}
+
+    this._projects = {};
+    this._project = undefined;
+    this._graph = new _Graph__WEBPACK_IMPORTED_MODULE_7__["default"](this._nodeManager, this, data => this.sendMessageMainData('graph', data));
+  } // get assetIds () { return this.assetIds }
+
+
+  get project() {
+    return this._projects[this._project];
+  }
+
+  set project(project) {
+    this._project = project;
+  } // get software () { return this._softwares }
+  // set software (software) { this._softwares[software.id] = software }
+  // get softwares () { return this._softwares }
+
+
+  get config() {
+    return this._config;
+  }
+
+  get nodes() {
+    return this._nodeManager.nodes;
+  }
+
+  get page() {
+    return this._page;
+  }
+
+  set page(page) {
+    this._page = page;
+    this.setWindowMenu();
+  }
+
+  async whenReady() {
+    const config = await this._config.readConfig();
+    await this._config.checkEngines();
+    await this._config.checkNodes(); // Logger.list(config);
+
+    this.onConfig('config', config);
+    return config;
+  }
+
+  setWindows(mainWindow, overlay) {
+    this._mainWindow = mainWindow;
+    this._overlay = overlay;
+    this._renderer = new _Renderer__WEBPACK_IMPORTED_MODULE_11__["default"](this, mainWindow, overlay);
+  }
+
+  setWindowMenu() {
+    if (this._page === 'graph') {
+      const template = [{
+        label: 'File',
+        submenu: [{
+          label: 'Open Graph',
+          click: () => {
+            this.openGraph();
+          }
+        }, {
+          label: 'Save Graph',
+          click: () => {
+            this.saveGraph();
+          }
+        }]
+      }];
+      const menu = electron__WEBPACK_IMPORTED_MODULE_0__["Menu"].buildFromTemplate(template);
+      electron__WEBPACK_IMPORTED_MODULE_0__["Menu"].setApplicationMenu(menu);
+    }
+  }
+
+  onConfig(message, config) {
+    this._nodeManager.path = this._config._nodesPath; // if (process.env.NODE_ENV === 'production') {
+    //   // this._nodeManager.path = path.join(__dirname, '../../../nodes')
+    //   // console.log(path.join(__dirname, '../../../nodes'))
+    //   // result = spawn.sync(executable, [], { encoding: 'utf8' });
+    // } else {
+    //   this._nodeManager.path = 'C:/Users/leege/_pulsar/nodes'
+    // }
+
+    this._nodeManager.importNodes(() => {// let output = this._graph.addNode("base", "OUTPUT", {x: 11000, y: 10500});
+      // let merge = this._graph.addNode("operations", "merge", {x: 11000, y: 10600});
+      // let render = this._graph.addNode("houdini", "render", {x: 10700, y: 10500});
+      // this._graph.setNodeInputValue(render, "frames", [1, 5]);
+      // let render2 = this._graph.addNode("houdini", "render", {x: 10700, y: 10700});
+      // this._graph.setNodeInputValue(render2, "frames", [10, 15]);
+      // let file1 = this._graph.addNode("constants", "file", {x: 10400, y: 10450});
+      // this._graph.setNodeInputValue(file1, "file", "C:\\Houdini17\\bin\\hrender.py");
+      // let file2 = this._graph.addNode("constants", "file", {x: 10400, y: 10550});
+      // this._graph.setNodeInputValue(file2, "file", "C:\\Users\\leege\\pulsar-test.hipnc");
+      // let string = this._graph.addNode("constants", "string", {x: 10400, y: 10650});
+      // this._graph.setNodeInputValue(string, "string", "/out/mantra_ipr");
+      // // this._graph.addEdge(output, "output", render, "output");
+      // this._graph.addEdge(merge, "input1", render, "output");
+      // this._graph.addEdge(merge, "input2", render2, "output");
+      // this._graph.addEdge(render, "hrender.py", file1, "output");
+      // this._graph.addEdge(render, "scene", file2, "output");
+      // this._graph.addEdge(render, "render_node", string, "output");
+      // this._graph.addEdge(render2, "hrender.py", file1, "output");
+      // this._graph.addEdge(render2, "scene", file2, "output");
+      // this._graph.addEdge(render2, "render_node", string, "output");
+    }); // this.sendMessageMain(message, config)
+
+
+    for (const p in config.projects) {
+      const project = new _Project__WEBPACK_IMPORTED_MODULE_10__["default"](p, config.projects[p], data => this.sendMessageMainData('project', data));
+      this._projects[p] = project;
+    }
+
+    const keys = Object.keys(config.projects);
+
+    if (keys.length > 0) {
+      this._project = keys[0];
+    } // if(this._assetIds["fileManager"] == undefined) {
+    //   Logger.info("----- fileManager AssetId doesn't exist -----");
+    //   let fm = new AssetId("fileManager", config.paths, config.projects, (data) => this.sendMessageMainData("assetId", data));
+    //   this._assetIds["fileManager"] = fm;
+    //   let keys = Object.keys(config.projects);
+    //   if(keys.length > 0) {
+    //     this.setAssetIdValue("fileManager", "project", keys[0])
+    //     // fm.project = keys[0];
+    //   }
+    //   // fm.formatForRender();
+    // }
+    // if(this._assetIds["newAsset"] == undefined) {
+    //   Logger.log("----- newAsset AssetId doesn't exist -----");
+    //   let na = new AssetId("newAsset", config.paths, config.projects, (data) => this.sendMessageMainData("assetId", data));
+    //   this._assetIds["newAsset"] = na;
+    //   let keys = Object.keys(config.projects);
+    //   if(keys.length > 0) {
+    //     this.setAssetIdValue("newAsset", "project", keys[0])
+    //     // na.project = keys[0];
+    //   }
+    //   // na.formatForRender();
+    // }
+
+  }
+
+  setConfig(data) {
+    if (this._config.config.firstUsage === true &amp;&amp; data.firstUsage === false) {
+      for (const p in data.projects) {
+        const project = new _Project__WEBPACK_IMPORTED_MODULE_10__["default"](p, data.projects[p], data => this.sendMessageMainData('project', data));
+        this._projects[p] = project;
+      }
+
+      const keys = Object.keys(data.projects);
+
+      if (keys.length > 0) {
+        this._project = keys[0];
+      } // if(Object.keys(data.projects).length > 0) {
+      // this._assetIds["fileManager"].projects = data.projects;
+      // this._assetIds["fileManager"].project = Object.keys(data.projects)[0];
+      // this._assetIds["newAsset"].projects = data.projects;
+      // this._assetIds["newAsset"].project = Object.keys(data.projects)[0];
+      // }
+
+    }
+
+    this._config.setConfig(data, () => this.sendMessageMain('configSet'));
+  }
+
+  setAssetIdValue(sid, type, value) {
+    _Logger__WEBPACK_IMPORTED_MODULE_8__["default"].info(`sid = ${sid}`);
+    _Logger__WEBPACK_IMPORTED_MODULE_8__["default"].warning(`${type}: ${value}`); // this._assetIds[sid].setValue(type, value);
+  }
+
+  sendMessageMain(message) {
+    this._renderer.sendMessageMain(message);
+  }
+
+  sendMessageMainData(message, data) {
+    this._renderer.sendMessageMainData(message, data);
+  } // execTask (data) {
+  //   const type = data.type
+  //   const task = data.command
+  //
+  //   if (['maya', 'houdini', 'nuke'].includes(type)) {
+  //     const args = data.arguments
+  //     if (data.id === 'new') {
+  //       let winTask = `${type}_${task}`
+  //       if (data.customArgs) {
+  //         winTask = task
+  //       }
+  //       const node = this._nodeManager.getNode('windows', winTask)
+  //       let dirPath
+  //       if (process.env.NODE_ENV === 'production') {
+  //         dirPath = path.join(__dirname, '../../../nodes/scripts/windows')
+  //         // result = spawn.sync(executable, [], { encoding: 'utf8' });
+  //       } else {
+  //         dirPath = `${this.config.config.nodes}/scripts/windows`
+  //       }
+  //       const file = node.script
+  //       const filePath = path.join(dirPath, file)
+  //       const softPath = this.config.config.softwares[type]
+  //       Logger.warning(filePath)
+  //       // let command = `start ${filePath} ${softPath} ${args.file}`
+  //       // Logger.success(command);
+  //       if (data.customArgs) {
+  //         execFile(filePath, args, (error, stdout, stderr) => {
+  //           if (error) {
+  //             console.log(`error: ${error.message}`)
+  //             return
+  //           }
+  //           if (stderr) {
+  //             console.log(`stderr: ${stderr}`)
+  //             return
+  //           }
+  //           console.log(`stdout: ${stdout}`)
+  //         })
+  //       } else {
+  //         execFile(filePath, [softPath, args.file], (error, stdout, stderr) => {
+  //           if (error) {
+  //             console.log(`error: ${error.message}`)
+  //             return
+  //           }
+  //           if (stderr) {
+  //             console.log(`stderr: ${stderr}`)
+  //             return
+  //           }
+  //           console.log(`stdout: ${stdout}`)
+  //         })
+  //       }
+  //     } else {
+  //
+  //     }
+  //   } else if (['mayapy', 'hython'].includes(data.id)) {
+  //     const node = this._nodeManager.getNode(type, task)
+  //     // let dirPath = `${this.config.config.nodes}/scripts/${type}`;
+  //     let dirPath
+  //     if (process.env.NODE_ENV === 'production') {
+  //       dirPath = path.join(__dirname, `../../../nodes/scripts/${type}`)
+  //       // result = spawn.sync(executable, [], { encoding: 'utf8' });
+  //     } else {
+  //       dirPath = `${this.config.config.nodes}/scripts/${type}`
+  //     }
+  //     const file = node.script
+  //     const filePath = path.join(dirPath, file)
+  //
+  //     const args = data.arguments
+  //     args.unshift(filePath)
+  //
+  //     const softPath = this.config.config.softwares[type]
+  //     // let command = `${softPath} ${filePath} ${data.arguments.file}`;
+  //     // Logger.info(command);
+  //     execFile(softPath, args, (error, stdout, stderr) => {
+  //       if (error) {
+  //         console.log(`error: ${error.message}`)
+  //         return
+  //       }
+  //       if (stderr) {
+  //         console.log(`stderr: ${stderr}`)
+  //         return
+  //       }
+  //       console.log(`stdout: ${stdout}`)
+  //     })
+  //   }
+  // }
+
+
+  startServer() {
+    try {
+      this._http.listen(7846, () => {
+        console.log('----- listening on *:7846 -----');
+      });
+    } catch (e) {}
+  }
+
+  openGraph() {
+    electron__WEBPACK_IMPORTED_MODULE_0__["dialog"].showOpenDialog(this._mainWindow, {
+      filters: [{
+        name: 'Pulsar Graph',
+        extensions: ['puls']
+      }]
+    }, files => {
+      if (files.length > 0) {
+        const file = files[0];
+
+        if (!file.endsWith('.puls')) {
+          return;
+        }
+
+        fs__WEBPACK_IMPORTED_MODULE_3___default.a.readFile(file, (err, data) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+
+          try {
+            const graph = JSON.parse(data);
+            console.log(graph);
+            this.sendMessageMain('clearGraph');
+            this._graph.graph = graph;
+          } catch (e) {
+            console.error(e);
+          }
+        });
+      }
+    });
+  }
+
+  saveGraph() {
+    if (this._graph.name === undefined) {
+      electron__WEBPACK_IMPORTED_MODULE_0__["dialog"].showSaveDialog(this._mainWindow, {
+        filters: [{
+          name: 'Pulsar Graph',
+          extensions: ['puls']
+        }]
+      }, file => {
+        if (file === '') {
+          console.log('no file');
+          return;
+        }
+
+        if (!file.endsWith('.puls')) {
+          file += '.puls';
+        }
+
+        const data = this._graph.formatForSave();
+
+        data.name = path__WEBPACK_IMPORTED_MODULE_2___default.a.basename(file);
+        data.path = file;
+        const jsonContent = JSON.stringify(data, null, 2);
+        fs__WEBPACK_IMPORTED_MODULE_3___default.a.writeFile(file, jsonContent, 'utf8', function (err) {
+          if (err) {
+            console.log('An error occured while writing JSON Object to File.'); // return console.log(err);
+          }
+        });
+      });
+    } else {
+      const data = this._graph.formatForSave();
+
+      const jsonContent = JSON.stringify(data, null, 2);
+      fs__WEBPACK_IMPORTED_MODULE_3___default.a.writeFile(data.path, jsonContent, 'utf8', function (err) {
+        if (err) {
+          console.log('An error occured while writing JSON Object to File.'); // return console.log(err);
+        }
+      });
+    }
+  }
+
+}
+
+/***/ }),
+
+/***/ "./main/Software.js":
+/*!**************************!*\
+  !*** ./main/Software.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Software; });
+class Software {
+  constructor(socket) {
+    this._id = socket.id;
+    this._socket = socket;
+    this._software = undefined;
+    this._scene = undefined;
+    this._saved = 1;
+  }
+
+  get id() {
+    return this._id;
+  }
+
+  get socket() {
+    return this._socket;
+  }
+
+  get software() {
+    return this._software;
+  }
+
+  set software(software) {
+    this._software = software;
+  }
+
+  get scene() {
+    return this._scene;
+  }
+
+  set scene(scene) {
+    this._scene = scene;
+  }
+
+  get saved() {
+    return this._saved;
+  }
+
+  set saved(saved) {
+    this._saved = saved;
+  }
+
+  execTask(data) {
+    this._socket.emit('execTask', data);
+  }
+
+  formatForRender() {
+    return {
+      id: this._id,
+      software: this._software,
+      scene: this._scene,
+      saved: this._saved
+    };
+  }
+
+}
+
+/***/ }),
+
+/***/ "./main/SoftwareSocket.js":
+/*!********************************!*\
+  !*** ./main/SoftwareSocket.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SoftwareSocket; });
+/* harmony import */ var _Renderer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Renderer */ "./main/Renderer.js");
+/* harmony import */ var _Software__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Software */ "./main/Software.js");
+
+
+class SoftwareSocket {
+  constructor(io, server) {
+    if (!!this.constructor.instance) {
+      return this.constructor.instance;
+    }
+
+    this.constructor.instance = this;
+    this._server = server;
+    this._softwares = {};
+    this._io = io.of('/software').on('connection', socket => {
+      console.log('----- software connected -----');
+      console.log(`software.id: ${socket.id}`);
+      const software = new _Software__WEBPACK_IMPORTED_MODULE_1__["default"](socket); // this._server.client = software
+
+      this._softwares[socket.id] = software;
+      console.log(this._softwares);
+      socket.on('software', data => {
+        software.software = data.software;
+        software.scene = data.scene;
+        software.saved = data.saved;
+        this.sendSoftwares();
+      });
+      socket.on('disconnect', () => {
+        console.log('----- software disconnected -----');
+        console.log(`software.id: ${socket.id}`);
+        delete this._softwares[socket.id];
+        console.log(this._softwares);
+        this.sendSoftwares();
+      });
+    });
+  }
+
+  get softwares() {
+    return this._softwares;
+  }
+
+  sendSoftwares() {
+    const softs = {};
+
+    for (const id in this._softwares) {
+      const soft = this._softwares[id].formatForRender();
+
+      softs[id] = soft;
+    }
+
+    const render = new _Renderer__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    render.sendMessageMainData('softwares', softs);
+  }
+
+}
+
+/***/ }),
+
+/***/ "./main/background.js":
+/*!****************************!*\
+  !*** ./main/background.js ***!
+  \****************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! electron */ "electron");
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(electron__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var electron_serve__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! electron-serve */ "electron-serve");
+/* harmony import */ var electron_serve__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(electron_serve__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers */ "./main/helpers/index.js");
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Server */ "./main/Server.js");
+
+
+
+ // import io from 'socket.io-client';
+
+
+
+const {
+  autoUpdater
+} = __webpack_require__(/*! electron-updater */ "electron-updater");
+
+const server = new _Server__WEBPACK_IMPORTED_MODULE_4__["default"]();
+console.log('#######################################################');
+console.log(process.argv);
+console.log('#######################################################');
+setInterval(() => {
+  try {
+    autoUpdater.checkForUpdates();
+  } catch (e) {
+    console.error('Cannont update');
+    console.error(e);
+  }
+}, 1000 * 60);
+autoUpdater.on('update-available', () => {
+  console.log('----- update available -----');
+});
+autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+  console.log('update-downloaded');
+  autoUpdater.quitAndInstall();
+}); // import {PythonShell} from 'python-shell';
+
+const isProd = "development" === 'production';
+var overlaySoftware = undefined; // var softwares = {};
+// var config = {};
+// var directories = {
+//   type: [],
+//   name: [],
+//   task: [],
+//   subtask: [],
+//   file: []
+// };
+// var assetDirectories = {
+//   type: [],
+//   name: [],
+//   task: [],
+//   subtask: [],
+//   file: []
+// };
+
+if (isProd) {
+  electron_serve__WEBPACK_IMPORTED_MODULE_2___default()({
+    directory: 'app'
+  });
+} else {
+  Object(_helpers__WEBPACK_IMPORTED_MODULE_3__["exitOnChange"])();
+  electron__WEBPACK_IMPORTED_MODULE_1__["app"].setPath('userData', `${electron__WEBPACK_IMPORTED_MODULE_1__["app"].getPath('userData')} (development)`);
+}
+
+(async () => {
+  await electron__WEBPACK_IMPORTED_MODULE_1__["app"].whenReady();
+  const config = await server.whenReady();
+  var mainWindow = Object(_helpers__WEBPACK_IMPORTED_MODULE_3__["createWindow"])('main', {
+    width: 1200,
+    height: 800,
+    minWidth: 1200,
+    minHeight: 800,
+    frame: true,
+    title: 'Pulsar',
+    icon: path__WEBPACK_IMPORTED_MODULE_0___default.a.join(__dirname, '../main/pulsar.png')
+  });
+  mainWindow.maximize(); // var overlay = createWindow('overlay', {
+  //   width: 250,
+  //   height: 85,
+  //   frame: false,
+  //   resizable: false,
+  //   alwaysOnTop: true,
+  //   skipTaskbar: true,
+  //   transparent: true
+  // });
+  //
+  // overlay.minimize();
+
+  server.setWindows(mainWindow, 'overlay');
+  server.startServer(); // console.log("-----config-----", config);
+
+  if (config.firstUsage) {
+    const homeUrl = isProd ? 'app://./welcome.html' : 'http://localhost:8888/welcome';
+    await mainWindow.loadURL(homeUrl);
+    server.page = 'welcome';
+  } else {
+    const homeUrl = isProd ? 'app://./manager.html' : 'http://localhost:8888/manager';
+    server.page = 'graph';
+    await mainWindow.loadURL(homeUrl);
+  } // const overlayUrl = isProd ? 'app://./overlay.html' : 'http://localhost:8888/overlay';
+  // await overlay.loadURL(overlayUrl);
+
+
+  if (!isProd) {
+    mainWindow.webContents.openDevTools(); // overlay.webContents.openDevTools();
+  } // mainWindow.on("focus", (e) => {
+  //   overlay.minimize();
+  // });
+  //
+  // mainWindow.on("blur", (e) => {
+  //   overlay.restore();
+  // });
+  // const ret = globalShortcut.register('CommandOrControl+S', () => {
+  //   console.log('CommandOrControl+S is pressed')
+  // });
+  // var socket = io('http://localhost:7846/frontend', {
+  //   transports: ['websocket'],
+  // });
+  // ipcMain.on("getSoftwares", (event) => {
+  //   event.sender.send('softwares', softwares);
+  // });
+  //
+  // ipcMain.on("getConfig", (event) => {
+  //   if(config == {}) {
+  //     socket.emit("getConfig");
+  //   } else {
+  //     event.sender.send('config', config);
+  //   }
+  // });
+  //
+  // ipcMain.on("setProject", (event, data) => {
+  //   console.log("----- set project -----", data);
+  //   socket.emit("setProject", data);
+  // });
+  //
+  // ipcMain.on("setAssetProject", (event, data) => {
+  //   console.log("----- set project -----", data);
+  //   socket.emit("setAssetProject", data);
+  // });
+  //
+  // ipcMain.on("setSwitch", (event, data) => {
+  //   console.log("----- set switch -----", data);
+  //   socket.emit("setSwitch", data);
+  // });
+  //
+  // ipcMain.on("setAssetSwitch", (event, data) => {
+  //   console.log("----- set switch -----", data);
+  //   socket.emit("setAssetSwitch", data);
+  // });
+  //
+  // ipcMain.on("setType", (event, data) => {
+  //   console.log("----- set type -----", data);
+  //   socket.emit("setType", data);
+  // });
+  //
+  // ipcMain.on("setName", (event, data) => {
+  //   console.log("----- set type -----", data);
+  //   socket.emit("setType", data);
+  // });
+  //
+  // ipcMain.on("setSidDir", (event, data) => {
+  //   console.log("----- set sid dir -----", data);
+  //   socket.emit("setSidDir", data);
+  // });
+  //
+  // ipcMain.on("setFile", (event, data) => {
+  //   console.log("----- set file -----", data);
+  //   socket.emit("setFile", data);
+  // });
+  //
+  // ipcMain.on("execTask", (event, data) => {
+  //   console.log("----- exec task -----", data);
+  //   socket.emit("execTask", data);
+  // });
+  //
+  // ipcMain.on("checkSotfwareSaved", (event) => {
+  //   console.log("----- check is software is saved -----");
+  //   socket.emit("checkSotfwareSaved");
+  // });
+  //
+  // ipcMain.on("saveComment", (event, data) => {
+  //   console.log("----- save comment -----", data);
+  //   socket.emit("saveComment", data);
+  // });
+  //
+  // ipcMain.on("saveConfig", (event, data) => {
+  //   removeShortcuts()
+  //   console.log("----- save config -----", data);
+  //   socket.emit("saveConfig", data);
+  //   config = data;
+  //   overlay.webContents.send('config', data);
+  //   setShortcuts()
+  // });
+  //
+  // ipcMain.on("refresh", (event) => {
+  //   console.log("----- refresh browser -----");
+  //   socket.emit("refresh");
+  // });
+  //
+  // ipcMain.on("overlaySoftware", (event, data) => {
+  //   overlaySoftware = data;
+  //   overlay.webContents.send('software', data);
+  // });
+  //
+  // ipcMain.on("getSceneName", (event, data) => {
+  //   socket.emit("getSceneName", data);
+  // });
+  // socket.on("connection", (data) => {
+  //   console.log("----- connected to the python server -----");
+  // });
+  //
+  // socket.on("configFile", (data) => {
+  //   removeShortcuts()
+  //   console.log("----- received config file -----");
+  //   console.log(data);
+  //   config = data;
+  //   mainWindow.webContents.send('config', data)
+  //   overlay.webContents.send('config', data)
+  //   setShortcuts()
+  // });
+  //
+  // socket.on("directories", (data) => {
+  //   console.log("----- received directories");
+  //   console.log(data);
+  //   let dirs = data.sid == "sid" ? directories : assetDirectories;
+  //   switch (data.type) {
+  //     case "type":
+  //     dirs.name = [];
+  //     dirs.task = [];
+  //     dirs.subtask = [];
+  //     dirs.file = [];
+  //     break;
+  //     case "name":
+  //     dirs.task = [];
+  //     dirs.subtask = [];
+  //     dirs.file = [];
+  //     break;
+  //     case "task":
+  //     dirs.subtask = [];
+  //     dirs.file = [];
+  //     break;
+  //     case "subtask":
+  //     dirs.file = [];
+  //     break;
+  //   }
+  //   dirs[data.type] = data.dirs
+  //   mainWindow.webContents.send('directories', {sid: data.sid, dirs: dirs})
+  // });
+  //
+  // socket.on("softwares", (data) => {
+  //   console.log("----- connected softwares: -----");
+  //   console.log(data);
+  //   softwares = data;
+  //   mainWindow.webContents.send('softwares', data)
+  // });
+  // var setShortcuts = () => {
+  //   globalShortcut.register(config.overlay.save, () => {
+  //     console.log('save')
+  //     if(overlaySoftware != undefined) {
+  //       let task = {
+  //         id: overlaySoftware.id,
+  //         command: "save_file",
+  //         arguments: {},
+  //         type: overlaySoftware.software
+  //       };
+  //       socket.emit("execTask", task);
+  //     }
+  //   });
+  //   globalShortcut.register(config.overlay.increment, () => {
+  //     console.log('increment')
+  //     if(overlaySoftware != undefined) {
+  //       let task = {
+  //         id: overlaySoftware.id,
+  //         command: "save_increment",
+  //         arguments: {},
+  //         type: overlaySoftware.software
+  //       };
+  //       socket.emit("execTask", task);
+  //     }
+  //   });
+
+
+  mainWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null; // if (overlay != null) {
+    //   // secondWindow.close()
+    //   overlay.destroy()
+    //   overlay = null;
+    // }
+  }); // }
+})();
+
+var removeShortcuts = () => {
+  electron__WEBPACK_IMPORTED_MODULE_1__["globalShortcut"].unregisterAll();
+};
+
+electron__WEBPACK_IMPORTED_MODULE_1__["app"].on('window-all-closed', () => {
+  electron__WEBPACK_IMPORTED_MODULE_1__["app"].quit();
+});
+electron__WEBPACK_IMPORTED_MODULE_1__["app"].on('will-quit', () => {
+  // Unregister all shortcuts.
+  electron__WEBPACK_IMPORTED_MODULE_1__["globalShortcut"].unregisterAll();
+});
+
+/***/ }),
+
+/***/ "./main/helpers/create-window.js":
+/*!***************************************!*\
+  !*** ./main/helpers/create-window.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return createWindow; });
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! electron */ "electron");
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(electron__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var electron_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! electron-store */ "electron-store");
+/* harmony import */ var electron_store__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(electron_store__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function createWindow(windowName, options) {
+  const key = 'window-state';
+  const name = `window-state-${windowName}`;
+  const store = new electron_store__WEBPACK_IMPORTED_MODULE_1__({
+    name
+  });
+  const defaultSize = {
+    width: options.width,
+    height: options.height
+  };
+  let state = {};
+  let win;
+
+  const restore = () => store.get(key, defaultSize);
+
+  const getCurrentPosition = () => {
+    const position = win.getPosition();
+    const size = win.getSize();
+    return {
+      x: position[0],
+      y: position[1],
+      width: size[0],
+      height: size[1]
+    };
+  };
+
+  const windowWithinBounds = (windowState, bounds) => {
+    return windowState.x >= bounds.x &amp;&amp; windowState.y >= bounds.y &amp;&amp; windowState.x + windowState.width &lt;= bounds.x + bounds.width &amp;&amp; windowState.y + windowState.height &lt;= bounds.y + bounds.height;
+  };
+
+  const resetToDefaults = () => {
+    const bounds = electron__WEBPACK_IMPORTED_MODULE_0__["screen"].getPrimaryDisplay().bounds;
+    return Object.assign({}, defaultSize, {
+      x: (bounds.width - defaultSize.width) / 2,
+      y: (bounds.height - defaultSize.height) / 2
+    });
+  };
+
+  const ensureVisibleOnSomeDisplay = windowState => {
+    const visible = electron__WEBPACK_IMPORTED_MODULE_0__["screen"].getAllDisplays().some(display => {
+      return windowWithinBounds(windowState, display.bounds);
+    });
+
+    if (!visible) {
+      // Window is partially or fully not visible now.
+      // Reset it to safe defaults.
+      return resetToDefaults();
+    }
+
+    return windowState;
+  };
+
+  const saveState = () => {
+    if (!win.isMinimized() &amp;&amp; !win.isMaximized()) {
+      Object.assign(state, getCurrentPosition());
+    }
+
+    store.set(key, state);
+  };
+
+  state = ensureVisibleOnSomeDisplay(restore());
+  win = new electron__WEBPACK_IMPORTED_MODULE_0__["BrowserWindow"]({ ...options,
+    ...state,
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
+  win.on('close', saveState);
+  return win;
+}
+;
+
+/***/ }),
+
+/***/ "./main/helpers/exit-on-change.js":
+/*!****************************************!*\
+  !*** ./main/helpers/exit-on-change.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return exitOnChange; });
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! fs */ "fs");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! electron */ "electron");
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(electron__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+function exitOnChange() {
+  Object(fs__WEBPACK_IMPORTED_MODULE_0__["watchFile"])(Object(path__WEBPACK_IMPORTED_MODULE_1__["join"])(process.cwd(), 'app/background.js'), () => {
+    electron__WEBPACK_IMPORTED_MODULE_2__["app"].exit(0);
+  });
+}
+;
+
+/***/ }),
+
+/***/ "./main/helpers/index.js":
+/*!*******************************!*\
+  !*** ./main/helpers/index.js ***!
+  \*******************************/
+/*! exports provided: createWindow, exitOnChange */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _create_window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./create-window */ "./main/helpers/create-window.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createWindow", function() { return _create_window__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _exit_on_change__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./exit-on-change */ "./main/helpers/exit-on-change.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "exitOnChange", function() { return _exit_on_change__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/chalk/node_modules/ansi-styles/index.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/chalk/node_modules/ansi-styles/index.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+const wrapAnsi16 = (fn, offset) => (...args) => {
+	const code = fn(...args);
+	return `\u001B[${code + offset}m`;
+};
+
+const wrapAnsi256 = (fn, offset) => (...args) => {
+	const code = fn(...args);
+	return `\u001B[${38 + offset};5;${code}m`;
+};
+
+const wrapAnsi16m = (fn, offset) => (...args) => {
+	const rgb = fn(...args);
+	return `\u001B[${38 + offset};2;${rgb[0]};${rgb[1]};${rgb[2]}m`;
+};
+
+const ansi2ansi = n => n;
+const rgb2rgb = (r, g, b) => [r, g, b];
+
+const setLazyProperty = (object, property, get) => {
+	Object.defineProperty(object, property, {
+		get: () => {
+			const value = get();
+
+			Object.defineProperty(object, property, {
+				value,
+				enumerable: true,
+				configurable: true
+			});
+
+			return value;
+		},
+		enumerable: true,
+		configurable: true
+	});
+};
+
+/** @type {typeof import('color-convert')} */
+let colorConvert;
+const makeDynamicStyles = (wrap, targetSpace, identity, isBackground) => {
+	if (colorConvert === undefined) {
+		colorConvert = __webpack_require__(/*! color-convert */ "./node_modules/chalk/node_modules/color-convert/index.js");
+	}
+
+	const offset = isBackground ? 10 : 0;
+	const styles = {};
+
+	for (const [sourceSpace, suite] of Object.entries(colorConvert)) {
+		const name = sourceSpace === 'ansi16' ? 'ansi' : sourceSpace;
+		if (sourceSpace === targetSpace) {
+			styles[name] = wrap(identity, offset);
+		} else if (typeof suite === 'object') {
+			styles[name] = wrap(suite[targetSpace], offset);
+		}
+	}
+
+	return styles;
+};
+
+function assembleStyles() {
+	const codes = new Map();
+	const styles = {
+		modifier: {
+			reset: [0, 0],
+			// 21 isn't widely supported and 22 does the same thing
+			bold: [1, 22],
+			dim: [2, 22],
+			italic: [3, 23],
+			underline: [4, 24],
+			inverse: [7, 27],
+			hidden: [8, 28],
+			strikethrough: [9, 29]
+		},
+		color: {
+			black: [30, 39],
+			red: [31, 39],
+			green: [32, 39],
+			yellow: [33, 39],
+			blue: [34, 39],
+			magenta: [35, 39],
+			cyan: [36, 39],
+			white: [37, 39],
+
+			// Bright color
+			blackBright: [90, 39],
+			redBright: [91, 39],
+			greenBright: [92, 39],
+			yellowBright: [93, 39],
+			blueBright: [94, 39],
+			magentaBright: [95, 39],
+			cyanBright: [96, 39],
+			whiteBright: [97, 39]
+		},
+		bgColor: {
+			bgBlack: [40, 49],
+			bgRed: [41, 49],
+			bgGreen: [42, 49],
+			bgYellow: [43, 49],
+			bgBlue: [44, 49],
+			bgMagenta: [45, 49],
+			bgCyan: [46, 49],
+			bgWhite: [47, 49],
+
+			// Bright color
+			bgBlackBright: [100, 49],
+			bgRedBright: [101, 49],
+			bgGreenBright: [102, 49],
+			bgYellowBright: [103, 49],
+			bgBlueBright: [104, 49],
+			bgMagentaBright: [105, 49],
+			bgCyanBright: [106, 49],
+			bgWhiteBright: [107, 49]
+		}
+	};
+
+	// Alias bright black as gray (and grey)
+	styles.color.gray = styles.color.blackBright;
+	styles.bgColor.bgGray = styles.bgColor.bgBlackBright;
+	styles.color.grey = styles.color.blackBright;
+	styles.bgColor.bgGrey = styles.bgColor.bgBlackBright;
+
+	for (const [groupName, group] of Object.entries(styles)) {
+		for (const [styleName, style] of Object.entries(group)) {
+			styles[styleName] = {
+				open: `\u001B[${style[0]}m`,
+				close: `\u001B[${style[1]}m`
+			};
+
+			group[styleName] = styles[styleName];
+
+			codes.set(style[0], style[1]);
+		}
+
+		Object.defineProperty(styles, groupName, {
+			value: group,
+			enumerable: false
+		});
+	}
+
+	Object.defineProperty(styles, 'codes', {
+		value: codes,
+		enumerable: false
+	});
+
+	styles.color.close = '\u001B[39m';
+	styles.bgColor.close = '\u001B[49m';
+
+	setLazyProperty(styles.color, 'ansi', () => makeDynamicStyles(wrapAnsi16, 'ansi16', ansi2ansi, false));
+	setLazyProperty(styles.color, 'ansi256', () => makeDynamicStyles(wrapAnsi256, 'ansi256', ansi2ansi, false));
+	setLazyProperty(styles.color, 'ansi16m', () => makeDynamicStyles(wrapAnsi16m, 'rgb', rgb2rgb, false));
+	setLazyProperty(styles.bgColor, 'ansi', () => makeDynamicStyles(wrapAnsi16, 'ansi16', ansi2ansi, true));
+	setLazyProperty(styles.bgColor, 'ansi256', () => makeDynamicStyles(wrapAnsi256, 'ansi256', ansi2ansi, true));
+	setLazyProperty(styles.bgColor, 'ansi16m', () => makeDynamicStyles(wrapAnsi16m, 'rgb', rgb2rgb, true));
+
+	return styles;
+}
+
+// Make the export immutable
+Object.defineProperty(module, 'exports', {
+	enumerable: true,
+	get: assembleStyles
+});
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../nextron/node_modules/webpack/buildin/module.js */ "./node_modules/nextron/node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./node_modules/chalk/node_modules/color-convert/conversions.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/chalk/node_modules/color-convert/conversions.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* MIT license */
+/* eslint-disable no-mixed-operators */
+const cssKeywords = __webpack_require__(/*! color-name */ "./node_modules/chalk/node_modules/color-name/index.js");
+
+// NOTE: conversions should only return primitive values (i.e. arrays, or
+//       values that give correct `typeof` results).
+//       do not use box values types (i.e. Number(), String(), etc.)
+
+const reverseKeywords = {};
+for (const key of Object.keys(cssKeywords)) {
+	reverseKeywords[cssKeywords[key]] = key;
+}
+
+const convert = {
+	rgb: {channels: 3, labels: 'rgb'},
+	hsl: {channels: 3, labels: 'hsl'},
+	hsv: {channels: 3, labels: 'hsv'},
+	hwb: {channels: 3, labels: 'hwb'},
+	cmyk: {channels: 4, labels: 'cmyk'},
+	xyz: {channels: 3, labels: 'xyz'},
+	lab: {channels: 3, labels: 'lab'},
+	lch: {channels: 3, labels: 'lch'},
+	hex: {channels: 1, labels: ['hex']},
+	keyword: {channels: 1, labels: ['keyword']},
+	ansi16: {channels: 1, labels: ['ansi16']},
+	ansi256: {channels: 1, labels: ['ansi256']},
+	hcg: {channels: 3, labels: ['h', 'c', 'g']},
+	apple: {channels: 3, labels: ['r16', 'g16', 'b16']},
+	gray: {channels: 1, labels: ['gray']}
+};
+
+module.exports = convert;
+
+// Hide .channels and .labels properties
+for (const model of Object.keys(convert)) {
+	if (!('channels' in convert[model])) {
+		throw new Error('missing channels property: ' + model);
+	}
+
+	if (!('labels' in convert[model])) {
+		throw new Error('missing channel labels property: ' + model);
+	}
+
+	if (convert[model].labels.length !== convert[model].channels) {
+		throw new Error('channel and label counts mismatch: ' + model);
+	}
+
+	const {channels, labels} = convert[model];
+	delete convert[model].channels;
+	delete convert[model].labels;
+	Object.defineProperty(convert[model], 'channels', {value: channels});
+	Object.defineProperty(convert[model], 'labels', {value: labels});
+}
+
+convert.rgb.hsl = function (rgb) {
+	const r = rgb[0] / 255;
+	const g = rgb[1] / 255;
+	const b = rgb[2] / 255;
+	const min = Math.min(r, g, b);
+	const max = Math.max(r, g, b);
+	const delta = max - min;
+	let h;
+	let s;
+
+	if (max === min) {
+		h = 0;
+	} else if (r === max) {
+		h = (g - b) / delta;
+	} else if (g === max) {
+		h = 2 + (b - r) / delta;
+	} else if (b === max) {
+		h = 4 + (r - g) / delta;
+	}
+
+	h = Math.min(h * 60, 360);
+
+	if (h &lt; 0) {
+		h += 360;
+	}
+
+	const l = (min + max) / 2;
+
+	if (max === min) {
+		s = 0;
+	} else if (l &lt;= 0.5) {
+		s = delta / (max + min);
+	} else {
+		s = delta / (2 - max - min);
+	}
+
+	return [h, s * 100, l * 100];
+};
+
+convert.rgb.hsv = function (rgb) {
+	let rdif;
+	let gdif;
+	let bdif;
+	let h;
+	let s;
+
+	const r = rgb[0] / 255;
+	const g = rgb[1] / 255;
+	const b = rgb[2] / 255;
+	const v = Math.max(r, g, b);
+	const diff = v - Math.min(r, g, b);
+	const diffc = function (c) {
+		return (v - c) / 6 / diff + 1 / 2;
+	};
+
+	if (diff === 0) {
+		h = 0;
+		s = 0;
+	} else {
+		s = diff / v;
+		rdif = diffc(r);
+		gdif = diffc(g);
+		bdif = diffc(b);
+
+		if (r === v) {
+			h = bdif - gdif;
+		} else if (g === v) {
+			h = (1 / 3) + rdif - bdif;
+		} else if (b === v) {
+			h = (2 / 3) + gdif - rdif;
+		}
+
+		if (h &lt; 0) {
+			h += 1;
+		} else if (h > 1) {
+			h -= 1;
+		}
+	}
+
+	return [
+		h * 360,
+		s * 100,
+		v * 100
+	];
+};
+
+convert.rgb.hwb = function (rgb) {
+	const r = rgb[0];
+	const g = rgb[1];
+	let b = rgb[2];
+	const h = convert.rgb.hsl(rgb)[0];
+	const w = 1 / 255 * Math.min(r, Math.min(g, b));
+
+	b = 1 - 1 / 255 * Math.max(r, Math.max(g, b));
+
+	return [h, w * 100, b * 100];
+};
+
+convert.rgb.cmyk = function (rgb) {
+	const r = rgb[0] / 255;
+	const g = rgb[1] / 255;
+	const b = rgb[2] / 255;
+
+	const k = Math.min(1 - r, 1 - g, 1 - b);
+	const c = (1 - r - k) / (1 - k) || 0;
+	const m = (1 - g - k) / (1 - k) || 0;
+	const y = (1 - b - k) / (1 - k) || 0;
+
+	return [c * 100, m * 100, y * 100, k * 100];
+};
+
+function comparativeDistance(x, y) {
+	/*
+		See https://en.m.wikipedia.org/wiki/Euclidean_distance#Squared_Euclidean_distance
+	*/
+	return (
+		((x[0] - y[0]) ** 2) +
+		((x[1] - y[1]) ** 2) +
+		((x[2] - y[2]) ** 2)
+	);
+}
+
+convert.rgb.keyword = function (rgb) {
+	const reversed = reverseKeywords[rgb];
+	if (reversed) {
+		return reversed;
+	}
+
+	let currentClosestDistance = Infinity;
+	let currentClosestKeyword;
+
+	for (const keyword of Object.keys(cssKeywords)) {
+		const value = cssKeywords[keyword];
+
+		// Compute comparative distance
+		const distance = comparativeDistance(rgb, value);
+
+		// Check if its less, if so set as closest
+		if (distance &lt; currentClosestDistance) {
+			currentClosestDistance = distance;
+			currentClosestKeyword = keyword;
+		}
+	}
+
+	return currentClosestKeyword;
+};
+
+convert.keyword.rgb = function (keyword) {
+	return cssKeywords[keyword];
+};
+
+convert.rgb.xyz = function (rgb) {
+	let r = rgb[0] / 255;
+	let g = rgb[1] / 255;
+	let b = rgb[2] / 255;
+
+	// Assume sRGB
+	r = r > 0.04045 ? (((r + 0.055) / 1.055) ** 2.4) : (r / 12.92);
+	g = g > 0.04045 ? (((g + 0.055) / 1.055) ** 2.4) : (g / 12.92);
+	b = b > 0.04045 ? (((b + 0.055) / 1.055) ** 2.4) : (b / 12.92);
+
+	const x = (r * 0.4124) + (g * 0.3576) + (b * 0.1805);
+	const y = (r * 0.2126) + (g * 0.7152) + (b * 0.0722);
+	const z = (r * 0.0193) + (g * 0.1192) + (b * 0.9505);
+
+	return [x * 100, y * 100, z * 100];
+};
+
+convert.rgb.lab = function (rgb) {
+	const xyz = convert.rgb.xyz(rgb);
+	let x = xyz[0];
+	let y = xyz[1];
+	let z = xyz[2];
+
+	x /= 95.047;
+	y /= 100;
+	z /= 108.883;
+
+	x = x > 0.008856 ? (x ** (1 / 3)) : (7.787 * x) + (16 / 116);
+	y = y > 0.008856 ? (y ** (1 / 3)) : (7.787 * y) + (16 / 116);
+	z = z > 0.008856 ? (z ** (1 / 3)) : (7.787 * z) + (16 / 116);
+
+	const l = (116 * y) - 16;
+	const a = 500 * (x - y);
+	const b = 200 * (y - z);
+
+	return [l, a, b];
+};
+
+convert.hsl.rgb = function (hsl) {
+	const h = hsl[0] / 360;
+	const s = hsl[1] / 100;
+	const l = hsl[2] / 100;
+	let t2;
+	let t3;
+	let val;
+
+	if (s === 0) {
+		val = l * 255;
+		return [val, val, val];
+	}
+
+	if (l &lt; 0.5) {
+		t2 = l * (1 + s);
+	} else {
+		t2 = l + s - l * s;
+	}
+
+	const t1 = 2 * l - t2;
+
+	const rgb = [0, 0, 0];
+	for (let i = 0; i &lt; 3; i++) {
+		t3 = h + 1 / 3 * -(i - 1);
+		if (t3 &lt; 0) {
+			t3++;
+		}
+
+		if (t3 > 1) {
+			t3--;
+		}
+
+		if (6 * t3 &lt; 1) {
+			val = t1 + (t2 - t1) * 6 * t3;
+		} else if (2 * t3 &lt; 1) {
+			val = t2;
+		} else if (3 * t3 &lt; 2) {
+			val = t1 + (t2 - t1) * (2 / 3 - t3) * 6;
+		} else {
+			val = t1;
+		}
+
+		rgb[i] = val * 255;
+	}
+
+	return rgb;
+};
+
+convert.hsl.hsv = function (hsl) {
+	const h = hsl[0];
+	let s = hsl[1] / 100;
+	let l = hsl[2] / 100;
+	let smin = s;
+	const lmin = Math.max(l, 0.01);
+
+	l *= 2;
+	s *= (l &lt;= 1) ? l : 2 - l;
+	smin *= lmin &lt;= 1 ? lmin : 2 - lmin;
+	const v = (l + s) / 2;
+	const sv = l === 0 ? (2 * smin) / (lmin + smin) : (2 * s) / (l + s);
+
+	return [h, sv * 100, v * 100];
+};
+
+convert.hsv.rgb = function (hsv) {
+	const h = hsv[0] / 60;
+	const s = hsv[1] / 100;
+	let v = hsv[2] / 100;
+	const hi = Math.floor(h) % 6;
+
+	const f = h - Math.floor(h);
+	const p = 255 * v * (1 - s);
+	const q = 255 * v * (1 - (s * f));
+	const t = 255 * v * (1 - (s * (1 - f)));
+	v *= 255;
+
+	switch (hi) {
+		case 0:
+			return [v, t, p];
+		case 1:
+			return [q, v, p];
+		case 2:
+			return [p, v, t];
+		case 3:
+			return [p, q, v];
+		case 4:
+			return [t, p, v];
+		case 5:
+			return [v, p, q];
+	}
+};
+
+convert.hsv.hsl = function (hsv) {
+	const h = hsv[0];
+	const s = hsv[1] / 100;
+	const v = hsv[2] / 100;
+	const vmin = Math.max(v, 0.01);
+	let sl;
+	let l;
+
+	l = (2 - s) * v;
+	const lmin = (2 - s) * vmin;
+	sl = s * vmin;
+	sl /= (lmin &lt;= 1) ? lmin : 2 - lmin;
+	sl = sl || 0;
+	l /= 2;
+
+	return [h, sl * 100, l * 100];
+};
+
+// http://dev.w3.org/csswg/css-color/#hwb-to-rgb
+convert.hwb.rgb = function (hwb) {
+	const h = hwb[0] / 360;
+	let wh = hwb[1] / 100;
+	let bl = hwb[2] / 100;
+	const ratio = wh + bl;
+	let f;
+
+	// Wh + bl cant be > 1
+	if (ratio > 1) {
+		wh /= ratio;
+		bl /= ratio;
+	}
+
+	const i = Math.floor(6 * h);
+	const v = 1 - bl;
+	f = 6 * h - i;
+
+	if ((i &amp; 0x01) !== 0) {
+		f = 1 - f;
+	}
+
+	const n = wh + f * (v - wh); // Linear interpolation
+
+	let r;
+	let g;
+	let b;
+	/* eslint-disable max-statements-per-line,no-multi-spaces */
+	switch (i) {
+		default:
+		case 6:
+		case 0: r = v;  g = n;  b = wh; break;
+		case 1: r = n;  g = v;  b = wh; break;
+		case 2: r = wh; g = v;  b = n; break;
+		case 3: r = wh; g = n;  b = v; break;
+		case 4: r = n;  g = wh; b = v; break;
+		case 5: r = v;  g = wh; b = n; break;
+	}
+	/* eslint-enable max-statements-per-line,no-multi-spaces */
+
+	return [r * 255, g * 255, b * 255];
+};
+
+convert.cmyk.rgb = function (cmyk) {
+	const c = cmyk[0] / 100;
+	const m = cmyk[1] / 100;
+	const y = cmyk[2] / 100;
+	const k = cmyk[3] / 100;
+
+	const r = 1 - Math.min(1, c * (1 - k) + k);
+	const g = 1 - Math.min(1, m * (1 - k) + k);
+	const b = 1 - Math.min(1, y * (1 - k) + k);
+
+	return [r * 255, g * 255, b * 255];
+};
+
+convert.xyz.rgb = function (xyz) {
+	const x = xyz[0] / 100;
+	const y = xyz[1] / 100;
+	const z = xyz[2] / 100;
+	let r;
+	let g;
+	let b;
+
+	r = (x * 3.2406) + (y * -1.5372) + (z * -0.4986);
+	g = (x * -0.9689) + (y * 1.8758) + (z * 0.0415);
+	b = (x * 0.0557) + (y * -0.2040) + (z * 1.0570);
+
+	// Assume sRGB
+	r = r > 0.0031308
+		? ((1.055 * (r ** (1.0 / 2.4))) - 0.055)
+		: r * 12.92;
+
+	g = g > 0.0031308
+		? ((1.055 * (g ** (1.0 / 2.4))) - 0.055)
+		: g * 12.92;
+
+	b = b > 0.0031308
+		? ((1.055 * (b ** (1.0 / 2.4))) - 0.055)
+		: b * 12.92;
+
+	r = Math.min(Math.max(0, r), 1);
+	g = Math.min(Math.max(0, g), 1);
+	b = Math.min(Math.max(0, b), 1);
+
+	return [r * 255, g * 255, b * 255];
+};
+
+convert.xyz.lab = function (xyz) {
+	let x = xyz[0];
+	let y = xyz[1];
+	let z = xyz[2];
+
+	x /= 95.047;
+	y /= 100;
+	z /= 108.883;
+
+	x = x > 0.008856 ? (x ** (1 / 3)) : (7.787 * x) + (16 / 116);
+	y = y > 0.008856 ? (y ** (1 / 3)) : (7.787 * y) + (16 / 116);
+	z = z > 0.008856 ? (z ** (1 / 3)) : (7.787 * z) + (16 / 116);
+
+	const l = (116 * y) - 16;
+	const a = 500 * (x - y);
+	const b = 200 * (y - z);
+
+	return [l, a, b];
+};
+
+convert.lab.xyz = function (lab) {
+	const l = lab[0];
+	const a = lab[1];
+	const b = lab[2];
+	let x;
+	let y;
+	let z;
+
+	y = (l + 16) / 116;
+	x = a / 500 + y;
+	z = y - b / 200;
+
+	const y2 = y ** 3;
+	const x2 = x ** 3;
+	const z2 = z ** 3;
+	y = y2 > 0.008856 ? y2 : (y - 16 / 116) / 7.787;
+	x = x2 > 0.008856 ? x2 : (x - 16 / 116) / 7.787;
+	z = z2 > 0.008856 ? z2 : (z - 16 / 116) / 7.787;
+
+	x *= 95.047;
+	y *= 100;
+	z *= 108.883;
+
+	return [x, y, z];
+};
+
+convert.lab.lch = function (lab) {
+	const l = lab[0];
+	const a = lab[1];
+	const b = lab[2];
+	let h;
+
+	const hr = Math.atan2(b, a);
+	h = hr * 360 / 2 / Math.PI;
+
+	if (h &lt; 0) {
+		h += 360;
+	}
+
+	const c = Math.sqrt(a * a + b * b);
+
+	return [l, c, h];
+};
+
+convert.lch.lab = function (lch) {
+	const l = lch[0];
+	const c = lch[1];
+	const h = lch[2];
+
+	const hr = h / 360 * 2 * Math.PI;
+	const a = c * Math.cos(hr);
+	const b = c * Math.sin(hr);
+
+	return [l, a, b];
+};
+
+convert.rgb.ansi16 = function (args, saturation = null) {
+	const [r, g, b] = args;
+	let value = saturation === null ? convert.rgb.hsv(args)[2] : saturation; // Hsv -> ansi16 optimization
+
+	value = Math.round(value / 50);
+
+	if (value === 0) {
+		return 30;
+	}
+
+	let ansi = 30
+		+ ((Math.round(b / 255) &lt;&lt; 2)
+		| (Math.round(g / 255) &lt;&lt; 1)
+		| Math.round(r / 255));
+
+	if (value === 2) {
+		ansi += 60;
+	}
+
+	return ansi;
+};
+
+convert.hsv.ansi16 = function (args) {
+	// Optimization here; we already know the value and don't need to get
+	// it converted for us.
+	return convert.rgb.ansi16(convert.hsv.rgb(args), args[2]);
+};
+
+convert.rgb.ansi256 = function (args) {
+	const r = args[0];
+	const g = args[1];
+	const b = args[2];
+
+	// We use the extended greyscale palette here, with the exception of
+	// black and white. normal palette only has 4 greyscale shades.
+	if (r === g &amp;&amp; g === b) {
+		if (r &lt; 8) {
+			return 16;
+		}
+
+		if (r > 248) {
+			return 231;
+		}
+
+		return Math.round(((r - 8) / 247) * 24) + 232;
+	}
+
+	const ansi = 16
+		+ (36 * Math.round(r / 255 * 5))
+		+ (6 * Math.round(g / 255 * 5))
+		+ Math.round(b / 255 * 5);
+
+	return ansi;
+};
+
+convert.ansi16.rgb = function (args) {
+	let color = args % 10;
+
+	// Handle greyscale
+	if (color === 0 || color === 7) {
+		if (args > 50) {
+			color += 3.5;
+		}
+
+		color = color / 10.5 * 255;
+
+		return [color, color, color];
+	}
+
+	const mult = (~~(args > 50) + 1) * 0.5;
+	const r = ((color &amp; 1) * mult) * 255;
+	const g = (((color >> 1) &amp; 1) * mult) * 255;
+	const b = (((color >> 2) &amp; 1) * mult) * 255;
+
+	return [r, g, b];
+};
+
+convert.ansi256.rgb = function (args) {
+	// Handle greyscale
+	if (args >= 232) {
+		const c = (args - 232) * 10 + 8;
+		return [c, c, c];
+	}
+
+	args -= 16;
+
+	let rem;
+	const r = Math.floor(args / 36) / 5 * 255;
+	const g = Math.floor((rem = args % 36) / 6) / 5 * 255;
+	const b = (rem % 6) / 5 * 255;
+
+	return [r, g, b];
+};
+
+convert.rgb.hex = function (args) {
+	const integer = ((Math.round(args[0]) &amp; 0xFF) &lt;&lt; 16)
+		+ ((Math.round(args[1]) &amp; 0xFF) &lt;&lt; 8)
+		+ (Math.round(args[2]) &amp; 0xFF);
+
+	const string = integer.toString(16).toUpperCase();
+	return '000000'.substring(string.length) + string;
+};
+
+convert.hex.rgb = function (args) {
+	const match = args.toString(16).match(/[a-f0-9]{6}|[a-f0-9]{3}/i);
+	if (!match) {
+		return [0, 0, 0];
+	}
+
+	let colorString = match[0];
+
+	if (match[0].length === 3) {
+		colorString = colorString.split('').map(char => {
+			return char + char;
+		}).join('');
+	}
+
+	const integer = parseInt(colorString, 16);
+	const r = (integer >> 16) &amp; 0xFF;
+	const g = (integer >> 8) &amp; 0xFF;
+	const b = integer &amp; 0xFF;
+
+	return [r, g, b];
+};
+
+convert.rgb.hcg = function (rgb) {
+	const r = rgb[0] / 255;
+	const g = rgb[1] / 255;
+	const b = rgb[2] / 255;
+	const max = Math.max(Math.max(r, g), b);
+	const min = Math.min(Math.min(r, g), b);
+	const chroma = (max - min);
+	let grayscale;
+	let hue;
+
+	if (chroma &lt; 1) {
+		grayscale = min / (1 - chroma);
+	} else {
+		grayscale = 0;
+	}
+
+	if (chroma &lt;= 0) {
+		hue = 0;
+	} else
+	if (max === r) {
+		hue = ((g - b) / chroma) % 6;
+	} else
+	if (max === g) {
+		hue = 2 + (b - r) / chroma;
+	} else {
+		hue = 4 + (r - g) / chroma;
+	}
+
+	hue /= 6;
+	hue %= 1;
+
+	return [hue * 360, chroma * 100, grayscale * 100];
+};
+
+convert.hsl.hcg = function (hsl) {
+	const s = hsl[1] / 100;
+	const l = hsl[2] / 100;
+
+	const c = l &lt; 0.5 ? (2.0 * s * l) : (2.0 * s * (1.0 - l));
+
+	let f = 0;
+	if (c &lt; 1.0) {
+		f = (l - 0.5 * c) / (1.0 - c);
+	}
+
+	return [hsl[0], c * 100, f * 100];
+};
+
+convert.hsv.hcg = function (hsv) {
+	const s = hsv[1] / 100;
+	const v = hsv[2] / 100;
+
+	const c = s * v;
+	let f = 0;
+
+	if (c &lt; 1.0) {
+		f = (v - c) / (1 - c);
+	}
+
+	return [hsv[0], c * 100, f * 100];
+};
+
+convert.hcg.rgb = function (hcg) {
+	const h = hcg[0] / 360;
+	const c = hcg[1] / 100;
+	const g = hcg[2] / 100;
+
+	if (c === 0.0) {
+		return [g * 255, g * 255, g * 255];
+	}
+
+	const pure = [0, 0, 0];
+	const hi = (h % 1) * 6;
+	const v = hi % 1;
+	const w = 1 - v;
+	let mg = 0;
+
+	/* eslint-disable max-statements-per-line */
+	switch (Math.floor(hi)) {
+		case 0:
+			pure[0] = 1; pure[1] = v; pure[2] = 0; break;
+		case 1:
+			pure[0] = w; pure[1] = 1; pure[2] = 0; break;
+		case 2:
+			pure[0] = 0; pure[1] = 1; pure[2] = v; break;
+		case 3:
+			pure[0] = 0; pure[1] = w; pure[2] = 1; break;
+		case 4:
+			pure[0] = v; pure[1] = 0; pure[2] = 1; break;
+		default:
+			pure[0] = 1; pure[1] = 0; pure[2] = w;
+	}
+	/* eslint-enable max-statements-per-line */
+
+	mg = (1.0 - c) * g;
+
+	return [
+		(c * pure[0] + mg) * 255,
+		(c * pure[1] + mg) * 255,
+		(c * pure[2] + mg) * 255
+	];
+};
+
+convert.hcg.hsv = function (hcg) {
+	const c = hcg[1] / 100;
+	const g = hcg[2] / 100;
+
+	const v = c + g * (1.0 - c);
+	let f = 0;
+
+	if (v > 0.0) {
+		f = c / v;
+	}
+
+	return [hcg[0], f * 100, v * 100];
+};
+
+convert.hcg.hsl = function (hcg) {
+	const c = hcg[1] / 100;
+	const g = hcg[2] / 100;
+
+	const l = g * (1.0 - c) + 0.5 * c;
+	let s = 0;
+
+	if (l > 0.0 &amp;&amp; l &lt; 0.5) {
+		s = c / (2 * l);
+	} else
+	if (l >= 0.5 &amp;&amp; l &lt; 1.0) {
+		s = c / (2 * (1 - l));
+	}
+
+	return [hcg[0], s * 100, l * 100];
+};
+
+convert.hcg.hwb = function (hcg) {
+	const c = hcg[1] / 100;
+	const g = hcg[2] / 100;
+	const v = c + g * (1.0 - c);
+	return [hcg[0], (v - c) * 100, (1 - v) * 100];
+};
+
+convert.hwb.hcg = function (hwb) {
+	const w = hwb[1] / 100;
+	const b = hwb[2] / 100;
+	const v = 1 - b;
+	const c = v - w;
+	let g = 0;
+
+	if (c &lt; 1) {
+		g = (v - c) / (1 - c);
+	}
+
+	return [hwb[0], c * 100, g * 100];
+};
+
+convert.apple.rgb = function (apple) {
+	return [(apple[0] / 65535) * 255, (apple[1] / 65535) * 255, (apple[2] / 65535) * 255];
+};
+
+convert.rgb.apple = function (rgb) {
+	return [(rgb[0] / 255) * 65535, (rgb[1] / 255) * 65535, (rgb[2] / 255) * 65535];
+};
+
+convert.gray.rgb = function (args) {
+	return [args[0] / 100 * 255, args[0] / 100 * 255, args[0] / 100 * 255];
+};
+
+convert.gray.hsl = function (args) {
+	return [0, 0, args[0]];
+};
+
+convert.gray.hsv = convert.gray.hsl;
+
+convert.gray.hwb = function (gray) {
+	return [0, 100, gray[0]];
+};
+
+convert.gray.cmyk = function (gray) {
+	return [0, 0, 0, gray[0]];
+};
+
+convert.gray.lab = function (gray) {
+	return [gray[0], 0, 0];
+};
+
+convert.gray.hex = function (gray) {
+	const val = Math.round(gray[0] / 100 * 255) &amp; 0xFF;
+	const integer = (val &lt;&lt; 16) + (val &lt;&lt; 8) + val;
+
+	const string = integer.toString(16).toUpperCase();
+	return '000000'.substring(string.length) + string;
+};
+
+convert.rgb.gray = function (rgb) {
+	const val = (rgb[0] + rgb[1] + rgb[2]) / 3;
+	return [val / 255 * 100];
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/chalk/node_modules/color-convert/index.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/chalk/node_modules/color-convert/index.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const conversions = __webpack_require__(/*! ./conversions */ "./node_modules/chalk/node_modules/color-convert/conversions.js");
+const route = __webpack_require__(/*! ./route */ "./node_modules/chalk/node_modules/color-convert/route.js");
+
+const convert = {};
+
+const models = Object.keys(conversions);
+
+function wrapRaw(fn) {
+	const wrappedFn = function (...args) {
+		const arg0 = args[0];
+		if (arg0 === undefined || arg0 === null) {
+			return arg0;
+		}
+
+		if (arg0.length > 1) {
+			args = arg0;
+		}
+
+		return fn(args);
+	};
+
+	// Preserve .conversion property if there is one
+	if ('conversion' in fn) {
+		wrappedFn.conversion = fn.conversion;
+	}
+
+	return wrappedFn;
+}
+
+function wrapRounded(fn) {
+	const wrappedFn = function (...args) {
+		const arg0 = args[0];
+
+		if (arg0 === undefined || arg0 === null) {
+			return arg0;
+		}
+
+		if (arg0.length > 1) {
+			args = arg0;
+		}
+
+		const result = fn(args);
+
+		// We're assuming the result is an array here.
+		// see notice in conversions.js; don't use box types
+		// in conversion functions.
+		if (typeof result === 'object') {
+			for (let len = result.length, i = 0; i &lt; len; i++) {
+				result[i] = Math.round(result[i]);
+			}
+		}
+
+		return result;
+	};
+
+	// Preserve .conversion property if there is one
+	if ('conversion' in fn) {
+		wrappedFn.conversion = fn.conversion;
+	}
+
+	return wrappedFn;
+}
+
+models.forEach(fromModel => {
+	convert[fromModel] = {};
+
+	Object.defineProperty(convert[fromModel], 'channels', {value: conversions[fromModel].channels});
+	Object.defineProperty(convert[fromModel], 'labels', {value: conversions[fromModel].labels});
+
+	const routes = route(fromModel);
+	const routeModels = Object.keys(routes);
+
+	routeModels.forEach(toModel => {
+		const fn = routes[toModel];
+
+		convert[fromModel][toModel] = wrapRounded(fn);
+		convert[fromModel][toModel].raw = wrapRaw(fn);
+	});
+});
+
+module.exports = convert;
+
+
+/***/ }),
+
+/***/ "./node_modules/chalk/node_modules/color-convert/route.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/chalk/node_modules/color-convert/route.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const conversions = __webpack_require__(/*! ./conversions */ "./node_modules/chalk/node_modules/color-convert/conversions.js");
+
+/*
+	This function routes a model to all other models.
+
+	all functions that are routed have a property `.conversion` attached
+	to the returned synthetic function. This property is an array
+	of strings, each with the steps in between the 'from' and 'to'
+	color models (inclusive).
+
+	conversions that are not possible simply are not included.
+*/
+
+function buildGraph() {
+	const graph = {};
+	// https://jsperf.com/object-keys-vs-for-in-with-closure/3
+	const models = Object.keys(conversions);
+
+	for (let len = models.length, i = 0; i &lt; len; i++) {
+		graph[models[i]] = {
+			// http://jsperf.com/1-vs-infinity
+			// micro-opt, but this is simple.
+			distance: -1,
+			parent: null
+		};
+	}
+
+	return graph;
+}
+
+// https://en.wikipedia.org/wiki/Breadth-first_search
+function deriveBFS(fromModel) {
+	const graph = buildGraph();
+	const queue = [fromModel]; // Unshift -> queue -> pop
+
+	graph[fromModel].distance = 0;
+
+	while (queue.length) {
+		const current = queue.pop();
+		const adjacents = Object.keys(conversions[current]);
+
+		for (let len = adjacents.length, i = 0; i &lt; len; i++) {
+			const adjacent = adjacents[i];
+			const node = graph[adjacent];
+
+			if (node.distance === -1) {
+				node.distance = graph[current].distance + 1;
+				node.parent = current;
+				queue.unshift(adjacent);
+			}
+		}
+	}
+
+	return graph;
+}
+
+function link(from, to) {
+	return function (args) {
+		return to(from(args));
+	};
+}
+
+function wrapConversion(toModel, graph) {
+	const path = [graph[toModel].parent, toModel];
+	let fn = conversions[graph[toModel].parent][toModel];
+
+	let cur = graph[toModel].parent;
+	while (graph[cur].parent) {
+		path.unshift(graph[cur].parent);
+		fn = link(conversions[graph[cur].parent][cur], fn);
+		cur = graph[cur].parent;
+	}
+
+	fn.conversion = path;
+	return fn;
+}
+
+module.exports = function (fromModel) {
+	const graph = deriveBFS(fromModel);
+	const conversion = {};
+
+	const models = Object.keys(graph);
+	for (let len = models.length, i = 0; i &lt; len; i++) {
+		const toModel = models[i];
+		const node = graph[toModel];
+
+		if (node.parent === null) {
+			// No possible conversion, or this node is the source model.
+			continue;
+		}
+
+		conversion[toModel] = wrapConversion(toModel, graph);
+	}
+
+	return conversion;
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/chalk/node_modules/color-name/index.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/chalk/node_modules/color-name/index.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+	"aliceblue": [240, 248, 255],
+	"antiquewhite": [250, 235, 215],
+	"aqua": [0, 255, 255],
+	"aquamarine": [127, 255, 212],
+	"azure": [240, 255, 255],
+	"beige": [245, 245, 220],
+	"bisque": [255, 228, 196],
+	"black": [0, 0, 0],
+	"blanchedalmond": [255, 235, 205],
+	"blue": [0, 0, 255],
+	"blueviolet": [138, 43, 226],
+	"brown": [165, 42, 42],
+	"burlywood": [222, 184, 135],
+	"cadetblue": [95, 158, 160],
+	"chartreuse": [127, 255, 0],
+	"chocolate": [210, 105, 30],
+	"coral": [255, 127, 80],
+	"cornflowerblue": [100, 149, 237],
+	"cornsilk": [255, 248, 220],
+	"crimson": [220, 20, 60],
+	"cyan": [0, 255, 255],
+	"darkblue": [0, 0, 139],
+	"darkcyan": [0, 139, 139],
+	"darkgoldenrod": [184, 134, 11],
+	"darkgray": [169, 169, 169],
+	"darkgreen": [0, 100, 0],
+	"darkgrey": [169, 169, 169],
+	"darkkhaki": [189, 183, 107],
+	"darkmagenta": [139, 0, 139],
+	"darkolivegreen": [85, 107, 47],
+	"darkorange": [255, 140, 0],
+	"darkorchid": [153, 50, 204],
+	"darkred": [139, 0, 0],
+	"darksalmon": [233, 150, 122],
+	"darkseagreen": [143, 188, 143],
+	"darkslateblue": [72, 61, 139],
+	"darkslategray": [47, 79, 79],
+	"darkslategrey": [47, 79, 79],
+	"darkturquoise": [0, 206, 209],
+	"darkviolet": [148, 0, 211],
+	"deeppink": [255, 20, 147],
+	"deepskyblue": [0, 191, 255],
+	"dimgray": [105, 105, 105],
+	"dimgrey": [105, 105, 105],
+	"dodgerblue": [30, 144, 255],
+	"firebrick": [178, 34, 34],
+	"floralwhite": [255, 250, 240],
+	"forestgreen": [34, 139, 34],
+	"fuchsia": [255, 0, 255],
+	"gainsboro": [220, 220, 220],
+	"ghostwhite": [248, 248, 255],
+	"gold": [255, 215, 0],
+	"goldenrod": [218, 165, 32],
+	"gray": [128, 128, 128],
+	"green": [0, 128, 0],
+	"greenyellow": [173, 255, 47],
+	"grey": [128, 128, 128],
+	"honeydew": [240, 255, 240],
+	"hotpink": [255, 105, 180],
+	"indianred": [205, 92, 92],
+	"indigo": [75, 0, 130],
+	"ivory": [255, 255, 240],
+	"khaki": [240, 230, 140],
+	"lavender": [230, 230, 250],
+	"lavenderblush": [255, 240, 245],
+	"lawngreen": [124, 252, 0],
+	"lemonchiffon": [255, 250, 205],
+	"lightblue": [173, 216, 230],
+	"lightcoral": [240, 128, 128],
+	"lightcyan": [224, 255, 255],
+	"lightgoldenrodyellow": [250, 250, 210],
+	"lightgray": [211, 211, 211],
+	"lightgreen": [144, 238, 144],
+	"lightgrey": [211, 211, 211],
+	"lightpink": [255, 182, 193],
+	"lightsalmon": [255, 160, 122],
+	"lightseagreen": [32, 178, 170],
+	"lightskyblue": [135, 206, 250],
+	"lightslategray": [119, 136, 153],
+	"lightslategrey": [119, 136, 153],
+	"lightsteelblue": [176, 196, 222],
+	"lightyellow": [255, 255, 224],
+	"lime": [0, 255, 0],
+	"limegreen": [50, 205, 50],
+	"linen": [250, 240, 230],
+	"magenta": [255, 0, 255],
+	"maroon": [128, 0, 0],
+	"mediumaquamarine": [102, 205, 170],
+	"mediumblue": [0, 0, 205],
+	"mediumorchid": [186, 85, 211],
+	"mediumpurple": [147, 112, 219],
+	"mediumseagreen": [60, 179, 113],
+	"mediumslateblue": [123, 104, 238],
+	"mediumspringgreen": [0, 250, 154],
+	"mediumturquoise": [72, 209, 204],
+	"mediumvioletred": [199, 21, 133],
+	"midnightblue": [25, 25, 112],
+	"mintcream": [245, 255, 250],
+	"mistyrose": [255, 228, 225],
+	"moccasin": [255, 228, 181],
+	"navajowhite": [255, 222, 173],
+	"navy": [0, 0, 128],
+	"oldlace": [253, 245, 230],
+	"olive": [128, 128, 0],
+	"olivedrab": [107, 142, 35],
+	"orange": [255, 165, 0],
+	"orangered": [255, 69, 0],
+	"orchid": [218, 112, 214],
+	"palegoldenrod": [238, 232, 170],
+	"palegreen": [152, 251, 152],
+	"paleturquoise": [175, 238, 238],
+	"palevioletred": [219, 112, 147],
+	"papayawhip": [255, 239, 213],
+	"peachpuff": [255, 218, 185],
+	"peru": [205, 133, 63],
+	"pink": [255, 192, 203],
+	"plum": [221, 160, 221],
+	"powderblue": [176, 224, 230],
+	"purple": [128, 0, 128],
+	"rebeccapurple": [102, 51, 153],
+	"red": [255, 0, 0],
+	"rosybrown": [188, 143, 143],
+	"royalblue": [65, 105, 225],
+	"saddlebrown": [139, 69, 19],
+	"salmon": [250, 128, 114],
+	"sandybrown": [244, 164, 96],
+	"seagreen": [46, 139, 87],
+	"seashell": [255, 245, 238],
+	"sienna": [160, 82, 45],
+	"silver": [192, 192, 192],
+	"skyblue": [135, 206, 235],
+	"slateblue": [106, 90, 205],
+	"slategray": [112, 128, 144],
+	"slategrey": [112, 128, 144],
+	"snow": [255, 250, 250],
+	"springgreen": [0, 255, 127],
+	"steelblue": [70, 130, 180],
+	"tan": [210, 180, 140],
+	"teal": [0, 128, 128],
+	"thistle": [216, 191, 216],
+	"tomato": [255, 99, 71],
+	"turquoise": [64, 224, 208],
+	"violet": [238, 130, 238],
+	"wheat": [245, 222, 179],
+	"white": [255, 255, 255],
+	"whitesmoke": [245, 245, 245],
+	"yellow": [255, 255, 0],
+	"yellowgreen": [154, 205, 50]
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/chalk/node_modules/has-flag/index.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/chalk/node_modules/has-flag/index.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = (flag, argv = process.argv) => {
+	const prefix = flag.startsWith('-') ? '' : (flag.length === 1 ? '-' : '--');
+	const position = argv.indexOf(prefix + flag);
+	const terminatorPosition = argv.indexOf('--');
+	return position !== -1 &amp;&amp; (terminatorPosition === -1 || position &lt; terminatorPosition);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/chalk/node_modules/supports-color/index.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/chalk/node_modules/supports-color/index.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+const os = __webpack_require__(/*! os */ "os");
+const tty = __webpack_require__(/*! tty */ "tty");
+const hasFlag = __webpack_require__(/*! has-flag */ "./node_modules/chalk/node_modules/has-flag/index.js");
+
+const {env} = process;
+
+let forceColor;
+if (hasFlag('no-color') ||
+	hasFlag('no-colors') ||
+	hasFlag('color=false') ||
+	hasFlag('color=never')) {
+	forceColor = 0;
+} else if (hasFlag('color') ||
+	hasFlag('colors') ||
+	hasFlag('color=true') ||
+	hasFlag('color=always')) {
+	forceColor = 1;
+}
+
+if ('FORCE_COLOR' in env) {
+	if (env.FORCE_COLOR === 'true') {
+		forceColor = 1;
+	} else if (env.FORCE_COLOR === 'false') {
+		forceColor = 0;
+	} else {
+		forceColor = env.FORCE_COLOR.length === 0 ? 1 : Math.min(parseInt(env.FORCE_COLOR, 10), 3);
+	}
+}
+
+function translateLevel(level) {
+	if (level === 0) {
+		return false;
+	}
+
+	return {
+		level,
+		hasBasic: true,
+		has256: level >= 2,
+		has16m: level >= 3
+	};
+}
+
+function supportsColor(haveStream, streamIsTTY) {
+	if (forceColor === 0) {
+		return 0;
+	}
+
+	if (hasFlag('color=16m') ||
+		hasFlag('color=full') ||
+		hasFlag('color=truecolor')) {
+		return 3;
+	}
+
+	if (hasFlag('color=256')) {
+		return 2;
+	}
+
+	if (haveStream &amp;&amp; !streamIsTTY &amp;&amp; forceColor === undefined) {
+		return 0;
+	}
+
+	const min = forceColor || 0;
+
+	if (env.TERM === 'dumb') {
+		return min;
+	}
+
+	if (process.platform === 'win32') {
+		// Windows 10 build 10586 is the first Windows release that supports 256 colors.
+		// Windows 10 build 14931 is the first release that supports 16m/TrueColor.
+		const osRelease = os.release().split('.');
+		if (
+			Number(osRelease[0]) >= 10 &amp;&amp;
+			Number(osRelease[2]) >= 10586
+		) {
+			return Number(osRelease[2]) >= 14931 ? 3 : 2;
+		}
+
+		return 1;
+	}
+
+	if ('CI' in env) {
+		if (['TRAVIS', 'CIRCLECI', 'APPVEYOR', 'GITLAB_CI'].some(sign => sign in env) || env.CI_NAME === 'codeship') {
+			return 1;
+		}
+
+		return min;
+	}
+
+	if ('TEAMCITY_VERSION' in env) {
+		return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(env.TEAMCITY_VERSION) ? 1 : 0;
+	}
+
+	if ('GITHUB_ACTIONS' in env) {
+		return 1;
+	}
+
+	if (env.COLORTERM === 'truecolor') {
+		return 3;
+	}
+
+	if ('TERM_PROGRAM' in env) {
+		const version = parseInt((env.TERM_PROGRAM_VERSION || '').split('.')[0], 10);
+
+		switch (env.TERM_PROGRAM) {
+			case 'iTerm.app':
+				return version >= 3 ? 3 : 2;
+			case 'Apple_Terminal':
+				return 2;
+			// No default
+		}
+	}
+
+	if (/-256(color)?$/i.test(env.TERM)) {
+		return 2;
+	}
+
+	if (/^screen|^xterm|^vt100|^vt220|^rxvt|color|ansi|cygwin|linux/i.test(env.TERM)) {
+		return 1;
+	}
+
+	if ('COLORTERM' in env) {
+		return 1;
+	}
+
+	return min;
+}
+
+function getSupportLevel(stream) {
+	const level = supportsColor(stream, stream &amp;&amp; stream.isTTY);
+	return translateLevel(level);
+}
+
+module.exports = {
+	supportsColor: getSupportLevel,
+	stdout: translateLevel(supportsColor(true, tty.isatty(1))),
+	stderr: translateLevel(supportsColor(true, tty.isatty(2)))
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/chalk/source/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/chalk/source/index.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+const ansiStyles = __webpack_require__(/*! ansi-styles */ "./node_modules/chalk/node_modules/ansi-styles/index.js");
+const {stdout: stdoutColor, stderr: stderrColor} = __webpack_require__(/*! supports-color */ "./node_modules/chalk/node_modules/supports-color/index.js");
+const {
+	stringReplaceAll,
+	stringEncaseCRLFWithFirstIndex
+} = __webpack_require__(/*! ./util */ "./node_modules/chalk/source/util.js");
+
+// `supportsColor.level` → `ansiStyles.color[name]` mapping
+const levelMapping = [
+	'ansi',
+	'ansi',
+	'ansi256',
+	'ansi16m'
+];
+
+const styles = Object.create(null);
+
+const applyOptions = (object, options = {}) => {
+	if (options.level > 3 || options.level &lt; 0) {
+		throw new Error('The `level` option should be an integer from 0 to 3');
+	}
+
+	// Detect level if not set manually
+	const colorLevel = stdoutColor ? stdoutColor.level : 0;
+	object.level = options.level === undefined ? colorLevel : options.level;
+};
+
+class ChalkClass {
+	constructor(options) {
+		return chalkFactory(options);
+	}
+}
+
+const chalkFactory = options => {
+	const chalk = {};
+	applyOptions(chalk, options);
+
+	chalk.template = (...arguments_) => chalkTag(chalk.template, ...arguments_);
+
+	Object.setPrototypeOf(chalk, Chalk.prototype);
+	Object.setPrototypeOf(chalk.template, chalk);
+
+	chalk.template.constructor = () => {
+		throw new Error('`chalk.constructor()` is deprecated. Use `new chalk.Instance()` instead.');
+	};
+
+	chalk.template.Instance = ChalkClass;
+
+	return chalk.template;
+};
+
+function Chalk(options) {
+	return chalkFactory(options);
+}
+
+for (const [styleName, style] of Object.entries(ansiStyles)) {
+	styles[styleName] = {
+		get() {
+			const builder = createBuilder(this, createStyler(style.open, style.close, this._styler), this._isEmpty);
+			Object.defineProperty(this, styleName, {value: builder});
+			return builder;
+		}
+	};
+}
+
+styles.visible = {
+	get() {
+		const builder = createBuilder(this, this._styler, true);
+		Object.defineProperty(this, 'visible', {value: builder});
+		return builder;
+	}
+};
+
+const usedModels = ['rgb', 'hex', 'keyword', 'hsl', 'hsv', 'hwb', 'ansi', 'ansi256'];
+
+for (const model of usedModels) {
+	styles[model] = {
+		get() {
+			const {level} = this;
+			return function (...arguments_) {
+				const styler = createStyler(ansiStyles.color[levelMapping[level]][model](...arguments_), ansiStyles.color.close, this._styler);
+				return createBuilder(this, styler, this._isEmpty);
+			};
+		}
+	};
+}
+
+for (const model of usedModels) {
+	const bgModel = 'bg' + model[0].toUpperCase() + model.slice(1);
+	styles[bgModel] = {
+		get() {
+			const {level} = this;
+			return function (...arguments_) {
+				const styler = createStyler(ansiStyles.bgColor[levelMapping[level]][model](...arguments_), ansiStyles.bgColor.close, this._styler);
+				return createBuilder(this, styler, this._isEmpty);
+			};
+		}
+	};
+}
+
+const proto = Object.defineProperties(() => {}, {
+	...styles,
+	level: {
+		enumerable: true,
+		get() {
+			return this._generator.level;
+		},
+		set(level) {
+			this._generator.level = level;
+		}
+	}
+});
+
+const createStyler = (open, close, parent) => {
+	let openAll;
+	let closeAll;
+	if (parent === undefined) {
+		openAll = open;
+		closeAll = close;
+	} else {
+		openAll = parent.openAll + open;
+		closeAll = close + parent.closeAll;
+	}
+
+	return {
+		open,
+		close,
+		openAll,
+		closeAll,
+		parent
+	};
+};
+
+const createBuilder = (self, _styler, _isEmpty) => {
+	const builder = (...arguments_) => {
+		// Single argument is hot path, implicit coercion is faster than anything
+		// eslint-disable-next-line no-implicit-coercion
+		return applyStyle(builder, (arguments_.length === 1) ? ('' + arguments_[0]) : arguments_.join(' '));
+	};
+
+	// `__proto__` is used because we must return a function, but there is
+	// no way to create a function with a different prototype
+	builder.__proto__ = proto; // eslint-disable-line no-proto
+
+	builder._generator = self;
+	builder._styler = _styler;
+	builder._isEmpty = _isEmpty;
+
+	return builder;
+};
+
+const applyStyle = (self, string) => {
+	if (self.level &lt;= 0 || !string) {
+		return self._isEmpty ? '' : string;
+	}
+
+	let styler = self._styler;
+
+	if (styler === undefined) {
+		return string;
+	}
+
+	const {openAll, closeAll} = styler;
+	if (string.indexOf('\u001B') !== -1) {
+		while (styler !== undefined) {
+			// Replace any instances already present with a re-opening code
+			// otherwise only the part of the string until said closing code
+			// will be colored, and the rest will simply be 'plain'.
+			string = stringReplaceAll(string, styler.close, styler.open);
+
+			styler = styler.parent;
+		}
+	}
+
+	// We can move both next actions out of loop, because remaining actions in loop won't have
+	// any/visible effect on parts we add here. Close the styling before a linebreak and reopen
+	// after next line to fix a bleed issue on macOS: https://github.com/chalk/chalk/pull/92
+	const lfIndex = string.indexOf('\n');
+	if (lfIndex !== -1) {
+		string = stringEncaseCRLFWithFirstIndex(string, closeAll, openAll, lfIndex);
+	}
+
+	return openAll + string + closeAll;
+};
+
+let template;
+const chalkTag = (chalk, ...strings) => {
+	const [firstString] = strings;
+
+	if (!Array.isArray(firstString)) {
+		// If chalk() was called by itself or with a string,
+		// return the string itself as a string.
+		return strings.join(' ');
+	}
+
+	const arguments_ = strings.slice(1);
+	const parts = [firstString.raw[0]];
+
+	for (let i = 1; i &lt; firstString.length; i++) {
+		parts.push(
+			String(arguments_[i - 1]).replace(/[{}\\]/g, '\\$&amp;'),
+			String(firstString.raw[i])
+		);
+	}
+
+	if (template === undefined) {
+		template = __webpack_require__(/*! ./templates */ "./node_modules/chalk/source/templates.js");
+	}
+
+	return template(chalk, parts.join(''));
+};
+
+Object.defineProperties(Chalk.prototype, styles);
+
+const chalk = Chalk(); // eslint-disable-line new-cap
+chalk.supportsColor = stdoutColor;
+chalk.stderr = Chalk({level: stderrColor ? stderrColor.level : 0}); // eslint-disable-line new-cap
+chalk.stderr.supportsColor = stderrColor;
+
+// For TypeScript
+chalk.Level = {
+	None: 0,
+	Basic: 1,
+	Ansi256: 2,
+	TrueColor: 3,
+	0: 'None',
+	1: 'Basic',
+	2: 'Ansi256',
+	3: 'TrueColor'
+};
+
+module.exports = chalk;
+
+
+/***/ }),
+
+/***/ "./node_modules/chalk/source/templates.js":
+/*!************************************************!*\
+  !*** ./node_modules/chalk/source/templates.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+const TEMPLATE_REGEX = /(?:\\(u(?:[a-f\d]{4}|\{[a-f\d]{1,6}\})|x[a-f\d]{2}|.))|(?:\{(~)?(\w+(?:\([^)]*\))?(?:\.\w+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(\})|((?:.|[\r\n\f])+?)/gi;
+const STYLE_REGEX = /(?:^|\.)(\w+)(?:\(([^)]*)\))?/g;
+const STRING_REGEX = /^(['"])((?:\\.|(?!\1)[^\\])*)\1$/;
+const ESCAPE_REGEX = /\\(u(?:[a-f\d]{4}|\{[a-f\d]{1,6}\})|x[a-f\d]{2}|.)|([^\\])/gi;
+
+const ESCAPES = new Map([
+	['n', '\n'],
+	['r', '\r'],
+	['t', '\t'],
+	['b', '\b'],
+	['f', '\f'],
+	['v', '\v'],
+	['0', '\0'],
+	['\\', '\\'],
+	['e', '\u001B'],
+	['a', '\u0007']
+]);
+
+function unescape(c) {
+	const u = c[0] === 'u';
+	const bracket = c[1] === '{';
+
+	if ((u &amp;&amp; !bracket &amp;&amp; c.length === 5) || (c[0] === 'x' &amp;&amp; c.length === 3)) {
+		return String.fromCharCode(parseInt(c.slice(1), 16));
+	}
+
+	if (u &amp;&amp; bracket) {
+		return String.fromCodePoint(parseInt(c.slice(2, -1), 16));
+	}
+
+	return ESCAPES.get(c) || c;
+}
+
+function parseArguments(name, arguments_) {
+	const results = [];
+	const chunks = arguments_.trim().split(/\s*,\s*/g);
+	let matches;
+
+	for (const chunk of chunks) {
+		const number = Number(chunk);
+		if (!Number.isNaN(number)) {
+			results.push(number);
+		} else if ((matches = chunk.match(STRING_REGEX))) {
+			results.push(matches[2].replace(ESCAPE_REGEX, (m, escape, character) => escape ? unescape(escape) : character));
+		} else {
+			throw new Error(`Invalid Chalk template style argument: ${chunk} (in style '${name}')`);
+		}
+	}
+
+	return results;
+}
+
+function parseStyle(style) {
+	STYLE_REGEX.lastIndex = 0;
+
+	const results = [];
+	let matches;
+
+	while ((matches = STYLE_REGEX.exec(style)) !== null) {
+		const name = matches[1];
+
+		if (matches[2]) {
+			const args = parseArguments(name, matches[2]);
+			results.push([name].concat(args));
+		} else {
+			results.push([name]);
+		}
+	}
+
+	return results;
+}
+
+function buildStyle(chalk, styles) {
+	const enabled = {};
+
+	for (const layer of styles) {
+		for (const style of layer.styles) {
+			enabled[style[0]] = layer.inverse ? null : style.slice(1);
+		}
+	}
+
+	let current = chalk;
+	for (const [styleName, styles] of Object.entries(enabled)) {
+		if (!Array.isArray(styles)) {
+			continue;
+		}
+
+		if (!(styleName in current)) {
+			throw new Error(`Unknown Chalk style: ${styleName}`);
+		}
+
+		current = styles.length > 0 ? current[styleName](...styles) : current[styleName];
+	}
+
+	return current;
+}
+
+module.exports = (chalk, temporary) => {
+	const styles = [];
+	const chunks = [];
+	let chunk = [];
+
+	// eslint-disable-next-line max-params
+	temporary.replace(TEMPLATE_REGEX, (m, escapeCharacter, inverse, style, close, character) => {
+		if (escapeCharacter) {
+			chunk.push(unescape(escapeCharacter));
+		} else if (style) {
+			const string = chunk.join('');
+			chunk = [];
+			chunks.push(styles.length === 0 ? string : buildStyle(chalk, styles)(string));
+			styles.push({inverse, styles: parseStyle(style)});
+		} else if (close) {
+			if (styles.length === 0) {
+				throw new Error('Found extraneous } in Chalk template literal');
+			}
+
+			chunks.push(buildStyle(chalk, styles)(chunk.join('')));
+			chunk = [];
+			styles.pop();
+		} else {
+			chunk.push(character);
+		}
+	});
+
+	chunks.push(chunk.join(''));
+
+	if (styles.length > 0) {
+		const errMsg = `Chalk template literal is missing ${styles.length} closing bracket${styles.length === 1 ? '' : 's'} (\`}\`)`;
+		throw new Error(errMsg);
+	}
+
+	return chunks.join('');
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/chalk/source/util.js":
+/*!*******************************************!*\
+  !*** ./node_modules/chalk/source/util.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+const stringReplaceAll = (string, substring, replacer) => {
+	let index = string.indexOf(substring);
+	if (index === -1) {
+		return string;
+	}
+
+	const substringLength = substring.length;
+	let endIndex = 0;
+	let returnValue = '';
+	do {
+		returnValue += string.substr(endIndex, index - endIndex) + substring + replacer;
+		endIndex = index + substringLength;
+		index = string.indexOf(substring, endIndex);
+	} while (index !== -1);
+
+	returnValue += string.substr(endIndex);
+	return returnValue;
+};
+
+const stringEncaseCRLFWithFirstIndex = (string, prefix, postfix, index) => {
+	let endIndex = 0;
+	let returnValue = '';
+	do {
+		const gotCR = string[index - 1] === '\r';
+		returnValue += string.substr(endIndex, (gotCR ? index - 1 : index) - endIndex) + prefix + (gotCR ? '\r\n' : '\n') + postfix;
+		endIndex = index + 1;
+		index = string.indexOf('\n', endIndex);
+	} while (index !== -1);
+
+	returnValue += string.substr(endIndex);
+	return returnValue;
+};
+
+module.exports = {
+	stringReplaceAll,
+	stringEncaseCRLFWithFirstIndex
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/nextron/node_modules/webpack/buildin/module.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/module.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
+/***/ "child_process":
+/*!********************************!*\
+  !*** external "child_process" ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("child_process");
+
+/***/ }),
+
+/***/ "electron":
+/*!***************************!*\
+  !*** external "electron" ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("electron");
+
+/***/ }),
+
+/***/ "electron-serve":
+/*!*********************************!*\
+  !*** external "electron-serve" ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("electron-serve");
+
+/***/ }),
+
+/***/ "electron-store":
+/*!*********************************!*\
+  !*** external "electron-store" ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("electron-store");
+
+/***/ }),
+
+/***/ "electron-updater":
+/*!***********************************!*\
+  !*** external "electron-updater" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("electron-updater");
+
+/***/ }),
+
+/***/ "express":
+/*!**************************!*\
+  !*** external "express" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("express");
+
+/***/ }),
+
+/***/ "fileseq":
+/*!**************************!*\
+  !*** external "fileseq" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("fileseq");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ "glob":
+/*!***********************!*\
+  !*** external "glob" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("glob");
+
+/***/ }),
+
+/***/ "http":
+/*!***********************!*\
+  !*** external "http" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("http");
+
+/***/ }),
+
+/***/ "ncp":
+/*!**********************!*\
+  !*** external "ncp" ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("ncp");
+
+/***/ }),
+
+/***/ "os":
+/*!*********************!*\
+  !*** external "os" ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("os");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("path");
+
+/***/ }),
+
+/***/ "socket.io":
+/*!****************************!*\
+  !*** external "socket.io" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("socket.io");
+
+/***/ }),
+
+/***/ "string-format":
+/*!********************************!*\
+  !*** external "string-format" ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("string-format");
+
+/***/ }),
+
+/***/ "tty":
+/*!**********************!*\
+  !*** external "tty" ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("tty");
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=background.js.map</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+  
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+var list = [{"title":"getting-started","link":"getting-started"},{"title":"AssetId","link":"<a href=\"AssetId.html\">AssetId</a>"},{"title":"AssetId#clearValues","link":"<a href=\"AssetId.html#clearValues\">AssetId &rtrif; clearValues</a>"},{"title":"AssetId#createNewFile","link":"<a href=\"AssetId.html#createNewFile\">AssetId &rtrif; createNewFile</a>"},{"title":"AssetId#deleteTag","link":"<a href=\"AssetId.html#deleteTag\">AssetId &rtrif; deleteTag</a>"},{"title":"AssetId#execTask","link":"<a href=\"AssetId.html#execTask\">AssetId &rtrif; execTask</a>"},{"title":"AssetId#saveComment","link":"<a href=\"AssetId.html#saveComment\">AssetId &rtrif; saveComment</a>"},{"title":"AssetId#saveTag","link":"<a href=\"AssetId.html#saveTag\">AssetId &rtrif; saveTag</a>"},{"title":"AssetId#searchNext","link":"<a href=\"AssetId.html#searchNext\">AssetId &rtrif; searchNext</a>"},{"title":"AssetId#setDimension","link":"<a href=\"AssetId.html#setDimension\">AssetId &rtrif; setDimension</a>"},{"title":"AssetId#setDirs","link":"<a href=\"AssetId.html#setDirs\">AssetId &rtrif; setDirs</a>"},{"title":"AssetId#setFiles","link":"<a href=\"AssetId.html#setFiles\">AssetId &rtrif; setFiles</a>"},{"title":"AssetId#setSearchDir","link":"<a href=\"AssetId.html#setSearchDir\">AssetId &rtrif; setSearchDir</a>"},{"title":"Project","link":"<a href=\"Project.html\">Project</a>"},{"title":"Project#createNewFile","link":"<a href=\"Project.html#createNewFile\">Project &rtrif; createNewFile</a>"},{"title":"Project#createNewGroupValue","link":"<a href=\"Project.html#createNewGroupValue\">Project &rtrif; createNewGroupValue</a>"},{"title":"Project#deleteTag","link":"<a href=\"Project.html#deleteTag\">Project &rtrif; deleteTag</a>"},{"title":"Project#execTask","link":"<a href=\"Project.html#execTask\">Project &rtrif; execTask</a>"},{"title":"Project#formatForRender","link":"<a href=\"Project.html#formatForRender\">Project &rtrif; formatForRender</a>"},{"title":"Project#getData","link":"<a href=\"Project.html#getData\">Project &rtrif; getData</a>"},{"title":"Project#saveComment","link":"<a href=\"Project.html#saveComment\">Project &rtrif; saveComment</a>"},{"title":"Project#saveTag","link":"<a href=\"Project.html#saveTag\">Project &rtrif; saveTag</a>"},{"title":"Project#setDimension","link":"<a href=\"Project.html#setDimension\">Project &rtrif; setDimension</a>"},{"title":"Project#setGroupValue","link":"<a href=\"Project.html#setGroupValue\">Project &rtrif; setGroupValue</a>"}];
+setupSearch(list)
+</script>
+
+ 
+<script type="text/javascript" src="scripts/misc.js"></script>
+</body>
+</html>

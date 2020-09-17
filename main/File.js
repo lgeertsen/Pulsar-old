@@ -1,6 +1,20 @@
 import { unlink, writeFile } from 'fs'
 
-export default class File {
+/**
+ * Class that represents a file
+ */
+class File {
+  /**
+   * constructor - Construcor for the File class
+   *
+   * @param {string} name      The file's name
+   * @param {string} extension The file's extension
+   * @param {number} size      The size of the file in bytes
+   * @param {Date} modified  The modification date of the file
+   * @param {string} comment   The comment that goes with the file
+   * @param {string[]} tags    The tags that have been added to the file
+   * @param {string} path      The path of the file
+   */
   constructor (name, extension, size, modified, comment, tags, path) {
     this.name = name
     this.state = undefined
@@ -13,10 +27,25 @@ export default class File {
     this.path = path
   }
 
+  /**
+   * fullName - Getter for the file name plus it's extension
+   *
+   * @returns {string} fileName.fileExtension
+   */
   get fullName () { return `${this._name}.${this._extension}` }
 
+  /**
+   * getVersionAsInt - Getter for the files version
+   *
+   * @returns {number} The version of the file
+   */
   getVersionAsInt () { return parseInt(this.version) }
 
+  /**
+   * saveComment - Save a comment.txt for the file
+   *
+   * @param {string} comment The comment that has to be saved
+   */
   saveComment (comment) {
     this._comment = comment
     const splitPath = this._path.split('/')
@@ -30,6 +59,11 @@ export default class File {
     })
   }
 
+  /**
+   * saveTag - Add a .tag file
+   *
+   * @param {string} tag Name of the tag
+   */
   saveTag (tag) {
     this._tags.push(tag)
     const splitPath = this._path.split('/')
@@ -43,6 +77,11 @@ export default class File {
     })
   }
 
+  /**
+   * deleteTag - Delete a .tag file
+   *
+   * @param {string} tag Name of the tage to be deleted
+   */
   deleteTag (tag) {
     this._tags.push(tag)
     const splitPath = this._path.split('/')
@@ -58,6 +97,11 @@ export default class File {
     })
   }
 
+  /**
+   * formatDate - Format the modified date to a readable string
+   *
+   * @returns {string} The modified date as a string
+   */
   formatDate () {
     const year = this._modified.getFullYear()
     const month = this._modified.getMonth() + 1
@@ -69,6 +113,11 @@ export default class File {
     return `${month}/${day}/${year} ${hours}:${minutes}`
   }
 
+  /**
+   * formatForRender - Format the instance as an Object to send to the frontend
+   *
+   * @returns {Object} An Object representation of the instance
+   */
   formatForRender () {
     const file = {
       class: 'file',
@@ -84,6 +133,11 @@ export default class File {
     return file
   }
 
+  /**
+   * format - Duplicate of formatForRender??????
+   *
+   * @returns {type} Description
+   */
   format () {
     const file = {
       name: this._name,
@@ -99,3 +153,5 @@ export default class File {
     return file
   }
 }
+
+export default File

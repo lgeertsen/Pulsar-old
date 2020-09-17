@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Project</title>
+    <title>File</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -47,7 +47,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Project</h1>
+    <h1 class="page-title">File</h1>
     
 
     
@@ -63,12 +63,12 @@
         
         <h2>
         
-        Project
+        File
         
         </h2>
         
         
-            <div class="class-description"><p>Class representing a Project.</p></div>
+            <div class="class-description"><p>Class that represents a file</p></div>
             <hr/>
         
     
@@ -84,14 +84,14 @@
         <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Project"><span class="type-signature"></span>new Project<span class="signature">(name, paths, sendToRenderer)</span><span class="type-signature"> &rarr; {<a href="Project.html">Project</a>}</span></h4>
+    <h4 class="name" id="File"><span class="type-signature"></span>new File<span class="signature">(name, extension, size, modified, comment, tags, path)</span><span class="type-signature"></span></h4>
 
     
 
 
 
     <div class="description">
-        <p>constructor - Project Object constructor</p>
+        <p>constructor - Construcor for the File class</p>
     </div>
 
 
@@ -144,20 +144,20 @@
 
             
 
-            <td class="description last"><p>Name of the project</p></td>
+            <td class="description last"><p>The file's name</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>paths</code></td>
+                <td class="name"><code>extension</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">string</span>
 
 
             
@@ -167,20 +167,20 @@
 
             
 
-            <td class="description last"><p>File Paths</p></td>
+            <td class="description last"><p>The file's extension</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>sendToRenderer</code></td>
+                <td class="name"><code>size</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">number</span>
 
 
             
@@ -190,7 +190,99 @@
 
             
 
-            <td class="description last"><p>Function to send project to the Render Screen</p></td>
+            <td class="description last"><p>The size of the file in bytes</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>modified</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The modification date of the file</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>comment</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The comment that goes with the file</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tags</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The tags that have been added to the file</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The path of the file</p></td>
         </tr>
 
     
@@ -233,7 +325,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line15">line 15</a>
+                <a href="File.js.html">File.js</a>, <a href="File.js.html#line18">line 18</a>
             </li></ul></dd>
         </div>
     
@@ -256,30 +348,6 @@
 
 
 
-
-    <div class="method-member-container mt-20">
-    <strong>Returns:</strong>
-        
-            
-<div class="param-desc">
-    <p>Project Object</p>
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Project.html">Project</a></span>
-
-
-    </dd>
-</dl>
- 
-    </div>
 
 
 
@@ -302,13 +370,13 @@
 
         
             
-<h4 class="name" id="pathSubType"><span class="type-signature"></span>pathSubType<span class="type-signature"></span></h4>
+<h4 class="name" id="fullName"><span class="type-signature"></span>fullName<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    <p>set pathSubType - pathSubType setter</p>
+    <p>fullName - Getter for the file name plus it's extension</p>
 </div>
 
 
@@ -347,71 +415,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line61">line 61</a>
-            </li></ul></dd>
-        </div>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="pathType"><span class="type-signature"></span>pathType<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    <p>set pathType - pathType setter</p>
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class="details-item-container">
-            <dt class="tag-source">Source:</dt>
-            <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line46">line 46</a>
+                <a href="File.js.html">File.js</a>, <a href="File.js.html#line35">line 35</a>
             </li></ul></dd>
         </div>
     
@@ -439,345 +443,6 @@
 
     
 
-    <h4 class="name" id="createNewFile"><span class="type-signature"></span>createNewFile<span class="signature">(name, template, type)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-    <div class="description">
-        <p>createNewFile - Create new scene file</p>
-    </div>
-
-
-
-
-
-
-
-
-
-    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
-        <strong>Parameters:</strong>
-        
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Name of the new file</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>template</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Path of the template, undefined if no template is used</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>type</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The name of the software, undefined if a template is used</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class="details-item-container">
-            <dt class="tag-source">Source:</dt>
-            <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line118">line 118</a>
-            </li></ul></dd>
-        </div>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="createNewGroupValue"><span class="type-signature"></span>createNewGroupValue<span class="signature">(group, value)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-    <div class="description">
-        <p>createNewGroupValue - Create now directory of name 'value' in the specified group</p>
-    </div>
-
-
-
-
-
-
-
-
-
-    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
-        <strong>Parameters:</strong>
-        
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>group</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>name of the group</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>name for the new directory</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class="details-item-container">
-            <dt class="tag-source">Source:</dt>
-            <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line95">line 95</a>
-            </li></ul></dd>
-        </div>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
     <h4 class="name" id="deleteTag"><span class="type-signature"></span>deleteTag<span class="signature">(tag)</span><span class="type-signature"></span></h4>
 
     
@@ -785,7 +450,7 @@
 
 
     <div class="description">
-        <p>deleteTag - Remove a tog from a file</p>
+        <p>deleteTag - Delete a .tag file</p>
     </div>
 
 
@@ -838,7 +503,7 @@
 
             
 
-            <td class="description last"><p>Name of the tag</p></td>
+            <td class="description last"><p>Name of the tage to be deleted</p></td>
         </tr>
 
     
@@ -881,7 +546,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line161">line 161</a>
+                <a href="File.js.html">File.js</a>, <a href="File.js.html#line85">line 85</a>
             </li></ul></dd>
         </div>
     
@@ -913,218 +578,14 @@
 
     
 
-    <h4 class="name" id="execTask"><span class="type-signature"></span>execTask<span class="signature">(softwareId, softwareType, command, args)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="format"><span class="type-signature"></span>format<span class="signature">()</span><span class="type-signature"> &rarr; {type}</span></h4>
 
     
 
 
 
     <div class="description">
-        <p>execTask - Exevute a task with a scene file</p>
-    </div>
-
-
-
-
-
-
-
-
-
-    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
-        <strong>Parameters:</strong>
-        
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>softwareId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Id of the connected software, 'new' if you want to launch a new instance</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>softwareType</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Type of software the task needs to be executed in</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>command</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The script to be executed in the software</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>args</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>THe arguments to pass to the command</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class="details-item-container">
-            <dt class="tag-source">Source:</dt>
-            <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line131">line 131</a>
-            </li></ul></dd>
-        </div>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="formatForRender"><span class="type-signature"></span>formatForRender<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-    <div class="description">
-        <p>formatForRender - Format the data of the project into an Object to send to the Render Screen</p>
+        <p>format - Duplicate of formatForRender??????</p>
     </div>
 
 
@@ -1169,7 +630,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line170">line 170</a>
+                <a href="File.js.html">File.js</a>, <a href="File.js.html#line141">line 141</a>
             </li></ul></dd>
         </div>
     
@@ -1193,6 +654,30 @@
 
 
 
+    <div class="method-member-container mt-20">
+    <strong>Returns:</strong>
+        
+            
+<div class="param-desc">
+    <p>Description</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">type</span>
+
+
+    </dd>
+</dl>
+ 
+    </div>
+
 
 
 
@@ -1201,14 +686,14 @@
 
     
 
-    <h4 class="name" id="getData"><span class="type-signature"></span>getData<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="formatDate"><span class="type-signature"></span>formatDate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
 
     
 
 
 
     <div class="description">
-        <p>getData - Get the files/directories found for the current selected AssetId of the project</p>
+        <p>formatDate - Format the modified date to a readable string</p>
     </div>
 
 
@@ -1253,7 +738,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line82">line 82</a>
+                <a href="File.js.html">File.js</a>, <a href="File.js.html#line105">line 105</a>
             </li></ul></dd>
         </div>
     
@@ -1276,6 +761,246 @@
 
 
 
+
+    <div class="method-member-container mt-20">
+    <strong>Returns:</strong>
+        
+            
+<div class="param-desc">
+    <p>The modified date as a string</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+ 
+    </div>
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="formatForRender"><span class="type-signature"></span>formatForRender<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+    <div class="description">
+        <p>formatForRender - Format the instance as an Object to send to the frontend</p>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="File.js.html">File.js</a>, <a href="File.js.html#line121">line 121</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container mt-20">
+    <strong>Returns:</strong>
+        
+            
+<div class="param-desc">
+    <p>An Object representation of the instance</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+ 
+    </div>
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getVersionAsInt"><span class="type-signature"></span>getVersionAsInt<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+    <div class="description">
+        <p>getVersionAsInt - Getter for the files version</p>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="File.js.html">File.js</a>, <a href="File.js.html#line42">line 42</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container mt-20">
+    <strong>Returns:</strong>
+        
+            
+<div class="param-desc">
+    <p>The version of the file</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+ 
+    </div>
 
 
 
@@ -1292,7 +1017,7 @@
 
 
     <div class="description">
-        <p>saveComment - Save the comment of a file</p>
+        <p>saveComment - Save a comment.txt for the file</p>
     </div>
 
 
@@ -1345,7 +1070,7 @@
 
             
 
-            <td class="description last"><p>A comment</p></td>
+            <td class="description last"><p>The comment that has to be saved</p></td>
         </tr>
 
     
@@ -1388,7 +1113,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line141">line 141</a>
+                <a href="File.js.html">File.js</a>, <a href="File.js.html#line49">line 49</a>
             </li></ul></dd>
         </div>
     
@@ -1427,7 +1152,7 @@
 
 
     <div class="description">
-        <p>saveTag - Add a tag to a file</p>
+        <p>saveTag - Add a .tag file</p>
     </div>
 
 
@@ -1523,300 +1248,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line151">line 151</a>
-            </li></ul></dd>
-        </div>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setDimension"><span class="type-signature"></span>setDimension<span class="signature">(dimension)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-    <div class="description">
-        <p>setDimension - set the dimension of the current used AssetId of the project</p>
-    </div>
-
-
-
-
-
-
-
-
-
-    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
-        <strong>Parameters:</strong>
-        
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>dimension</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>&quot;3d&quot; or &quot;2d&quot;</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class="details-item-container">
-            <dt class="tag-source">Source:</dt>
-            <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line74">line 74</a>
-            </li></ul></dd>
-        </div>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setGroupValue"><span class="type-signature"></span>setGroupValue<span class="signature">(group, value)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-    <div class="description">
-        <p>setGroupValue - Set the value of a group in the current selected AssetId</p>
-    </div>
-
-
-
-
-
-
-
-
-
-    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
-        <strong>Parameters:</strong>
-        
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>group</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>name of the group</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>the value the set for the group</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class="details-item-container">
-            <dt class="tag-source">Source:</dt>
-            <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Project.js.html">Project.js</a>, <a href="Project.js.html#line106">line 106</a>
+                <a href="File.js.html">File.js</a>, <a href="File.js.html#line67">line 67</a>
             </li></ul></dd>
         </div>
     

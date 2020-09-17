@@ -3,7 +3,13 @@ import { join, sep } from 'path'
 import fs from 'fs'
 import ncp from 'ncp'
 
-export default class Config {
+/**
+* Manages the config file
+*/
+class Config {
+  /**
+   * constructor - Reads the config file or creates one if not found
+   */
   constructor () {
     if (!!this.constructor.instance) {
       return this.constructor.instance
@@ -52,9 +58,23 @@ export default class Config {
     this._filePath = join(...pathSplit)
   }
 
+  /**
+   * get config - getter for the Pulsar config
+   *
+   * @returns {Object} the config
+   */
   get config () { return this._config }
+
+  /**
+   * set config - setter for the Pulsar config
+   *
+   * @param {Object} config An object with the onfiguration for Pulsar
+   */
   set config (config) { this._config = config }
 
+  /**
+   * checkEngines - copy the engine plugins to the users folder on first usage
+   */
   checkEngines () {
     return new Promise((resolve, reject) => {
       if (process.env.NODE_ENV === 'production') {
@@ -86,6 +106,9 @@ export default class Config {
     })
   }
 
+  /**
+   * checkNodes - copy the node scripts to the users folder on first usage
+   */
   checkNodes () {
     return new Promise((resolve, reject) => {
       if (process.env.NODE_ENV === 'production') {
@@ -105,7 +128,7 @@ export default class Config {
         if (!fs.existsSync(this._nodesPath)) {
           ncp('C:/Users/leege/_pulsar/nodes', this._nodesPath, function (err) {
             if (err) {
-              console.error(err);
+              console.error(err)
               reject(err)
               // return console.error(err)
             }
@@ -119,6 +142,13 @@ export default class Config {
     })
   }
 
+  /**
+   * initConfig - create a config file for Pulsar
+   *
+   * @param {function} cb a callback function
+   *
+   * @returns {type} Description
+   */
   initConfig (cb) {
     fs.copyFile('.pulsar.json', this._filePath, (err) => {
       if (err) {
@@ -130,6 +160,9 @@ export default class Config {
     })
   }
 
+  /**
+   * readConfig - Read the config file and store the values
+   */
   readConfig () {
     return new Promise((resolve, reject) => {
       fs.readFile(this._filePath, (err, data) => {
@@ -173,6 +206,12 @@ export default class Config {
     })
   }
 
+  /**
+   * setConfig - Set some values in the config, and update the config file
+   *
+   * @param {Object} data The values to add/change in the config
+   * @param {function} cb   A callback function
+   */
   setConfig (data, cb) {
     const keys = Object.keys(data)
     for (let i = 0; i < keys.length; i++) {
@@ -189,3 +228,5 @@ export default class Config {
     })
   }
 }
+
+export default Config

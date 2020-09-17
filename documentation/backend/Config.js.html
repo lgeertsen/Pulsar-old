@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Project.js</title>
+    <title>Config.js</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -47,7 +47,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Project.js</h1>
+    <h1 class="page-title">Config.js</h1>
     
 
     
@@ -57,225 +57,238 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import AssetId from './AssetId'
+            <pre class="prettyprint source linenums"><code>import { homedir } from 'os'
+import { join, sep } from 'path'
+import fs from 'fs'
+import ncp from 'ncp'
 
 /**
- * Class representing a Project.
- */
-class Project {
+* Manages the config file
+*/
+class Config {
   /**
-   * constructor - Project Object constructor
-   *
-   * @param  {string} name              Name of the project
-   * @param  {Object} paths             File Paths
-   * @param  {function} sendToRenderer  Function to send project to the Render Screen
-   * @returns {Project}                 Project Object
+   * constructor - Reads the config file or creates one if not found
    */
-  constructor (name, paths, sendToRenderer) {
-    this._name = name
-    this._path = paths.path
-    this._pathTypes = {
-      asset: {
-        scene: new AssetId('scene', paths.asset.scene, this._path, () => this.formatForRender()),
-        render: new AssetId('render', paths.asset.render, this._path, () => this.formatForRender()),
-        cache: new AssetId('cache', paths.asset.cache, this._path, () => this.formatForRender()),
-        texture: new AssetId('texture', paths.asset.texture, this._path, () => this.formatForRender())
-      },
-      shot: {
-        scene: new AssetId('scene', paths.shot.scene, this._path, () => this.formatForRender()),
-        render: new AssetId('render', paths.shot.render, this._path, () => this.formatForRender()),
-        cache: new AssetId('cache', paths.shot.cache, this._path, () => this.formatForRender()),
-        texture: new AssetId('texture', paths.shot.texture, this._path, () => this.formatForRender())
-      }
+  constructor () {
+    if (!!this.constructor.instance) {
+      return this.constructor.instance
     }
 
-    this._pathType = 'asset'
-    this._pathSubType = 'scene'
+    this.constructor.instance = this
 
-    this._sendToRenderer = sendToRenderer
-  }
+    this._config = {}
+    this._file = '.pulsar.json'
+    this._path = join(homedir(), 'Pulsar')
 
-  get pathType () { return this._pathType }
-
-  /**
-   * set pathType - pathType setter
-   *
-   * @param  {string} pathType "asset" or "shot"
-   */
-  set pathType (pathType) {
-    this._pathType = pathType
-    const assetId = this._pathTypes[this._pathType][this._pathSubType]
-    assetId.clearValues('project')
-    assetId.setSearchDir('project')
-    assetId.searchNext()
-  }
-
-  get pathSubType () { return this._pathSubType }
-
-  /**
-   * set pathSubType - pathSubType setter
-   *
-   * @param  {string} pathSubType "scene", "render", "texture" or "cache"
-   */
-  set pathSubType (pathSubType) {
-    this._pathSubType = pathSubType
-    const assetId = this._pathTypes[this._pathType][this._pathSubType]
-    assetId.clearValues('project')
-    assetId.setSearchDir('project')
-    assetId.searchNext()
-  }
-
-  /**
-   * setDimension - set the dimension of the current used AssetId of the project
-   *
-   * @param  {string} dimension "3d" or "2d"
-   */
-  setDimension (dimension) {
-    this._pathTypes[this._pathType][this._pathSubType].setDimension(dimension)
-  }
-
-  /**
-   * getData - Get the files/directories found for the current selected AssetId of the project
-   *
-   */
-  getData () {
-    const assetId = this._pathTypes[this._pathType][this._pathSubType]
-    assetId.clearValues('project')
-    assetId.setSearchDir('project')
-    assetId.searchNext()
-  }
-
-  /**
-   * createNewGroupValue - Create now directory of name 'value' in the specified group
-   *
-   * @param {string} group name of the group
-   * @param {string} value name for the new directory
-   */
-  createNewGroupValue (group, value) {
-    const assetId = this._pathTypes[this._pathType][this._pathSubType]
-    assetId.createNewGroupValue(group, value)
-  }
-
-  /**
-   * setGroupValue - Set the value of a group in the current selected AssetId
-   *
-   * @param  {string} group name of the group
-   * @param  {string} value     the value the set for the group
-   */
-  setGroupValue (group, value) {
-    const assetId = this._pathTypes[this._pathType][this._pathSubType]
-    assetId.setGroupValue(group, value)
-  }
-
-  /**
-   * createNewFile - Create new scene file
-   *
-   * @param {string} name     Name of the new file
-   * @param {string} template Path of the template, undefined if no template is used
-   * @param {string} type     The name of the software, undefined if a template is used
-   */
-  createNewFile (name, template, type) {
-    const assetId = this._pathTypes[this._pathType][this._pathSubType]
-    assetId.createNewFile(name, template, type)
-  }
-
-  /**
-   * execTask - Exevute a task with a scene file
-   *
-   * @param {string} softwareId   Id of the connected software, 'new' if you want to launch a new instance
-   * @param {string} softwareType Type of software the task needs to be executed in
-   * @param {string} command      The script to be executed in the software
-   * @param {array} args         THe arguments to pass to the command
-   */
-  execTask (softwareId, softwareType, command, args) {
-    const assetId = this._pathTypes[this._pathType][this._pathSubType]
-    assetId.execTask(softwareId, softwareType, command, args)
-  }
-
-  /**
-   * saveComment - Save the comment of a file
-   *
-   * @param {string} comment A comment
-   */
-  saveComment (comment) {
-    const assetId = this._pathTypes[this._pathType][this._pathSubType]
-    assetId.saveComment(comment)
-  }
-
-  /**
-   * saveTag - Add a tag to a file
-   *
-   * @param {string} tag Name of the tag
-   */
-  saveTag (tag) {
-    const assetId = this._pathTypes[this._pathType][this._pathSubType]
-    assetId.saveTag(tag)
-  }
-
-  /**
-   * deleteTag - Remove a tog from a file
-   *
-   * @param {string} tag Name of the tag
-   */
-  deleteTag (tag) {
-    const assetId = this._pathTypes[this._pathType][this._pathSubType]
-    assetId.deleteTag(tag)
-  }
-
-  /**
-   * formatForRender - Format the data of the project into an Object to send to the Render Screen
-   *
-   */
-  formatForRender () {
-    let directories = {}
-    let dirOrder = []
-    let groups = {}
-
-    const assetId = this._pathTypes[this._pathType][this._pathSubType]
-    directories = assetId.directories
-    dirOrder = assetId.directoriesOrder
-    groups = assetId.groups
-    const file = groups.file === '&lt;>' ? {} : groups.file
-
-    const asset = {
-      project: this._name,
-      pathType: this._pathType,
-      pathSubType: this._pathSubType,
-      groups: groups,
-      directories: directories,
-      directoriesOrder: dirOrder,
-      file: file
+    if (!fs.existsSync(this._path)) {
+      fs.mkdirSync(this._path)
     }
-    //   let asset = {
-    //     sid:         this.sid,
-    //
-    //     path:        this.path,
-    //     pathSubType: this._pathSubType,
-    //
-    //     projects:    this.projects,
-    //     project:     this.projectName,
-    //     projectPath: this.project,
-    //     pathType:    this.pathType,
-    //     dimension:   this.dimension,
-    //     group:       this.group == "&lt;>" ? "" : this.group,
-    //     name:        this.name == "&lt;>" ? "" : this.name,
-    //     task:        this.task == "&lt;>" ? "" : this.task,
-    //     subtask:     this.subtask == "&lt;>" ? "" : this.subtask,
-    //     file:        this.formatFile == "&lt;>" ? "" : this.formatFile,
-    //
-    //     groups:      this.groups,
-    //     names:       this.names,
-    //     tasks:       this.tasks,
-    //     subtasks:    this.subtasks,
-    //     files:       this.formatFiles(),
+
+    this._enginePath = join(this._path, 'engines')
+    this._nodesPath = join(this._path, 'nodes')
+
+    // if (process.env.NODE_ENV === 'production') {
+    //   this._enginePath = join(this._path, 'engines')
+    //   if (!fs.existsSync(this._enginePath)) {
+    //     ncp(join(__dirname, '../../../engines'), this._enginePath, function (err) {
+    //       if (err) {
+    //         return console.error(err)
+    //       }
+    //       console.log('---- Copied engines ----')
+    //     })
     //   }
+    //   this._nodesPath = join(this._path, 'nodes')
+    //   if (!fs.existsSync(this._enginePath)) {
+    //     ncp(join(__dirname, '../../../nodes'), this._nodesPath, function (err) {
+    //       if (err) {
+    //         return console.error(err)
+    //       }
+    //       console.log('---- Copied nodes ----')
+    //     })
+    //   }
+    // } else {
+    //   this._enginePath = join(this._path, 'engines')
+    //   this._nodesPath = join(this._path, 'nodes')
     //
-    this._sendToRenderer(asset)
     // }
+
+    const pathSplit = this._path.split(sep)
+    pathSplit.push(this._file)
+    this._filePath = join(...pathSplit)
+  }
+
+  /**
+   * get config - getter for the Pulsar config
+   *
+   * @returns {Object} the config
+   */
+  get config () { return this._config }
+
+  /**
+   * set config - setter for the Pulsar config
+   *
+   * @param {Object} config An object with the onfiguration for Pulsar
+   */
+  set config (config) { this._config = config }
+
+  /**
+   * checkEngines - copy the engine plugins to the users folder on first usage
+   */
+  checkEngines () {
+    return new Promise((resolve, reject) => {
+      if (process.env.NODE_ENV === 'production') {
+        if (!fs.existsSync(this._enginePath)) {
+          ncp(join(__dirname, '../../../engines'), this._enginePath, function (err) {
+            if (err) {
+              return console.error(err)
+            }
+            console.log('---- Copied engines ----')
+            resolve()
+          })
+        } else {
+          resolve()
+        }
+      } else {
+        if (!fs.existsSync(this._enginePath)) {
+          ncp('C:/Users/leege/_pulsar/engines', this._enginePath, function (err) {
+            if (err) {
+              reject(err)
+              // return console.error(err)
+            }
+            console.log('---- Copied engines ----')
+            resolve()
+          })
+        } else {
+          resolve()
+        }
+      }
+    })
+  }
+
+  /**
+   * checkNodes - copy the node scripts to the users folder on first usage
+   */
+  checkNodes () {
+    return new Promise((resolve, reject) => {
+      if (process.env.NODE_ENV === 'production') {
+        if (!fs.existsSync(this._nodesPath)) {
+          ncp(join(__dirname, '../../../nodes'), this._nodesPath, function (err) {
+            if (err) {
+              console.error(err)
+              reject(err)
+            }
+            console.log('---- Copied nodes ----')
+            resolve()
+          })
+        } else {
+          resolve()
+        }
+      } else {
+        if (!fs.existsSync(this._nodesPath)) {
+          ncp('C:/Users/leege/_pulsar/nodes', this._nodesPath, function (err) {
+            if (err) {
+              console.error(err)
+              reject(err)
+              // return console.error(err)
+            }
+            console.log('---- Copied nodes ----')
+            resolve()
+          })
+        } else {
+          resolve()
+        }
+      }
+    })
+  }
+
+  /**
+   * initConfig - create a config file for Pulsar
+   *
+   * @param {function} cb a callback function
+   *
+   * @returns {type} Description
+   */
+  initConfig (cb) {
+    fs.copyFile('.pulsar.json', this._filePath, (err) => {
+      if (err) {
+        console.error(err)
+      } else {
+        console.log('----- config copied successfully')
+        this.readConfig(cb)
+      }
+    })
+  }
+
+  /**
+   * readConfig - Read the config file and store the values
+   */
+  readConfig () {
+    return new Promise((resolve, reject) => {
+      fs.readFile(this._filePath, (err, data) => {
+        if (err) {
+          console.error(err)
+          if (err.code === 'ENOENT') {
+            console.log('----- Config does not exist')
+            fs.copyFile('.pulsar.json', this._filePath, (err) => {
+              if (err) {
+                console.error(err)
+              } else {
+                console.log('----- config copied successfully')
+                fs.readFile(this._filePath, (err, data) => {
+                  if (err) {
+
+                  } else {
+                    try {
+                      const config = JSON.parse(data)
+                      this._config = config
+                      resolve(this._config)
+                    } catch (e) {
+                      console.error(e)
+                      reject(e)
+                    }
+                  }
+                })
+              }
+            })
+          }
+        } else {
+          try {
+            const config = JSON.parse(data)
+            this._config = config
+            resolve(this._config)
+          } catch (e) {
+            console.error(e)
+            reject(e)
+          }
+        }
+      })
+    })
+  }
+
+  /**
+   * setConfig - Set some values in the config, and update the config file
+   *
+   * @param {Object} data The values to add/change in the config
+   * @param {function} cb   A callback function
+   */
+  setConfig (data, cb) {
+    const keys = Object.keys(data)
+    for (let i = 0; i &lt; keys.length; i++) {
+      this._config[keys[i]] = data[keys[i]]
+    }
+    const jsonContent = JSON.stringify(this._config, null, 2)
+
+    fs.writeFile(this._filePath, jsonContent, 'utf8', function (err) {
+      if (err) {
+        console.log('An error occured while writing JSON Object to File.')
+        // return console.log(err);
+      }
+      cb()
+    })
   }
 }
 
-export default Project
+export default Config
 </code></pre>
         </article>
     </section>

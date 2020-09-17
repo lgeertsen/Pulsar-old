@@ -37,7 +37,7 @@
   ],
   "recurseDepth": 10,
   "source": {
-    "exclude": ["./node_modules/", "./tutorials/", "./documentation/", "./main/", "./renderer"],
+    "exclude": ["./node_modules/", "./tutorials/", "./documentation/", "./main/", "./renderer/", "./app/"],
     "includePattern": ".+\\.js(doc|x)?$",
     "excludePattern": "(^|\\/|\\\\)_"
   },
