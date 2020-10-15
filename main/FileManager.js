@@ -42,7 +42,7 @@ class FileManager {
    */
   static createDirectory (path, name, cb) {
     const dirPath = join(path, name)
-    mkdir(dirPath, (err) => {
+    mkdir(dirPath, { recursive: true }, (err) => {
       if (err) throw err
       cb()
     })
