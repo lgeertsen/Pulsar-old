@@ -53,9 +53,7 @@ class Config {
     //
     // }
 
-    const pathSplit = this._path.split(sep)
-    pathSplit.push(this._file)
-    this._filePath = join(...pathSplit)
+    this._filePath = join(this._path, this._file)
   }
 
   /**
