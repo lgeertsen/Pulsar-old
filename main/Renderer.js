@@ -30,7 +30,7 @@ export default class Renderer {
   listenForMessages () {
     ipcMain.on('getSoftwares', (event) => {
       // event.sender.send('softwares', this._server.softwares)
-      this._server._softwareSocket.sendSoftwares()
+      // this._server._softwareSocket.sendSoftwares()
     })
 
     ipcMain.on('getConfig', (event) => {

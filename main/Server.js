@@ -21,9 +21,9 @@ export default class Server {
   constructor () {
     this._app = express()
     // this._app.use('/', router)
-    this._http = createServer(this._app)
-    this._io = new SocketIO(this._http)
-    this._softwareSocket = new SoftwareSocket(this._io)
+    // this._http = createServer(this._app)
+    // this._io = new SocketIO(this._http)
+    // this._softwareSocket = new SoftwareSocket(this._io)
 
     this._nodeManager = new NodeManager()
 
@@ -287,13 +287,13 @@ export default class Server {
   // }
 
   startServer () {
-    try {
-      this._http.listen(7846, () => {
-        console.log('----- listening on *:7846 -----')
-      })
-    } catch (e) {
-
-    }
+    // try {
+    //   this._http.listen(7846, () => {
+    //     console.log('----- listening on *:7846 -----')
+    //   })
+    // } catch (e) {
+    //
+    // }
   }
 
   openGraph () {

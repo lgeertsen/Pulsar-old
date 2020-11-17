@@ -27,9 +27,9 @@ export default class Nav extends React.Component {
           </div>
           <div className="menu-divider"></div>
           <div className="nav-menu">
-            <div className={this.props.page === 'manager' ? 'nav-item icon active ' + this.props.primaryColor : 'nav-item icon hover-' + this.props.primaryColor} onClick={() => Router.push('/manager')}>
+            {/* <div className={this.props.page === 'manager' ? 'nav-item icon active ' + this.props.primaryColor : 'nav-item icon hover-' + this.props.primaryColor} onClick={() => Router.push('/manager')}>
               <i className="las la-folder-open"></i>
-            </div>
+            </div> */}
             <div className={this.props.page === 'graph' ? 'nav-item icon active ' + this.props.primaryColor : 'nav-item icon hover-' + this.props.primaryColor} onClick={() => Router.push('/graph')}>
               <i className="las la-project-diagram"></i>
             </div>
@@ -39,14 +39,14 @@ export default class Nav extends React.Component {
             {/* <div className={this.props.page === "vyewer" ? "nav-item icon active " + this.props.primaryColor : "nav-item icon hover-" + this.props.primaryColor}>
             <i className="las la-photo-video"></i>
           </div> */}
-            <div className={this.props.page === 'settings' ? 'nav-item icon active ' + this.props.primaryColor : 'nav-item icon hover-' + this.props.primaryColor} onClick={() => Router.push('/settings')}>
+            {/* <div className={this.props.page === 'settings' ? 'nav-item icon active ' + this.props.primaryColor : 'nav-item icon hover-' + this.props.primaryColor} onClick={() => Router.push('/settings')}>
               <i className="las la-cog"></i>
             </div>
             {Object.keys(this.props.connectedSoftwares).map((softId, index) => (
               <div key={index} className="nav-item nav-software">
                 <img className="nav-software-logo" src={'softwareLogos/' + this.props.connectedSoftwares[softId].software + '.png'}/>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
         <div className={this.props.open ? 'nav-sidebar open ' + this.props.theme : 'nav-sidebar ' + this.props.theme}>
@@ -63,10 +63,10 @@ export default class Nav extends React.Component {
           </div>
           <div className="menu-divider"></div>
           <div className="nav-menu">
-            <div className={this.props.page === 'manager' ? 'nav-item icon active ' + this.props.primaryColor : 'nav-item icon hover-' + this.props.primaryColor} onClick={() => Router.push('/manager')}>
+            {/* <div className={this.props.page === 'manager' ? 'nav-item icon active ' + this.props.primaryColor : 'nav-item icon hover-' + this.props.primaryColor} onClick={() => Router.push('/manager')}>
               <i className="las la-folder-open"></i>
               <div className="nav-item-title">ASSET MANAGER</div>
-            </div>
+            </div> */}
             <div className={this.props.page === 'graph' ? 'nav-item icon active ' + this.props.primaryColor : 'nav-item icon hover-' + this.props.primaryColor} onClick={() => Router.push('/graph')}>
               <i className="las la-project-diagram"></i>
               <div className="nav-item-title">GRAPH EDITOR</div>
@@ -79,7 +79,7 @@ export default class Nav extends React.Component {
               <i className="las la-photo-video"></i>
               <div className="nav-item-title">Vyewer</div>
             </div> */}
-            <div className={this.props.page === 'settings' ? 'nav-item icon active ' + this.props.primaryColor : 'nav-item icon hover-' + this.props.primaryColor} onClick={() => Router.push('/settings')}>
+            {/* <div className={this.props.page === 'settings' ? 'nav-item icon active ' + this.props.primaryColor : 'nav-item icon hover-' + this.props.primaryColor} onClick={() => Router.push('/settings')}>
               <i className="las la-cog"></i>
               <div className="nav-item-title">SETTINGS</div>
             </div>
@@ -88,7 +88,7 @@ export default class Nav extends React.Component {
                 <img className="nav-software-logo" src={'softwareLogos/' + this.props.connectedSoftwares[softId].software + '.png'}/>
                 <div className="nav-item-title">{this.props.connectedSoftwares[softId].scene}</div>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
 

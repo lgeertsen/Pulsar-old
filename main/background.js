@@ -95,15 +95,15 @@ if (isProd) {
   server.startServer()
 
   // console.log("-----config-----", config);
-  if (config.firstUsage) {
-    const homeUrl = isProd ? 'app://./welcome.html' : 'http://localhost:8888/welcome'
-    await mainWindow.loadURL(homeUrl)
-    server.page = 'welcome'
-  } else {
-    const homeUrl = isProd ? 'app://./manager.html' : 'http://localhost:8888/manager'
+  // if (config.firstUsage) {
+  //   const homeUrl = isProd ? 'app://./welcome.html' : 'http://localhost:8888/welcome'
+  //   await mainWindow.loadURL(homeUrl)
+  //   server.page = 'welcome'
+  // } else {
+    const homeUrl = isProd ? 'app://./graph.html' : 'http://localhost:8888/graph'
     server.page = 'graph'
     await mainWindow.loadURL(homeUrl)
-  }
+  // }
 
   // const overlayUrl = isProd ? 'app://./overlay.html' : 'http://localhost:8888/overlay';
   // await overlay.loadURL(overlayUrl);
