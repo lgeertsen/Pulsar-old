@@ -1,0 +1,11 @@
+- software boxes
+- subnets
+- trigger server with database
+- dcc plugins, connected to database
+- parameter promotion from subnets
+- parameter promotion from graph, for execution from command line or dcc
+- boxes, notes
+- scripter
+- nodes git with update functions
+- export graph as node
+- pulsar auto-update improvement
