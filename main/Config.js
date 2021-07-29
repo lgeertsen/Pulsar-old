@@ -88,8 +88,9 @@ class Config {
           resolve()
         }
       } else {
+        console.log("In dev env");
         if (!fs.existsSync(this._enginePath)) {
-          ncp('C:/Users/leege/_pulsar/engines', this._enginePath, function (err) {
+          ncp('C:/Users/Cinesite/pulsar-repo/engines', this._enginePath, function (err) {
             if (err) {
               reject(err)
               // return console.error(err)
@@ -124,7 +125,7 @@ class Config {
         }
       } else {
         if (!fs.existsSync(this._nodesPath)) {
-          ncp('C:/Users/leege/_pulsar/nodes', this._nodesPath, function (err) {
+          ncp('C:/Users/Cinesite/pulsar-repo/nodes', this._nodesPath, function (err) {
             if (err) {
               console.error(err)
               reject(err)
